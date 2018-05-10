@@ -1,0 +1,598 @@
+<?php
+
+function m($arg) {
+    global $euk_data;
+    if (isset($euk_data[$arg])) {
+        return $euk_data[$arg];
+    }
+    else {
+        return false;
+    }
+}
+
+function q($arg) {
+    global $euk_query;
+    if (isset($euk_query[$arg])) {
+        return $euk_query[$arg];
+    }
+    else {
+        return false;
+    }
+}
+
+function euk_handle_action() {
+    global $euk_data;
+    switch(euk_action()) {
+    case 'index':
+        euk_index();
+        break;
+    case 'page':
+        euk_page();
+        break;
+    case 'download':
+        euk_download();
+        exit;
+        break;
+    case 'paged':
+        euk_paged();
+        break;
+    case 'text':
+        euk_text();
+        break;
+    default:
+        print "<!-- {" . euk_action() . "} -->\n";
+        $euk_data = array('action' => euk_action());
+        break;
+    }
+}
+
+function euk_action() {
+    parse_str($_SERVER['QUERY_STRING'], $params);
+    if (isset($params['action'])) {
+        return $params['action'];
+    }
+    else {
+        return 'index';
+    }
+}
+
+function euk_download() {
+    header("Content-type: image/jpeg");
+    header("Content-Disposition: attachment; filename=\"kittens.jpg\"");
+    readfile("http://placekitten.com/g/288/144");
+    exit;
+    global $euk_id;
+    global $euk_query;
+    euk_initialize_query();
+    euk_initialize_id();
+
+    if (!isset($_GET['type'])) {
+        return;
+    }
+
+    switch ($_GET['type']) {
+    case 'jpeg':
+        $field = 'reference_image_url_s';
+        $mime = 'image/jpeg';
+        break;
+    case 'pdf':
+        $field = 'pdf_url_display';
+        $mime = 'application/pdf';
+        break;
+    default:
+        return;
+    }
+
+    $doc = euk_get_document($euk_id);
+    $url = $doc[$field];
+    if (is_array($url)) {
+        $url = $url[0];
+    }
+
+    /* TODO: maybe have a metadata-determined filename? */
+    $name = basename($url);
+
+    header("Content-type: $mime");
+    header("Content-Disposition: attachment; filename=\"$name\"");
+
+    /* TODO: maybe stream this instead */
+    readfile($url);
+}
+
+function euk_index() {
+    global $euk_data;
+    global $euk_solr;
+    global $site_title;
+    global $hit_fields;
+    global $euk_query;
+    euk_initialize_query();
+    $result = euk_get_search_results();
+
+    $data = array(
+        'site_title' => $site_title,
+    );
+    $data['action'] = 'index';
+    
+    # Search
+    $data['query'] = htmlspecialchars(json_encode($euk_query));
+    $data['q'] = $euk_query['q'];
+    $data['search_link'] = "$euk_solr?" . euk_build_search_params();
+    $data['back_to_search'] = u('/catalog/' . euk_link_to_query($euk_query));
+    
+    # Facets
+    $data['active_facets'] = array();
+    foreach ($euk_query['f'] as $f_term => $value) {
+        $remove_link = euk_remove_filter($f_term, $value);
+        $field_label = euk_facet_displayname($f_term);
+        $facet_counts = $result['facet_counts']['facet_fields'][$f_term];
+        $count = 0;
+        if (count($facet_counts) > 0) {
+            $navs_sensible = euk_makeNavsSensible($facet_counts);
+            $count = $navs_sensible[$value];
+        }
+        $data['active_facets'][] = array(
+            'field_label' => $field_label,
+            'remove_link' => u('/catalog/' . $remove_link),
+            'field_raw' => $f_term,
+            'value_label' => $value,
+            'count' => $count,
+        );
+    }
+    
+    $data['facets'] = array();
+    global $facets;
+    foreach ($facets as $facet) {
+        $facet_counts = $result['facet_counts']['facet_fields'][$facet];
+        if (count($facet_counts) > 2) {
+            $navs_sensible = euk_makeNavsSensible($facet_counts);
+            $values = array();
+            foreach ($navs_sensible as $label => $count) {
+                $add_link = euk_add_filter($facet, $label);
+                $values[] = array(
+                    'add_link' => u('/catalog/' . $add_link),
+                    'value_label' => $label,
+                    'count' => $count,
+                );
+            }
+            $data['facets'][] = array(
+                'field_label' => euk_facet_displayname($facet),
+                'values' => $values,
+                'field_raw' => $facet,
+            );
+        }
+    }
+    
+    # Pagination and results
+    if (!euk_on_front_page()) {
+        $data['on_front_page'] = false;
+        $data['pagination'] = array();
+        $data['results'] = array();
+        if (intval($result['response']['numFound']) > 0) {
+            #pagination
+            $pagination_data = array(
+                'first' => $euk_query['offset'] + 1,
+                'last' => $euk_query['offset'] + $euk_query['rows'],
+                'count' => $result['response']['numFound'],
+            );
+            if ($euk_query['offset'] > 0) {
+                $pagination_data['previous'] = u('/catalog/' . euk_previous_link());
+            }
+            if ($pagination_data['last'] <= $pagination_data['count']) {
+                $pagination_data['next'] = u('/catalog/' . euk_next_link());
+            }
+            else {
+                $pagination_data['last'] = $pagination_data['count'];
+            }
+            $data['pagination'] = $pagination_data;
+    
+            # results
+            $docs = $result['response']['docs'];
+            $results = array();
+            for ($i = 0; $i < count($docs); $i++) {
+                $results_data = array();
+                # raw to begin
+                foreach ($hit_fields as $field => $solr_field) {
+                    $raw_field = null;
+                    if (isset($docs[$i][$solr_field])) {
+                        $raw_field = $docs[$i][$solr_field];
+                        if (is_array($raw_field)) {
+                            $results_data[$field] = $raw_field[0];
+                        }
+                        else {
+                            $results_data[$field] = $raw_field;
+                        }
+                    }
+                }
+                # cleanup
+                if (isset($results_data['thumb'])) {
+                    $results_data['thumb'] = str_replace('http:', 'https:', $results_data['thumb']);
+                    $results_data['thumb'] = str_replace('_tb.jpg', '_ftb.jpg', $results_data['thumb']);
+                }
+                $results_data['link'] = u('/catalog/' . $docs[$i]['id'] . euk_link_to_query($euk_query));
+                $results_data['number'] = $euk_query['offset'] + $i + 1;
+                if ($results_data['format'] === 'collections') {
+                    $results_data['target'] = ' target="_blank"';
+                }
+                $results[] = $results_data;
+            }
+            $data['results'] = $results;
+        }
+    }
+    else {
+        $data['on_front_page'] = true;
+    }
+    
+    # JSON
+    $data['json'] = htmlspecialchars(json_encode($data));
+    
+    #print $templates['index']($data);
+    $euk_data = $data;
+    return $euk_data;
+}
+
+function euk_page() {
+    global $euk_data;
+    global $euk_id;
+    global $euk_query;
+    global $facets;
+    global $site_title;
+    euk_initialize_query();
+    euk_initialize_id();
+
+    $result = euk_get_search_results();
+    
+    $data = array(
+        'site_title' => $site_title,
+    );
+    $data['action'] = 'page';
+    
+    # Search
+    $data['query'] = htmlspecialchars(json_encode($euk_query));
+    $data['q'] = q('q');
+    $data['search_link'] = "$euk_solr?" . euk_build_search_params();
+    $data['back_to_search'] = euk_link_to_query($euk_query);
+    
+    # Facets
+    $data['active_facets'] = array();
+    foreach (q('f') as $f_term => $value) {
+        $remove_link = euk_remove_filter($f_term, $value);
+        $field_label = euk_facet_displayname($f_term);
+        $facet_counts = $result['facet_counts']['facet_fields'][$f_term];
+        $count = 0;
+        if (count($facet_counts) > 0) {
+            $navs_sensible = euk_makeNavsSensible($facet_counts);
+            $count = $navs_sensible[$value];
+        }
+        $data['active_facets'][] = array(
+            'field_label' => $field_label,
+            'remove_link' => $remove_link,
+            'field_raw' => $f_term,
+            'value_label' => $value,
+            'count' => $count,
+        );
+    }
+    
+    $data['facets'] = array();
+    foreach ($facets as $facet) {
+        $facet_counts = $result['facet_counts']['facet_fields'][$facet];
+        if (count($facet_counts) > 2) {
+            $navs_sensible = euk_makeNavsSensible($facet_counts);
+            $values = array();
+            foreach ($navs_sensible as $label => $count) {
+                $add_link = euk_add_filter($facet, $label);
+                $values[] = array(
+                    'add_link' => $add_link,
+                    'value_label' => $label,
+                    'count' => $count,
+                );
+            }
+            $data['facets'][] = array(
+                'field_label' => euk_facet_displayname($facet),
+                'values' => $values,
+            );
+        }
+    }
+    
+    $doc = euk_get_document($euk_id);
+    $format = $doc['format'];
+    $flat = array();
+    foreach ($doc as $key => $value) {
+        if (is_array($value) and count($value) > 0) {
+            $flat[$key] = $value[0];
+        }
+        elseif (isset($value)) {
+            $flat[$key] = $value;
+        }
+        else {
+            $flat[$key] = '';
+        }
+    }
+    $metadata = array();
+    $desired = array(
+        array('Title', 'title_display'),
+        array('Creator', 'author_display'),
+        array('Format', 'format'),
+        array('Publication date', 'pub_date'),
+        array('Date uploaded', 'date_digitized_display'),
+        array('Language', 'language_display'),
+        array('Publisher', 'publisher_display'),
+        array('Type', 'type_display'),
+        array('Accession number', 'accession_number_display'),
+        array('Source', 'source_s'),
+        array('Coverage', 'coverage_s'),
+        array('Finding aid', 'finding_aid_url_s'),
+        array('Metadata record', 'mets_url_display'),
+        array('Rights', 'usage_display'),
+    );
+    foreach ($desired as $row) {
+        $label = $row[0];
+        $key = $row[1];
+        $link = false;
+        if ($key === 'type_display') {
+            $value = type_for($doc['format'], $doc['type_display']);
+        }
+        else {
+            if (is_array($doc[$key])) {
+                $value = implode('.  ', $doc[$key]);
+            }
+            elseif (isset($doc[$key])) {
+                $value = $doc[$key];
+            }
+            else {
+                $value = false;
+            }
+        }
+        if ($key === 'finding_aid_url_s' or $key === 'mets_url_display') {
+            $link = true;
+        }
+        if ($value) {
+            $metadata[] = array(
+                'label' => $label,
+                'key' => $key,
+                'value' => $value,
+                'link' => $link,
+            );
+        }
+    }
+    
+    if (array_key_exists('finding_aid_url_s', $doc)) {
+        $entry = array(
+            'label' => 'Collection guide',
+            'anchor' => true,
+            'key' => 'collection_guide',
+            'value' => u('/catalog/' . $doc['object_id_s'][0] . euk_link_to_query($euk_query)),
+            'link' => true,
+        );
+        $metadata[] = $entry;
+    }
+    
+    $flat['metadata'] = $metadata;
+    
+    switch ($format) {
+    case 'audio':
+        $data['item_audio'] = array_merge(
+            $flat,
+            array(
+                'audio' => array(
+                    'href_id' => "audio_$euk_id",
+                    'href' => $flat['reference_audio_url_s'],
+                ),
+            )
+        );
+        $data['script_media'] = true;
+        break;
+    case 'audiovisual':
+        $data['item_audio'] = array_merge(
+            $flat,
+            array(
+                'video' => array(
+                    'href_id' => "video_$euk_id",
+                    'href' => $flat['reference_video_url_s'],
+                ),
+            )
+        );
+        $data['script_media'] = true;
+        break;
+    case 'drawings (visual works)':
+        /* fall through */
+    case 'images':
+        $theme_path = u('/themes/omeuka');
+        $data['item_image'] = $flat;
+        $data['script_image'] = array_merge(
+            $flat,
+            array(
+                'osd_id' => 'viewer',
+                'prefix_url' => "$theme_path/openseadragon/images/",
+                'ref_id' => 'reference_image',
+            )
+        );
+        break;
+    case 'annual reports':
+        /* fall through */
+    case 'architectural drawings (visual works)':
+        /* fall through */
+    case 'archival material':
+        /* fall through */
+    case 'athletic publications':
+        /* fall through */
+    case 'booklets':
+        /* fall through */
+    case 'books':
+        /* fall through */
+    case 'course catalogs':
+        /* fall through */
+    case 'directories':
+        /* fall through */
+    case 'indexes (reference sources)':
+        /* fall through */
+    case 'journals':
+        /* fall through */
+    case 'ledgers':
+        /* fall through */
+    case 'maps':
+        /* fall through */
+    case 'minutes':
+        /* fall through */
+    case 'newsletters':
+        /* fall through */
+    case 'newspapers':
+        /* fall through */
+    case 'yearbooks':
+        $flat['embed_url'] = u('/catalog/' . $euk_id . '/paged');
+        if (array_key_exists($text_field, $doc)) {
+            $flat['text'] = array(
+                'href' => u('/catalog/' . $euk_id . '/text'),
+            );
+        }
+        $data['item_book'] = $flat;
+        break;
+    case 'collections':
+        /* We'll want to embed this eventually */
+        $target = "https://nyx.uky.edu/fa/findingaid/?id=$euk_id";
+        header('Location: '. $target);
+        exit;
+        break;
+    default:
+        $pieces = array();
+        foreach ($doc as $field => $value) {
+            if (is_array($value)) {
+                $value = implode('; ', $value);
+            }
+            $pieces[] = "<b>$field</b>: $value";
+        }
+        $data['item'] = '<ul><li>' . implode('</li><li>', $pieces) . "</li></ul>\n";
+        $url = "$euk_solr?" . document_query($euk_id);
+        $data['item'] .= "<p><a href=\"$url\">$url</a></p>";
+        break;
+    }
+    $euk_data = $data;
+    return $euk_data;
+}
+
+function euk_paged() {
+    global $euk_data;
+    global $euk_id;
+    global $euk_query;
+    global $facets;
+    global $site_title;
+    euk_initialize_query();
+    euk_initialize_id();
+
+    $data = array(
+        'title' => $title,
+        'site_title' => $site_title,
+        'search_placeholder' => $search_placeholder,
+    );
+    $data['action'] = 'paged';
+    $data['back_to_search'] = euk_link_to_query($euk_query);
+
+    $doc = euk_get_document($euk_id);
+    $format = $doc['format'];
+    $flat = array();
+    foreach ($doc as $key => $value) {
+        if (is_array($value) and count($value) > 0) {
+            $flat[$key] = $value[0];
+        }
+        elseif (isset($value)) {
+            $flat[$key] = $value;
+        }
+        else {
+            $flat[$key] = '';
+        }
+    }
+    $metadata = array();
+    $desired = array(
+        array('Title', 'title_display'),
+        array('Creator', 'author_display'),
+        array('Format', 'format'),
+        array('Publication date', 'pub_date'),
+        array('Date uploaded', 'date_digitized_display'),
+        array('Language', 'language_display'),
+        array('Publisher', 'publisher_display'),
+        array('Type', 'type_display'),
+        array('Accession number', 'accession_number_display'),
+        array('Source', 'source_s'),
+        array('Coverage', 'coverage_s'),
+        array('Finding aid', 'finding_aid_url_s'),
+        array('Metadata record', 'mets_url_display'),
+        array('Rights', 'usage_display'),
+    );
+    foreach ($desired as $row) {
+        $label = $row[0];
+        $key = $row[1];
+        $link = false;
+        if ($key === 'type_display') {
+            $value = type_for($doc['format'], $doc['type_display']);
+        }
+        else {
+            if (is_array($doc[$key])) {
+                $value = implode('.  ', $doc[$key]);
+            }
+            elseif (isset($doc[$key])) {
+                $value = $doc[$key];
+            }
+            else {
+                $value = false;
+            }
+        }
+        if ($key === 'finding_aid_url_s' or $key === 'mets_url_display') {
+            $link = true;
+        }
+        if ($value) {
+            $metadata[] = array(
+                'label' => $label,
+                'key' => $key,
+                'value' => $value,
+                'link' => $link,
+            );
+        }
+    }
+
+    if (array_key_exists('finding_aid_url_s', $doc)) {
+        $entry = array(
+            'label' => 'Collection guide',
+            'anchor' => true,
+            'key' => 'collection_guide',
+            'value' => u('/catalog/' . $doc['object_id_s'][0] . euk_link_to_query($euk_query)),
+            'link' => true,
+        );
+        $metadata[] = $entry;
+    }
+
+    if (array_key_exists('pdf_url_display', $doc)) {
+        $entry = array(
+            'label' => 'PDF',
+            'anchor' => true,
+            'key' => 'pdf_url_display',
+            'value' => $doc['pdf_url_display'][0],
+            'link' => true,
+        );
+        $metadata[] = $entry;
+    }
+
+    if (array_key_exists('reference_image_url_s', $doc)) {
+        $entry = array(
+            'label' => 'Reference image',
+            'anchor' => true,
+            'key' => 'reference_image_url_s',
+            'value' => $doc['reference_image_url_s'][0],
+            'link' => true,
+        );
+        $metadata[] = $entry;
+    }
+
+    $flat['metadata'] = $metadata;
+
+    $pages = euk_get_pages($euk_id);
+    if ($pages) {
+        $data['script'] = array(
+            'json' => json_encode($pages),
+        );
+    }
+    $euk_data = $data;
+    return $euk_data;
+}
+
+function euk_text()
+{
+}
