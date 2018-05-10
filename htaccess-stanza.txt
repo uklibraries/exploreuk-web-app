@@ -1,0 +1,4 @@
+# Add this before Omeka's rewrite rules
+RewriteRule ^solr solr.php [L]
+RewriteRule ^text catalog.php [L]
+RewriteRule ^catalog catalog.php [L]

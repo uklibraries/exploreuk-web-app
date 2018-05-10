@@ -1,0 +1,108 @@
+<?php 
+# Move as much of this as possible into user-accessible config.
+
+global $euk_data;
+$euk_data = array();
+
+global $templates_dir;
+$templates_dir = 'handlebars';
+
+global $title;
+$title = 'ExploreStatic';
+global $site_title;
+$site_title = 'ExploreUK';
+global $search_placeholder;
+$search_placeholder = 'ExploreUK';
+
+global $euk_solr;
+$euk_solr = get_theme_option('euk_solr');
+
+global $facets;
+$facets = array(
+    'format',
+    'source_s',
+    'pub_date',
+);
+
+global $facets_titles;
+$facets_titles = array(
+    'format' => 'format',
+    'source_s' => 'collection',
+    'pub_date' => 'publication year',
+);
+
+global $hit_fields;
+$hit_fields = array(
+    'title' => 'title_display',
+    'thumb' => 'thumbnail_url_s',
+    'source' => 'source_s',
+    'pubdate' => 'pub_date',
+    'format' => 'format',
+);
+
+global $id_field;
+$id_field = 'id';
+global $text_field;
+$text_field = 'text_s';
+
+global $hl;
+$hl = true;
+global $hl_fl;
+$hl_fl = 'title_display';
+global $hl_simple_pre;
+$hl_simple_pre = '<em>';
+global $hl_simple_post;
+$hl_simple_post = '</em>';
+global $hl_snippets;
+$hl_snippets = 3;
+
+global $euk_type_dictionary;
+$euk_type_dictionary = get_theme_option('euk_typedict');
+
+function type_for($format, $type) {
+    $type_for = array(
+        'archival material' => 'collection',
+        'athletic publications' => 'text',
+        'books' => 'text',
+        'collections' => 'collection',
+        'course catalogs' => 'text',
+        'directories' => 'text',
+        'images' => 'image',
+        'journals' => 'text',
+        'ledgers' => 'text',
+        'maps' => 'image',
+        'minutes' => 'text',
+        'newspapers' => 'text',
+        'oral histories' => 'sound',
+        'scrapbooks' => array('text', 'image'),
+        'theses' => 'text',
+        'yearbooks' => array('text', 'image'),
+    );
+    if (array_key_exists($format, $type_for)) {
+        return $type_for[$format];
+    }
+    else {
+        return $type;
+    }
+}
+
+global $euk_query;
+global $euk_id;
+
+function euk_facet_displayname($facet) {
+    global $facets_titles;
+    if (isset($facets_titles[$facet])) {
+        return ucfirst($facets_titles[$facet]);
+    }
+    else {
+        return 'unknown';
+    }
+}
+
+function euk_makeNavsSensible($navs) {
+    $newNav = array();
+    for ($i =0; $i < count($navs); $i += 2) {
+        $newNav[$navs[$i]] = $navs[$i + 1];
+    }
+    return $newNav;
+}
