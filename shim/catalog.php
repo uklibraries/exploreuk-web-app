@@ -4,6 +4,14 @@
 global $euk_solr;
 $euk_solr = 'https://exploreuk.uky.edu/solr/select/';
 
+# We can't use BASE_DIR here (as we do in the theme) because
+# this file is not loaded by Omeka.
+global $euk_base;
+$euk_base = '';
+if (realpath(__DIR__) !== realpath($_SERVER['DOCUMENT_ROOT'])) {
+    $euk_base = basename(__DIR__);
+}
+
 # XXX: Don't know a way not to hardcode this.
 function euk_findingaid_redirect($id) {
     return "https://nyx.uky.edu/fa/findingaid/?id=$id";
@@ -157,49 +165,50 @@ else {
 
 $request_uri = strtok($_SERVER['REQUEST_URI'], '?');
 $query_string = $_SERVER['QUERY_STRING'];
-$base = 'eukr';
 
-if (preg_match("#^/$base/catalog/(?<id>[^/]+)/download/?#", $request_uri, $matches)) {
+if (preg_match("#^/$euk_base/catalog/(?<id>[^/]+)/download/?#", $request_uri, $matches)) {
     $id = $matches["id"];
     euk_download($id);
     exit;
 }
-elseif (preg_match("#^/$base/catalog/(?<id>[^/]+)/paged/?#", $request_uri, $matches)) {
+elseif (preg_match("#^/$euk_base/catalog/(?<id>[^/]+)/paged/?#", $request_uri, $matches)) {
     $id = $matches["id"];
-    $dest = "https://$host/$base/index.php?action=paged&id=$id";
+    $dest = "https://$host/$euk_base/index.php?action=paged&id=$id";
 }
-elseif (preg_match("#^/$base/catalog/(?<id>[^/]+)/text/?#", $request_uri, $matches)) {
+elseif (preg_match("#^/$euk_base/catalog/(?<id>[^/]+)/text/?#", $request_uri, $matches)) {
     $id = $matches["id"];
     euk_text($id);
     exit;
 }
-elseif (preg_match("#^/$base/catalog/(?<id>[^/]+)/?#", $request_uri, $matches)) {
+elseif (preg_match("#^/$euk_base/catalog/(?<id>[^/]+)/?#", $request_uri, $matches)) {
     $id = $matches["id"];
     $format = euk_get_format($id);
     if ($format === 'collections') {
         header('Location: ' . euk_findingaid_redirect($id));
     }
     else {
-        $dest = "https://$host/$base/index.php?action=page&id=$id";
+        $dest = "https://$host/$euk_base/index.php?action=page&id=$id";
     }
 }
-elseif (preg_match("#^/$base/catalog/?#", $request_uri, $matches)) {
-    $dest = "https://$host/$base/index.php?action=index";
+elseif (preg_match("#^/$euk_base/catalog/?#", $request_uri, $matches)) {
+    $dest = "https://$host/$euk_base/index.php?action=index";
 }
-elseif (preg_match("#^/$base/text/(?<id>[^/]+)/?#", $request_uri, $matches)) {
+elseif (preg_match("#^/$euk_base/text/(?<id>[^/]+)/?#", $request_uri, $matches)) {
     $id = $matches["id"];
-    $dest = "https://$host/$base/index.php?action=text&id=$id";
+    $dest = "https://$host/$euk_base/index.php?action=text&id=$id";
 }
 else {
-    $dest = "https://$host/$base/index.php?action=index";
+    $dest = "https://$host/$euk_base/index.php?action=index";
 }
 
 if (strlen($query_string) > 0) {
     $dest .= "&$query_string";
 }
 
-# XXX: This section shouldn't be used in production (users won't
-# be required to give passwords).  Instead, use the TODO section.
+# Clean up destination.
+$dest = str_replace("$host//", "$host/", $dest);
+
+# Uncomment this section for development.
 $username = 'okapi';
 $home = $_SERVER['HOME']; # XXX: make this more robust
 $password = trim(file_get_contents("$home/okapi/okapi.txt"));
@@ -209,7 +218,7 @@ $context = stream_context_create(array(
     )
 ));
 print file_get_contents($dest, false, $context);
-# TODO: Uncomment this bit.  Comment out the above stanza.
+# Comment out this section for development
 /*
 print file_get_contents($dest);
 */
