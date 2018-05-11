@@ -1,20 +1,38 @@
 <?php
-# XXX: For portability, this should read from theme config
-# if possible.  That's a little iffy.
-global $euk_solr;
-$euk_solr = 'https://exploreuk.uky.edu/solr/select/';
+# We need to construct and initialize the Omeka application
+# to read theme configuration variables (for example, where
+# is Solr?).  Otherwise, we'd have to hardcode those variables
+# here.
 
-# We can't use BASE_DIR here (as we do in the theme) because
-# this file is not loaded by Omeka.
+require_once 'bootstrap.php';
+require_once 'globals.php';
+
+$application = new Omeka_Application(APPLICATION_ENV);
+$application->getBootstrap()->setOptions(array(
+    'resources' => array(
+        'theme' => array(
+            'basePath' => THEME_DIR,
+            'webBasePath' => WEB_RELATIVE_THEME,
+        )
+    )
+));
+$application->initialize();
+
+global $euk_solr;
+$euk_solr = get_theme_option('euk_solr');
+
 global $euk_base;
 $euk_base = '';
-if (realpath(__DIR__) !== realpath($_SERVER['DOCUMENT_ROOT'])) {
-    $euk_base = basename(__DIR__);
+if (realpath(BASE_DIR) !== realpath($_SERVER['DOCUMENT_ROOT'])) {
+    $euk_base = basename(BASE_DIR) . '/';
 }
 
-# XXX: Don't know a way not to hardcode this.
+global $euk_findingaid_base_url;
+$euk_findingaid_base_url = get_theme_option('euk_findingaid_base_url');
+
 function euk_findingaid_redirect($id) {
-    return "https://nyx.uky.edu/fa/findingaid/?id=$id";
+    global $euk_findingaid_base_url;
+    return "$euk_findingaid_base_url$id";
 }
 
 function euk_initialize_id() {
@@ -166,59 +184,48 @@ else {
 $request_uri = strtok($_SERVER['REQUEST_URI'], '?');
 $query_string = $_SERVER['QUERY_STRING'];
 
-if (preg_match("#^/$euk_base/catalog/(?<id>[^/]+)/download/?#", $request_uri, $matches)) {
+if (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/download/?#", $request_uri, $matches)) {
     $id = $matches["id"];
     euk_download($id);
     exit;
 }
-elseif (preg_match("#^/$euk_base/catalog/(?<id>[^/]+)/paged/?#", $request_uri, $matches)) {
+elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/paged/?#", $request_uri, $matches)) {
     $id = $matches["id"];
-    $dest = "https://$host/$euk_base/index.php?action=paged&id=$id";
+    $dest = "https://$host/${euk_base}index.php?action=paged&id=$id";
 }
-elseif (preg_match("#^/$euk_base/catalog/(?<id>[^/]+)/text/?#", $request_uri, $matches)) {
+elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/text/?#", $request_uri, $matches)) {
     $id = $matches["id"];
     euk_text($id);
     exit;
 }
-elseif (preg_match("#^/$euk_base/catalog/(?<id>[^/]+)/?#", $request_uri, $matches)) {
+elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/?#", $request_uri, $matches)) {
     $id = $matches["id"];
     $format = euk_get_format($id);
     if ($format === 'collections') {
         header('Location: ' . euk_findingaid_redirect($id));
     }
     else {
-        $dest = "https://$host/$euk_base/index.php?action=page&id=$id";
+        $dest = "https://$host/${euk_base}index.php?action=page&id=$id";
     }
 }
-elseif (preg_match("#^/$euk_base/catalog/?#", $request_uri, $matches)) {
-    $dest = "https://$host/$euk_base/index.php?action=index";
+elseif (preg_match("#^/${euk_base}catalog/?#", $request_uri, $matches)) {
+    $dest = "https://$host/${euk_base}index.php?action=index";
 }
-elseif (preg_match("#^/$euk_base/text/(?<id>[^/]+)/?#", $request_uri, $matches)) {
+elseif (preg_match("#^/${euk_base}text/(?<id>[^/]+)/?#", $request_uri, $matches)) {
     $id = $matches["id"];
-    $dest = "https://$host/$euk_base/index.php?action=text&id=$id";
+    $dest = "https://$host/${euk_base}index.php?action=text&id=$id";
 }
 else {
-    $dest = "https://$host/$euk_base/index.php?action=index";
+    $dest = "https://$host/${euk_base}index.php?action=index";
 }
 
 if (strlen($query_string) > 0) {
     $dest .= "&$query_string";
 }
 
+# XXX: Verify that this is not needed.
 # Clean up destination.
 $dest = str_replace("$host//", "$host/", $dest);
 
-# Uncomment this section for development.
-$username = 'okapi';
-$home = $_SERVER['HOME']; # XXX: make this more robust
-$password = trim(file_get_contents("$home/okapi/okapi.txt"));
-$context = stream_context_create(array(
-    'http' => array(
-        'header' => 'Authorization: Basic ' . base64_encode("$username:$password")
-    )
-));
-print file_get_contents($dest, false, $context);
-# Comment out this section for development
-/*
-print file_get_contents($dest);
-*/
+# NOTE: The following section is included from aux/catalog-{dev,prod}.php,
+# with the choice made at time of export.

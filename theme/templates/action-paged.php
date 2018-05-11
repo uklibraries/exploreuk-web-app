@@ -1,4 +1,3 @@
-<?php $theme_path = u('/themes/omeukaprologue'); ?>
 <!DOCTYPE html>
 <html>
 <head>

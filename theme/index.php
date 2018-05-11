@@ -1,7 +1,8 @@
 <?php
 require_once("init.php");
 global $theme_path;
-$theme_path = u('/themes/omeukaprologue');
+$theme_name = Theme::getCurrentThemeName('public');
+$theme_path = u("/themes/$theme_name");
 require_once('euk/euk.php');
 
 if (m('action') === 'paged') {
