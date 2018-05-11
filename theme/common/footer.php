@@ -3,7 +3,8 @@ $base_dir = dirname(__DIR__);
 global $euk_base;
 require_once("$base_dir/init.php");
 global $theme_path;
-$theme_path = u('/themes/omeukaprologue');
+$theme_name = Theme::getCurrentThemeName('public');
+$theme_path = u("/themes/$theme_name");
 require_once("$base_dir/euk/euk.php");
 ?>
 				</header>

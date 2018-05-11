@@ -397,7 +397,6 @@ function euk_page() {
     case 'drawings (visual works)':
         /* fall through */
     case 'images':
-        #$theme_path = u('/themes/omeukaprologue');
         $data['item_image'] = $flat;
         $data['script_image'] = array_merge(
             $flat,
