@@ -236,6 +236,7 @@ function euk_page() {
     global $euk_query;
     global $facets;
     global $site_title;
+    global $theme_path;
     euk_initialize_query();
     euk_initialize_id();
 
@@ -396,7 +397,7 @@ function euk_page() {
     case 'drawings (visual works)':
         /* fall through */
     case 'images':
-        $theme_path = u('/themes/omeuka');
+        #$theme_path = u('/themes/omeukaprologue');
         $data['item_image'] = $flat;
         $data['script_image'] = array_merge(
             $flat,

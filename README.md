@@ -21,6 +21,9 @@ the dist directory, then build the file
 
 Extract this file in the Omeka root directory.
 
+Log in to Omeka as a Super User.  Select the Omeuka Prologue theme,
+then configure the theme appropriately.
+
 Licenses
 --------
 

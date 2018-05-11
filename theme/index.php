@@ -1,5 +1,6 @@
 <?php
 require_once("init.php");
+global $theme_path;
 $theme_path = u('/themes/omeukaprologue');
 require_once('euk/euk.php');
 

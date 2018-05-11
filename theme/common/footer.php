@@ -1,8 +1,8 @@
 <?php
 $base_dir = dirname(__DIR__);
-require_once("$base_dir/init.php");
 global $euk_base;
-$euk_base = get_theme_option('euk_base');
+require_once("$base_dir/init.php");
+global $theme_path;
 $theme_path = u('/themes/omeukaprologue');
 require_once("$base_dir/euk/euk.php");
 ?>
