@@ -2505,7 +2505,12 @@
     color: white;
 }
 
-.bg-wildcatblue h1, h2, h3, h4, h5, h6 {
+.bg-wildcatblue h1,
+.bg-wildcatblue h2,
+.bg-wildcatblue h3,
+.bg-wildcatblue h4,
+.bg-wildcatblue h5,
+.bg-wildcatblue h6 {
     color: white;
 }
 
