@@ -1,5 +1,5 @@
-omeka-solr-shim-theme
-=====================
+omeka-solr-shim
+===============
 
 This is the main portion of the Omeuka application, which serves
 ExploreUK to users atop Omeka, pulling metadata from Solr.
