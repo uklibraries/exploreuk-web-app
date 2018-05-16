@@ -1,5 +1,5 @@
 @import url("font-awesome.min.css");
-@import url("https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300italic,400,600");
+@import url("https://fonts.googleapis.com/css?family=Muli");
 
 /*
 	Prologue by HTML5 UP
@@ -1552,7 +1552,6 @@
 
 	body {
 		background: #fff;
-		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 19pt;
 		font-weight: 300;
 		line-height: 1.75em;
@@ -1571,7 +1570,6 @@
 		}
 
 	input, textarea, select {
-		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 19pt;
 		font-weight: 300;
 		line-height: 1.75em;
@@ -1816,7 +1814,7 @@
 		form input[type="password"]:focus,
 		form select:focus,
 		form textarea:focus {
-			box-shadow: 0 0 2px 1px #0033a0; /*#8ebebc;*/
+			box-shadow: 0 0 2px 1px #0033a0;
 			background: #fff;
 		}
 
@@ -1903,7 +1901,7 @@
 		color: #fff !important;
 		text-decoration: none;
 		padding: 0.75em 2.5em 0.75em 2.5em;
-		background-color: #0033a0; /*#8ebebc;*/
+		background-color: #0033a0;
 		border: 0;
 		cursor: pointer;
 		background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15)), url("images/overlay.png");
@@ -1987,7 +1985,6 @@
 		-webkit-justify-content: space-between;
 		-ms-justify-content: space-between;
 		justify-content: space-between;
-		/*background: #222629 url("images/overlay.png"); */
         background: #0033a0;
 		box-shadow: inset -0.25em 0 0.25em 0 rgba(0, 0, 0, 0.1);
 		color: #fff;
@@ -2066,59 +2063,12 @@
 			top: 0;
 		}
 
-    #nav h1, #nav h2, #nav h3, #nav h4, #nav h5, #nav h6 {
-        color: rgba(255, 255, 255, 0.5);
-    }
-
-	#nav ul {
-		margin-bottom: 0;
-	}
-
-		#nav ul li a {
-			display: block;
-			padding: 0.5em 1.5em 0.5em 1.5em;
-			color: rgba(255, 255, 255, 0.5);
-			text-decoration: none;
-			outline: 0;
-			border: 0;
-			-moz-transition: none;
-			-webkit-transition: none;
-			-ms-transition: none;
-			transition: none;
-		}
-
-			#nav ul li a span {
-				position: relative;
-				display: block;
-				font-size: 0.8em;
-			}
-
-				#nav ul li a span:before {
-					position: absolute;
-					left: 0;
-					color: #41484c;
-					text-align: center;
-					width: 1.25em;
-					line-height: 1.75em;
-				}
-
-			#nav ul li a.active {
-				background: rgba(0, 0, 0, 0.15);
-				box-shadow: inset 0 0 0.25em 0 rgba(0, 0, 0, 0.125);
-				color: #fff;
-			}
-
-				#nav ul li a.active span:before {
-					color: #e27689;
-				}
-
 /* Footer */
 
 	#footer {
 		margin-left: 375px;
 		text-align: center;
         background: #fff;
-		/*background-color: #dce3e2;*/
 		padding: 3em 0 4em 0;
 		box-shadow: inset 0 1px 0 0 rgba(0, 0, 0, 0.05), inset 0 0.1em 0.1em 0 rgba(0, 0, 0, 0.025);
 		font-size: 0.8em;
@@ -2146,7 +2096,6 @@
 /* Main */
 
 	#main {
-		margin-left: 375px;
 	}
 
 		#main > section {
@@ -2155,7 +2104,6 @@
 			padding: 4em 0;
 			box-shadow: inset 0 1px 0 0 rgba(0, 0, 0, 0.05), inset 0 0.1em 0.1em 0 rgba(0, 0, 0, 0.025);
 			text-align: center;
-			background-image: url("images/overlay.png");
 		}
 
 			#main > section.dark {
@@ -2287,21 +2235,6 @@
 				margin: 0 0 0.5em 0;
 			}
 
-			#nav ul li a {
-				font-size: 0.8em;
-				padding-top: 0.5em;
-				padding-bottom: 0.5em;
-			}
-
-				#nav ul li a span {
-					padding-right: 2.25em;
-				}
-
-					#nav ul li a span:before {
-						left: 100%;
-						margin-left: -1.25em;
-						line-height: 2.25em;
-					}
 
 		/* Footer */
 
@@ -2381,7 +2314,6 @@
 				width: 275px;
 				z-index: 10002;
 				width: 275px;
-				/*background: #222729 url("images/overlay.png"); */
                 background: #0033a0;
 				box-shadow: inset -0.25em 0 0.25em 0 rgba(0, 0, 0, 0.125);
 			}
@@ -2402,9 +2334,6 @@
 				margin: 1.5em 1.25em 1.25em 1.25em;
 			}
 
-			#nav ul li a {
-				padding: 0.5em 1.25em 0.5em 1.25em;
-			}
 
 			#headerToggle {
 				-moz-backface-visibility: hidden;
@@ -2565,3 +2494,67 @@
 				}
 
 	}
+
+/*** new */
+
+.sticky {
+}
+
+.bg-wildcatblue {
+    background: #0033a0;
+    color: white;
+}
+
+.bg-wildcatblue h1, h2, h3, h4, h5, h6 {
+    color: white;
+}
+
+.bg-wildcatblue a:visited {
+    color: white;
+}
+
+body {
+    font-family: Muli, sans-serif;
+}
+
+#primary {
+    color: #2c2a29;
+    text-align: left;
+}
+
+.frontlogo {
+    width: 100%;
+    margin: 0 auto;
+}
+
+a {
+    border-bottom: 0;
+}
+
+nav {
+    background: #0033a0;
+    width: 100%;
+}
+
+nav li {
+    display: inline;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+nav a {
+    color: white;
+    border-bottom: 0;
+}
+
+nav a:visited {
+    color: white;
+}
+
+#active_facets, #facets {
+    text-align: left;
+}
+
+#footer {
+    text-align: left;
+}

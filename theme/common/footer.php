@@ -7,27 +7,33 @@ $theme_name = Theme::getCurrentThemeName('public');
 $theme_path = u("/themes/$theme_name");
 require_once("$base_dir/euk/euk.php");
 ?>
-				</header>
+            </header>
 
-                            <footer>
-                            </footer>
-                        </div>
-                    </section>
-			</div>
+            <footer>
+            </footer>
+        </div>
+    </section>
+</div>
 
-		<!-- Footer -->
-			<div id="footer">
-<?php echo get_theme_option('Footer Text'); ?>
-			</div>
+<div id="footer">
+<?php
+$footer = get_theme_option('Footer Text');
+if (strpos($footer, '{{LOGO}}') !== false) {
+    $link = link_to_home_page(theme_logo());
+    $footer = str_replace('{{LOGO}}', $link, $footer);
+}
+echo $footer;
+?>
+</div>
 
-		<!-- Scripts -->
-			<script src="<?php echo $theme_path; ?>/assets/js/jquery.min.js"></script>
-			<script src="<?php echo $theme_path; ?>/assets/js/jquery.scrolly.min.js"></script>
-			<script src="<?php echo $theme_path; ?>/assets/js/jquery.scrollzer.min.js"></script>
-			<script src="<?php echo $theme_path; ?>/assets/js/skel.min.js"></script>
-			<script src="<?php echo $theme_path; ?>/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="<?php echo $theme_path; ?>/assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="<?php echo $theme_path; ?>/assets/js/main.js"></script>
+<!-- Scripts -->
+<script src="<?php echo $theme_path; ?>/assets/js/jquery.min.js"></script>
+<script src="<?php echo $theme_path; ?>/assets/js/jquery.scrolly.min.js"></script>
+<script src="<?php echo $theme_path; ?>/assets/js/jquery.scrollzer.min.js"></script>
+<script src="<?php echo $theme_path; ?>/assets/js/skel.min.js"></script>
+<script src="<?php echo $theme_path; ?>/assets/js/util.js"></script>
+<!--[if lte IE 8]><script src="<?php echo $theme_path; ?>/assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="<?php echo $theme_path; ?>/assets/js/main.js"></script>
 <script type="text/javascript" src="<?php echo "$theme_path/openseadragon/openseadragon.js"; ?>"></script>
 <script type="text/javascript" src="<?php echo "$theme_path/javascripts/mediaelementplayer.min.js"; ?>"></script>
 <?php if (m('script_media')): ?>
