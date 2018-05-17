@@ -8,11 +8,11 @@ rsync -crlpt shim/ dist/pack/
 case "$OPT" in
 dev)
     echo "Exporting for development"
-    cat "aux/catalog-dev.php" >> dist/pack/catalog.php
+    cat "auxiliary/catalog-dev.php" >> dist/pack/catalog.php
     ;;
 *)
     echo "Exporting for production"
-    cat "aux/catalog-prod.php" >> dist/pack/catalog.php
+    cat "auxiliary/catalog-prod.php" >> dist/pack/catalog.php
     ;;
 esac
 rsync -crlpt theme/ "dist/pack/themes/$THEME/"
