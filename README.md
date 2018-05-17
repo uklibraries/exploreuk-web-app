@@ -9,20 +9,32 @@ This is based in part on euk: https://github.com/uklibraries/euk/ .
 Installation
 ------------
 
+Download and extract the repository in a working directory outside
+your web installation.
+
 Modify the Omeka installation's .htaccess file to include the
 stanza included in the following file:
 
 * htaccess-stanza.txt
 
-Run the script exe/build.sh .  This will wipe out and recreate
-the dist directory, then build the file
+This stanza should be included just before the line
+
+> RewriteRule ^install/.\*$ install/install.php [L]
+
+From the root of the downloaded repository, run the command
+
+> bash exe/build.sh
+
+This will wipe out and recreate the dist directory, then build the file
 
 * dist/omeuka.tar.gz
 
 Extract this file in the Omeka root directory.
 
 Log in to Omeka as a Super User.  Select the Omeuka Prologue theme,
-then configure the theme appropriately.
+then configure the theme appropriately.  Make sure to save changes to
+the theme.  This ensures that the Solr configuration is saved to the
+Omeka database.
 
 Licenses
 --------
