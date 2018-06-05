@@ -1,5 +1,5 @@
 $username = 'okapi';
-$home = $_SERVER['HOME']; # XXX: make this more robust
+$home = posix_getpwuid(posix_getuid())['dir'];
 $password = trim(file_get_contents("$home/okapi/okapi.txt"));
 $context = stream_context_create(array(
     'http' => array(
