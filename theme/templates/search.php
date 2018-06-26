@@ -2,6 +2,22 @@
     <div class="form-group">
         <input class="q form-control" type="text" name="q" value="<?php echo q('q'); ?>">
         <span class="input-group-btn"><button type="submit" class="btn btn-default" value="search">Search</button></span>
+    <div id="featured_collections"><span id="featured_collections_box"><div id="featured_collections_content">Featured Collections:<ul id="featured_collections_text">
+<?php
+foreach ($featured_collections as $s_id => $s_label):
+?>
+    <li>&odot;&nbsp;&nbsp;<a href="<?php echo $findaidurl . $s_id; ?>"><?php echo $s_label; ?></a></li>
+<?php
+endforeach;
+?>
+    </ul>
+
+    </div></span></div>
+
+    </div>
+
+    <div id="featured_image_box"><p id="featured_image_text">Featured Image: <a href="<?php echo $random_collection['url']; ?>"><?php echo $random_collection['label']; ?></a></p>
+
     </div>
 </form>
 <article>

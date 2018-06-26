@@ -32,6 +32,16 @@ require_once("$base_dir/euk/euk.php");
 </head>
 <body>
 <div id="main">
+<style type="text/css">
+#top > div {
+    background-image:url(<?php echo $random_collection['background-image']; ?>);
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+</style>
+
     <section id="top">
         <div class="container">
 <?php if (euk_on_front_page()): ?>
