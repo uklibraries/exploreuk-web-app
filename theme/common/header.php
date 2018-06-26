@@ -19,14 +19,15 @@ require_once("$base_dir/euk/euk.php");
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--[if lte IE 8]><script src="<?php echo $theme_path; ?>/assets/js/ie/html5shiv.js"></script><![endif]-->
-    <link rel="stylesheet" href="<?php echo $theme_path; ?>/assets/css/main.css" />
     <!--[if lte IE 8]><link rel="stylesheet" href="<?php echo $theme_path; ?>/assets/css/ie8.css" /><![endif]-->
     <!--[if lte IE 9]><link rel="stylesheet" href="<?php echo $theme_path; ?>/assets/css/ie9.css" /><![endif]-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.theme.css" integrity="sha256-mEMD30TTg+vIEGUmHHgcgSOgm0FBfLipyQ97Jr0TTH8=" crossorigin="anonymous" />
     <!-- lity -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/2.15.1/mediaelementplayer.min.css">
+    <link rel="stylesheet" href="<?php echo $theme_path; ?>/assets/css/main.css" />
 </head>
 <body>
 <div id="main">
