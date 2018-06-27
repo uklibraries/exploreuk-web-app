@@ -54,8 +54,9 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-The following directories are derived from the HTML5 Up Prologue theme,
-which is licensed under the Creative Commons Attribution 3.0 License:
+The following directories are derived from the [HTML5 Up Prologue](https://html5up.net/prologue)
+theme, which is licensed under the
+[Creative Commons Attribution 3.0 License](https://creativecommons.org/licenses/by/3.0/):
 
 * omeuka/assets
 * omeuka/images
@@ -67,8 +68,9 @@ HTML5 Up Prologue theme:
 
 This package includes some packages with other licenses:
 
-* Internet Archive BookReader - GNU Affero GPL
-* jQuery - dual-licensed under the GPLv2 and MIT licenses
-* jQuery UI - dual-licensed under the GPL and MIT licenses
-* MediaElement.js - MIT
-* OpenSeadragon - new BSD license
+* [Internet Archive BookReader](https://github.com/internetarchive/bookreader) - GNU Affero GPL
+* [jQuery](http://jquery.com/) - dual-licensed under the GPLv2 and MIT licenses
+* [jQuery UI](https://jqueryui.com/) - dual-licensed under the GPL and MIT licenses
+* [MediaElement.js](https://www.mediaelementjs.com/) - MIT
+* [OpenSeadragon](https://openseadragon.github.io/) - new BSD license
+* [A Simple CSS Tooltip](https://chrisbracco.com/a-simple-css-tooltip/) - [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/)

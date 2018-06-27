@@ -2,6 +2,7 @@
     <div class="form-group">
         <input class="q form-control" type="text" name="q" value="<?php echo q('q'); ?>">
         <span class="input-group-btn"><button type="submit" class="btn btn-default" value="search">Search</button></span>
+        &nbsp;<span  data-tooltip="Search for a specific phrase by surrounding it in quotation marks."><i class="fas fa-info-circle" id="app"></i></span>
     <div id="featured_collections"><span id="featured_collections_box"><div id="featured_collections_content">Featured Collections:<ul id="featured_collections_text">
 <?php
 foreach ($featured_collections as $s_id => $s_label):
