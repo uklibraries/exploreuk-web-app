@@ -44,25 +44,18 @@ require_once("$base_dir/euk/euk.php");
 
     <section id="top">
         <div class="container">
-<?php if (euk_on_front_page()): ?>
-<header>
-<div class="row bg-wildcatblue">
-    <div class="frontlogo">
-<?php require_once("$base_dir/templates/sitetitle.php"); ?>
-    </div>
-</div>
-</header>
-<footer>
+<?php require_once("$base_dir/templates/stickyheader.php"); ?>
 <?php require_once("$base_dir/templates/search.php"); ?>
 <div class="row">
 <?php require_once("$base_dir/templates/nav.php"); ?>
 </div>
-</footer>
 <?php else: ?>
+    <section class="bg-uklblack" id="top2">
+        <div class="container">
 <?php require_once("$base_dir/templates/stickyheader.php"); ?>
-<footer>
-<?php require_once("$base_dir/templates/search.php"); ?>
-</footer>
+<div id="top2_bottom">
+<?php require_once("$base_dir/templates/search-brief.php"); ?>
+        </div>
 <?php endif; ?>
         </div>
     </section>
