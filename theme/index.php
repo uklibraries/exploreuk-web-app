@@ -3,11 +3,11 @@ require_once("init.php");
 global $theme_path;
 $theme_name = Theme::getCurrentThemeName('public');
 $theme_path = u("/themes/$theme_name");
-require_once('euk/euk.php');
-
 global $findaidurl;
 global $featured_collections;
 global $random_collection;
+
+require_once('euk/euk.php');
 
 if (m('action') === 'paged') {
     euk_paged();
