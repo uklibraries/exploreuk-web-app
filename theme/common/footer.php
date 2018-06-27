@@ -81,5 +81,6 @@ $('#<?php echo $s['ref_id']; ?>').hide();
 </script>
 <?php endif; ?>
 <script src="<?php echo $theme_path; ?>/javascripts/back_to_top.js"></script>
+<script src="<?php echo $theme_path; ?>/javascripts/main.js"></script>
 	</body>
 </html>
