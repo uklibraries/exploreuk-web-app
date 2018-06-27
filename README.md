@@ -74,3 +74,4 @@ This package includes some packages with other licenses:
 * [MediaElement.js](https://www.mediaelementjs.com/) - MIT
 * [OpenSeadragon](https://openseadragon.github.io/) - new BSD license
 * [A Simple CSS Tooltip](https://chrisbracco.com/a-simple-css-tooltip/) - [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/)
+* [back-to-top](https://github.com/CodyHouse/back-to-top) - BSD-3-Clause license

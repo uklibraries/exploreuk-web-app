@@ -80,5 +80,6 @@ $(osd_viewer.element).find('.openseadragon-canvas').css('background-color', 'bla
 $('#<?php echo $s['ref_id']; ?>').hide();
 </script>
 <?php endif; ?>
+<script src="<?php echo $theme_path; ?>/javascripts/back_to_top.js"></script>
 	</body>
 </html>

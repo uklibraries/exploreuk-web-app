@@ -30,6 +30,7 @@ require_once("$base_dir/euk/euk.php");
     <link rel="stylesheet" href="<?php echo $theme_path; ?>/assets/css/main.css" />
 </head>
 <body>
+<a href="#0" class="cd-top js-cd-top">Top</a>
 <div id="main">
 <style type="text/css">
 #top > div {
