@@ -1,9 +1,10 @@
 <header class="sticky">
-<div class="row bg-wildcatblue">
-<div class="4u 12u$(mobile)">
+<div class="bg-uklblack" id="ukhomelink"><a href="http:/www.uky.edu/UKHome/">UK HOME</a></div>
+<div class="row bg-uklblue">
+    <div>
 <?php require_once("$base_dir/templates/sitetitle.php"); ?>
 </div>
-<div class="8u 12u$(mobile)">
+<div id="navlinks">
 <?php require_once("$base_dir/templates/nav.php"); ?>
 </div>
 </div>

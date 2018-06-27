@@ -1,3 +1,12 @@
+                   <div id="result_controls">
+
+                       <span id="result_controls_text">
+
+                           <span id="checkerbox"><span id="checker"></span><span id="breadcrumb">&nbsp;you are here: <a href="https://exploreuk.org/omeuk/">home</a> / search results / this [collection] / this [format]</span>
+                           </span>
+                           </span>
+                           </div>
+
 <!-- rewrite this! -->
 <div class="col-md-8">
 <?php if (m('item_audio')): ?>
