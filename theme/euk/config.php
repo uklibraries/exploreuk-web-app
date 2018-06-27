@@ -30,7 +30,7 @@ while (count($raw_collections) >= 2) {
     $s_id = preg_replace('/[^a-z0-9]/', '', $us_id);
     $s_label = htmlspecialchars($us_label);
 
-    $featured_collections[$s_id] = $label;
+    $featured_collections[$s_id] = $s_label;
 }
 
 global $random_collection;
