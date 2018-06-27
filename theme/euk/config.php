@@ -78,8 +78,8 @@ $bg = array(
     ),
     array(
         'id' => 'xt7sbc3svg22',
-        'background-image' => 'https://nyx.uky.edu/dips/xt7sbc3svg22/data/pa46m4_003/pa46m4_003.jpg'
-        'label' => 'Laura Clay and group marching for the Madsion, Fayette ... - xt7sbc3svg22_1_4'
+        'background-image' => 'https://nyx.uky.edu/dips/xt7sbc3svg22/data/pa46m4_003/pa46m4_003.jpg',
+        'label' => 'Laura Clay and group marching for the Madsion, Fayette ... - xt7sbc3svg22_1_4',
     ),
 );
 
