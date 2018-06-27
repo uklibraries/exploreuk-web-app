@@ -2559,6 +2559,55 @@ nav a:visited {
     text-align: left;
 }
 
+/* START Style the back-to-top floating button */
+/* Copyright 2018 Amber Creative Lab Ltd, CodyHouse.co */
+/* https://github.com/CodyHouse/back-to-top, accessed 2018-06-05 */
+
+.cd-top {
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    position: fixed;
+    bottom: 40px;
+    right: 10px;
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    /* image replacement properties */
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    background: #1897d4 url(images/cd-top-arrow.svg) no-repeat center 50%;
+    visibility: hidden;
+    opacity: 0;
+    -webkit-transition: opacity .3s 0s, visibility 0s .3s, background-color .3s 0s;
+    transition: opacity .3s 0s, visibility 0s .3s, background-color .3s 0s;
+}
+
+.cd-top.cd-top--show,
+.cd-top.cd-top--fade-out,
+.cd-top:hover {
+    -webkit-transition: opacity .3s 0s, visibility 0s 0s, background-color .3s 0s;
+    transition: opacity .3s 0s, visibility 0s 0s, background-color .3s 0s;
+}
+
+.cd-top.cd-top--show {
+    /* the button becomes visible */
+    visibility: visible;
+    opacity: 1;
+}
+
+.cd-top.cd-top--fade-out {
+    /* if the user keeps scrolling down, the button is out of focus and becomes less visible */
+    opacity: .5;
+}
+
+.cd-top:hover {
+    background-color: #143887;
+    opacity: 1;
+}
+
+/* END Style the back-to-top floating button */
+
 /**
  * Tooltip Styles
  */
