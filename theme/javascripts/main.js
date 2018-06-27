@@ -46,4 +46,12 @@ jQuery(document).ready(function($){
             }
         }
     }
+
+    $('#browse_facet_top_page_button').on('click', function () {
+        $('#mySidenav').width('33%');
+    });
+
+    $('.sidenav > .closebtn').on('click', function () {
+        $('#mySidenav').width('0');
+    });
 });

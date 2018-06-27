@@ -3137,3 +3137,18 @@ Main components
     padding-left: 0.5rem;
     margin-top: 10px;
 }
+
+#browse_facet_top_page_button {
+    border: 1px solid;
+    background: rgba(0,0,0,0.4);
+    margin-top: 10px;
+    width: 80%;
+    float: left;
+    margin-left: 5%;
+}
+
+#browse_facet_label {
+    font-size: 14px;
+    cursor: pointer;
+    color: aliceblue;
+}
