@@ -35,6 +35,7 @@ require_once("$base_dir/euk/euk.php");
 <body>
 <a href="#0" class="cd-top js-cd-top">Top</a>
 <div id="main">
+<?php if (euk_on_front_page()): ?>
 <style type="text/css">
 #top > div {
     background-image:url(<?php echo $random_collection['background-image']; ?>);
@@ -44,6 +45,7 @@ require_once("$base_dir/euk/euk.php");
     background-size: cover;
 }
 </style>
+<?php endif; ?>
 
     <section id="top">
         <div class="container">
