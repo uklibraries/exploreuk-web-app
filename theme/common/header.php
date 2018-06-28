@@ -47,9 +47,9 @@ require_once("$base_dir/euk/euk.php");
 </style>
 <?php endif; ?>
 
+<?php if (euk_on_front_page()): ?>
     <section id="top">
         <div class="container">
-<?php if (euk_on_front_page()): ?>
 <?php require_once("$base_dir/templates/stickyheader.php"); ?>
 <?php require_once("$base_dir/templates/search.php"); ?>
 <div class="row">
