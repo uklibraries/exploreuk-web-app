@@ -2576,7 +2576,7 @@ nav a:visited {
     overflow: hidden;
     text-indent: 100%;
     white-space: nowrap;
-    background: #1897d4 url(images/cd-top-arrow.svg) no-repeat center 50%;
+    background: #1897d4 url(../../images/cd-top-arrow.svg) no-repeat center 50%;
     visibility: hidden;
     opacity: 0;
     -webkit-transition: opacity .3s 0s, visibility 0s .3s, background-color .3s 0s;
@@ -3495,6 +3495,10 @@ a:hover {
     color: #ffffff;
 }
 
+.fg-uklblue {
+    color: #005dab !important;
+}
+
 .bg-uklwhite {
     background: #ffffff;
     margin-bottom: 10px !important;
@@ -3601,4 +3605,9 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
         float: right;
     }
 
+}
+
+/* side navigation */
+.sidenav {
+    display: none;
 }

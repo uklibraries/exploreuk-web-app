@@ -7,6 +7,7 @@ $theme_name = Theme::getCurrentThemeName('public');
 $theme_path = u("/themes/$theme_name");
 global $findaidurl;
 global $featured_collections;
+global $random_collection;
 require_once("$base_dir/euk/euk.php");
 ?>
 <!DOCTYPE HTML>
