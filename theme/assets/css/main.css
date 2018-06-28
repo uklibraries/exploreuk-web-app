@@ -2889,6 +2889,7 @@ Main components
 }
 .cd-nav-trigger span {
     /* the span element is used to create the menu icon */
+    background: #005dab;
     position: absolute;
     display: block;
     width: 20px;
@@ -3493,10 +3494,6 @@ a:hover {
 .bg-uklblack {
     background: #282828;
     color: #ffffff;
-}
-
-.fg-uklblue {
-    color: #005dab !important;
 }
 
 .bg-uklwhite {
