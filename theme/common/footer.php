@@ -22,6 +22,13 @@ if (strpos($footer, '{{LOGO}}') !== false) {
     $link = link_to_home_page(theme_logo());
     $footer = str_replace('{{LOGO}}', $link, $footer);
 }
+if (strpos($footer, '{{FOOTER}}') !== false) {
+    $footer_addition = <<<FOOTER
+<div class="bg-uklwhite"><span id="inner_footer_funders"><a href="https://www.imls.gov/"><img id="footer_funder_image" src="$theme_path/images/imls-n.png" /></a>&nbsp;&nbsp;<a href="https://www.clir.org/"><img id="footer_funder_image" src="$theme_path/images/clir-n.png" /></a>&nbsp;&nbsp;<a href="https://www.neh.org/"><img id="footer_funder_image" src="$theme_path/images/neh-n.jpg" /></a>&nbsp;&nbsp;<a href="https://www.archives.gov/nhprc"><img id="footer_funder_image" src="$theme_path/images/nhprc-n.jpg" /></a>&nbsp;&nbsp;<a href="https://libraries.uky.edu/page.php?lweb_id=1114"><img id="footer_funder_image" src="$theme_path/images/heyburn-n.png" /></a></span></div>
+<div class="row bg-uklblack"><span id="copyright">Copyright © 2018 UK Libraries. For questions or comments about this website, contact <a href="mailto:sarah.dorpinghaus@uky.edu" target="_top">Sarah Dorpinghaus</a>.</span><span id="govlinks"><a href="https://www.gpo.gov/"><img class="euk-logo-small" src="$theme_path/images/gpo_fst.jpg" /></a>&nbsp;&nbsp;<a href="https://www.fdlp.gov/"><img class="euk-logo-small" src="$theme_path/images/fdlp.png" /></a></span>
+FOOTER;
+    $footer = str_replace('{{FOOTER}}', $footer_addition, $footer);
+}
 echo $footer;
 ?>
 </div>
