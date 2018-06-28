@@ -3156,6 +3156,15 @@ Main components
     text-align: center;
 }
 
+@supports (display: flex) {
+    #inner_footer_funders {
+        width: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
 .euk_front_section {
     border-bottom: 1px solid;
 }
