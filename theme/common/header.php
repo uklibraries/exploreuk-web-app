@@ -28,7 +28,6 @@ require_once("$base_dir/euk/euk.php");
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.theme.css" integrity="sha256-mEMD30TTg+vIEGUmHHgcgSOgm0FBfLipyQ97Jr0TTH8=" crossorigin="anonymous" />
     <!-- lity -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/2.15.1/mediaelementplayer.min.css">
     <link rel="stylesheet" href="<?php echo $theme_path; ?>/assets/css/main.css" />
 </head>
