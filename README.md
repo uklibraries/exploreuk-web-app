@@ -36,6 +36,18 @@ then configure the theme appropriately.  Make sure to save changes to
 the theme.  This ensures that the Solr configuration is saved to the
 Omeka database.
 
+Notes
+-----
+
+To use the maintenance scripts in the exe directory, the following
+programs are required:
+
+* bash
+* cleancss
+* ImageMagick
+* rsync
+* wget
+
 Licenses
 --------
 
