@@ -10,13 +10,13 @@ global $featured_collections;
 global $random_collection;
 require_once("$base_dir/euk/euk.php");
 ?>
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <!--
 	Prologue by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
-<html>
+<html lang="en">
 <head>
     <title><?php echo m('site_title'); ?></title>
     <meta charset="utf-8" />
