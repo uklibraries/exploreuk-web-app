@@ -41,6 +41,7 @@ echo $footer;
 <script src="<?php echo $theme_path; ?>/assets/js/skel.min.js"></script>
 <script src="<?php echo $theme_path; ?>/assets/js/util.js"></script>
 <!--[if lte IE 8]><script src="<?php echo $theme_path; ?>/assets/js/ie/respond.min.js"></script><![endif]-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.0/lity.js"></script>
 <script src="<?php echo $theme_path; ?>/assets/js/main.js"></script>
 <script type="text/javascript" src="<?php echo "$theme_path/openseadragon/openseadragon.js"; ?>"></script>
 <script type="text/javascript" src="<?php echo "$theme_path/javascripts/mediaelementplayer.min.js"; ?>"></script>
