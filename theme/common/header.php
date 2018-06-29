@@ -31,7 +31,7 @@ require_once("$base_dir/euk/euk.php");
 <?php if (euk_on_front_page()): ?>
 <style type="text/css">
 #top > div {
-    background-image:url(<?php echo $random_collection['background-image']; ?>);
+    background-image:url(<?php echo $theme_path . '/images/' . $random_collection['background-image']; ?>);
     height: 100%;
     background-repeat: no-repeat;
     background-position: center;
