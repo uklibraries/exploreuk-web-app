@@ -2,7 +2,7 @@
     <div class="form-group">
         <span id="search_items_count"><?php echo get_theme_option('Search Items Count Text'); ?></span>
         <span id="site_description"><?php echo get_theme_option('Site Description Text'); ?></span>
-        <input class="q form-control" type="text" name="q" value="<?php echo q('q'); ?>">
+        <input aria-label="Search" class="q form-control" type="text" name="q" value="<?php echo q('q'); ?>">
         <span class="input-group-btn"><button type="submit" class="btn btn-default bg-uklblue" value="search">Search</button></span>
         &nbsp;<span  data-tooltip="Search for a specific phrase by surrounding it in quotation marks."><i class="fas fa-info-circle" id="app"></i></span>
 
