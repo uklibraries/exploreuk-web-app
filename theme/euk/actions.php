@@ -109,15 +109,21 @@ function euk_index() {
     $result = euk_get_search_results();
 
     $data = array(
-        'site_title' => $site_title,
+        'action' => 'index',
     );
-    $data['action'] = 'index';
-    
+
     # Search
-    $data['query'] = htmlspecialchars(json_encode($euk_query));
-    $data['q'] = $euk_query['q'];
+    $data['q'] = q('q');
     $data['search_link'] = "$euk_solr?" . euk_build_search_params();
     $data['back_to_search'] = u('/catalog/' . euk_link_to_query($euk_query));
+
+    # Title
+    if (strlen($data['q']) > 0) {
+        $data['site_title'] = $data['q'] . ' - ' . $site_title;
+    }
+    else {
+        $data['site_title'] = $site_title;
+    }
     
     # Facets
     $data['active_facets'] = array();
@@ -222,10 +228,6 @@ function euk_index() {
         $data['on_front_page'] = true;
     }
     
-    # JSON
-    $data['json'] = htmlspecialchars(json_encode($data));
-    
-    #print $templates['index']($data);
     $euk_data = $data;
     return $euk_data;
 }
@@ -243,15 +245,21 @@ function euk_page() {
     $result = euk_get_search_results();
     
     $data = array(
-        'site_title' => $site_title,
+        'action' => 'page',
     );
-    $data['action'] = 'page';
     
     # Search
-    $data['query'] = htmlspecialchars(json_encode($euk_query));
     $data['q'] = q('q');
     $data['search_link'] = "$euk_solr?" . euk_build_search_params();
     $data['back_to_search'] = euk_link_to_query($euk_query);
+
+    # Title
+    if (strlen($data['q']) > 0) {
+        $data['site_title'] = $data['q'] . ' - ' . $site_title;
+    }
+    else {
+        $data['site_title'] = $site_title;
+    }
     
     # Facets
     $data['active_facets'] = array();
