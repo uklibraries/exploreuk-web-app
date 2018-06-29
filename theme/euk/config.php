@@ -7,8 +7,6 @@ $euk_data = array();
 global $templates_dir;
 $templates_dir = 'handlebars';
 
-global $title;
-$title = 'ExploreStatic';
 global $site_title;
 $site_title = 'ExploreUK';
 global $search_placeholder;
