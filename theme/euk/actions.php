@@ -479,7 +479,6 @@ function euk_paged() {
     euk_initialize_id();
 
     $data = array(
-        'title' => $title,
         'site_title' => $site_title,
         'search_placeholder' => $search_placeholder,
     );
