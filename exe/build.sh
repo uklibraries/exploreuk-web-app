@@ -17,7 +17,7 @@ dev)
 esac
 rsync -crlpt theme/ "dist/pack/themes/$THEME/"
 cd dist/pack
-find . -type f -name "*.swp" | xargs -n 1 rm
+find . -type f -name "*.swp" | xargs -n 1 --no-run-if-empty rm
 tar zcf ../omeuka.tar.gz .
 cd ../..
 echo "Export stored in dist/omeuka.tar.gz"
