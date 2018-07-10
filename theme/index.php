@@ -5,7 +5,7 @@ $theme_name = Theme::getCurrentThemeName('public');
 $theme_path = u("/themes/$theme_name");
 global $findaidurl;
 global $featured_collections;
-global $random_collection;
+global $featured_image;
 
 require_once('euk/euk.php');
 

@@ -4,7 +4,6 @@
         <span id="site_description"><?php echo get_theme_option('Site Description Text'); ?></span>
         <input aria-label="Search" class="q form-control" type="text" name="q" value="<?php echo q('q'); ?>">
         <span class="input-group-btn"><button type="submit" class="btn btn-default bg-uklblue" value="search">Search</button></span>
-        &nbsp;<span  data-tooltip="Search for a specific phrase by surrounding it in quotation marks."><i class="fas fa-info-circle" id="app"></i></span>
 
     <div id="browse_facet_top_page_button"><span id="browse_facet_label"><?php echo get_theme_option('Browse Content Button Text'); ?></span></div>
     <div id="featured_collections"><span id="featured_collections_box"><div id="featured_collections_content">Featured Collections:<ul id="featured_collections_text">
@@ -21,7 +20,7 @@ endforeach;
 
     </div>
 
-    <div id="featured_image_box"><p id="featured_image_text">Featured Image: <a href="<?php echo $random_collection['url']; ?>"><?php echo $random_collection['label']; ?></a></p>
+    <div id="featured_image_box"><p id="featured_image_text"><a href="<?php echo $featured_image['url']; ?>"><?php echo $featured_image['label']; ?></a></p>
 
     </div>
 </form>
