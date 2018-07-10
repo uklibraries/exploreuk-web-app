@@ -34,11 +34,12 @@ while (count($raw_collections) >= 2) {
 global $featured_image;
 
 $featured_image = array(
-    'id' => 'xt734t6f3d29',
-    'background-image' => 'bg-006.jpg',
-    'label' => 'Cats; Butterscotch Tabby cat on a chair - xt734t6f3d29_4066_1',
+    'id' => 'xt7gqn5z7t3j',
+    'background-image' => '2013av023_008_bg.jpg',
+    'label' => 'From the Jim Curtis photograph collection on Civil Rights in Kentucky',
+    'url' => '/catalog/xt7gqn5z7t3j_8_1',
+
 );
-$featured_image['url'] = $findaidurl . $featured_image['id'];
 
 global $facets;
 $facets = array(
