@@ -1,7 +1,7 @@
 <?php
 function euk_on_front_page() {
     global $euk_query;
-    return !(isset($euk_query['q']) or count($euk_query['fq']) > 0 or count($euk_query['f']) > 0 or $euk_query['offset'] > 0);
+    return (m('action') === 'index') && !(isset($euk_query['q']) or count($euk_query['fq']) > 0 or count($euk_query['f']) > 0 or $euk_query['offset'] > 0);
 }
 
 function euk_initialize_id() {
