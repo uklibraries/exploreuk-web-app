@@ -1,23 +1,8 @@
 <form action="<?php echo u('/catalog/'); ?>" method="get" id="search">
     <div class="form-group">
-        <span id="search_items_count"><?php echo get_theme_option('Search Items Count Text'); ?></span>
-        <span id="site_description"><?php echo get_theme_option('Site Description Text'); ?></span>
-        <input aria-label="Search" class="q form-control" type="text" name="q" value="<?php echo q('q'); ?>">
-        <span class="input-group-btn"><button type="submit" class="btn btn-default bg-uklblue" value="search">Search</button></span>
-
-    <div id="browse_facet_top_page_button"><span id="browse_facet_label"><?php echo get_theme_option('Browse Content Button Text'); ?></span></div>
-    <div id="featured_collections"><span id="featured_collections_box"><div id="featured_collections_content">Featured Collections:<ul id="featured_collections_text">
-<?php
-foreach ($featured_collections as $s_id => $s_label):
-?>
-    <li>&odot;&nbsp;&nbsp;<a href="<?php echo $findaidurl . $s_id; ?>"><?php echo $s_label; ?></a></li>
-<?php
-endforeach;
-?>
-    </ul>
-
-    </div></span></div>
-
+        <span><?php echo get_theme_option('Search Items Count Text'); ?></span>
+        <span><input aria-label="Search" class="q form-control" type="text" name="q" value="<?php echo q('q'); ?>">
+        <span class="input-group-btn"><button type="submit" class="btn btn-default bg-uklblue" value="search">Search</button></span></span>
     </div>
 
     <div id="featured_image_box"><p id="featured_image_text"><a href="<?php echo $featured_image['url']; ?>"><?php echo $featured_image['label']; ?></a></p>

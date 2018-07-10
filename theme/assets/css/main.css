@@ -1678,11 +1678,8 @@ summary {
 }
 
 .form-group {
-    background: rgba(22,21,20,0.7);
-    padding-top: 19px;
     width: 50%;
     float: right;
-    margin-bottom: 5%;
     margin-right: 2%;
 }
 
@@ -1701,6 +1698,28 @@ summary {
 #top > div > footer > form > div > h4 {
     margin-bottom: 50px;
     color: #fff;
+}
+
+#search > .form-group > * {
+    font-size: 15px;
+    text-align: left;
+    line-height: 1.4;
+    width: 80%;
+    margin-left: 5%;
+    color: #ffffff;
+}
+
+.form-group {
+    background: rgba(22,21,20,0.7);
+    padding-top: 19px;
+    margin-bottom: 5%;
+}
+
+@supports (display: flex) {
+    #search > .form-group {
+        display: flex;
+        flex-direction: column;
+    }
 }
 
 #search_items_count {
@@ -1853,8 +1872,7 @@ input[type="button"], input[type="submit"], input[type="reset"], button, .button
 
 form input[type="text"], form input[type="email"], form input[type="password"], form select, form textarea {
     display: initial !important;
-    width: 70% !important;
-    margin-left: .9%;
+    width: 77% !important;
     padding: 0.1em 1em 0.3em 1em !important;
 }
 
@@ -1893,11 +1911,8 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     }
 
     .form-group {
-        background: rgba(22,21,20,0.7);
-        padding-top: 19px;
         width: 90%;
         float: unset;
-        margin-bottom: 5%;
         margin-right: auto;
         margin-left: auto;
     }
