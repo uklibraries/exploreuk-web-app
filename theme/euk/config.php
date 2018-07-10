@@ -31,59 +31,14 @@ while (count($raw_collections) >= 2) {
     $featured_collections[$s_id] = $s_label;
 }
 
-global $random_collection;
+global $featured_image;
 
-$bg = array(
-    array(
-        'id' => 'xt7sf7664q86',
-        'background-image' => 'bg-001.jpg',
-        'label' => 'Locomotive and train - xt7sf7664q86_6197_1',
-    ),
-    array(
-        'id' => 'xt7qrf5kb01p',
-        'background-image' => 'bg-002.jpg',
-        'label' => 'N. Limestone - Short to Church (West), 1921 - xt7qrf5kb01p_1_184',
-    ),
-    array(
-        'id' => 'xt7q833mwz5w',
-        'background-image' => 'bg-003.jpg',
-        'label' => 'a copy of a print, horse racing - xt7q833mwz5w_1_51',
-    ),
-    array(
-        'id' => 'xt7sf7664q86',
-        'background-image' => 'bg-004.jpg',
-        'label' => 'African-American chef in cafeteria kitchen - xt7sf7664q86_410_1',
-    ),
-    array(
-        'id' => 'xt7prr1pgv6h',
-        'background-image' => 'bg-005.jpg',
-        'label' => 'Margaret I. King Library under construction, 1929 - xt7prr1pgv6h_44_3',
-    ),
-    array(
-        'id' => 'xt734t6f3d29',
-        'background-image' => 'bg-006.jpg',
-        'label' => 'Cats; Butterscotch Tabby cat on a chair - xt734t6f3d29_4066_1',
-    ),
-    array(
-        'id' => 'xt7tdz03077b',
-        'background-image' => 'bg-007.jpg',
-        'label' => 'African-American man playing guitar, 1960 - xt7tdz03077b_38_32',
-    ),
-    array(
-        'id' => 'xt7sf7664q86',
-        'background-image' => 'bg-008.jpg',
-        'label' => 'Students - xt7sf7664q86_1642_1',
-    ),
-    array(
-        'id' => 'xt7sbc3svg22',
-        'background-image' => 'bg-009.jpg',
-        'label' => 'Laura Clay and group marching for the Madsion, Fayette ... - xt7sbc3svg22_1_4',
-    ),
+$featured_image = array(
+    'id' => 'xt734t6f3d29',
+    'background-image' => 'bg-006.jpg',
+    'label' => 'Cats; Butterscotch Tabby cat on a chair - xt734t6f3d29_4066_1',
 );
-
-$bg_index = array_rand($bg);
-$random_collection = $bg[$bg_index];
-$random_collection['url'] = $findaidurl . $random_collection['id'];
+$featured_image['url'] = $findaidurl . $featured_image['id'];
 
 global $facets;
 $facets = array(
