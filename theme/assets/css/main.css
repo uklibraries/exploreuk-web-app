@@ -1713,6 +1713,8 @@ summary {
     background: rgba(22,21,20,0.7);
     padding-top: 19px;
     margin-bottom: 5%;
+    min-height: 210px;
+    max-height: 250px;
 }
 
 @supports (display: flex) {
