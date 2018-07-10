@@ -1613,6 +1613,16 @@ Main components
 #ukhomelink {
     width: 100%;
     height: 32px;
+    font-size: 16px !important;
+    padding-left: 40px;
+}
+
+@supports (display: flex) {
+    #ukhomelink {
+        display: flex;
+        align-items: center;
+        justify-content: left;
+    }
 }
 
 #top > div > footer > form {
