@@ -1448,18 +1448,57 @@ Main components
     vertical-align: middle;
 }
 
-#inner_footer_funders {
-    width: 90%;
-    margin-left: auto;
-    margin-right: auto;
+#outer_footer_funders {
+    margin: auto;
     text-align: center;
+    font-size: 16px;
+}
+
+#outer_footer_funders > * {
+    width: 90%;
+}
+
+#copyright-bar {
+    font-size: 16px;
+    min-height: 150px;
+    width: 100%;
+}
+
+#copyright {
+    max-width: 50%;
 }
 
 @supports (display: flex) {
     #inner_footer_funders {
-        width: 90%;
         display: flex;
+        flex-direction: row;
         align-items: center;
+        justify-content: center;
+        margin: 0 -2em;
+    }
+
+    #inner_footer_funders > * {
+        padding: 0 2em;
+    }
+
+    #copyright-bar {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: center;
+    }
+
+    #copyright-bar > * {
+        max-height: 40px;
+        margin: 12px 0 0 0;
+        padding: 0 40px !important;
+    }
+
+    #copyright-bar > ul {
+        display: flex;
+        flex-direction: row;
+        align-items: baseline;
         justify-content: center;
     }
 }
@@ -1812,10 +1851,6 @@ a:hover {
         color: #1897d4 !important;
     }
 
-#copyright {
-    height: 150px;
-    }
-
 #top > div > header > div:nth-of-type(2) {
     border-bottom: 1px solid lightgray;
     }
@@ -1847,8 +1882,8 @@ a:hover {
 }
 
 .fab {
-    font-size: 40px;
-    padding: 10px;
+    font-size: 30px;
+    padding: 8px;
 }
 
 .fa, .far, .fas {
