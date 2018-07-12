@@ -9,6 +9,13 @@ This is based in part on euk: https://github.com/uklibraries/euk/ .
 Installation
 ------------
 
+Install Omeka.  Make sure to configure ImageMagick.
+
+Install and activate the following plugins:
+
+* [Admin Images](https://github.com/UCSCLibrary/AdminImages)
+* [Simple Pages](https://github.com/omeka/plugin-SimplePages)
+
 Download and extract the repository in a working directory outside
 your web installation.
 

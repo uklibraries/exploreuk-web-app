@@ -33,11 +33,12 @@ while (count($raw_collections) >= 2) {
 
 global $featured_image;
 
+$image = get_record_by_id("AdminImage", 2);
 $featured_image = array(
-    'id' => 'xt7gqn5z7t3j',
-    'background-image' => '2013av023_008_bg.jpg',
-    'label' => 'From the Jim Curtis photograph collection on Civil Rights in Kentucky',
-    'url' => '/catalog/xt7gqn5z7t3j_8_1',
+    #'id' => 'xt7gqn5z7t3j',
+    'background-image' => $image->getUrl('fullsize'), // '2013av023_008_bg.jpg',
+    'label' => $image->title, // 'From the Jim Curtis photograph collection on Civil Rights in Kentucky',
+    'url' => $image->href, //'/catalog/xt7gqn5z7t3j_8_1',
 
 );
 
