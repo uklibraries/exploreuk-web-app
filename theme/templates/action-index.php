@@ -123,14 +123,6 @@ $p = m('pagination');
 <?php endif; ?>
 <?php endforeach; ?>
 </div>
-<?php else: ?>
-<div class="euk_front_section">
-<?php echo get_theme_option('Front Browse Text'); ?>
-</div>
-
-<div class="euk_front_section">
-<?php echo get_theme_option('Front Page Text'); ?>
-</div>
 <?php endif; ?>
 
 <?php if (!euk_on_front_page()):
