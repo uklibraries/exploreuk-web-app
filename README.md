@@ -51,7 +51,6 @@ programs are required:
 
 * bash
 * cleancss
-* ImageMagick
 * rsync
 * wget
 
