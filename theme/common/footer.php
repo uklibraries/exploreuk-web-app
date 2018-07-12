@@ -16,20 +16,31 @@ require_once("$base_dir/euk/euk.php");
 </div>
 
 <div id="footer">
-<?php
-$footer = get_theme_option('Footer Text');
-if (strpos($footer, '{{LOGO}}') !== false) {
-    $link = link_to_home_page(theme_logo());
-    $footer = str_replace('{{LOGO}}', $link, $footer);
-}
-if (strpos($footer, '{{THEME}}') !== false) {
-    $footer = str_replace('{{THEME}}', $theme_path, $footer);
-}
-if (strpos($footer, '%7B%7BTHEME%7D%7D') !== false) {
-    $footer = str_replace('%7B%7BTHEME%7D%7D', $theme_path, $footer);
-}
-echo $footer;
-?>
+    <div id="outer_footer_funders" class="row bg-uklwhite">
+        <span>Content made available with the support of:</span>
+        <ul id="inner_footer_funders">
+            <li><a href="https://www.imls.gov/"><img id="footer_funder_image" src="<?php echo $theme_path; ?>/images/imls-n.png" alt="Institute of Museum and Library Services" /></a></li>
+            <li><a href="https://www.clir.org/"><img src="<?php echo $theme_path; ?>/images/clir-n.png" alt="Council on Library and Information Resources" /></a></li>
+            <li><a href="https://www.neh.org/"><img src="<?php echo $theme_path; ?>/images/neh-n.jpg" alt="National Endowment for the Humanities" /></a></li>
+            <li><a href="https://www.archives.gov/nhprc"><img src="<?php echo $theme_path; ?>/images/nhprc-n.jpg" alt="National Archives - National Historical Publications and Records Commission" /></a></li>
+            <li><a href="https://libraries.uky.edu/page.php?lweb_id=1114"><img src="<?php echo $theme_path; ?>/images/heyburn-n.png" alt="The John G. Heyburn II Initiative for Excellence in the Federal Judiciary" /></a></li>
+        </ul>
+    </div>
+    <div id="copyright-bar" class="row bg-uklblack">
+        <span id="copyright">Copyright © 2018 UK Libraries. For questions or comments about this website, contact <a href="mailto:sarah.dorpinghaus@uky.edu">Sarah Dorpinghaus</a>.</span>
+        <ul>
+            <li><a aria-label="Special Collections Research Center on Facebook" href="https://www.facebook.com/ukscrc/"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a aria-label="University of Kentucky Libraries on Twitter" href="https://twitter.com/UKLibraries"><i class="fab fa-twitter"></i></a></li>
+            <li><a aria-label="University of Kentucky Libraries on Instagram" href="https://www.instagram.com/uklibraries/"><i class="fab fa-instagram"></i></a></li>
+            <li><a aria-label="University of Kentucky Archives on YouTube" href="https://www.youtube.com/channel/UCxgb2cJ2hpO-0QOTnmxgfKw"><i class="fab fa-youtube"></i></a></li>
+            <li><a aria-label="Curiosities and Wonders" href="https://ukyarchives.blogspot.com/"><i class="fab fa-blogger"></i></a></li>
+        </ul>
+        <ul>
+            <li><a href="https://libraries.uky.edu/SC"><img class="euk-logo-small" src="<?php echo $theme_path; ?>/images/scrc_logo.png" alt="UK Special Collections Research Center" /></a></li>
+            <li><a href="https://www.gpo.gov/"><img class="euk-logo-small" src="<?php echo $theme_path; ?>/images/gpo_fst.jpg" alt="US Government Publishing Office" /></a></li>
+            <li><a href="https://www.fdlp.gov/"><img class="euk-logo-small" src="<?php echo $theme_path; ?>/images/fdlp.png" alt="Federal Depository Library Program" /></a></li>
+        </ul>
+    </div>
 </div>
 
 <!-- CSS -->
