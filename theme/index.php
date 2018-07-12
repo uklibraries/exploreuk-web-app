@@ -8,6 +8,13 @@ global $featured_image;
 
 require_once('euk/euk.php');
 
+if (euk_on_front_page()) {
+    echo head();
+    require_once('templates/front-page.php');
+    echo foot();
+    exit;
+}
+
 if (m('action') === 'paged') {
     euk_paged();
     require_once('templates/action-paged.php');
