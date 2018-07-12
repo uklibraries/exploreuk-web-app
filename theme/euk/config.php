@@ -18,19 +18,6 @@ $euk_solr = get_theme_option('euk_solr');
 global $findaidurl;
 $findaidurl = filter_var(get_theme_option('euk_findingaid_base_url'), FILTER_SANITIZE_URL);
 
-global $featured_collections;
-$featured_collections = array();
-$raw_collections = explode('^', get_theme_option('featured_collections_text'));
-while (count($raw_collections) >= 2) {
-    $us_id = array_shift($raw_collections);
-    $us_label = array_shift($raw_collections);
-
-    $s_id = preg_replace('/[^a-z0-9]/', '', $us_id);
-    $s_label = htmlspecialchars($us_label);
-
-    $featured_collections[$s_id] = $s_label;
-}
-
 global $featured_image;
 
 $image = get_record_by_id("AdminImage", 2);
