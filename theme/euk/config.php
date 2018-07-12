@@ -21,9 +21,10 @@ $findaidurl = filter_var(get_theme_option('euk_findingaid_base_url'), FILTER_SAN
 global $featured_image;
 
 $image = get_record_by_id("AdminImage", 2);
+$image_url = preg_replace('/index.php\//', '', $image->getUrl('fullsize'));
 $featured_image = array(
     #'id' => 'xt7gqn5z7t3j',
-    'background-image' => $image->getUrl('fullsize'), // '2013av023_008_bg.jpg',
+    'background-image' => $image_url, // '2013av023_008_bg.jpg',
     'label' => $image->title, // 'From the Jim Curtis photograph collection on Civil Rights in Kentucky',
     'url' => $image->href, //'/catalog/xt7gqn5z7t3j_8_1',
 

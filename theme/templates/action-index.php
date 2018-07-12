@@ -1,4 +1,4 @@
-<?php if (!euk_on_front_page()):
+<?php
 $p = m('pagination');
 ?>
 <div id="facet_group_mobile">
@@ -90,9 +90,7 @@ $p = m('pagination');
 </p>
         </div>
         </div>
-<?php endif; ?>
 
-<?php if (!euk_on_front_page()): ?>
 <div class="row">
 <?php foreach (m('results') as $r): ?>
 <?php if (isset($r['link'])): ?>
@@ -123,11 +121,7 @@ $p = m('pagination');
 <?php endif; ?>
 <?php endforeach; ?>
 </div>
-<?php endif; ?>
 
-<?php if (!euk_on_front_page()):
-$p = m('pagination');
-?>
         <div class="row">
         <div class="col-md-4">
 <p>
@@ -154,4 +148,3 @@ $p = m('pagination');
         </div>
         </div>
         </div>
-<?php endif; ?>
