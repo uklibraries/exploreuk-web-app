@@ -5,6 +5,8 @@ $theme_name = Theme::getCurrentThemeName('public');
 $theme_path = u("/themes/$theme_name");
 global $findaidurl;
 global $featured_image;
+global $popular_resources;
+global $additional_resources;
 
 require_once('euk/euk.php');
 

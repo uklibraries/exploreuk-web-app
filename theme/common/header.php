@@ -46,5 +46,3 @@ require_once("$base_dir/euk/euk.php");
         </div>
     </section>
     <section>
-        <div>
-            <header>

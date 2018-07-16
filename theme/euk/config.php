@@ -30,6 +30,26 @@ $featured_image = array(
 
 );
 
+global $popular_resources;
+global $additional_resources;
+# demo data
+$popular_resources = array();
+for ($i = 0; $i < 11; $i++) {
+    $popular_resources[] = array(
+        'image' => 'https://loremflickr.com/228/342/cat',
+        'label' => "Popular Resource $i",
+        'url' => "https://example.com/popular/$i",
+    );
+}
+$additional_resources = array();
+for ($i = 0; $i < 6; $i++) {
+    $additional_resources[] = array(
+        'image' => 'https://loremflickr.com/420/120/cat',
+        'label' => "Additional Resource $i",
+        'url' => "https://example.com/additional/$i",
+    );
+}
+
 global $facets;
 $facets = array(
     'format',
