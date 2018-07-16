@@ -7,11 +7,6 @@ $theme_name = Theme::getCurrentThemeName('public');
 $theme_path = u("/themes/$theme_name");
 require_once("$base_dir/euk/euk.php");
 ?>
-            </header>
-
-            <footer>
-            </footer>
-        </div>
     </section>
 </div>
 
