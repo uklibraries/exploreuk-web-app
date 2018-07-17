@@ -1,6 +1,30 @@
 <?php 
 # Move as much of this as possible into user-accessible config.
 
+# Reminder: Omeka does not have "advanced" search for collections.
+# https://forum.omeka.org/t/find-collections-by-metadata-exact-match/3051/2
+function euk_get_collection_by_title($title)
+{
+    # XXX: Calling this function assumes that Omeka has been loaded.
+    $db = get_db();
+    $table = $db->getTable('Collection');
+
+    $sql = <<<SQL
+SELECT collections.* FROM `{$db->Collection}` AS collections
+INNER JOIN `{$db->ElementText}` AS element_texts ON element_texts.record_id = collections.id
+WHERE element_texts.element_id = ? AND element_texts.record_type = 'Collection' AND element_texts.text = ?
+GROUP BY collections.id
+SQL;
+    # XXX: In a standard Omeka setup, Title is element 50.
+    $collections = $table->fetchObjects($sql, array(50, $title));
+    if (count($collections) > 0) {
+        return $collections[0];
+    }
+    else {
+        return null;
+    }
+}
+
 global $euk_data;
 $euk_data = array();
 
@@ -20,34 +44,101 @@ $findaidurl = filter_var(get_theme_option('euk_findingaid_base_url'), FILTER_SAN
 
 global $featured_image;
 
-$image = get_record_by_id("AdminImage", 2);
-$image_url = preg_replace('/index.php\//', '', $image->getUrl('fullsize'));
-$featured_image = array(
-    #'id' => 'xt7gqn5z7t3j',
-    'background-image' => $image_url, // '2013av023_008_bg.jpg',
-    'label' => $image->title, // 'From the Jim Curtis photograph collection on Civil Rights in Kentucky',
-    'url' => $image->href, //'/catalog/xt7gqn5z7t3j_8_1',
-
+# Reminder: Omeka does not have "advanced" search for collections.
+# https://forum.omeka.org/t/find-collections-by-metadata-exact-match/3051/2
+$colln = euk_get_collection_by_title('Background image rotation');
+$items = get_records(
+    'Item',
+    array(
+        'collection' => $colln->id,
+        'featured' => 1,
+    )
 );
-
-global $popular_resources;
-global $additional_resources;
-# demo data
-$popular_resources = array();
-for ($i = 0; $i < 11; $i++) {
-    $popular_resources[] = array(
-        'image' => 'https://loremflickr.com/228/342/cat',
-        'label' => "Popular Resource $i",
-        'url' => "https://example.com/popular/$i",
+if (count($items) > 0) {
+    $index = array_rand($items);
+    $item = $items[$index];
+    set_loop_records('files', $item->Files);
+    foreach (loop('files') as $file) {
+        break;
+    }
+    $featured_image = array(
+        'background-image' => file_display_url($file, 'fullsize'),
+        'label' => metadata($item, array('Dublin Core', 'Title')),
+        'url' => metadata($item, array('Dublin Core', 'Relation')),
     );
 }
-$additional_resources = array();
-for ($i = 0; $i < 6; $i++) {
-    $additional_resources[] = array(
-        'image' => 'https://loremflickr.com/420/120/cat',
-        'label' => "Additional Resource $i",
-        'url' => "https://example.com/additional/$i",
+else {
+    $featured_image = array(
+        'background-image' => '',
+        'label' => '',
+        'url' => '',
     );
+}
+
+global $popular_resources;
+$popular_resources = array();
+# XXX: Ultimately we will allow users to order these.
+$colln = euk_get_collection_by_title('Popular Resources');
+$items = get_records(
+    'Item',
+    array(
+        'collection' => $colln->id,
+    ),
+    11
+);
+foreach ($items as $item) {
+    set_loop_records('files', $item->Files);
+    unset($file);
+    foreach (loop('files') as $file) {
+        break;
+    }
+    if (isset($file)) {
+        $popular_resources[] = array(
+            'image' => file_display_url($file, 'fullsize'),
+            'label' => metadata($item, array('Dublin Core', 'Title')),
+            'url' => metadata($item, array('Dublin Core', 'Relation')),
+        );
+    }
+    else {
+        $popular_resources[] = array(
+            'image' => '',
+            'label' => '',
+            'url' => '',
+        );
+    }
+}
+
+global $additional_resources;
+$additional_resources = array();
+# XXX: Ultimately we will allow users to order these.
+$colln = euk_get_collection_by_title('Additional Resources');
+$items = get_records(
+    'Item',
+    array(
+        'collection' => $colln->id,
+    ),
+    6
+);
+foreach ($items as $item) {
+    set_loop_records('files', $item->Files);
+    unset($file);
+    foreach (loop('files') as $file) {
+        break;
+    }
+    if (isset($file)) {
+        $additional_resources[] = array(
+            'image' => file_display_url($file, 'fullsize'),
+            'label' => metadata($item, array('Dublin Core', 'Title')),
+            'url' => metadata($item, array('Dublin Core', 'Relation')),
+        );
+    }
+    else {
+        $additional_resources[] = array(
+            'image' => '',
+            'label' => '',
+            'url' => '',
+        );
+    }
 }
 
 global $facets;

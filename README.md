@@ -13,7 +13,7 @@ Install Omeka.  Make sure to configure ImageMagick.
 
 Install and activate the following plugins:
 
-* [Admin Images](https://github.com/UCSCLibrary/AdminImages)
+* [Hide Elements](https://github.com/zerocrates/HideElements)
 * [Simple Pages](https://github.com/omeka/plugin-SimplePages)
 
 Download and extract the repository in a working directory outside
