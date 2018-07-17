@@ -50,20 +50,10 @@
 }
 <?php endforeach; ?>
 
-.popular-resources-title {
-    position: absolute;
-    top: -2em;
-    padding-top: 0.5em;
-    padding-bottom: 0em;
-}
-
-.resources-section {
-    position: relative;
-}
-
 .popular-resources-title,
 .additional-resources-title {
-    font-size: 1.5em;
+    font-size: 1.3em;
+    padding: 0.5em;
 }
 
 .popular-resources {
