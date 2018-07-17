@@ -5,7 +5,7 @@
 <?php foreach ($popular_resources as $index => $resource): ?>
 
 <li><a id="popular-resource-<?php echo $index; ?>" href="<?php echo $resource['url']; ?>">
-    <h3><?php echo $resource['label']; ?></h3>
+    <h3><span><?php echo $resource['label']; ?></span></h3>
 </a></li>
 
 <?php endforeach; ?>
@@ -15,7 +15,7 @@
 <ul class="additional-resources">
 <?php foreach ($additional_resources as $index => $resource): ?>
 
-<li><a id="additional-resource-<?php echo $index; ?>" href="<?php echo $resource['url']; ?>">
+<li><a id="additional-resource-<?php echo $index; ?>" href="<?php echo $resource['url']; ?>" target="_blank">
     <h3 class="bg-uklblue"><?php echo $resource['label']; ?></h3>
     </a></li>
 
@@ -83,12 +83,10 @@
     height: 342px;
     margin: 1rem;
     background: #ffffff;
-    //border: 1px dotted #ffff00;
 }
 .popular-resources > li > a {
     width: 100%;
     height: 100%;
-    //border: 1px solid red;
     position: relative;
 }
 
@@ -99,6 +97,19 @@
     width: 100%;
     height: 33%;
     bottom: 0;
+    font-size: 100%;
+}
+
+.popular-resources > li > a > h3 > span {
+    text-align: center;
+}
+
+@supports (display: grid) {
+    .popular-resources > li > a > h3 {
+        display: grid;
+        justify-items: center;
+        align-items: center;
+    }
 }
 
 .additional-resources > li {
@@ -106,12 +117,10 @@
     height: 120px;
     margin: 1rem;
     background: #ffffff;
-    //border: 1px dotted #ffff00;
 }
 .additional-resources > li > a {
     width: 100%;
     height: 100%;
-    //border: 1px solid red;
 }
 .additional-resources > li > a > h3 {
     display: none;
