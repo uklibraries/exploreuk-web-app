@@ -15,7 +15,7 @@
 <ul class="additional-resources">
 <?php foreach ($additional_resources as $index => $resource): ?>
 
-<li><a id="additional-resource-<?php echo $index; ?>" href="<?php echo $resource['url']; ?>" target="_blank">
+<li><a aria-label="<?php echo $resource['label']; ?>" id="additional-resource-<?php echo $index; ?>" href="<?php echo $resource['url']; ?>" target="_blank">
     <h3 class="bg-uklblue"><?php echo $resource['label']; ?></h3>
     </a></li>
 
