@@ -46,13 +46,9 @@ require_once("$base_dir/euk/euk.php");
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-<script src="<?php echo $theme_path; ?>/assets/js/jquery.scrolly.min.js"></script>
-<script src="<?php echo $theme_path; ?>/assets/js/jquery.scrollzer.min.js"></script>
-<script src="<?php echo $theme_path; ?>/assets/js/skel.min.js"></script>
-<script src="<?php echo $theme_path; ?>/assets/js/util.js"></script>
 <!--[if lte IE 8]><script src="<?php echo $theme_path; ?>/assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.1/lity.min.js" integrity="sha256-3VzI8FuSG20IfvIDKRptBR+1d4T6G57eDIf6ZEO13iY=" crossorigin="anonymous"></script>
-<script src="<?php echo $theme_path; ?>/assets/js/main.js"></script>
+<script src="<?php echo $theme_path; ?>/assets/js/resize.js"></script>
 <?php if (m('script_media')): ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/2.15.1/mediaelementplayer.min.css" integrity="sha256-6DWOIEAEFJqhgMTt7B/BzbsUfdGFD9DUdubbfI2t/eo=" crossorigin="anonymous" />
 <script type="text/javascript" src="<?php echo "$theme_path/javascripts/mediaelementplayer.min.js"; ?>"></script>

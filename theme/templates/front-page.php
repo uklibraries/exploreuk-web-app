@@ -69,8 +69,8 @@
 }
 
 .popular-resources > li {
-    width: 228px;
-    height: 342px;
+    width: 160px;
+    height: 240px;
     margin: 1rem;
     background: #ffffff;
 }
@@ -119,8 +119,9 @@
 @supports (display: grid) {
     .popular-resources {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         grid-gap: 1rem;
+        max-width: 700px;
     }
 
     .additional-resources {
