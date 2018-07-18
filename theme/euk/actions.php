@@ -217,7 +217,7 @@ function euk_index() {
                 $results_data['link'] = u('/catalog/' . $docs[$i]['id'] . euk_link_to_query($euk_query));
                 $results_data['number'] = $euk_query['offset'] + $i + 1;
                 if ($results_data['format'] === 'collections') {
-                    $results_data['target'] = ' target="_blank"';
+                    $results_data['target'] = ' target="_blank" rel="noopener"';
                 }
                 $results[] = $results_data;
             }

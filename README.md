@@ -72,17 +72,21 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-The following directories are derived from the [HTML5 Up Prologue](https://html5up.net/prologue)
+The following directories are derived in part from the [HTML5 Up Prologue](https://html5up.net/prologue)
 theme, which is licensed under the
 [Creative Commons Attribution 3.0 License](https://creativecommons.org/licenses/by/3.0/):
 
-* omeuka/assets
-* omeuka/images
+* theme/assets/css
+* theme/assets/js/ie
 
-Additionally, the HTML in the following directory is derived from the
+Additionally, the HTML in the following directory is derived in part from the
 HTML5 Up Prologue theme:
 
-* omeuka/templates
+* theme/templates
+
+The following file is derived from [Google's documentation of lazy loading images](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/), which is licensed under the [Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0):
+
+* theme/assets/js/lazy-loading.js
 
 This package includes some packages with other licenses:
 

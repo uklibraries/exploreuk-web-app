@@ -15,9 +15,7 @@
 <ul class="additional-resources">
 <?php foreach ($additional_resources as $index => $resource): ?>
 
-<li><a aria-label="<?php echo $resource['label']; ?>" id="additional-resource-<?php echo $index; ?>" href="<?php echo $resource['url']; ?>" target="_blank">
-    <h3 class="bg-uklblue"><?php echo $resource['label']; ?></h3>
-    </a></li>
+<li><a aria-label="<?php echo $resource['label']; ?>" id="additional-resource-<?php echo $index; ?>" href="<?php echo $resource['url']; ?>" target="_blank" rel="noopener"><img class="lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $resource['image']; ?>" title="<?php echo $resource['label']; ?>"></a></li>
 
 <?php endforeach; ?>
 </ul>
@@ -34,15 +32,6 @@
 
 <?php foreach ($popular_resources as $index => $resource): ?>
 #popular-resource-<?php echo $index; ?> {
-    background-image:url(<?php echo $resource['image']; ?>);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}
-<?php endforeach; ?>
-
-<?php foreach ($additional_resources as $index => $resource): ?>
-#additional-resource-<?php echo $index; ?> {
     background-image:url(<?php echo $resource['image']; ?>);
     background-repeat: no-repeat;
     background-position: center;
