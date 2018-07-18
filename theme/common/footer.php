@@ -14,11 +14,11 @@ require_once("$base_dir/euk/euk.php");
     <div id="outer_footer_funders" class="row bg-uklwhite">
         <span>Content made available with the support of:</span>
         <ul id="inner_footer_funders">
-            <li><a href="https://www.imls.gov/"><img id="footer_funder_image" src="<?php echo $theme_path; ?>/images/imls-n.png" alt="Institute of Museum and Library Services" /></a></li>
-            <li><a href="https://www.clir.org/"><img src="<?php echo $theme_path; ?>/images/clir-n.png" alt="Council on Library and Information Resources" /></a></li>
-            <li><a href="https://www.neh.org/"><img src="<?php echo $theme_path; ?>/images/neh-n.jpg" alt="National Endowment for the Humanities" /></a></li>
-            <li><a href="https://www.archives.gov/nhprc"><img src="<?php echo $theme_path; ?>/images/nhprc-n.jpg" alt="National Archives - National Historical Publications and Records Commission" /></a></li>
-            <li><a href="https://libraries.uky.edu/page.php?lweb_id=1114"><img src="<?php echo $theme_path; ?>/images/heyburn-n.png" alt="The John G. Heyburn II Initiative for Excellence in the Federal Judiciary" /></a></li>
+            <li><a href="https://www.imls.gov/"><img id="footer_funder_image" class="lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/imls-n.png" alt="Institute of Museum and Library Services" width="231" height="83"/></a></li>
+            <li><a href="https://www.clir.org/"><img class="lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/clir-n.png" alt="Council on Library and Information Resources" width="167" height="76"/></a></li>
+            <li><a href="https://www.neh.org/"><img class="lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/neh-n.jpg" alt="National Endowment for the Humanities" width="214" height="99"/></a></li>
+            <li><a href="https://www.archives.gov/nhprc"><img class="lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/nhprc-n.jpg" alt="National Archives - National Historical Publications and Records Commission" width="117" height="147"/></a></li>
+            <li><a href="https://libraries.uky.edu/page.php?lweb_id=1114"><img class="lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/heyburn-n.png" alt="The John G. Heyburn II Initiative for Excellence in the Federal Judiciary" width="118" height="89"/></a></li>
         </ul>
     </div>
     <div id="copyright-bar" class="row bg-uklblack">
@@ -31,9 +31,9 @@ require_once("$base_dir/euk/euk.php");
             <li><a aria-label="Curiosities and Wonders" href="https://ukyarchives.blogspot.com/"><i class="fab fa-blogger"></i></a></li>
         </ul>
         <ul>
-            <li><a href="https://libraries.uky.edu/SC"><img class="euk-logo-small" src="<?php echo $theme_path; ?>/images/scrc_logo.png" alt="UK Special Collections Research Center" /></a></li>
-            <li><a href="https://www.gpo.gov/"><img class="euk-logo-small" src="<?php echo $theme_path; ?>/images/gpo_fst.jpg" alt="US Government Publishing Office" /></a></li>
-            <li><a href="https://www.fdlp.gov/"><img class="euk-logo-small" src="<?php echo $theme_path; ?>/images/fdlp.png" alt="Federal Depository Library Program" /></a></li>
+            <li><a href="https://libraries.uky.edu/SC"><img class="euk-logo-small lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/scrc_logo.png" alt="UK Special Collections Research Center" width="134" height="34"/></a></li>
+            <li><a href="https://www.gpo.gov/"><img class="euk-logo-small lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/gpo_fst.jpg" alt="US Government Publishing Office" width="74" height="34"/></a></li>
+            <li><a href="https://www.fdlp.gov/"><img class="euk-logo-small lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/fdlp.png" alt="Federal Depository Library Program" width="46" height="34"/></a></li>
         </ul>
     </div>
 </div>
@@ -96,5 +96,6 @@ $('#<?php echo $s['ref_id']; ?>').hide();
 <?php endif; ?>
 <script src="<?php echo $theme_path; ?>/javascripts/back_to_top.js"></script>
 <script src="<?php echo $theme_path; ?>/javascripts/main.js"></script>
+<script src="<?php echo $theme_path; ?>/assets/js/lazyload.js"></script>
 	</body>
 </html>
