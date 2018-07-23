@@ -251,7 +251,7 @@ function euk_page() {
     # Search
     $data['q'] = q('q');
     $data['search_link'] = "$euk_solr?" . euk_build_search_params();
-    $data['back_to_search'] = euk_link_to_query($euk_query);
+    $data['back_to_search'] = u('/catalog/' . euk_link_to_query($euk_query));
 
     # Title
     if (strlen($data['q']) > 0) {
@@ -491,7 +491,7 @@ function euk_paged() {
         'search_placeholder' => $search_placeholder,
     );
     $data['action'] = 'paged';
-    $data['back_to_search'] = euk_link_to_query($euk_query);
+    $data['back_to_search'] = u('/catalog/' . euk_link_to_query($euk_query));
 
     $doc = euk_get_document($euk_id);
     $format = $doc['format'];

@@ -67,6 +67,9 @@ function euk_link_to_query($query) {
     if ($query['offset'] > 0) {
         $pieces[] = 'offset=' . urlencode($query['offset']);
     }
+    if ($query['rows'] > 0) {
+        $pieces[] = 'per_page=' . urlencode($query['rows']);
+    }
     return '?' . implode('&', $pieces);
 }
 
@@ -84,6 +87,7 @@ function euk_previous_link() {
         'fq' => $euk_query['fq'],
         'f' => $euk_query['f'],
         'offset' => $offset,
+        'rows' => $euk_query['rows'],
     ));
 }
 
@@ -101,6 +105,7 @@ function euk_next_link() {
         'fq' => $euk_query['fq'],
         'f' => $euk_query['f'],
         'offset' => $offset,
+        'rows' => $euk_query['rows'],
     ));
 }
 
@@ -112,7 +117,7 @@ function euk_add_filter($facet, $label) {
         'q' => $euk_query['q'],
         'fq' => $euk_query['fq'],
         'f' => $f,
-        'offset' => $euk_query['offset'],
+        'rows' => $euk_query['rows'],
     ));
 }
 
@@ -122,7 +127,7 @@ function euk_remove_search_term($label) {
         'q' => '',
         'fq' => $euk_query['fq'],
         'f' => $euk_query['f'],
-        'offset' => $euk_query['offset'],
+        'rows' => $euk_query['rows'],
     ));
 }
 
@@ -138,7 +143,7 @@ function euk_remove_filter($facet, $label) {
         'q' => $euk_query['q'],
         'fq' => $euk_query['fq'],
         'f' => $f,
-        'offset' => $euk_query['offset'],
+        'rows' => $euk_query['rows'],
     ));
 }
 

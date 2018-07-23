@@ -1,4 +1,5 @@
                    <div id="result_controls">
+                           <a href="<?php echo m('back_to_search'); ?>">back to search</a>
 
                        <span id="result_controls_text">
 
