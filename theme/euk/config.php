@@ -25,6 +25,9 @@ SQL;
     }
 }
 
+global $euk_per_page_opts;
+$euk_per_page_opts = array(20, 50, 100);
+
 global $euk_data;
 $euk_data = array();
 

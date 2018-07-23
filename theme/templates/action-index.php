@@ -67,6 +67,25 @@ $p = m('pagination');
                    <div id="result_controls"><span id="result_controls_text"><span id="checkerbox"><span id="checker"><i class="fas fa-th"></i>&nbsp;&nbsp;&nbsp;<i class="fas fa-list"></i></span><span id="breadcrumb">&nbsp;you are here: <a href="https://exploreuk.org/omeuk/">home</a> / search results</span></span></span> </div>
         <div class="row">
         <div class="col-md-4">
+<form action="/catalog" class="per_page" method="get">
+<label for="per_page">Show <select id="per_page" name="per_page" onchange="this.form.submit()" title="Number of results to display per page">
+<?php
+$opts = $euk_per_page_opts;
+foreach ($opts as $opt) {
+    if (q('rows') == $opt) {
+        print "<option value=\"$opt\" selected=\"selected\">$opt</option>\n";
+    }
+    else {
+        print "<option value=\"$opt\">$opt</option>\n";
+    }
+}
+?>
+</select> per page</label>
+<input name="commit" type="hidden" value="search" />
+<input name="search_field" type="hidden" value="all_fields" />
+<input name="q" type="hidden" value="<?php echo q('q'); ?>" />
+    <noscript><input name="commit" type="submit" value="update" /></noscript>
+</form>
 <p>
 <?php if (isset($p['previous'])): ?>
 <a href="<?php echo $p['previous']; ?>" class="prev_page">&laquo; Previous</a>
