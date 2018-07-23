@@ -45,6 +45,9 @@ function euk_initialize_query() {
             elseif ($key == 'offset') {
                 $euk_query['offset'] = intval($value);
             }
+            elseif ($key == 'per_page') {
+                $euk_query['rows'] = intval($value);
+            }
         }
     }
     return $euk_query;
