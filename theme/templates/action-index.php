@@ -31,7 +31,7 @@ $p = m('pagination');
 </div>
 </div>
     </div>
-<div style="width:100%;">
+<div class="results">
     <div id="resultsfacets">
 <div id="facet_group">
 <div id="facet_group_left">
