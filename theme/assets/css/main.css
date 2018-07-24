@@ -1485,6 +1485,26 @@ Main components
     width: 80%;
 }
 
+.results {
+    width: 100%;
+}
+
+@supports (display: flex) {
+    .results {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+
+    .results > * {
+        flex-shrink: 0;
+    }
+
+    #resultsfacets {
+        flex-grow: 1;
+    }
+}
+
 #resultsfacets {
     width: 20%;
     float: left;
@@ -1611,7 +1631,6 @@ summary {
 
 #active_facets, #facets {
     text-align: left;
-    border-bottom: 1px solid lightgray;
     padding-bottom: 40px;
     padding-top: 20px;
 }
