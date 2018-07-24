@@ -48,7 +48,7 @@
 <ul>
 <?php foreach ($r['metadata'] as $e): ?>
 <?php if (isset($e['anchor'])): ?>
-<li><a href="<?php echo $e['value']; ?>"><?php echo $e['label']; ?></a></li>
+<li><a href="<?php echo $e['value']; ?>" target="_blank" rel="noopener"><?php echo $e['label']; ?></a></li>
 <?php else: ?>
 <li><?php echo $e['label']; ?>:
     <?php if ($e['link']): ?>
@@ -118,7 +118,7 @@ window.addEventListener('message', function (e) {
 <?php if (m('metadata')): ?>
 <?php foreach (m('metadata') as $m): ?>
 <?php if ($m['anchor']): ?>
-<li><a href="<?php echo $m['value']; ?>"><?php echo $m['label']; ?></a></li>
+<li><a href="<?php echo $m['value']; ?>" target="_blank" rel="noopener"><?php echo $m['label']; ?></a></li>
 <?php else: ?>
 <li><?php echo $m['label']; ?>:
     <?php if ($m['link']): ?>
