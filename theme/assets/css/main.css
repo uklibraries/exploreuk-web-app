@@ -1876,3 +1876,33 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     }
 
 }
+
+/* Pagination */
+.pagination {
+    font-size: 16px;
+    margin-bottom: 10px !important;
+}
+
+.pagination label {
+    display: inline;
+}
+
+.pagination input[type="submit"] {
+    font-size: 16px;
+    padding: 0 8px;
+}
+
+.rows-select {
+    float: left;
+}
+
+.page-navigation {
+    float: right;
+    margin-right: 4%;
+}
+
+#per_page {
+    width: 4em !important;
+    height: 25px;
+    font-size: 16px;
+}
