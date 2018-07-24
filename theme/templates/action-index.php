@@ -54,7 +54,7 @@ $p = m('pagination');
 <?php echo $facet['field_label']; ?></summary><br/>
 <ul>
 <?php foreach ($facet['values'] as $value): ?>
-<li><a href="<?php echo $value['add_link']; ?>"><?php echo $value['value_label']; ?> (<?php echo $value['count']; ?>)</a></li>
+<li><a href="<?php echo $value['add_link']; ?>"><?php echo $value['value_label']; ?> <span class="facet-count">(<?php echo $value['count']; ?>)</span></a></li>
 <?php endforeach; ?>
 </ul></details>
 </article>
