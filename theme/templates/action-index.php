@@ -64,7 +64,6 @@ $p = m('pagination');
 </div>
     </div>
 <div id="resultsmain">
-                   <div id="result_controls"><span id="result_controls_text"><span id="checkerbox"><span id="checker"><i class="fas fa-th"></i>&nbsp;&nbsp;&nbsp;<i class="fas fa-list"></i></span><span id="breadcrumb">&nbsp;you are here: <a href="https://exploreuk.org/omeuk/">home</a> / search results</span></span></span> </div>
 <?php require("pagination.php"); ?>
 
 <div class="row">

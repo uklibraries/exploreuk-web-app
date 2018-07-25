@@ -1,12 +1,6 @@
-                   <div id="result_controls">
-                           <a href="<?php echo m('back_to_search'); ?>">back to search</a>
-
-                       <span id="result_controls_text">
-
-                           <span id="checkerbox"><span id="checker"></span><span id="breadcrumb">&nbsp;you are here: <a href="https://exploreuk.org/omeuk/">home</a> / search results / this [collection] / this [format]</span>
-                           </span>
-                           </span>
-                           </div>
+<div id="result_controls">
+    <a href="<?php echo m('back_to_search'); ?>">back to search</a>
+</div>
 
 <!-- rewrite this! -->
 <div class="col-md-8">
