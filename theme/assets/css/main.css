@@ -1027,7 +1027,7 @@ Main components
         width: auto;
         max-width: none;
         bottom: auto;
-        top: 36px;
+        top: 32px;
         background: transparent;
         visibility: visible;
         box-shadow: none;
@@ -1935,7 +1935,6 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
         width: 100%;
         float: right;
     }
-
 }
 
 /* Pagination */
@@ -1971,3 +1970,78 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 #books_viewer {
     margin: 0 10em;
 }
+
+/* Begin submenu */
+#cd-main-nav ul {
+    background: #005dab;
+    font-size: 0;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#cd-main-nav ul li {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+#cd-main-nav ul li a {
+    background: #005dab;
+    color: #fff;
+    display: block;
+    font: 16px/50px sans-serif; /* TODO: fix this. */
+    padding: 0 25px;
+    text-decoration: none;
+    -webkit-transition: all .25s ease;
+       -moz-transition: all .25s ease;
+        -ms-transition: all .25s ease;
+         -o-transition: all .25s ease;
+            transition: all .25s ease;
+    text-align:left;
+    margin-left: 0;
+}
+
+#cd-main-nav ul li:hover a {
+    background: #282828;
+    color: #0087f8;
+}
+
+#cd-main-nav ul li ul {
+    opacity: 1;
+    position: fixed;
+    top: 35px;
+    -webkit-transition: all .25s ease;
+       -moz-transition: all .25s ease;
+        -ms-transition: all .25s ease;
+         -o-transition: all .25s ease;
+            transition: all .25s ease;
+    min-width: 300px;
+    height:auto;
+    text-align:left;
+}
+
+#cd-main-nav ul li ul li {
+    display:block;
+}
+
+#cd-main-nav ul li:hover ul {
+    opacity: 1;
+    visibility: visible;
+}
+
+#cd-main-nav ul li ul a:hover {
+    background: #dedede;
+    color: #0087f8;
+}
+
+#cd-main-nav ul li ul {
+    visibility:hidden;
+}
+
+#cd-nav ul {
+    overflow:visible !important;
+}
+/* End submenu */
