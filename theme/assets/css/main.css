@@ -1802,6 +1802,35 @@ a:hover {
     margin-bottom: 0em;
 }
 
+@supports (display: flex) {
+    .result-item > a {
+        height: 100%;
+        display: flex;
+        flex-wrap: 1;
+        flex-direction: row;
+    }
+
+    .result-item  > a > * {
+        flex-shrink: 0;
+    }
+
+    .result-item > a > header {
+        flex-grow: 1;
+    }
+}
+
+.result-item > a:hover {
+    background: #d3d3d3;
+}
+
+@supports (display: grid) {
+    .result-metadata {
+        display: grid;
+        grid-direction: row;
+        grid-template-columns: 20em 1fr;
+    }
+}
+
 .item > a > header {
     display: none;
 }

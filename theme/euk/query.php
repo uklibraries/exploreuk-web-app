@@ -64,6 +64,9 @@ function euk_link_to_query($query) {
     foreach ($query['f'] as $f_term => $value) {
         $pieces[] = urlencode("f[$f_term][]") . '=' . urlencode($value);
     }
+    if (!isset($query['offset'])) {
+        $query['offset'] = 0;
+    }
     if ($query['offset'] > 0) {
         $pieces[] = 'offset=' . urlencode($query['offset']);
     }
