@@ -1,9 +1,66 @@
 <?php
 
+define('EUK_MAX_LABEL', 80);
+
+function euk_brevity($message, $length = 0) {
+    if ($length == 0) {
+        $length = EUK_MAX_LABEL;
+    }
+    if (strlen($message) <= $length) {
+        return $message;
+    }
+    $source_words = preg_split('/\b/', $message);
+    $target_words = array();
+    $current_length = 0;
+    foreach ($source_words as $word) {
+        if (($current_length == 0) || $current_length + strlen($word) <= $length) {
+            $target_words[] = $word;
+            $current_length += strlen($word);
+        }
+        else {
+            break;
+        }
+    }
+    $count = count($target_words);
+    if ($count == 0) {
+        $message = '…';
+    }
+    else {
+        $terminal = $target_words[$count - 1];
+        if (preg_match('/^\W+$/', $terminal)) {
+            array_pop($target_words);
+            $message = implode('', $target_words) . '…';
+        }
+    }
+    return $message;
+}
+
 function m($arg) {
     global $euk_data;
     if (isset($euk_data[$arg])) {
         return $euk_data[$arg];
+    }
+    else {
+        return false;
+    }
+}
+
+function meta($arg) {
+    global $euk_data;
+    $r = null;
+    $sources = array(
+        'item_audio',
+        'item_image',
+        'item_book',
+    );
+    foreach ($sources as $source) {
+        if (m($source)) {
+            $r = m($source);
+            break;
+        }
+    }
+    if ($r && isset($r[$arg])) {
+        return $r[$arg];
     }
     else {
         return false;
@@ -389,6 +446,7 @@ function euk_page() {
             )
         );
         $data['script_media'] = true;
+        $data['downloadable'] = false;
         break;
     case 'audiovisual':
         $data['item_audio'] = array_merge(
@@ -401,6 +459,7 @@ function euk_page() {
             )
         );
         $data['script_media'] = true;
+        $data['downloadable'] = false;
         break;
     case 'drawings (visual works)':
         /* fall through */
@@ -414,6 +473,7 @@ function euk_page() {
                 'ref_id' => 'reference_image',
             )
         );
+        $data['downloadable'] = true;
         break;
     case 'annual reports':
         /* fall through */
@@ -453,6 +513,7 @@ function euk_page() {
             );
         }
         $data['item_book'] = $flat;
+        $data['downloadable'] = true;
         break;
     case 'collections':
         /* We'll want to embed this eventually */

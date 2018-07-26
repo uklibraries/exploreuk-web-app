@@ -144,6 +144,9 @@ foreach ($items as $item) {
     }
 }
 
+global $euk_back_to_search_text;
+$euk_back_to_search_text = 'Back to Search Results';
+
 global $facets;
 $facets = array(
     'format',
@@ -156,6 +159,35 @@ $facets_titles = array(
     'format' => 'format',
     'source_s' => 'collection',
     'pub_date' => 'publication year',
+);
+
+global $euk_title_fields;
+$euk_title_fields = array(
+    'author_display' => 'Creator',
+    'pub_date' => 'Date Created',
+    'description_display' => 'Description',
+    'language_display' => 'Language',
+);
+
+global $euk_detail_fields;
+$euk_detail_fields = array(
+    'usage_display' => 'Rights',
+    'accession_number_s' => 'Accession Number',
+    'contributor_s' => 'Contributor',
+    'coverage_display' => 'Location',
+    'subject_topic_facet' => 'Subjects',
+    'relation_display' => 'Relation',
+    'publisher_display' => 'Publisher',
+    'source_s' => 'Source',
+    'format' => 'Format',
+    'finding_aid_url_s' => 'XML Collection Guide',
+    'mets_url_display' => 'XML Metadata',
+);
+
+global $euk_detail_search;
+$euk_detail_search = array(
+    'source_s' => '/?f%5Bsource_s%5D%5B%5D=',
+    'format' => '/?f%5Bformat%5D%5B%5D=',
 );
 
 global $hit_fields;
