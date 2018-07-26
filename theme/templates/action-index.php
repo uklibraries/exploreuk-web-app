@@ -73,7 +73,7 @@ $p = m('pagination');
 <article class="result-item">
     <a href="<?php echo $r['link']; ?>">
         <header>
-            <h3><?php echo $r['number']; ?>. <?php echo $r['title']; ?></h3>
+            <h3><?php echo $r['number']; ?>. <?php echo euk_brevity($r['title']); ?></h3>
             <dl class="result-metadata">
                 <?php if (isset($r['source'])): ?>
                     <dt>Collection:</dt>
