@@ -69,33 +69,33 @@ $p = m('pagination');
 <div class="row">
 <ul>
 <?php foreach (m('results') as $r): ?>
-<li>
-<article class="result-item">
-    <a href="<?php echo $r['link']; ?>">
-        <header>
-            <h3><?php echo $r['number']; ?>. <?php echo euk_brevity($r['title']); ?></h3>
-            <dl class="result-metadata">
-                <?php if (isset($r['source'])): ?>
-                    <dt>Collection:</dt>
-                    <dd><?php echo $r['source']; ?></dd>
-                <?php endif; ?>
-
-                <?php if (isset($r['pubdate'])): ?>
-                    <dt>Publication date:</dt>
-                    <dd><?php echo $r['pubdate']; ?></dd>
-                <?php endif; ?>
-
-                <?php if (isset($r['format'])): ?>
-                    <dt>Format:</dt>
-                    <dd><?php echo $r['format']; ?></dd>
-                <?php endif; ?>
-            </dl>
-        </header>
-        <?php if (isset($r['thumb'])): ?>
-        <img class="image" src="<?php echo $r['thumb']; ?>" title="<?php echo $r['title']; ?>">
-        <?php endif; ?>
+<li class="result-item">
+    <?php if (isset($r['thumb'])): ?>
+    <a class="image-placeholder" href="<?php echo $r['link']; ?>">
+        <img src="<?php echo $r['thumb']; ?>" title="<?php echo $r['title']; ?>">
     </a>
-</article>
+    <?php else: ?>
+    <div class="image-placeholder"></div>
+    <?php endif; ?>
+    <div class="result-summary">
+        <h3><?php echo $r['number']; ?>. <a href="<?php echo $r['link']; ?>"><?php echo euk_brevity($r['title']); ?></a></h3>
+        <ul class="result-metadata">
+            <?php if (isset($r['source'])): ?>
+                <li><span class="result-metadata-label">Collection:</span>
+                <?php echo $r['source']; ?></li>
+            <?php endif; ?>
+
+            <?php if (isset($r['pubdate'])): ?>
+                <li><span class="result-metadata-label">Publication date:</span>
+                <?php echo $r['pubdate']; ?></li>
+            <?php endif; ?>
+
+            <?php if (isset($r['format'])): ?>
+                <li><span class="result-metadata-label">Format:</span>
+                <?php echo $r['format']; ?></li>
+            <?php endif; ?>
+        </ul>
+    </div>
 </li>
 <?php endforeach; ?>
 </ul>

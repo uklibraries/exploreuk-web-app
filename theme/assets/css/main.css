@@ -105,7 +105,7 @@
     }
 
     h3 {
-        font-size: 1.5em;
+        font-size: 1.25em;
     }
 
     header {
@@ -1807,32 +1807,38 @@ a:hover {
     margin-bottom: 0em;
 }
 
-@supports (display: flex) {
-    .result-item > a {
-        height: 100%;
-        display: flex;
-        flex-wrap: 1;
-        flex-direction: row;
-    }
-
-    .result-item  > a > * {
-        flex-shrink: 0;
-    }
-
-    .result-item > a > header {
-        flex-grow: 1;
-    }
+.result-item {
+    width: 100%;
 }
 
-.result-item > a:hover {
-    background: #d3d3d3;
+.result-item a {
+    color: #005dab;
+}
+
+.result-item .image-placeholder,
+.result-item .image-placeholder img {
+    width: 400px;
+}
+
+.result-item .result-summary {
+    width: 100%;
+}
+
+.result-metadata {
+    margin-left: 1em;
+    padding-left: 1em;
+    border-left: 4px solid #f7f7f7;
+}
+
+.result-metadata-label {
+    font-weight: bold;
 }
 
 @supports (display: grid) {
-    .result-metadata {
+    .result-item {
         display: grid;
-        grid-direction: row;
-        grid-template-columns: 20em 1fr;
+        grid-template-columns: 400px 1fr;
+        grid-gap: 1em;
     }
 }
 
@@ -2074,6 +2080,10 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     font-size: 1.25em;
 }
 
+.item-details {
+    word-wrap: break-word;
+}
+
 .item-details,
 .item-text {
     border: 1px solid #282828;
@@ -2083,7 +2093,7 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 
 .item-details a {
     color: #005dab;
-    font-decoration: underline;
+    text-decoration: underline;
 }
 
 .download {
