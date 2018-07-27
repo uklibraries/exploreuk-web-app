@@ -70,6 +70,7 @@ $p = m('pagination');
 <ul>
 <?php foreach (m('results') as $r): ?>
 <li class="result-item">
+    <p class="result-number"><?php echo $r['number']; ?>.</p>
     <?php if (isset($r['thumb'])): ?>
     <a class="image-placeholder" href="<?php echo $r['link']; ?>">
         <img src="<?php echo $r['thumb']; ?>" title="<?php echo $r['title']; ?>">
@@ -78,7 +79,7 @@ $p = m('pagination');
     <div class="image-placeholder"></div>
     <?php endif; ?>
     <div class="result-summary">
-        <h3><?php echo $r['number']; ?>. <a href="<?php echo $r['link']; ?>"><?php echo euk_brevity($r['title']); ?></a></h3>
+        <h3><a href="<?php echo $r['link']; ?>"><?php echo euk_brevity($r['title']); ?></a></h3>
         <ul class="result-metadata">
             <?php if (isset($r['source'])): ?>
                 <li><span class="result-metadata-label">Collection:</span>

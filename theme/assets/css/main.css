@@ -1817,7 +1817,7 @@ a:hover {
 
 .result-item .image-placeholder,
 .result-item .image-placeholder img {
-    width: 400px;
+    width: 100%;
 }
 
 .result-item .result-summary {
@@ -1837,7 +1837,7 @@ a:hover {
 @supports (display: grid) {
     .result-item {
         display: grid;
-        grid-template-columns: 400px 1fr;
+        grid-template-columns: 3em minmax(150px, 400px) 1fr;
         grid-gap: 1em;
     }
 }
