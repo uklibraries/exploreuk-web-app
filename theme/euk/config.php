@@ -165,8 +165,8 @@ global $euk_title_fields;
 $euk_title_fields = array(
     'author_display' => 'Creator',
     'pub_date' => 'Date Created',
-    'description_display' => 'Description',
     'language_display' => 'Language',
+    'description_display' => 'Description',
 );
 
 global $euk_detail_fields;
