@@ -363,7 +363,11 @@ function euk_page() {
     $format = $doc['format'];
     $flat = array();
     foreach ($doc as $key => $value) {
-        if (is_array($value) and count($value) > 0) {
+        # XXX: Consider adding $euk_repeatable_fields to config.
+        if ($key === 'subject_topic_facet') {
+            $flat[$key] = $value;
+        }
+        elseif (is_array($value) and count($value) > 0) {
             $flat[$key] = $value[0];
         }
         elseif (isset($value)) {

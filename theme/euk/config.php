@@ -184,9 +184,11 @@ $euk_detail_fields = array(
     'mets_url_display' => 'XML Metadata',
 );
 
+# XXX: Are any of these not "/?f[FIELD][]=", urlencoded?
 global $euk_detail_search;
 $euk_detail_search = array(
     'source_s' => '/?f%5Bsource_s%5D%5B%5D=',
+    'subject_topic_facet' => '/?f%5Bsubject_topic_facet%5D%5B%5D=',
     'format' => '/?f%5Bformat%5D%5B%5D=',
 );
 
