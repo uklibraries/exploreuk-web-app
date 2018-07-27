@@ -29,8 +29,8 @@ function euk_brevity($message, $length = 0) {
         $terminal = $target_words[$count - 1];
         if (preg_match('/^\W+$/', $terminal)) {
             array_pop($target_words);
-            $message = implode('', $target_words) . '…';
         }
+        $message = implode('', $target_words) . '…';
     }
     return $message;
 }
