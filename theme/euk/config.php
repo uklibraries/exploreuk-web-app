@@ -185,8 +185,8 @@ $euk_facetable = array(
 global $facets;
 $facets = array(
     'format',
-    'source_s',
     'pub_date',
+    'source_s',
 );
 
 global $euk_title_field_order;
