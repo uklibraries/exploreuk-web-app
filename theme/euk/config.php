@@ -189,6 +189,13 @@ $facets = array(
     'source_s',
 );
 
+global $euk_result_facet_order;
+$euk_result_facet_order = array(
+    'source',
+    'pubdate',
+    'format',
+);
+
 global $euk_title_field_order;
 $euk_title_field_order = array(
     'pub_date',
