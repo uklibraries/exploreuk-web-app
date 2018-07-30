@@ -156,6 +156,7 @@ $euk_locale = array(
         'contributor_s' => 'Contributor',
         'coverage_display' => 'Geographic Subject',
         'description_display' => 'Description',
+        'facet_menu_title' => 'Filter Your Results',
         'finding_aid_url_s' => 'XML Collection Guide',
         'format' => 'Format',
         'id' => 'Permalink',
