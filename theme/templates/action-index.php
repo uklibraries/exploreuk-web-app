@@ -81,20 +81,13 @@ $p = m('pagination');
     <div class="result-summary">
         <h3><a href="<?php echo $r['link']; ?>"><?php echo euk_brevity($r['title']); ?></a></h3>
         <ul class="result-metadata">
-            <?php if (isset($r['source'])): ?>
-                <li><span class="result-metadata-label">Collection:</span>
-                <?php echo $r['source']; ?></li>
-            <?php endif; ?>
-
-            <?php if (isset($r['pubdate'])): ?>
-                <li><span class="result-metadata-label">Date:</span>
-                <?php echo $r['pubdate']; ?></li>
-            <?php endif; ?>
-
-            <?php if (isset($r['format'])): ?>
-                <li><span class="result-metadata-label">Format:</span>
-                <?php echo $r['format']; ?></li>
-            <?php endif; ?>
+            <?php foreach ($euk_result_facet_order as $field): ?>
+                <?php if (isset($r[$field])): ?>
+                    <?php $label = $euk_locale['en'][$hit_fields[$field]]; ?>
+                    <li><span class="result-metadata-label"><?php echo $label; ?>:</span>
+                    <?php echo $r[$field]; ?></li>
+                <?php endif; ?>
+            <?php endforeach; ?>
         </ul>
     </div>
 </li>
