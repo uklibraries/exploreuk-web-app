@@ -1824,6 +1824,10 @@ a:hover {
     width: 100%;
 }
 
+.result-summary {
+    padding-right: 1em;
+}
+
 .result-metadata {
     margin-left: 1em;
     padding-left: 1em;
@@ -1837,8 +1841,24 @@ a:hover {
 @supports (display: grid) {
     .result-item {
         display: grid;
-        grid-template-columns: 3em minmax(150px, 400px) 1fr;
+        grid-template-columns: 3em minmax(150px, 1fr);
         grid-gap: 1em;
+    }
+}
+
+.image-placeholder {
+    max-width: 300px;
+}
+
+@media all and (min-width:800px) {
+    .image-placeholder {
+        float: right;
+    }
+}
+
+@media all and (max-width:800px) {
+    .result-metadata-drop {
+        display: none;
     }
 }
 

@@ -196,6 +196,11 @@ $euk_result_facet_order = array(
     'format',
 );
 
+global $euk_result_drop_fields;
+$euk_result_drop_fields = array(
+    'format',
+);
+
 global $euk_title_field_order;
 $euk_title_field_order = array(
     'pub_date',
