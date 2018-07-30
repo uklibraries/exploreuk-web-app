@@ -87,7 +87,7 @@ $p = m('pagination');
             <?php endif; ?>
 
             <?php if (isset($r['pubdate'])): ?>
-                <li><span class="result-metadata-label">Publication date:</span>
+                <li><span class="result-metadata-label">Date:</span>
                 <?php echo $r['pubdate']; ?></li>
             <?php endif; ?>
 
