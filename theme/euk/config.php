@@ -150,23 +150,22 @@ $euk_back_to_search_text = 'Back to Search Results';
 global $euk_locale;
 $euk_locale = array(
     'en' => array(
-        'pub_date' => 'Date',
-        'author_display' => 'Creator',
-        'language_display' => 'Language',
-        'source_s' => 'Collection',
-        'description_display' => 'Description',
-
-        'usage_display' => 'Rights',
         'accession_number_s' => 'Accession Number',
+        'author_display' => 'Creator',
         'container_list_s' => 'Containers',
         'contributor_s' => 'Contributor',
         'coverage_display' => 'Geographic Subject',
-        'subject_topic_facet' => 'Library of Congress Subject Headings',
-        'publisher_display' => 'Publisher',
+        'description_display' => 'Description',
+        'finding_aid_url_s' => 'XML Collection Guide',
         'format' => 'Format',
         'id' => 'Permalink',
-        'finding_aid_url_s' => 'XML Collection Guide',
+        'language_display' => 'Language',
         'mets_url_display' => 'XML Metadata',
+        'pub_date' => 'Date',
+        'publisher_display' => 'Publisher',
+        'source_s' => 'Collection',
+        'subject_topic_facet' => 'Library of Congress Subject Headings',
+        'usage_display' => 'Rights',
     ),
 );
 
