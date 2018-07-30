@@ -3,7 +3,7 @@ $p = m('pagination');
 ?>
 <div id="facet_group_mobile">
     <div id="facet_group_mobile_top">
-<div class="bg-uklblue" id="facet_group_mobile_container"><span id="facet_group_mobile_head">Limit Your Search</span></div>
+<div class="bg-uklblue" id="facet_group_mobile_container"><span id="facet_group_mobile_head"><?php echo $euk_locale['en']['facet_menu_title']; ?></span></div>
 <?php if (count(m('active_facets')) > 0): ?>
 <div id="active_facets" class="row">
 <?php foreach (m('active_facets') as $active): ?>
@@ -35,7 +35,7 @@ $p = m('pagination');
     <div id="resultsfacets">
 <div id="facet_group">
 <div id="facet_group_left">
-<div class="bg-uklblue" id="facet_group_left_container"><span id="facet_group_left_head">Limit Your Search</span></div>
+<div class="bg-uklblue" id="facet_group_left_container"><span id="facet_group_left_head"><?php echo $euk_locale['en']['facet_menu_title']; ?></span></div>
 <?php if (count(m('active_facets')) > 0): ?>
 <div id="active_facets" class="row">
 <?php foreach (m('active_facets') as $active): ?>
