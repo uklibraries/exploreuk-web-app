@@ -2,6 +2,51 @@
 
 define('EUK_MAX_LABEL', 80);
 
+function render_field($field, $content) {
+    global $euk_locale;
+    if (isset($euk_locale['en'][$field])) {
+        $label = $euk_locale['en'][$field];
+    }
+    else {
+        $label = 'Unknown';
+    }
+    $lines = array("<h3>$label</h3>");
+    if (is_array($content)) {
+        $lines[] = "<ul>";
+        foreach ($content as $item) {
+            $lines[] = "<li>" . render_field_helper($field, $item) . "</li>";
+        }
+        $lines[] = "</ul>";
+    }
+    else {
+        $lines[] = "<p>" . render_field_helper($field, $content) . "</p>";
+    }
+    return implode("\n", $lines) . "\n";
+}
+
+function render_field_helper($field, $item) {
+    global $euk_facetable;
+    global $euk_requires_capitalization;
+
+    if ($field === 'id') {
+        $item = "https://exploreuk.uky.edu/catalog/$item";
+    }
+    if (in_array($field, $euk_requires_capitalization)) {
+        $item = ucfirst($item);
+    }
+
+    if (strpos($item, 'http') === 0) {
+        return "<a href=\"$item\" target=\"_blank\" rel=\"noopener\">$item</a>";
+    }
+    elseif (in_array($field, $euk_facetable)) {
+        $link = "/?f%5B$field%5D%5B%5D=";
+        return "<a href=\"" . u($link . urlencode($item)) . "\">$item</a>";
+    }
+    else {
+        return $item;
+    }
+}
+
 function euk_brevity($message, $length = 0) {
     if ($length == 0) {
         $length = EUK_MAX_LABEL;

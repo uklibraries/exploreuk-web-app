@@ -147,6 +147,42 @@ foreach ($items as $item) {
 global $euk_back_to_search_text;
 $euk_back_to_search_text = 'Back to Search Results';
 
+global $euk_locale;
+$euk_locale = array(
+    'en' => array(
+        'pub_date' => 'Date',
+        'author_display' => 'Creator',
+        'language_display' => 'Language',
+        'source_s' => 'Collection',
+        'description_display' => 'Description',
+
+        'usage_display' => 'Rights',
+        'accession_number_s' => 'Accession Number',
+        'container_list_s' => 'Containers',
+        'contributor_s' => 'Contributor',
+        'coverage_display' => 'Geographic Subject',
+        'subject_topic_facet' => 'Library of Congress Subject Headings',
+        'publisher_display' => 'Publisher',
+        'format' => 'Format',
+        'id' => 'Permalink',
+        'finding_aid_url_s' => 'XML Collection Guide',
+        'mets_url_display' => 'XML Metadata',
+    ),
+);
+
+global $euk_requires_capitalization;
+$euk_requires_capitalization = array(
+    'language_display',
+);
+
+global $euk_facetable;
+$euk_facetable = array(
+    'source_s',
+    'subject_topic_facet',
+    'format',
+    'pub_date',
+);
+
 global $facets;
 $facets = array(
     'format',
@@ -154,42 +190,28 @@ $facets = array(
     'pub_date',
 );
 
-global $facets_titles;
-$facets_titles = array(
-    'format' => 'format',
-    'source_s' => 'collection',
-    'pub_date' => 'publication year',
+global $euk_title_field_order;
+$euk_title_field_order = array(
+    'pub_date',
+    'author_display',
+    'language_display',
+    'source_s',
+    'description_display',
 );
 
-global $euk_title_fields;
-$euk_title_fields = array(
-    'author_display' => 'Creator',
-    'pub_date' => 'Date Created',
-    'language_display' => 'Language',
-    'description_display' => 'Description',
-);
-
-global $euk_detail_fields;
-$euk_detail_fields = array(
-    'usage_display' => 'Rights',
-    'accession_number_s' => 'Accession Number',
-    'contributor_s' => 'Contributor',
-    'coverage_display' => 'Location',
-    'subject_topic_facet' => 'Subjects',
-    'relation_display' => 'Relation',
-    'publisher_display' => 'Publisher',
-    'source_s' => 'Source',
-    'format' => 'Format',
-    'finding_aid_url_s' => 'XML Collection Guide',
-    'mets_url_display' => 'XML Metadata',
-);
-
-# XXX: Are any of these not "/?f[FIELD][]=", urlencoded?
-global $euk_detail_search;
-$euk_detail_search = array(
-    'source_s' => '/?f%5Bsource_s%5D%5B%5D=',
-    'subject_topic_facet' => '/?f%5Bsubject_topic_facet%5D%5B%5D=',
-    'format' => '/?f%5Bformat%5D%5B%5D=',
+global $euk_detail_field_order;
+$euk_detail_field_order = array(
+    'usage_display',
+    'accession_number_s',
+    'container_list_s',
+    'contributor_s',
+    'coverage_display',
+    'subject_topic_facet',
+    'publisher_display',
+    'format',
+    'id',
+    'finding_aid_url_s',
+    'mets_url_display',
 );
 
 global $hit_fields;
@@ -251,9 +273,9 @@ global $euk_query;
 global $euk_id;
 
 function euk_facet_displayname($facet) {
-    global $facets_titles;
-    if (isset($facets_titles[$facet])) {
-        return ucfirst($facets_titles[$facet]);
+    global $euk_locale;
+    if (isset($euk_locale['en'][$facet])) {
+        return ucfirst($euk_locale['en'][$facet]);
     }
     else {
         return 'unknown';

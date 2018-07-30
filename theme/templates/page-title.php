@@ -4,13 +4,11 @@
 <?php endif; ?>
 
 <h2><?php echo meta('title_display'); ?></h2>
-<?php foreach ($euk_title_fields as $field => $label): ?>
-<?php $content = meta($field); if ($content): ?>
-<h3><?php echo $label; ?></h3>
-<p>
-    <?php echo $content; ?>
-</p>
-<?php endif; ?>
-<?php endforeach; ?>
+<?php foreach ($euk_title_field_order as $field):
+        $content = meta($field);
+        if ($content):
+            print render_field($field, $content);
+        endif;
+      endforeach; ?>
 
 </div>
