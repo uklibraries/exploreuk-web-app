@@ -31,8 +31,8 @@ foreach ($opts as $opt) {
     <a href="<?php echo $p['previous']; ?>" class="prev_page">&laquo; Previous</a>
 <?php else: ?>
     &laquo; Previous
-<?php endif; ?>
-<?php echo $p['first'] . ' - ' . $p['last'] . ' of ' . $p['count']; ?>
+<?php endif; ?> |
+<?php echo '<strong>' . $p['first'] . '</strong> - <strong>' . $p['last'] . '</strong> of <strong>' . $p['count'] . '</strong>'; ?> |
 <?php if (isset($p['next'])): ?>
     <a href="<?php echo $p['next']; ?>" class="next_page">Next &raquo;</a>
 <?php else: ?>
