@@ -6,3 +6,11 @@
 #BRtoolbar .embed, .print {
     display: none;
 }
+
+#BRtoolbar,
+div#BRnav,
+div#BRfiller,
+div#BRzoomer button,
+.BRnavCntl {
+    background-color: #f7f7f7;
+}
