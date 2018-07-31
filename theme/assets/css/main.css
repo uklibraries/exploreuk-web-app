@@ -1513,7 +1513,8 @@ Main components
 #resultsfacets {
     width: 20%;
     float: left;
-    background: #282828;
+    background: #f7f7f7;
+    color: #282828;
 }
 
 #resultsmain {
@@ -1663,7 +1664,6 @@ summary {
 
 #facet_group {
     width: 100%;
-    color: #ffffff;
 }
 
 #facets article {
