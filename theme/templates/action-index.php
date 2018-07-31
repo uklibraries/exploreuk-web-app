@@ -67,7 +67,7 @@ $p = m('pagination');
 <?php require("pagination.php"); ?>
 
 <div class="row">
-<ul>
+<ul class="result-list">
 <?php foreach (m('results') as $r): ?>
 <li class="result-item">
     <p class="result-number"><?php echo $r['number']; ?>.</p>

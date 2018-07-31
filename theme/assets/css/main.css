@@ -1807,6 +1807,10 @@ a:hover {
     margin-bottom: 0em;
 }
 
+.result-list {
+    width: 100%;
+}
+
 .result-item {
     width: 100%;
 }
