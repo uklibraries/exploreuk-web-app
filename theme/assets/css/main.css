@@ -1439,6 +1439,12 @@ Main components
     }
 }
 
+@media all and (max-width: 800px) {
+    #inner_footer_funders {
+        display: block;
+    }
+}
+
 #top > div > header > div:nth-of-type(1) > a {
     font-size: 16px;
     float: left;
