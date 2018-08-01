@@ -198,6 +198,10 @@ elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/text/?#", $request_uri, $
     euk_text($id);
     exit;
 }
+elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/zoom/?#", $request_uri, $matches)) {
+    $id = $matches["id"];
+    $dest = "https://$host/${euk_base}index.php?action=zoom&id=$id";
+}
 elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/?#", $request_uri, $matches)) {
     $id = $matches["id"];
     $format = euk_get_format($id);

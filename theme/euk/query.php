@@ -22,6 +22,7 @@ function euk_initialize_query() {
         'f' => array(),
         'offset' => 0,
         'rows' => 20,
+        'ui' => null,
     );
     $raw_params = array();
     if (isset($_SERVER['QUERY_STRING'])) {
@@ -48,6 +49,19 @@ function euk_initialize_query() {
             elseif ($key == 'per_page') {
                 $euk_query['rows'] = intval($value);
             }
+            elseif ($key == 'ui') {
+                switch ($value) {
+                case '1':
+                    /* fall through */
+                case '2':
+                    $euk_query['ui'] = $value;
+                    break;
+
+                default:
+                    /* do nothing */
+                    break;
+                }
+            }
         }
     }
     return $euk_query;
@@ -73,6 +87,9 @@ function euk_link_to_query($query) {
     if ($query['rows'] > 0) {
         $pieces[] = 'per_page=' . urlencode($query['rows']);
     }
+    if (isset($query['ui'])) {
+        $pieces[] = 'ui=' . urlencode($query['ui']);
+    }
     return '?' . implode('&', $pieces);
 }
 
@@ -91,6 +108,7 @@ function euk_previous_link() {
         'f' => $euk_query['f'],
         'offset' => $offset,
         'rows' => $euk_query['rows'],
+        'ui' => $euk_query['ui'],
     ));
 }
 
@@ -109,6 +127,7 @@ function euk_next_link() {
         'f' => $euk_query['f'],
         'offset' => $offset,
         'rows' => $euk_query['rows'],
+        'ui' => $euk_query['ui'],
     ));
 }
 
@@ -121,6 +140,7 @@ function euk_add_filter($facet, $label) {
         'fq' => $euk_query['fq'],
         'f' => $f,
         'rows' => $euk_query['rows'],
+        'ui' => $euk_query['ui'],
     ));
 }
 
@@ -131,6 +151,7 @@ function euk_remove_search_term($label) {
         'fq' => $euk_query['fq'],
         'f' => $euk_query['f'],
         'rows' => $euk_query['rows'],
+        'ui' => $euk_query['ui'],
     ));
 }
 
@@ -147,6 +168,7 @@ function euk_remove_filter($facet, $label) {
         'fq' => $euk_query['fq'],
         'f' => $f,
         'rows' => $euk_query['rows'],
+        'ui' => $euk_query['ui'],
     ));
 }
 

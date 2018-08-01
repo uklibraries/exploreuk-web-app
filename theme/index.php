@@ -23,6 +23,11 @@ if (m('action') === 'paged') {
     exit;
 }
 
+if (m('action') === 'zoom') {
+    require_once('templates/action-zoom.php');
+    exit;
+}
+
 echo head();
 
 switch (m('action')) {

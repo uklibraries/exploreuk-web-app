@@ -5,37 +5,39 @@ require_once("$base_dir/init.php");
 global $theme_path;
 $theme_name = Theme::getCurrentThemeName('public');
 $theme_path = u("/themes/$theme_name");
+global $findaidurl;
+global $featured_image;
+require_once("$base_dir/euk/euk.php");
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><?php echo m('site_title'); ?></title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+<div class="item-container-zoom">
+<main class="item-presentation-zoom">
+<?php if (m('item_image')): ?>
+    <?php require("image-viewer.php"); ?>
+<?php endif; ?>
+
+<?php if (m('item_book')): ?>
+    <?php require("book-reader.php"); ?>
+<?php endif; ?>
+</main>
+</div>
+<?php
+$base_dir = dirname(__DIR__);
+global $euk_base;
+require_once("$base_dir/init.php");
+global $theme_path;
+$theme_name = Theme::getCurrentThemeName('public');
+$theme_path = u("/themes/$theme_name");
 require_once("$base_dir/euk/euk.php");
 ?>
     </section>
-</div>
-
-<div id="footer">
-    <div id="outer_footer_funders" class="row bg-uklwhite">
-        <span>Content made available with the support of:</span>
-        <ul id="inner_footer_funders">
-            <li><a href="https://www.imls.gov/"><img id="footer_funder_image" class="lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/imls-n.png" alt="Institute of Museum and Library Services" width="231" height="83"/></a></li>
-            <li><a href="https://www.clir.org/"><img class="lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/clir-n.png" alt="Council on Library and Information Resources" width="167" height="76"/></a></li>
-            <li><a href="https://www.neh.org/"><img class="lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/neh-n.jpg" alt="National Endowment for the Humanities" width="214" height="99"/></a></li>
-            <li><a href="https://www.archives.gov/nhprc"><img class="lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/nhprc-n.jpg" alt="National Archives - National Historical Publications and Records Commission" width="117" height="147"/></a></li>
-            <li><a href="https://libraries.uky.edu/page.php?lweb_id=1114"><img class="lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/heyburn-n.png" alt="The John G. Heyburn II Initiative for Excellence in the Federal Judiciary" width="118" height="89"/></a></li>
-        </ul>
-    </div>
-    <div id="copyright-bar" class="row bg-uklblack">
-        <span id="copyright">Copyright © 2018 UK Libraries. For questions or comments about this website, contact <a href="mailto:sarah.dorpinghaus@uky.edu">Sarah Dorpinghaus</a>.</span>
-        <ul>
-            <li><a aria-label="Special Collections Research Center on Facebook" href="https://www.facebook.com/ukscrc/"><i class="fab fa-facebook-f"></i></a></li>
-            <li><a aria-label="University of Kentucky Libraries on Twitter" href="https://twitter.com/UKLibraries"><i class="fab fa-twitter"></i></a></li>
-            <li><a aria-label="University of Kentucky Libraries on Instagram" href="https://www.instagram.com/uklibraries/"><i class="fab fa-instagram"></i></a></li>
-            <li><a aria-label="University of Kentucky Archives on YouTube" href="https://www.youtube.com/channel/UCxgb2cJ2hpO-0QOTnmxgfKw"><i class="fab fa-youtube"></i></a></li>
-            <li><a aria-label="Curiosities and Wonders" href="https://ukyarchives.blogspot.com/"><i class="fab fa-blogger"></i></a></li>
-        </ul>
-        <ul>
-            <li><a href="https://libraries.uky.edu/SC"><img class="euk-logo-small lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/scrc_logo.png" alt="UK Special Collections Research Center" width="134" height="34"/></a></li>
-            <li><a href="https://www.gpo.gov/"><img class="euk-logo-small lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/gpo_fst.jpg" alt="US Government Publishing Office" width="74" height="34"/></a></li>
-            <li><a href="https://www.fdlp.gov/"><img class="euk-logo-small lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $theme_path; ?>/images/fdlp.png" alt="Federal Depository Library Program" width="46" height="34"/></a></li>
-        </ul>
-    </div>
 </div>
 
 <!-- CSS -->
@@ -79,8 +81,6 @@ $('.click-to-play-video').click(function () {
 <?php if (m('script_image')): ?>
 <?php $s = m('script_image'); ?>
 <?php $r = m('item_image'); ?>
-<?php $ui = q('ui'); if (!isset($ui) || !$ui) { $ui = "1"; }?>
-<?php if ($ui === "1"): ?>
 <script type="text/javascript" src="<?php echo "$theme_path/openseadragon/openseadragon.min.js"; ?>"></script>
 <script type="text/javascript">
 var id = '<?php echo $s['osd_id']; ?>';
@@ -95,7 +95,6 @@ var osd_viewer = OpenSeadragon({
 $(osd_viewer.element).find('.openseadragon-canvas').css('background-color', 'black');
 $('#<?php echo $s['ref_id']; ?>').hide();
 </script>
-<?php endif; ?>
 <?php endif; ?>
 <script src="<?php echo $theme_path; ?>/javascripts/back_to_top.js"></script>
 <script src="<?php echo $theme_path; ?>/javascripts/main.js"></script>
