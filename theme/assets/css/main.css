@@ -1443,6 +1443,10 @@ Main components
     #inner_footer_funders {
         display: block;
     }
+
+    #inner_footer_funders img {
+        margin-bottom: 2em;
+    }
 }
 
 #top > div > header > div:nth-of-type(1) > a {
