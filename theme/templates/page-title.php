@@ -3,6 +3,10 @@
     <?php require("download-menu.php"); ?>
 <?php endif; ?>
 
+<?php if (m('item_audio')): ?>
+    <?php require("audio-video-player.php"); ?>
+<?php endif; ?>
+
 <h2><?php echo meta('title_display'); ?></h2>
 <?php foreach ($euk_title_field_order as $field):
         $content = meta($field);

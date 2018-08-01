@@ -2137,29 +2137,34 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     text-decoration: underline;
 }
 
-.download {
+.download,
+.media-player {
     background: #ffffff;
     color: #282828;
     border: 1px solid #282828;
     float: right;
 }
 
-.download li {
+.download li,
+.media-player li {
     margin: 0.5em;
     border-radius: 0.75em;
     padding: 0.5em;
 }
 
-.download a {
+.download a,
+.media-player a {
     text-align: center;
 }
 
-.download a > * {
+.download a > *,
+.media-player a > * {
     margin: auto;
 }
 
 @supports (display: grid) {
-    .download a {
+    .download a,
+    .media-player a {
         display: grid;
         grid-template-columns: 1fr 3fr;
         align-items: center;
@@ -2167,7 +2172,8 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     }
 }
 
-.download i:before {
+.download i:before,
+.media-player i:before {
     font-size: 64px;
 }
 
