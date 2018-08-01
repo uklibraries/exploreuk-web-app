@@ -792,10 +792,6 @@ nav a:visited {
     color: white;
 }
 
-#active_facets, #facets {
-    text-align: left;
-}
-
 #footer {
     text-align: left;
 }
@@ -1533,6 +1529,10 @@ Main components
     display: none;
 }
 
+#facet_group_mobile i {
+    color: #282828;
+}
+
 #facet_group_left {
     width: 80%;
     float: left;
@@ -1541,15 +1541,14 @@ Main components
 
 #facet_group_mobile_top {
     width: 100%;
-    float: left;
-    font-size: 12px
+    font-size: 12px;
+    margin-bottom: 1em;
 }
 
 #facet_group_mobile_container {
     width: 100%;
-    background: #005dab;
-    height: 60px;
-    border-bottom: 1px solid lightgray;
+    background: #f7f7f7;
+    padding: 1em 0;
 }
 
 #facet_group_mobile_head {
@@ -1561,7 +1560,7 @@ Main components
 #facet_group_left {
      width: 100%;
      float: left;
-     font-size: 12px;
+     font-size: 16px;
 }
 
 #facet_group_left_container {
@@ -1629,16 +1628,23 @@ Main components
 
 summary {
     outline: none;
-    font-size: 13px;
+    font-size: 16px;
     float: left;
     padding-left: 10px;
     position: relative;
 }
 
 #active_facets, #facets {
+    width: 100%;
     text-align: left;
+    font-size: 16px;
     padding-bottom: 40px;
     padding-top: 20px;
+}
+
+#active_facets ul {
+    width: 100%;
+    padding: 0 1em !important;
 }
 
 #facets > article > details > ul > li {
