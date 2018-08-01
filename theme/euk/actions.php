@@ -131,6 +131,9 @@ function euk_handle_action() {
     case 'page':
         euk_page();
         break;
+    case 'zoom':
+        euk_zoom();
+        break;
     case 'download':
         euk_download();
         exit;
@@ -707,6 +710,13 @@ function euk_paged() {
         );
     }
     $euk_data = $data;
+    return $euk_data;
+}
+
+function euk_zoom() {
+    global $euk_data;
+    $euk_data = euk_page();
+    $euk_data['action'] = 'zoom';
     return $euk_data;
 }
 

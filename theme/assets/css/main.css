@@ -2019,6 +2019,11 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     font-size: 16px;
 }
 
+.item-container-zoom {
+    width: 100%;
+    height: 100%;
+}
+
 .item-container {
     margin: 0 10em;
 }
@@ -2177,6 +2182,22 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     font-size: 64px;
 }
 
-.back-to-search {
+.back-to-search,
+.image-controls {
     padding: 0 10em;
+}
+
+.static-thumb {
+    max-width: 100%;
+    height: auto;
+}
+
+/* https://css-tricks.com/forums/topic/setting-a-div-height-to-the-window-viewport-size/#post-113078 */
+.full-viewport {
+    position: fixed !important;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
 }
