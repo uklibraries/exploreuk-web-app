@@ -3,63 +3,20 @@ $p = m('pagination');
 ?>
 <div id="facet_group_mobile">
     <div id="facet_group_mobile_top">
-<div class="bg-uklblue" id="facet_group_mobile_container"><span id="facet_group_mobile_head"><?php echo $euk_locale['en']['facet_menu_title']; ?></span></div>
-<?php if (count(m('active_facets')) > 0): ?>
-<div id="active_facets" class="row">
-<?php foreach (m('active_facets') as $active): ?>
-<article class="4u 12u$(mobile)">
-<details><summary><?php echo $active['field_label']; ?></summary>
-<ul>
-<li><?php echo $active['value_label']; ?> (<?php echo $active['count']; ?>) <a href="<?php echo $active['remove_link']; ?>">[remove]</a></li>
-</ul></details>
-</article>
-<?php endforeach; ?>
-</div>
-<?php endif; ?>
-<div id="facets" class="row">
-<?php foreach (m('facets') as $facet): ?>
-<article class="4u 12u$(mobile)"><details><summary>
-<?php echo $facet['field_label']; ?></summary><br/>
-<ul>
-<?php foreach ($facet['values'] as $value): ?>
-<li><a href="<?php echo $value['add_link']; ?>"><?php echo $value['value_label']; ?> (<?php echo $value['count']; ?>)</a></li>
-<?php endforeach; ?>
-</ul></details>
-</article>
-<?php endforeach; ?>
-</div>
-</div>
-</div>
+        <details id="facet_group_mobile_container" class="facet-menu-mobile bg-uklwhite row">
+            <summary id="facet_group_mobile_head"><?php echo $euk_locale['en']['facet_menu_title']; ?></summary>
+            <?php require("facets.php"); ?>
+        </details>
     </div>
+</div>
 <div class="results">
     <div id="resultsfacets">
 <div id="facet_group">
 <div id="facet_group_left">
-<div class="bg-uklblue" id="facet_group_left_container"><span id="facet_group_left_head"><?php echo $euk_locale['en']['facet_menu_title']; ?></span></div>
-<?php if (count(m('active_facets')) > 0): ?>
-<div id="active_facets" class="row">
-<?php foreach (m('active_facets') as $active): ?>
-<article class="4u 12u$(mobile)">
-<details><summary><?php echo $active['field_label']; ?></summary>
-<ul>
-<li><?php echo $active['value_label']; ?> (<?php echo $active['count']; ?>) <a href="<?php echo $active['remove_link']; ?>">[remove]</a></li>
-</ul></details>
-</article>
-<?php endforeach; ?>
-</div>
-<?php endif; ?>
-<div id="facets" class="row">
-<?php foreach (m('facets') as $facet): ?>
-<article class="4u 12u$(mobile)"><details><summary>
-<?php echo $facet['field_label']; ?></summary><br/>
-<ul>
-<?php foreach ($facet['values'] as $value): ?>
-<li><a href="<?php echo $value['add_link']; ?>"><?php echo $value['value_label']; ?> <span class="facet-count">(<?php echo $value['count']; ?>)</span></a></li>
-<?php endforeach; ?>
-</ul></details>
-</article>
-<?php endforeach; ?>
-</div>
+    <div class="bg-uklblue" id="facet_group_left_container">
+        <span id="facet_group_left_head"><?php echo $euk_locale['en']['facet_menu_title']; ?></span>
+    </div>
+    <?php require("facets.php"); ?>
 </div>
 </div>
     </div>
