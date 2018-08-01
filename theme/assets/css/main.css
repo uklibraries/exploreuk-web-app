@@ -1529,7 +1529,8 @@ Main components
     display: none;
 }
 
-#facet_group_mobile i {
+#facet_group_mobile i,
+#facet_group i {
     color: #282828;
 }
 
