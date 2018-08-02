@@ -31,6 +31,9 @@ $euk_per_page_opts = array(20, 50, 100);
 global $euk_data;
 $euk_data = array();
 
+global $oai_response;
+global $oai_verb;
+
 global $templates_dir;
 $templates_dir = 'handlebars';
 
