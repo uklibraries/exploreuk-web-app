@@ -125,6 +125,9 @@ function q($arg) {
 function euk_handle_action() {
     global $euk_data;
     switch(euk_action()) {
+    case 'oai':
+        euk_oai();
+        break;
     case 'index':
         euk_index();
         break;
@@ -722,4 +725,14 @@ function euk_zoom() {
 
 function euk_text()
 {
+}
+
+function euk_oai() {
+    header("Content-type: application/xml");
+    require_once('oai.php');
+    global $euk_data;
+    global $oai_response;
+    $euk_data['action'] = 'oai';
+    $oai = euk_oai_response();
+    return $euk_data;
 }

@@ -10,6 +10,11 @@ global $additional_resources;
 
 require_once('euk/euk.php');
 
+if (m('action') === 'oai') {
+    require_once('templates/oai.php');
+    exit;
+}
+
 if (euk_on_front_page()) {
     echo head();
     require_once('templates/front-page.php');
