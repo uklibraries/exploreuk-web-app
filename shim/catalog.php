@@ -205,6 +205,49 @@ function euk_oai() {
                 }
             }
         }
+        elseif ($response['verb'] === 'ListIdentifiers') {
+            foreach ($response['metadata']['results'] as $record) {
+                # header
+                $header = $doc->createElement('header', '');
+                $header = $node->appendChild($header);
+                foreach ($record['header'] as $row) {
+                    $child = $doc->createElement($row[0], $row[1]);
+                    $child = $header->appendChild($child);
+                }
+            }
+            $token = $doc->createElement('resumptionToken', $response['metadata']['resumptionToken']);
+            $token = $node->appendChild($token);
+        }
+        elseif ($response['verb'] === 'ListRecords') {
+            foreach ($response['metadata']['results'] as $record) {
+                $result_node = $doc->createElement('record', '');
+                $result_node = $node->appendChild($result_node);
+                # header
+                $header = $doc->createElement('header', '');
+                $header = $result_node->appendChild($header);
+                foreach ($record['header'] as $row) {
+                    $child = $doc->createElement($row[0], $row[1]);
+                    $child = $header->appendChild($child);
+                }
+
+                # metadata
+                $metadata = $doc->createElement('metadata', '');
+                $metadata = $result_node->appendChild($metadata);
+
+                $oai_dc = $doc->createElementNS('http://www.openarchives.org/OAI/2.0/oai_dc/', 'oai_dc:dc');
+                $oai_dc = $metadata->appendChild($oai_dc);
+                $oai_dc->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:dc', 'http://purl.org/dc/elements/1.1/');
+                $oai_dc->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+                $oai_dc->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'schemaLocation', 'http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd');
+
+                foreach ($record['metadata'] as $row) {
+                    $child = $doc->createElement('dc:' . $row[0], $row[1]);
+                    $child = $oai_dc->appendChild($child);
+                }
+            }
+            $token = $doc->createElement('resumptionToken', $response['metadata']['resumptionToken']);
+            $token = $node->appendChild($token);
+        }
     }
 
     header('Content-type: application/xml');
