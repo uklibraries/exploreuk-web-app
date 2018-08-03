@@ -238,6 +238,7 @@ function euk_oai_list_sets($options) {
 }
 
 function euk_oai_list_metadata_formats($options) {
+    global $host;
     global $euk_solr;
     $permitted_options = array(
         'identifier',
@@ -259,8 +260,10 @@ function euk_oai_list_metadata_formats($options) {
     );
     if (isset($options['identifier'])) {
         $metadata['identifier'] = $options['identifier'];
+        $id = $options['identifier'];
+        $id = preg_replace("#$host/#", '', $id);
         # verify that document exists
-        $url = "$euk_solr?qt=document&wt=json&id=" . urlencode($options['identifier']);
+        $url = "$euk_solr?qt=document&wt=json&id=" . urlencode($id);
         $result = json_decode(file_get_contents($url), true);
         if (isset($result['response']) && $result['response']['numFound'] == 0) {
             return euk_oai_error('idDoesNotExist');
@@ -599,7 +602,9 @@ function euk_oai_get_record($options) {
     }
     $desired_fields[] = 'timestamp';
     $fl = urlencode(implode(',', $desired_fields));
-    $url = "$euk_solr?qt=document&wt=json&id=" . urlencode($options['identifier']) . "&fl=$fl";
+    $id = $options['identifier'];
+    $id = preg_replace("#$host/#", '', $id);
+    $url = "$euk_solr?qt=document&wt=json&id=" . urlencode($id) . "&fl=$fl";
     $result = json_decode(file_get_contents($url), true);
     # This error should only happen if Solr is not working.  In this case, it is
     # literally true that we cannot disseminate the format for the given identifier.
