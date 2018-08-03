@@ -2197,3 +2197,30 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     bottom: 0;
     left: 0;
 }
+
+/* begin Simple Pages */
+#primary h1 {
+    display: block;
+    font-size: 2em;
+    padding: .5em;
+}
+
+#primary h2 {
+    display: block;
+    font-size: 1.5em;
+    padding: .2em;
+}
+
+#primary h3 {
+    display: block;
+    font-size: 1.17em;
+    padding: .2em;
+}
+
+#primary p {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 16px;
+}
+/* end   Simple Pages */
