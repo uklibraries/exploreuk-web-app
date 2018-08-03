@@ -2208,19 +2208,21 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 #primary h2 {
     display: block;
     font-size: 1.5em;
-    padding: .2em;
+    padding: 1.2em;
 }
 
 #primary h3 {
     display: block;
     font-size: 1.17em;
-    padding: .2em;
+    padding: 2em;
 }
 
 #primary p {
     width: 90%;
+    max-width: 70em;
     margin-left: auto;
     margin-right: auto;
     font-size: 16px;
+    line-height: 1.5em;
 }
 /* end   Simple Pages */
