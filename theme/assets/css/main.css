@@ -1902,10 +1902,6 @@ a:hover {
     padding: 8px;
 }
 
-.fa, .far, .fas {
-    color: #ffffff;
-}
-
 #facets > article {
     padding-left: 10px !important;
 }
