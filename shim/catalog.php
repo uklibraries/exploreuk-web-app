@@ -132,8 +132,8 @@ function euk_oai() {
         $node = $root->appendChild($node);
         if ($response['verb'] === 'Identify') {
             foreach ($response['metadata'] as $spec) {
-                $field = $spec['field'];
-                $content = $spec['content'];
+                $field = $spec[0];
+                $content = $spec[1];
                 if ($field === 'description') {
                     $child = $doc->createElement($field, '');
                     $child = $node->appendChild($child);
@@ -142,7 +142,7 @@ function euk_oai() {
                     $oai_id->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
                     $oai_id->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'schemaLocation', 'http://www.openarchives.org/OAI/2.0/oai-identifier http://www.openarchives.org/OAI/2.0/oai-identifier.xsd');
                     foreach ($content as $item) {
-                        $subchild = $doc->createElement($item['field'], $item['content']);
+                        $subchild = $doc->createElement($item[0], $item[1]);
                         $subchild = $oai_id->appendChild($subchild);
                     }
                     continue;
