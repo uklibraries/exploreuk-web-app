@@ -2297,3 +2297,7 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     padding: 1em;
 }
 /* end item tabs */
+
+#books_viewer {
+    margin-top: 1em;
+}
