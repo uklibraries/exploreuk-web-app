@@ -1828,6 +1828,18 @@ a:hover {
     width: 100%;
 }
 
+.result-list {
+    font-size: 16px;
+}
+
+.result-list h3 {
+    font-size: 17px;
+}
+
+.result-number {
+    line-height: 1.5em;
+}
+
 .result-item {
     width: 100%;
 }
@@ -1868,7 +1880,7 @@ a:hover {
 }
 
 .image-placeholder {
-    max-width: 300px;
+    max-width: 250px;
 }
 
 @media all and (min-width:800px) {
