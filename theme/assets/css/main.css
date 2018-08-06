@@ -2226,3 +2226,53 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     line-height: 1.5em;
 }
 /* end   Simple Pages */
+
+/* begin item tabs */
+.tab-content.active {
+    display: block;
+    background: #ffffff;
+    margin-left: 1em;
+    margin-right: 1em;
+}
+.tab-content.hide {
+    display: none;
+}
+
+#item-view-tabs {
+    margin-bottom: -.2em;
+    margin-left: 1em;
+}
+
+.tab-content {
+    margin 0 1em !important;
+    background: #f7f7f7;
+    border: 1px solid;
+    padding: 1em;
+}
+
+#item-view-details {
+    background: #f7f7f7;
+}
+#item-view-details.active {
+    background: #ffffff;
+}
+
+#item-view-tabs li {
+    background: #f7f7f7;
+}
+#item-view-tabs li.active {
+    background: #ffffff;
+}
+
+#item-view-tabs li {
+    display: inline;
+    border-top: 1px solid;
+    border-bottom: 0;
+    border-right: 1px solid;
+    border-left: 1px solid;
+}
+
+#item-view-tabs li a {
+    padding: 1em;
+}
+/* end item tabs */

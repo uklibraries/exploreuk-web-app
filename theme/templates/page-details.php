@@ -1,11 +1,11 @@
-<ul>
-<li><a href="#item-details">Item Details</a></li>
+<ul id="item-view-tabs">
+<li id="item-view-details" class="active"><a href="#item-details">Item Details</a></li>
 <?php if (m('item_book')): ?>
-<li><a href="#item-text">Text</a></li>
+<li id="item-view-text"><a href="#item-text">Text</a></li>
 <?php endif; ?>
 </ul>
 
-<div id="item-details" class="item-details">
+<div id="item-details" class="tab-content active">
 <?php foreach ($euk_detail_field_order as $field):
         $content = meta($field);
         if ($content):
@@ -16,7 +16,7 @@
 
 <?php if (m('item_book')): ?>
 <?php $r = m('item_book')['text']; ?>
-<div id="item-text" class="item-text">
+<div id="item-text" class="tab-content hide">
     <p>The text may or may not be an accurate representation of the original.</p>
     <iframe id="text_frame" src="<?php echo $r['href']; ?>" width="100%" name="text"></iframe>
 </div>
