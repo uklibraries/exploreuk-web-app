@@ -1547,7 +1547,7 @@ Main components
 #facet_group_left {
     width: 80%;
     float: left;
-    font-size: 12px
+    font-size: 12px;
 }
 
 #facet_group_mobile_top {
@@ -2021,7 +2021,9 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 }
 
 .item-container {
-    margin: 0 10em;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Begin submenu */
@@ -2102,11 +2104,18 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 .page-title {
     border: 1px solid #282828;
     padding: 1em;
-    margin:  1em;
+    margin: 1em auto;
+}
+
+.page-title,
+.tab-content {
+    font-size: 16px;
+    line-height: 1.5em;
 }
 
 .page-title h2,
 .page-title h3,
+#item-details h3,
 .item-details h3 {
     font-weight: bold;
     text-align: left;
@@ -2114,12 +2123,13 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 }
 
 .page-title h2 {
-    font-size: 1.5em;
+    font-size: 1.125em;
     margin-bottom: 1em;
 }
 .page-title h3,
+#item-details h3,
 .item-details h3 {
-    font-size: 1.25em;
+    font-size: 1em;
 }
 
 .item-details {
@@ -2130,7 +2140,8 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 .item-text {
     border: 1px solid #282828;
     padding: 1em;
-    margin: 1em;
+    /*margin: 1em;*/
+    margin: 1em auto;
 }
 
 .item-details a {
@@ -2178,9 +2189,21 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     font-size: 64px;
 }
 
-.back-to-search,
-.image-controls {
-    padding: 0 10em;
+.download,
+.media-player {
+    font-size: 25px;
+}
+
+.search-and-item-control-row {
+    font-size: 16px;
+    line-height: 1.6em;
+    background-color: #f7f7f7;
+}
+
+.search-and-item-control-container {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .static-thumb {
@@ -2231,16 +2254,14 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 .tab-content.active {
     display: block;
     background: #ffffff;
-    margin-left: 1em;
-    margin-right: 1em;
 }
 .tab-content.hide {
     display: none;
 }
 
 #item-view-tabs {
-    margin-bottom: -.2em;
-    margin-left: 1em;
+    margin: 1em auto -.6em auto;
+    font-size: 18px;
 }
 
 .tab-content {
