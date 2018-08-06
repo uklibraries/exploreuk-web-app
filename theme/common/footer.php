@@ -99,6 +99,7 @@ $('#<?php echo $s['ref_id']; ?>').hide();
 <?php endif; ?>
 <script src="<?php echo $theme_path; ?>/javascripts/back_to_top.js"></script>
 <script src="<?php echo $theme_path; ?>/javascripts/main.js"></script>
+<script src="<?php echo $theme_path; ?>/javascripts/jsbin-tabs.js"></script>
 <script src="<?php echo $theme_path; ?>/assets/js/lazyload.js"></script>
 	</body>
 </html>
