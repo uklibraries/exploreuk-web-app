@@ -4,6 +4,20 @@ define('EUK_MAX_LABEL', 80);
 
 function render_field($field, $content) {
     global $euk_locale;
+    if ($field === 'collection_url') {
+        $field_label = $euk_locale['en']['source_s'];
+        $link = "/?f%5Bsource_s%5D%5B%5D=";
+        $link_label = $euk_locale['en']['more_items'];
+        $lines = array(
+            "<h3>$field_label</h3>\n",
+            '<p>',
+            render_link(u("/catalog/{$content['base_id']}"), $content['source_s'], true),
+            ' (',
+            render_link(u($link . urlencode($content['source_s'])), $link_label),
+            ')</p>',
+        );
+        return implode('', $lines);
+    }
     if (isset($euk_locale['en'][$field])) {
         $label = $euk_locale['en'][$field];
     }
@@ -36,15 +50,21 @@ function render_field_helper($field, $item) {
     }
 
     if (strpos($item, 'http') === 0) {
-        return "<a href=\"$item\" target=\"_blank\" rel=\"noopener\">$item</a>";
+        return render_link($item, $item, true);
     }
     elseif (in_array($field, $euk_facetable)) {
         $link = "/?f%5B$field%5D%5B%5D=";
-        return "<a href=\"" . u($link . urlencode($item)) . "\">$item</a>";
+        return render_link(u($link . urlencode($item)), $item);
     }
     else {
         return $item;
     }
+}
+
+function render_link($href, $text, $external = false) {
+    return "<a href=\"$href\" " .
+           ($external ? "target=\"_blank\" rel=\"noopener\"" : '') .
+           ">$text</a>";
 }
 
 function euk_brevity($message, $length = 0) {
@@ -91,6 +111,19 @@ function m($arg) {
 }
 
 function meta($arg) {
+    global $findaidurl;
+    if ($arg === 'collection_url') {
+        return array(
+            'base_id' => meta_raw('object_id_s'),
+            'source_s' => meta_raw('source_s'),
+        );
+    }
+    else {
+        return meta_raw($arg);
+    }
+}
+
+function meta_raw($arg) {
     global $euk_data;
     $r = null;
     $sources = array(
@@ -232,7 +265,7 @@ function euk_index() {
     else {
         $data['site_title'] = $site_title;
     }
-    
+
     # Facets
     $data['active_facets'] = array();
     foreach ($euk_query['f'] as $f_term => $value) {
@@ -252,7 +285,7 @@ function euk_index() {
             'count' => $count,
         );
     }
-    
+
     $data['facets'] = array();
     global $facets;
     foreach ($facets as $facet) {
@@ -275,7 +308,7 @@ function euk_index() {
             );
         }
     }
-    
+
     # Pagination and results
     if (!euk_on_front_page()) {
         $data['on_front_page'] = false;
@@ -298,7 +331,7 @@ function euk_index() {
                 $pagination_data['last'] = $pagination_data['count'];
             }
             $data['pagination'] = $pagination_data;
-    
+
             # results
             $docs = $result['response']['docs'];
             $results = array();
@@ -335,7 +368,7 @@ function euk_index() {
     else {
         $data['on_front_page'] = true;
     }
-    
+
     $euk_data = $data;
     return $euk_data;
 }
@@ -351,11 +384,11 @@ function euk_page() {
     euk_initialize_id();
 
     $result = euk_get_search_results();
-    
+
     $data = array(
         'action' => 'page',
     );
-    
+
     # Search
     $data['q'] = q('q');
     $data['search_link'] = "$euk_solr?" . euk_build_search_params();
@@ -368,7 +401,7 @@ function euk_page() {
     else {
         $data['site_title'] = $site_title;
     }
-    
+
     # Facets
     $data['active_facets'] = array();
     foreach (q('f') as $f_term => $value) {
@@ -388,7 +421,7 @@ function euk_page() {
             'count' => $count,
         );
     }
-    
+
     $data['facets'] = array();
     foreach ($facets as $facet) {
         $facet_counts = $result['facet_counts']['facet_fields'][$facet];
@@ -409,7 +442,7 @@ function euk_page() {
             );
         }
     }
-    
+
     $doc = euk_get_document($euk_id);
     $format = $doc['format'];
     $flat = array();
@@ -475,7 +508,7 @@ function euk_page() {
             );
         }
     }
-    
+
     if (array_key_exists('finding_aid_url_s', $doc)) {
         $entry = array(
             'label' => 'Collection guide',
@@ -486,9 +519,9 @@ function euk_page() {
         );
         $metadata[] = $entry;
     }
-    
+
     $flat['metadata'] = $metadata;
-    
+
     switch ($format) {
     case 'audio':
         $data['item_audio'] = array_merge(

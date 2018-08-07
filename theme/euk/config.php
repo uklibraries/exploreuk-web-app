@@ -167,9 +167,11 @@ $euk_locale = array(
         'mets_url_display' => 'XML Metadata',
         'pub_date' => 'Date',
         'publisher_display' => 'Publisher',
+        'collection_url' => 'Collection',
         'source_s' => 'Collection',
         'subject_topic_facet' => 'Library of Congress Subject Headings',
         'usage_display' => 'Rights',
+        'more_items' => 'more items',
     ),
 );
 
@@ -210,7 +212,7 @@ $euk_title_field_order = array(
     'pub_date',
     'author_display',
     'language_display',
-    'source_s',
+    'collection_url', # NOTE: this implies source_s
     'description_display',
 );
 
