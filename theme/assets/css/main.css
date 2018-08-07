@@ -1848,11 +1848,6 @@ a:hover {
     color: #005dab;
 }
 
-.result-item .image-placeholder,
-.result-item .image-placeholder img {
-    width: 100%;
-}
-
 .result-item .result-summary {
     width: 100%;
 }
@@ -1880,11 +1875,23 @@ a:hover {
 }
 
 .image-placeholder {
+    width: 100%;
+    height: auto;
+}
+
+.image-placeholder img {
+    max-width: 250px;
+    max-height: 250px;
+    height: auto;
+}
+
+.image-placeholder {
     max-width: 250px;
 }
 
 @media all and (min-width:800px) {
-    .image-placeholder {
+    .image-placeholder,
+    .image-placeholder img {
         float: right;
     }
 }
