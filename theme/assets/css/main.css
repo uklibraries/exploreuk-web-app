@@ -1869,13 +1869,14 @@ a:hover {
 @supports (display: grid) {
     .result-item {
         display: grid;
-        grid-template-columns: 3em minmax(150px, 1fr);
+        grid-template-columns: auto minmax(150px, 1fr);
         grid-gap: 1em;
     }
 }
 
 .image-placeholder {
     width: 100%;
+    max-width: 250px;
     height: auto;
 }
 
@@ -1883,10 +1884,6 @@ a:hover {
     max-width: 250px;
     max-height: 250px;
     height: auto;
-}
-
-.image-placeholder {
-    max-width: 250px;
 }
 
 @media all and (min-width:800px) {
