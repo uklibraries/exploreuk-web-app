@@ -82,17 +82,63 @@ $('.click-to-play-video').click(function () {
 <?php if ($ui === "1"): ?>
 <script type="text/javascript" src="<?php echo "$theme_path/openseadragon/openseadragon.min.js"; ?>"></script>
 <script type="text/javascript">
-var id = '<?php echo $s['osd_id']; ?>';
-var osd_viewer = OpenSeadragon({
-    id: id,
-    prefixUrl: "<?php echo $s['prefix_url']; ?>",
-    tileSources: {
-        type: 'image',
-        url: '<?php echo $r['reference_image_url_s']; ?>'
+$(function () {
+    function resize_window() {
+        var min_height = 150;
+        var max_height = Math.round(0.6 * $(window).height());
+
+        var image_width = <?php echo $r['reference_image_width_s']; ?>;
+        var image_height  = <?php echo $r['reference_image_height_s']; ?>;
+        var current_width = $('#viewer').width();
+
+        var target_height = Math.round(current_width * image_height / image_width);
+        if (target_height > max_height) {
+            target_height = max_height;
+        }
+        if (target_height < min_height) {
+            target_height = min_height;
+        }
+
+        $('#viewer').height(target_height);
+
+        /* display_viewer(); */
     }
+
+    function display_viewer() {
+        var width = $('#viewer').width();
+        if (width <= 400) {
+            $('#<?php echo $s['osd_id']; ?>').hide();
+            $('#<?php echo $s['ref_id']; ?>').show();
+        }
+        else {
+            $('#<?php echo $s['osd_id']; ?>').show();
+            $('#<?php echo $s['ref_id']; ?>').hide();
+        }
+    }
+
+    function initialize_osd() {
+        var id = '<?php echo $s['osd_id']; ?>';
+        var osd_viewer = OpenSeadragon({
+            id: id,
+            prefixUrl: "<?php echo $s['prefix_url']; ?>",
+            tileSources: {
+                type: 'image',
+                url: '<?php echo $r['reference_image_url_s']; ?>'
+            }
+        });
+        $(osd_viewer.element).find('.openseadragon-canvas').css('background-color', 'black');
+        /* display_viewer(); */
+        $('#<?php echo $s['ref_id']; ?>').hide();
+    }
+
+    $(window).resize(function () {
+        resize_window();
+    });
+
+
+    resize_window();
+    initialize_osd();
 });
-$(osd_viewer.element).find('.openseadragon-canvas').css('background-color', 'black');
-$('#<?php echo $s['ref_id']; ?>').hide();
 </script>
 <?php endif; ?>
 <?php endif; ?>
