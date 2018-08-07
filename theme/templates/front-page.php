@@ -110,7 +110,7 @@
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         grid-gap: 1rem;
-        max-width: 700px;
+        max-width: 880px;
     }
 
     .additional-resources {
