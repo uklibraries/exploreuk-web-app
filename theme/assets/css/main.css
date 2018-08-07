@@ -2076,8 +2076,8 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 }
 
 #cd-main-nav ul li:hover a {
-    background: #282828;
-    color: #0087f8;
+    background: #f7f7f7;
+    color: #005dab;
 }
 
 #cd-main-nav ul li ul {
@@ -2104,8 +2104,8 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 }
 
 #cd-main-nav ul li ul a:hover {
-    background: #dedede;
-    color: #0087f8;
+    background: #f7f7f7;
+    color: #005dab;
 }
 
 #cd-main-nav ul li ul {
