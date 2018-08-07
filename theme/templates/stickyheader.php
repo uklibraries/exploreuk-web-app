@@ -1,10 +1,12 @@
 <header class="sticky">
 <div class="bg-uklblack" id="ukhomelink">
-    <span class="toplinks">
-    <a href="https://www.uky.edu/UKHome/" target="_blank" rel="noopener">University of Kentucky</a> |
-    <a href="https://libraries.uky.edu/" target="_blank" rel="noopener">UK Libraries</a> |
-    <a href="https://libraries.uky.edu/SC" target="_blank" rel="noopener">Special Collections Research Center</a>
-    </span>
+<input class="menu-btn" type="checkbox" id="menu-btn" />
+  <label class="menu-icon" for="menu-btn"><span class="navicon"></span></label>
+  <ul class="menu">
+    <li><a href="https://www.uky.edu/UKHome/" target="_blank" rel="noopener">University of Kentucky</a></li>
+    <li><a href="https://libraries.uky.edu/" target="_blank" rel="noopener">UK Libraries</a></li>
+    <li><a href="https://libraries.uky.edu/SC" target="_blank" rel="noopener">Special Collections Research Center</a></li>
+  </ul>
 </div>
 <div class="row bg-uklblue">
     <div>
