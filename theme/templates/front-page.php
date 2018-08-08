@@ -92,12 +92,13 @@
 }
 
 .additional-resources > li {
-    width: 420px;
-    height: 120px;
+    width: 210px;
+    height: 60px;
     margin: 1rem;
     background: #ffffff;
 }
-.additional-resources > li > a {
+.additional-resources > li > a,
+.additional-resources > li > a > img {
     width: 100%;
     height: 100%;
 }
@@ -115,8 +116,9 @@
 
     .additional-resources {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
         grid-gap: 1rem;
+        max-width: 880px;
     }
 }
 
