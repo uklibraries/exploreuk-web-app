@@ -20,6 +20,7 @@ require_once("$base_dir/euk/euk.php");
     <title><?php echo m('site_title'); ?></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
 <a href="#0" class="cd-top js-cd-top">Top</a>
