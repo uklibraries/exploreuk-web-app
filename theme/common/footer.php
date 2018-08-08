@@ -41,7 +41,7 @@ require_once("$base_dir/euk/euk.php");
 <!-- CSS -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.1/lity.min.css" integrity="sha256-0SZxASYAglrmIuTx+ZYHE3hzTnCZWB7XLu+iA8AG0Z0=" crossorigin="anonymous" />
-<link rel="stylesheet" href="<?php echo $theme_path; ?>/assets/css/main.min.css" />
+<link rel="stylesheet" href="<?php echo $theme_path; ?>/assets/css/main.min.css" integrity="<?php echo subresource_integrity('assets/css/main.min.css'); ?>" crossorigin="anonymous" />
 
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>

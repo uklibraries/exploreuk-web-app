@@ -2,6 +2,16 @@
 
 define('EUK_MAX_LABEL', 80);
 
+function subresource_integrity($path) {
+    global $euk_base;
+    global $theme_path;
+    $theme_name = Theme::getCurrentThemeName('public');
+    $file_path = realpath(BASE_DIR) . "$euk_base/themes/$theme_name/$path";
+    $algo = 'sha384';
+    $version = $algo . '-' . base64_encode(hash($algo, file_get_contents($file_path), true));
+    return $version;
+}
+
 function render_field($field, $content) {
     global $euk_locale;
     if ($field === 'collection_url') {
