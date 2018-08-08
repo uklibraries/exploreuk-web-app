@@ -84,24 +84,29 @@ $('.click-to-play-video').click(function () {
 <script type="text/javascript">
 $(function () {
     function resize_window() {
-        var min_height = 150;
-        var max_height = Math.round(0.6 * $(window).height());
-
-        var image_width = <?php echo $r['reference_image_width_s']; ?>;
-        var image_height  = <?php echo $r['reference_image_height_s']; ?>;
-        var current_width = $('#viewer').width();
-
-        var target_height = Math.round(current_width * image_height / image_width);
-        if (target_height > max_height) {
-            target_height = max_height;
+        if (OpenSeadragon.isFullScreen()) {
+            $('#viewer').height($(window).height());
         }
-        if (target_height < min_height) {
-            target_height = min_height;
+        else {
+            var min_height = 150;
+            var max_height = Math.round(0.6 * $(window).height());
+
+            var image_width = <?php echo $r['reference_image_width_s']; ?>;
+            var image_height  = <?php echo $r['reference_image_height_s']; ?>;
+            var current_width = $('#viewer').width();
+
+            var target_height = Math.round(current_width * image_height / image_width);
+            if (target_height > max_height) {
+                target_height = max_height;
+            }
+            if (target_height < min_height) {
+                target_height = min_height;
+            }
+
+            $('#viewer').height(target_height);
+
+            /* display_viewer(); */
         }
-
-        $('#viewer').height(target_height);
-
-        /* display_viewer(); */
     }
 
     function display_viewer() {
@@ -134,7 +139,6 @@ $(function () {
     $(window).resize(function () {
         resize_window();
     });
-
 
     resize_window();
     initialize_osd();
