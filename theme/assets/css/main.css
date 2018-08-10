@@ -2036,8 +2036,12 @@ nav ul ul ul li {
 }
 
 /* Change ' +' in order to change the Dropdown symbol */
-li > a:after { content: ' +'; }
-li > a:only-child:after { content: ''; }
+nav li > a:after {
+    content: ' \25BC';
+}
+nav li > a:only-child:after {
+    content: '';
+}
 
 
 /* Media Queries
