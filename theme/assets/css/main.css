@@ -1911,7 +1911,6 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 }
 
 .tab-content {
-    margin 0 1em !important;
     background: #f7f7f7;
     border: 1px solid;
     padding: 1em;
