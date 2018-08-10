@@ -1481,6 +1481,7 @@ summary {
 #featured_image_text {
     float: right;
     margin-right: 20px;
+    margin-left: 1em;
 }
 
 a:hover {
