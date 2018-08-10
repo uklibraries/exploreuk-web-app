@@ -1620,6 +1620,25 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     padding: 0.1em 1em 0.3em 1em !important;
 }
 
+@media screen and (max-width: 1400px) {
+    form input[type=email],
+    form input[type=password],
+    form input[type=text],
+    form select,
+    form textarea {
+        margin-bottom: 1em;
+        margin-top: 1em;
+    }
+
+    .button,
+    button,
+    input[type=button],
+    input[type=reset],
+    input[type=submit] {
+        margin-bottom: 15px;
+    }
+}
+
 #top {
     padding: 0px 0px !important;
 }
