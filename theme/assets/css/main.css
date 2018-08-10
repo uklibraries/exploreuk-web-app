@@ -1588,6 +1588,7 @@ Main components
 }
 
 #featured_collections {
+    background: rgb(0,0,0);
     background: rgba(0,0,0,0.4);
     margin-top: 70px;
     border-top: 1px solid #514e49;
@@ -1855,6 +1856,7 @@ summary {
 }
 
 .form-group {
+    background: rgb(22,21,20);
     background: rgba(22,21,20,0.7);
     padding-top: 19px;
     margin-bottom: 5%;
@@ -2539,6 +2541,7 @@ form input[type=email], form input[type=password], form input[type=text], form s
     /* Stylinf the toggle lable */
     .toggle {
         display: block;
+        background: rgb(22,21,20);
         background: rgba(22,21,20,.7);
         padding: 5px 20px;
         color: #ffffff;

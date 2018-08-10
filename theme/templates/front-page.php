@@ -71,7 +71,8 @@
 
 .popular-resources > li > a > h3 {
     color: #ffffff;
-    background-color: rgb(0, 93, 171, 0.7);
+    background-color: rgb(0, 93, 171);
+    background-color: rgba(0, 93, 171, 0.7);
     position: absolute;
     width: 100%;
     height: 33%;
