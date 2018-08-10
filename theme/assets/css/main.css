@@ -1774,6 +1774,11 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     font-size: 1em;
 }
 
+.page-title p a {
+    color: #005dab;
+    text-decoration: underline;
+}
+
 .item-details {
     word-wrap: break-word;
 }
@@ -1784,11 +1789,6 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     padding: 1em;
     /*margin: 1em;*/
     margin: 1em auto;
-}
-
-.item-details a {
-    color: #005dab;
-    text-decoration: underline;
 }
 
 .download,
@@ -1893,6 +1893,11 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 /* end   Simple Pages */
 
 /* begin item tabs */
+.tab-content p a {
+    color: #005dab;
+    text-decoration: underline;
+}
+
 .tab-content.active {
     display: block;
     background: #ffffff;
