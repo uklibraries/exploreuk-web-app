@@ -1297,6 +1297,13 @@ nav a:visited {
   }
 }
 
+@media screen and (max-width: 768px) {
+    #ukhomelink .menu {
+        margin-top: 125px !important;
+        position: absolute;
+    }
+}
+
 #top > div > footer > form {
     width: 100%;
 }
