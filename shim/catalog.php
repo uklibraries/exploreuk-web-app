@@ -254,6 +254,55 @@ function euk_oai() {
     print $doc->saveXML();
 }
 
+function euk_find($id) {
+    global $euk_solr;
+    $parent_id = preg_replace('/_[^_]+$/', '', $id);
+    $sequence = preg_replace('/.*[^_]+_/', '', $id);
+    if ($sequence > 1) {
+        $index = $sequence - 1;
+    }
+
+    parse_str($_SERVER['QUERY_STRING'], $params);
+    $q = null;
+    foreach ($params as $key => $value) {
+        if ($key === 'q') {
+            $q = $value;
+            break;
+        }
+    }
+
+    $pieces = array();
+    $pieces[] = 'q=' . urlencode($q);
+    $pieces[] = 'fq=' . urlencode("parent_id_s:$parent_id");
+    $pieces[] = 'wt=json';
+    $pieces[] = 'fl=' . urlencode('id,reference_image_url_s,reference_image_width_s,reference_image_height_s,text_s,sequence_number_display');
+
+    $url = "$euk_solr?" . implode('&', $pieces);
+    $result = json_decode(file_get_contents($url), true);
+
+    $response = array(
+        'q' => $q,
+        'matches' => array(),
+    );
+
+    if (isset($result['response']) && ($result['response']['docs'] > 0)) {
+        foreach ($result['response']['docs'] as $doc) {
+            $response['matches'][] = array(
+                'text' => $doc['text_s'][0],
+                'par' => array(
+                    'boxes' => array(),
+                    'page' => intval($doc['sequence_number_display'][0]),
+                    'page_width' => intval($doc['reference_image_width_s'][0]),
+                    'page_height' => intval($doc['reference_image_height_s'][0]),
+                    'page_image' => $doc['reference_image_url_s'][0],
+                ),
+            );
+        }
+    }
+
+    print json_encode($response) . "\n";
+}
+
 function euk_download($id) {
     global $euk_id;
     $euk_id = $id;
@@ -346,6 +395,11 @@ $query_string = $_SERVER['QUERY_STRING'];
 
 if (preg_match("#^/${euk_base}catalog/oai/?#", $request_uri, $matches)) {
     euk_oai();
+    exit;
+}
+elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/find/?#", $request_uri, $matches)) {
+    $id = $matches["id"];
+    euk_find($id);
     exit;
 }
 elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/download/?#", $request_uri, $matches)) {
