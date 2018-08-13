@@ -1646,6 +1646,12 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     }
 }
 
+@media screen and (max-width: 1400px)
+#top2_bottom form input[type=text] {
+    margin-top: 0em;
+}
+
+
 #top {
     padding: 0px 0px !important;
 }
