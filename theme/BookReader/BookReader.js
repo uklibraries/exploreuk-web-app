@@ -4430,7 +4430,8 @@ BookReader.prototype.paramsFromCurrent = function() {
     // $$$ region
 
     // search
-    if (this.searchHighlightVisible()) {
+    //if (this.searchHighlightVisible()) {
+    if (this.searchTerm) {
         params.searchTerm = this.searchTerm;
     }
 

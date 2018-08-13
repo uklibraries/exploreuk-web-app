@@ -34,7 +34,7 @@ function render_field($field, $content) {
     else {
         $label = 'Unknown';
     }
-    $lines = array("<h3>$label</h3>");
+    $lines = array("<h3 id=\"page-details-$field\">$label</h3>");
     if (is_array($content)) {
         $lines[] = "<ul>";
         foreach ($content as $item) {

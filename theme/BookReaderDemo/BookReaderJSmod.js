@@ -1,4 +1,4 @@
-// 
+//
 // This file shows the minimum you need to provide to BookReader to display a book
 //
 // Copyright(c)2008-2009 Internet Archive. Software license AGPL version 3.
@@ -12,6 +12,11 @@ br = new BookReader();
 br.search_host = search_host;
 br.imagesBaseURL = imagesBaseURL;
 
+var params = br.paramsFromFragment(window.location.hash);
+if ('undefined' != typeof(params.searchTerm)) {
+    br.searchTerm = params.searchTerm;
+}
+
 // search()
 //______________________________________________________________________________
 br.search = function (term) {
@@ -22,7 +27,8 @@ br.search = function (term) {
     var url = br.search_host + '?q=' + escape(term);
 
     term = term.replace(/\//g, ' '); // strip slashes, since this goes in the url
-    this.searchTerm = term;
+    //this.searchTerm = term;
+    br.searchTerm = term;
 
     this.removeSearchResults();
     this.showProgressPopup('<img id="searchmarker" src="'+this.imagesBaseURL + 'marker_srch-on.png'+'"> Search results will appear below...');
@@ -59,6 +65,7 @@ br.BRSearchCallback = function (results) {
     }
     br.updateSearchHilites();
     br.removeProgressPopup();
+    br.updateLocationHash();
 }
 
 // Return the width of a given page.  Here we assume all images are 800 pixels wide
@@ -110,8 +117,8 @@ br.getPageSide = function(index) {
 // This function returns the left and right indices for the user-visible
 // spread that contains the given index.  The return values may be
 // null if there is no facing page or the index is invalid.
-br.getSpreadIndices = function(pindex) {   
-    var spreadIndices = [null, null]; 
+br.getSpreadIndices = function(pindex) {
+    var spreadIndices = [null, null];
     if ('rl' == this.pageProgression) {
         // Right to Left
         if (this.getPageSide(pindex) == 'R') {
@@ -133,7 +140,7 @@ br.getSpreadIndices = function(pindex) {
             spreadIndices[0] = pindex - 1;
         }
     }
-    
+
     return spreadIndices;
 }
 
@@ -173,18 +180,25 @@ $('#BRtoolbar').find('.read').hide();
 $('#BRtoolbar').find('.logo').hide();
 $('#BRreturn').hide();
 
+
 function updateOuter() {
     var origin = window.location.protocol + '//' + window.location.hostname;
     var page = parseInt(br.paramsFromFragment(window.location.hash).page, 10) - 1;
-    parent.postMessage({page: json[page], hash: window.location.hash}, origin);
+    if (json[page]) {
+        parent.postMessage({page: json[page], hash: window.location.hash}, origin);
+    }
+}
+
+if (br.searchTerm) {
+    $('#textSrch').val(br.searchTerm);
+    br.search(br.searchTerm);
+}
+else if (query) {
+    $('#textSrch').val(query);
+    br.search(query);
 }
 
 if ('onhashchange' in window) {
     window.addEventListener('hashchange', updateOuter);
 }
 updateOuter();
-
-if (query) {
-    $('#textSrch').val(query);
-    br.search(query);
-}

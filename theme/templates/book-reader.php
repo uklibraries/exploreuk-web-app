@@ -6,11 +6,7 @@
    initialization.  From now on, the inner frame will send messages to the outer
    frame instead. */
 if (window.location.hash.length > 0) {
-    var re = /^#page\/\d+\/mode\/\w+$/;
-    var hash = window.location.hash;
-    if (hash.match(re)) {
-        document.getElementById('books_frame').src += hash;
-    }
+    document.getElementById('books_frame').src += window.location.hash;
 }
 
 window.addEventListener('message', function (e) {
@@ -29,6 +25,21 @@ window.addEventListener('message', function (e) {
     var pdf_href = '<?php echo u('/catalog/'); ?>' + page.id + '/download/?type=pdf';
     document.getElementById('pdf_href').href = pdf_href;
 
+    var url = 'https://' + window.location.hostname
+        + '<?php echo u('/catalog/'); ?>'
+        + page.id
+        + window.location.search
+        + window.location.hash
+
+    var permalink = 'https://' + window.location.hostname
+        + '<?php echo u('/catalog/'); ?>'
+        + page.id;
+
+    var anchor = document.getElementById('page-details-id').nextElementSibling.childNodes[0];
+    anchor.href = permalink;
+    anchor.innerHTML = permalink;
+
+    history.pushState({href: url}, null, url);
     window.location.hash = hash;
 }, false);
 </script>

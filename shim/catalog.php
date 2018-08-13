@@ -270,6 +270,7 @@ function euk_find($id) {
     $pieces[] = 'q=' . urlencode($q);
     $pieces[] = 'fq=' . urlencode("parent_id_s:$id");
     $pieces[] = 'wt=json';
+    $pieces[] = 'rows=10000';
     $pieces[] = 'fl=' . urlencode('id,reference_image_url_s,reference_image_width_s,reference_image_height_s,text_s,sequence_number_display');
 
     $url = "$euk_solr?" . implode('&', $pieces);
@@ -282,21 +283,60 @@ function euk_find($id) {
 
     if (isset($result['response']) && ($result['response']['docs'] > 0)) {
         foreach ($result['response']['docs'] as $doc) {
-            $response['matches'][] = array(
-                'text' => $doc['text_s'][0],
-                'par' => array(array(
-                    'boxes' => array(),
-                    'page' => intval($doc['sequence_number_display'][0]),
-                    'page_width' => intval($doc['reference_image_width_s'][0]),
-                    'page_height' => intval($doc['reference_image_height_s'][0]),
-                    'page_image' => $doc['reference_image_url_s'][0],
-                )),
-            );
+            $snippet = euk_highlight_snippet($doc['text_s'][0], $q, 5);
+            if (strlen($snippet) > 5) {
+                $response['matches'][] = array(
+                    'text' => $snippet,
+                    'par' => array(array(
+                        'boxes' => array(),
+                        'page' => intval($doc['sequence_number_display'][0]),
+                        'page_width' => intval($doc['reference_image_width_s'][0]),
+                        'page_height' => intval($doc['reference_image_height_s'][0]),
+                        'page_image' => $doc['reference_image_url_s'][0],
+                    )),
+                );
+            }
         }
     }
 
     header("Content-Type: application/json\n");
     print json_encode($response); # . "\n";
+}
+
+function euk_highlight_snippet($text, $raw_terms, $radius) {
+    $terms = preg_split('/\s+/', $raw_terms, NULL, PREG_SPLIT_NO_EMPTY);
+    $words = explode(' ', preg_replace('/\s+/', ' ', $text));
+    $wanted = array_fill(0, count($words), 0);
+    for ($i = 0; $i < count($words); $i++) {
+        foreach ($terms as $term) {
+            if (preg_match("/\b$term\b/i", $words[$i])) {
+                $words[$i] = '{{{' . $words[$i] . '}}}';
+                $low = $i - $radius;
+                if ($low < 0) {
+                    $low = 0;
+                }
+                $high = $i + $radius;
+                if ($high >= count($words)) {
+                    $high = count($words) - 1;
+                }
+                $len = $high - $low + 1;
+                array_splice($wanted, $low, $len, array_fill(0, $len, 1));
+            }
+        }
+    }
+    $result = array();
+    $current = false;
+    for ($i = 0; $i < count($wanted); $i++) {
+        if ($wanted[$i]) {
+            $result[] = $words[$i];
+            $current = false;
+        }
+        else if (!$current) {
+            $current = true;
+            $result[] = '…';
+        }
+    }
+    return implode(' ', $result);
 }
 
 function euk_download($id) {
