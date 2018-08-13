@@ -9,6 +9,57 @@ var pages = json;
 
 // Create the BookReader object
 br = new BookReader();
+br.search_host = search_host;
+br.imagesBaseURL = imagesBaseURL;
+
+// search()
+//______________________________________________________________________________
+br.search = function (term) {
+    //console.log('search called with term=' + term);
+
+    $('#textSrch').blur(); //cause mobile safari to hide the keyboard
+
+    var url = br.search_host + '?q=' + escape(term);
+
+    term = term.replace(/\//g, ' '); // strip slashes, since this goes in the url
+    this.searchTerm = term;
+
+    this.removeSearchResults();
+    this.showProgressPopup('<img id="searchmarker" src="'+this.imagesBaseURL + 'marker_srch-on.png'+'"> Search results will appear below...');
+    $.ajax({url:url, dataType:'json', success: br.BRSearchCallback});
+}
+
+// BRSearchCallback()
+//______________________________________________________________________________
+br.BRSearchCallback = function (results) {
+    //console.log('got ' + results.matches.length + ' results');
+    br.removeSearchResults();
+    br.searchResults = results;
+    //console.log(br.searchResults);
+
+    if (0 == results.matches.length) {
+        var errStr  = 'No matches were found.';
+        var timeout = 1000;
+        if (false === results.indexed) {
+            errStr  = "<p>This book hasn't been indexed for searching yet. We've just started indexing it, so search should be available soon. Please try again later. Thanks!</p>";
+            timeout = 5000;
+        }
+        $(br.popup).html(errStr);
+        setTimeout(function(){
+            $(br.popup).fadeOut('slow', function() {
+                br.removeProgressPopup();
+            })
+        },timeout);
+        return;
+    }
+
+    var i;
+    for (i=0; i<results.matches.length; i++) {
+        br.addSearchResult(results.matches[i].text, br.leafNumToIndex(results.matches[i].par[0].page));
+    }
+    br.updateSearchHilites();
+    br.removeProgressPopup();
+}
 
 // Return the width of a given page.  Here we assume all images are 800 pixels wide
 br.getPageWidth = function(index) {
@@ -94,6 +145,10 @@ br.getPageNum = function(index) {
     return index+1;
 }
 
+br.leafNumToIndex = function (leafNum) {
+    return leafNum - 1;
+}
+
 // Total number of leafs
 br.numLeafs = pages.length; //15;
 
@@ -102,9 +157,6 @@ br.numLeafs = pages.length; //15;
 br.bookTitle = 'ExploreUK';
 br.bookUrl  = '/';
 
-// Override the path used to find UI images
-br.imagesBaseURL = '/BookReader/images/';
-
 br.getEmbedCode = function(frameWidth, frameHeight, viewParams) {
     return "Embed code not supported in bookreader demo.";
 }
@@ -112,10 +164,14 @@ br.getEmbedCode = function(frameWidth, frameHeight, viewParams) {
 // Let's go!
 br.init();
 
-// read-aloud and search need backend compenents and are not supported in the demo
+/* hide unused components */
+$('#BRtoolbar').find('.play').hide();
+$('#BRtoolbar').find('.pause').hide();
+$('#BRtoolbar').find('.info').hide();
+$('#BRtoolbar').find('.share').hide();
 $('#BRtoolbar').find('.read').hide();
-$('#textSrch').hide();
-$('#btnSrch').hide();
+$('#BRtoolbar').find('.logo').hide();
+$('#BRreturn').hide();
 
 function updateOuter() {
     var origin = window.location.protocol + '//' + window.location.hostname;
@@ -127,3 +183,8 @@ if ('onhashchange' in window) {
     window.addEventListener('hashchange', updateOuter);
 }
 updateOuter();
+
+if (query) {
+    $('#textSrch').val(query);
+    br.search(query);
+}
