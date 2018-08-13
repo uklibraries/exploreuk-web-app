@@ -604,7 +604,9 @@ function euk_page() {
     case 'newspapers':
         /* fall through */
     case 'yearbooks':
-        $flat['embed_url'] = u('/catalog/' . $euk_id . '/paged');
+        $flat['embed_url'] = u('/catalog/' . $euk_id . '/paged'
+            . (q('q') ? '?q=' . urlencode(q('q')) : '')
+        );
         if (array_key_exists($text_field, $doc)) {
             $flat['text'] = array(
                 'href' => u('/catalog/' . $euk_id . '/text'),
@@ -642,6 +644,7 @@ function euk_paged() {
     global $euk_query;
     global $facets;
     global $site_title;
+    global $theme_path;
     euk_initialize_query();
     euk_initialize_id();
 
@@ -751,8 +754,17 @@ function euk_paged() {
 
     $pages = euk_get_pages($euk_id);
     if ($pages) {
+        $parent = preg_replace('/_[^_]+$/', '', $euk_id);
+        $sequence = intval(preg_replace('/.*[^_]+_/', '', $euk_id)) - 1;
+        $search_host = 'https://' . $_SERVER['HTTP_HOST'] . '/catalog/' . $parent . '/find';
+        $images_base_url = 'https://' . $_SERVER['HTTP_HOST'] . $theme_path . '/BookReader/images/';
+
+
         $data['script'] = array(
             'json' => json_encode($pages),
+            'search_host' => json_encode($search_host),
+            'imagesBaseURL' => json_encode($images_base_url),
+            'query' => json_encode(q('q')),
         );
     }
     $euk_data = $data;

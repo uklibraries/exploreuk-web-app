@@ -256,11 +256,6 @@ function euk_oai() {
 
 function euk_find($id) {
     global $euk_solr;
-    $parent_id = preg_replace('/_[^_]+$/', '', $id);
-    $sequence = preg_replace('/.*[^_]+_/', '', $id);
-    if ($sequence > 1) {
-        $index = $sequence - 1;
-    }
 
     parse_str($_SERVER['QUERY_STRING'], $params);
     $q = null;
@@ -273,7 +268,7 @@ function euk_find($id) {
 
     $pieces = array();
     $pieces[] = 'q=' . urlencode($q);
-    $pieces[] = 'fq=' . urlencode("parent_id_s:$parent_id");
+    $pieces[] = 'fq=' . urlencode("parent_id_s:$id");
     $pieces[] = 'wt=json';
     $pieces[] = 'fl=' . urlencode('id,reference_image_url_s,reference_image_width_s,reference_image_height_s,text_s,sequence_number_display');
 
@@ -289,18 +284,19 @@ function euk_find($id) {
         foreach ($result['response']['docs'] as $doc) {
             $response['matches'][] = array(
                 'text' => $doc['text_s'][0],
-                'par' => array(
+                'par' => array(array(
                     'boxes' => array(),
                     'page' => intval($doc['sequence_number_display'][0]),
                     'page_width' => intval($doc['reference_image_width_s'][0]),
                     'page_height' => intval($doc['reference_image_height_s'][0]),
                     'page_image' => $doc['reference_image_url_s'][0],
-                ),
+                )),
             );
         }
     }
 
-    print json_encode($response) . "\n";
+    header("Content-Type: application/json\n");
+    print json_encode($response); # . "\n";
 }
 
 function euk_download($id) {
