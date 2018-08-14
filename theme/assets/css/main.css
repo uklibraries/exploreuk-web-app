@@ -1376,8 +1376,8 @@ summary {
 }
 
 #active_facets {
-     background:rgba(0,0,0,0.3);
-     rgb(0,0,0);
+     background: rgb(0, 0, 0);
+     background: rgba(0, 0, 0, 0.3);
 }
 
 #facet_group {
