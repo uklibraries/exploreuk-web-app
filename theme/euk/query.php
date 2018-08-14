@@ -172,6 +172,86 @@ function euk_remove_filter($facet, $label) {
     ));
 }
 
+function euk_get_facets_by_count() {
+    global $euk_solr;
+    $url = "$euk_solr?" . euk_build_search_params_by_count();
+    return json_decode(file_get_contents($url), true);
+}
+
+function euk_build_search_params_by_count() {
+    global $euk_query;
+    global $facets;
+    $q = $euk_query['q'];
+    $fq = $euk_query['fq'];
+    $f = $euk_query['f'];
+    $pieces = array();
+    $pieces[] = 'rows=0';
+    $pieces[] = 'wt=json';
+    $pieces[] = 'q=' . urlencode($q);
+    if (count($facets) > 0) {
+        $pieces[] = 'facet=true';
+        $pieces[] = 'facet.mincount=1';
+        $pieces[] = 'facet.limit=-1';
+        foreach ($facets as $facet) {
+            $pieces[] = "facet.field=$facet";
+        }
+        $pieces[] = 'facet.sort=count';
+    }
+    if (count($fq) > 0) {
+        foreach ($fq as $spec) {
+            $pieces[] = 'fq=' . urlencode($spec);
+        }
+    }
+    if (count($f) > 0) {
+        foreach ($f as $label => $value) {
+            $pieces[] = 'fq=' . urlencode("{!raw f=$label}$value");
+        }
+    }
+    # compound object
+    $pieces[] = 'fq=' . urlencode("compound_object_split_b:true");
+    return implode('&', $pieces);
+}
+
+function euk_get_facets_by_index() {
+    global $euk_solr;
+    $url = "$euk_solr?" . euk_build_search_params_by_index();
+    return json_decode(file_get_contents($url), true);
+}
+
+function euk_build_search_params_by_index() {
+    global $euk_query;
+    global $facets;
+    $q = $euk_query['q'];
+    $fq = $euk_query['fq'];
+    $f = $euk_query['f'];
+    $pieces = array();
+    $pieces[] = 'rows=0';
+    $pieces[] = 'wt=json';
+    $pieces[] = 'q=' . urlencode($q);
+    if (count($facets) > 0) {
+        $pieces[] = 'facet=true';
+        $pieces[] = 'facet.mincount=1';
+        $pieces[] = 'facet.limit=-1';
+        foreach ($facets as $facet) {
+            $pieces[] = "facet.field=$facet";
+        }
+        $pieces[] = 'facet.sort=index';
+    }
+    if (count($fq) > 0) {
+        foreach ($fq as $spec) {
+            $pieces[] = 'fq=' . urlencode($spec);
+        }
+    }
+    if (count($f) > 0) {
+        foreach ($f as $label => $value) {
+            $pieces[] = 'fq=' . urlencode("{!raw f=$label}$value");
+        }
+    }
+    # compound object
+    $pieces[] = 'fq=' . urlencode("compound_object_split_b:true");
+    return implode('&', $pieces);
+}
+
 function euk_get_search_results() {
     global $euk_solr;
     $url = "$euk_solr?" . euk_build_search_params();
