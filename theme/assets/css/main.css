@@ -1332,7 +1332,7 @@ summary {
     color: #ffffff;
 }
 
-#active_facets, #facets {
+.active_facets, .facets {
     width: 100%;
     text-align: left;
     font-size: 16px;
@@ -1340,18 +1340,18 @@ summary {
     padding-top: 0px;
 }
 
-#active_facets ul {
+.active_facets ul {
     width: 100%;
     padding: 0 1em !important;
 }
 
-#facets > article > details > ul > li {
+.facets > article > details > ul > li {
     margin-right: 0px;
     line-height: 2em;
     padding: 5px 0;
 }
 
-#facets > article > details > ul > li > a {
+.facets > article > details > ul > li > a {
     margin: 0;
     display: block;
     width: 100%;
@@ -1359,7 +1359,7 @@ summary {
     padding: 0 5px 0 5px;
 }
 
-#facets > article > details > ul > li:hover {
+.facets > article > details > ul > li:hover {
     background: lightgray;
 }
 
@@ -1367,15 +1367,15 @@ summary {
      background-size: 100% 100%;
 }
 
-#facet_group, #facets article {
+#facet_group, .facets article {
      width: 100%;
 }
 
-#facets>article>details>ul>li:nth-child(odd) {
+.facets>article>details>ul>li:nth-child(odd) {
      background: #ffffff;
 }
 
-#active_facets {
+.active_facets {
      background: rgb(0, 0, 0);
      background: rgba(0, 0, 0, 0.3);
 }
@@ -1384,7 +1384,7 @@ summary {
     width: 100%;
 }
 
-#facets article {
+.facets article {
     width: 100%;
 }
 
@@ -1621,7 +1621,7 @@ a:hover {
     padding: 8px;
 }
 
-#facets > article {
+.facets > article {
     padding-left: 0px !important;
 }
 
@@ -1753,7 +1753,7 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     margin-right: 4%;
 }
 
-#per_page {
+.pagination-rows {
     width: 4em !important;
     height: 25px;
     font-size: 16px;

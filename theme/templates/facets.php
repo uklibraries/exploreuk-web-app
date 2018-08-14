@@ -1,5 +1,11 @@
+<?php
+if (!isset($fc)) {
+    $fc = 0;
+}
+$fc++;
+?>
 <?php if (count(m('active_facets')) > 0): ?>
-<div id="active_facets" class="row">
+<div id="active_facets_<?= $fc ?>" class="active_facets row">
 <ul>
 <?php foreach (m('active_facets') as $active): ?>
 <li>
@@ -12,7 +18,7 @@
 </ul>
 </div>
 <?php endif; ?>
-<div id="facets" class="row">
+<div id="facets_<?= $fc ?>" class="facets row">
 <?php foreach (m('facets') as $facet): ?>
 <article><details open><summary>
 <?php echo $facet['field_label']; ?></summary><br/>
