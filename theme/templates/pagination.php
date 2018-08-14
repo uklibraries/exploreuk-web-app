@@ -1,11 +1,15 @@
 <?php
 $p = m('pagination');
+if (!isset($pc)) {
+    $pc = 0;
+}
+$pc++;
 ?>
 <div class="row pagination">
 
 <div class="rows-select">
 <form action="/catalog" class="per_page" method="get">
-<label for="per_page">Show <select id="per_page" name="per_page" onchange="this.form.submit()" title="Number of results to display per page">
+<label for="per_page_<?= $pc ?>">Show <select class="pagination-rows" id="per_page_<?= $pc ?>" name="per_page_<?= $pc ?>" onchange="this.form.submit()" title="Number of results to display per page">
 <?php
 $opts = $euk_per_page_opts;
 foreach ($opts as $opt) {
