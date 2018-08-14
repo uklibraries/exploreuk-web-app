@@ -319,6 +319,46 @@ function euk_index() {
         }
     }
 
+    $data['facet_full_lists'] = array();
+    $facets_by_count = euk_get_facets_by_count();
+    $facets_by_index = euk_get_facets_by_index();
+    foreach ($facets as $facet) {
+        $data['facet_full_lists'][$facet] = array(
+            'field_label' => euk_facet_displayname($facet),
+            'field_raw' => $facet,
+            'by_count' => array(),
+            'by_index' => array(),
+        );
+
+        $facet_counts = $facets_by_count['facet_counts']['facet_fields'][$facet];
+        if (count($facet_counts) > 2) {
+            $navs_sensible = euk_makeNavsSensible($facet_counts);
+            $values = array();
+            foreach ($navs_sensible as $label => $count) {
+                $add_link = euk_add_filter($facet, $label);
+                $data['facet_full_lists'][$facet]['by_count'][] = array(
+                    'add_link' => u('/catalog/' . $add_link),
+                    'value_label' => $label,
+                    'count' => $count,
+                );
+            }
+        }
+
+        $facet_counts = $facets_by_index['facet_counts']['facet_fields'][$facet];
+        if (count($facet_counts) > 2) {
+            $navs_sensible = euk_makeNavsSensible($facet_counts);
+            $values = array();
+            foreach ($navs_sensible as $label => $count) {
+                $add_link = euk_add_filter($facet, $label);
+                $data['facet_full_lists'][$facet]['by_index'][] = array(
+                    'add_link' => u('/catalog/' . $add_link),
+                    'value_label' => $label,
+                    'count' => $count,
+                );
+            }
+        }
+    }
+
     # Pagination and results
     if (!euk_on_front_page()) {
         $data['on_front_page'] = false;
