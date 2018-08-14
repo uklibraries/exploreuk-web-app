@@ -1933,7 +1933,8 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     display: none;
 }
 
-#item-view-tabs {
+#item-view-tabs,
+.tabs {
     margin: 1em auto -.6em auto;
     font-size: 18px;
 }
@@ -1951,10 +1952,12 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     background: #ffffff;
 }
 
-#item-view-tabs li {
+#item-view-tabs li,
+.tab-option {
     background: #f7f7f7;
 }
-#item-view-tabs li.active {
+#item-view-tabs li.active,
+.tab-option.active {
     background: #ffffff;
 }
 
@@ -2238,3 +2241,27 @@ form input[type=email], form input[type=password], form input[type=text], form s
     }
 }
 /* end dropdown */
+
+/* begin facet browse */
+.more-facets-button {
+    float: right;
+    padding-right: 10px;
+}
+
+.more-facets {
+    overflow: auto;
+    background: rgb(253, 253, 246);
+    padding: 20px;
+    width: 600px;
+    max-width: 100%;
+    border-radius: 6px;
+    max-height: 974px;
+}
+
+.more-facets-list li:nth-child(odd) {
+     background: #ffffff;
+}
+.more-facets-list li:nth-child(even) {
+     background: #f7f7f7;
+}
+/* end facet browse */
