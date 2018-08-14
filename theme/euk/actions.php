@@ -536,11 +536,13 @@ function euk_page() {
             $value = type_for($doc['format'], $doc['type_display']);
         }
         else {
-            if (is_array($doc[$key])) {
-                $value = implode('.  ', $doc[$key]);
-            }
-            elseif (isset($doc[$key])) {
-                $value = $doc[$key];
+            if (isset($doc[$key])) {
+                if (is_array($doc[$key])) {
+                    $value = implode('.  ', $doc[$key]);
+                }
+                else {
+                    $value = $doc[$key];
+                }
             }
             else {
                 $value = false;
@@ -690,7 +692,6 @@ function euk_paged() {
 
     $data = array(
         'site_title' => $site_title,
-        'search_placeholder' => $search_placeholder,
     );
     $data['action'] = 'paged';
     $data['back_to_search'] = u('/catalog/' . euk_link_to_query($euk_query));
@@ -734,11 +735,13 @@ function euk_paged() {
             $value = type_for($doc['format'], $doc['type_display']);
         }
         else {
-            if (is_array($doc[$key])) {
-                $value = implode('.  ', $doc[$key]);
-            }
-            elseif (isset($doc[$key])) {
-                $value = $doc[$key];
+            if (isset($doc[$key])) {
+                if (is_array($doc[$key])) {
+                    $value = implode('.  ', $doc[$key]);
+                }
+                else {
+                    $value = $doc[$key];
+                }
             }
             else {
                 $value = false;

@@ -39,8 +39,6 @@ $templates_dir = 'handlebars';
 
 global $site_title;
 $site_title = 'ExploreUK';
-global $search_placeholder;
-$search_placeholder = 'ExploreUK';
 
 global $euk_solr;
 $euk_solr = get_theme_option('euk_solr');
