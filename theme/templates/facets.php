@@ -26,7 +26,11 @@ $fc++;
 <?php foreach ($facet['values'] as $value): ?>
 <li><a href="<?php echo $value['add_link']; ?>"><?php echo euk_brevity($value['value_label'], 40); ?> <span class="facet-count">(<?php echo $value['count']; ?>)</span></a></li>
 <?php endforeach; ?>
-</ul></details>
+</ul>
+<p class="more-facets-button">
+    <a class="btn" href="#inlinefacets-<?= $facet['field_raw'] ?>" data-lity>More +</a>
+</p>
+</details>
 </article>
 <?php endforeach; ?>
 </div>

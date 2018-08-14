@@ -326,17 +326,16 @@ function euk_index() {
         $data['facet_full_lists'][$facet] = array(
             'field_label' => euk_facet_displayname($facet),
             'field_raw' => $facet,
-            'by_count' => array(),
-            'by_index' => array(),
+            'by-count' => array(),
+            'by-index' => array(),
         );
 
         $facet_counts = $facets_by_count['facet_counts']['facet_fields'][$facet];
         if (count($facet_counts) > 2) {
             $navs_sensible = euk_makeNavsSensible($facet_counts);
-            $values = array();
             foreach ($navs_sensible as $label => $count) {
                 $add_link = euk_add_filter($facet, $label);
-                $data['facet_full_lists'][$facet]['by_count'][] = array(
+                $data['facet_full_lists'][$facet]['by-count'][] = array(
                     'add_link' => u('/catalog/' . $add_link),
                     'value_label' => $label,
                     'count' => $count,
@@ -347,10 +346,9 @@ function euk_index() {
         $facet_counts = $facets_by_index['facet_counts']['facet_fields'][$facet];
         if (count($facet_counts) > 2) {
             $navs_sensible = euk_makeNavsSensible($facet_counts);
-            $values = array();
             foreach ($navs_sensible as $label => $count) {
                 $add_link = euk_add_filter($facet, $label);
-                $data['facet_full_lists'][$facet]['by_index'][] = array(
+                $data['facet_full_lists'][$facet]['by-index'][] = array(
                     'add_link' => u('/catalog/' . $add_link),
                     'value_label' => $label,
                     'count' => $count,

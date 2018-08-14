@@ -59,3 +59,4 @@ $p = m('pagination');
 
 <?php require("pagination.php"); ?>
         </div>
+<?php require("more-facets.php"); ?>
