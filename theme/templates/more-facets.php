@@ -4,7 +4,7 @@
 <h1><?= $list['field_label'] ?></h1>
 
 <ul class="tabs" id="more-facets-tabs-<?= $list['field_raw'] ?>">
-<li id="more-facets-<?= $list['field_raw'] ?>-by-count" class="tab-option active"><a href="#more-facets-list-<?= $list['field_raw'] ?>-by-count">Sort by Count</a></li>
+<li id="more-facets-<?= $list['field_raw'] ?>-by-count" class="tab-option active"><a href="#more-facets-list-<?= $list['field_raw'] ?>-by-count">Sort by Relevance</a></li>
 <li id="more-facets-<?= $list['field_raw'] ?>-by-index" class="tab-option"><a href="#more-facets-list-<?= $list['field_raw'] ?>-by-index">Sort by <?= $list['field_label'] ?></a></li>
 </ul>
 
