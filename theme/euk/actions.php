@@ -281,19 +281,21 @@ function euk_index() {
     foreach ($euk_query['f'] as $f_term => $value) {
         $remove_link = euk_remove_filter($f_term, $value);
         $field_label = euk_facet_displayname($f_term);
-        $facet_counts = $result['facet_counts']['facet_fields'][$f_term];
-        $count = 0;
-        if (count($facet_counts) > 0) {
-            $navs_sensible = euk_makeNavsSensible($facet_counts);
-            $count = $navs_sensible[$value];
+        if (isset($result['facet_counts']['facet_fields'][$f_term])) {
+            $facet_counts = $result['facet_counts']['facet_fields'][$f_term];
+            $count = 0;
+            if (count($facet_counts) > 0) {
+                $navs_sensible = euk_makeNavsSensible($facet_counts);
+                $count = $navs_sensible[$value];
+            }
+            $data['active_facets'][] = array(
+                'field_label' => $field_label,
+                'remove_link' => u('/catalog/' . $remove_link),
+                'field_raw' => $f_term,
+                'value_label' => $value,
+                'count' => $count,
+            );
         }
-        $data['active_facets'][] = array(
-            'field_label' => $field_label,
-            'remove_link' => u('/catalog/' . $remove_link),
-            'field_raw' => $f_term,
-            'value_label' => $value,
-            'count' => $count,
-        );
     }
 
     $data['facets'] = array();
@@ -425,8 +427,10 @@ function euk_page() {
     global $euk_data;
     global $euk_id;
     global $euk_query;
+    global $euk_solr;
     global $facets;
     global $site_title;
+    global $text_field;
     global $theme_path;
     euk_initialize_query();
     euk_initialize_id();
@@ -455,19 +459,21 @@ function euk_page() {
     foreach (q('f') as $f_term => $value) {
         $remove_link = euk_remove_filter($f_term, $value);
         $field_label = euk_facet_displayname($f_term);
+        if (isset($result['facet_counts']['facet_fields'][$f_term])) {
         $facet_counts = $result['facet_counts']['facet_fields'][$f_term];
-        $count = 0;
-        if (count($facet_counts) > 0) {
-            $navs_sensible = euk_makeNavsSensible($facet_counts);
-            $count = $navs_sensible[$value];
+            $count = 0;
+            if (count($facet_counts) > 0) {
+                $navs_sensible = euk_makeNavsSensible($facet_counts);
+                $count = $navs_sensible[$value];
+            }
+            $data['active_facets'][] = array(
+                'field_label' => $field_label,
+                'remove_link' => $remove_link,
+                'field_raw' => $f_term,
+                'value_label' => $value,
+                'count' => $count,
+            );
         }
-        $data['active_facets'][] = array(
-            'field_label' => $field_label,
-            'remove_link' => $remove_link,
-            'field_raw' => $f_term,
-            'value_label' => $value,
-            'count' => $count,
-        );
     }
 
     $data['facets'] = array();

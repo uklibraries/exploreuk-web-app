@@ -14,7 +14,7 @@
       endforeach; ?>
 </div>
 
-<?php if (m('item_book')): ?>
+<?php if (m('item_book') && isset(m('item_book')['text'])): ?>
 <?php $r = m('item_book')['text']; ?>
 <div id="item-text" class="tab-content hide">
     <p>The text may or may not be an accurate representation of the original.</p>
