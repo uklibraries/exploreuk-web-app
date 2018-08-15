@@ -1069,18 +1069,6 @@ nav a:visited {
     margin-left: 4%;
 }
 
-#more-facets-tabs {
-    display: flex;
-}
-
-#more-facets-tabs > li {
-    padding: 0 10px 0 10px;
-    border-top: solid 1px #282828;
-    border-right: solid 1px #282828;
-    border-left: solid 1px #282828;
-    margin-right: 10px;
-}
-
 #facets_1 {
     padding: 0 0 0 0 !important;
 }
@@ -1962,6 +1950,18 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 .tabs {
     margin: 1em auto -.6em auto;
     font-size: 18px;
+}
+
+.tabs {
+    display: flex;
+}
+
+.tabs > li {
+    padding: 0 10px 0 10px;
+    border-top: solid 1px #282828;
+    border-right: solid 1px #282828;
+    border-left: solid 1px #282828;
+    margin-right: 10px;
 }
 
 .tab-content {
