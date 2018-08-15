@@ -1069,7 +1069,7 @@ nav a:visited {
     margin-left: 4%;
 }
 
-#facets_1 {
+.facet-menu-mobile .facets {
     padding: 0 0 0 0 !important;
 }
 
