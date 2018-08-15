@@ -275,7 +275,7 @@ function euk_build_search_params() {
     if (count($facets) > 0) {
         $pieces[] = 'facet=true';
         $pieces[] = 'facet.mincount=1';
-        $pieces[] = 'facet.limit=20';
+        $pieces[] = 'facet.limit=10';
         foreach ($facets as $facet) {
             $pieces[] = "facet.field=$facet";
         }
