@@ -283,18 +283,20 @@ function euk_find($id) {
 
     if (isset($result['response']) && ($result['response']['docs'] > 0)) {
         foreach ($result['response']['docs'] as $doc) {
-            $snippet = euk_highlight_snippet($doc['text_s'][0], $q, 5);
-            if (strlen($snippet) > 5) {
-                $response['matches'][] = array(
-                    'text' => $snippet,
-                    'par' => array(array(
-                        'boxes' => array(),
-                        'page' => intval($doc['sequence_number_display'][0]),
-                        'page_width' => intval($doc['reference_image_width_s'][0]),
-                        'page_height' => intval($doc['reference_image_height_s'][0]),
-                        'page_image' => $doc['reference_image_url_s'][0],
-                    )),
-                );
+            if (isset($doc['text_s'])) {
+                $snippet = euk_highlight_snippet($doc['text_s'][0], $q, 5);
+                if (strlen($snippet) > 5) {
+                    $response['matches'][] = array(
+                        'text' => $snippet,
+                        'par' => array(array(
+                            'boxes' => array(),
+                            'page' => intval($doc['sequence_number_display'][0]),
+                            'page_width' => intval($doc['reference_image_width_s'][0]),
+                            'page_height' => intval($doc['reference_image_height_s'][0]),
+                            'page_image' => $doc['reference_image_url_s'][0],
+                        )),
+                    );
+                }
             }
         }
     }

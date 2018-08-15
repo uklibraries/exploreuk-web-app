@@ -299,7 +299,7 @@ function euk_get_document($id) {
     global $euk_solr;
     $url = "$euk_solr?" . euk_document_query($id);
     $result = json_decode(file_get_contents($url), true);
-    if (isset($result['response']) and $result['response']['docs'] > 0) {
+    if (isset($result['response']) and count($result['response']['docs']) > 0) {
         return $result['response']['docs'][0];
     }
     else {
