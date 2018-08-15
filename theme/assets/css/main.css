@@ -1069,13 +1069,17 @@ nav a:visited {
     margin-left: 4%;
 }
 
+.facet-menu-mobile .facets {
+    padding: 0 0 0 0 !important;
+}
+
 #facet_group_mobile {
     display: none;
 }
 
 #facet_group_mobile i,
 #facet_group i {
-    color: #282828;
+    color: unset !important;
 }
 
 #facet_group_left {
@@ -1094,12 +1098,14 @@ nav a:visited {
     width: 100%;
     background: #f7f7f7;
     padding: 1em 0;
+    padding: 0 0 !important;
 }
 
 #facet_group_mobile_head {
     float: left;
     padding-left: 10px;
     padding-top: 12px;
+    background: #005dab !important;
 }
 
 #facet_group_left {
@@ -1378,6 +1384,7 @@ summary {
 .active_facets {
      background: rgb(0, 0, 0);
      background: rgba(0, 0, 0, 0.3);
+     margin: 0 0px 0px !important;
 }
 
 #facet_group {
@@ -1434,7 +1441,7 @@ summary {
     padding-top: 19px;
     margin-bottom: 5%;
     min-height: 210px;
-    max-height: 250px;
+    max-height: 280px;
 }
 
 @supports (display: flex) {
@@ -1753,6 +1760,12 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     margin-right: 4%;
 }
 
+@media screen and (max-width: 760px) {
+.page-navigation {
+    float: left !important;
+}
+}
+
 .pagination-rows {
     width: 4em !important;
     height: 25px;
@@ -1937,6 +1950,18 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 .tabs {
     margin: 1em auto -.6em auto;
     font-size: 18px;
+}
+
+.tabs {
+    display: flex;
+}
+
+.tabs > li {
+    padding: 0 10px 0 10px;
+    border-top: solid 1px #282828;
+    border-right: solid 1px #282828;
+    border-left: solid 1px #282828;
+    margin-right: 10px;
 }
 
 .tab-content {
@@ -2244,13 +2269,17 @@ form input[type=email], form input[type=password], form input[type=text], form s
 
 /* begin facet browse */
 .more-facets-button {
-    float: right;
-    padding-right: 10px;
+    float: left;
+    margin-left: 10px;
+    background: #ffffff;
+    padding: 0px 10px;
+    border: solid 1px #282828;
+    border-radius: 5px;
 }
 
 .more-facets {
     overflow: auto;
-    background: rgb(253, 253, 246);
+    background: #f7f7f7;
     padding: 20px;
     width: 600px;
     max-width: 100%;
