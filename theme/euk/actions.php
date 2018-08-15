@@ -23,7 +23,7 @@ function render_field($field, $content) {
             "<h3>$field_label</h3>\n",
             '<p>',
             $content['source_s'],
-            ' ',
+            ' | ',
             render_link(u("/catalog/{$content['base_id']}"), $collection_label, true),
             ' or ',
             render_link(u($link . urlencode($content['source_s'])), $link_label, true),
