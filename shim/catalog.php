@@ -461,6 +461,7 @@ elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/?#", $request_uri, $match
     $format = euk_get_format($id);
     if ($format === 'collections') {
         header('Location: ' . euk_findingaid_redirect($id));
+        exit;
     }
     else {
         $dest = "https://$host/${euk_base}index.php?action=page&id=$id";
