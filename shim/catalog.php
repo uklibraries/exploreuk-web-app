@@ -1,22 +1,32 @@
 <?php
-# We need to construct and initialize the Omeka application
-# to read theme configuration variables (for example, where
-# is Solr?).  Otherwise, we'd have to hardcode those variables
-# here.
+global $application;
+$application = null;
 
-require_once 'bootstrap.php';
-require_once 'globals.php';
+function euk_initialize_omeka() {
+    global $application;
+    if (!isset($application)) {
+        # We need to construct and initialize the Omeka application
+        # to read theme configuration variables (for example, where
+        # is Solr?).  Otherwise, we'd have to hardcode those variables
+        # here.
 
-$application = new Omeka_Application(APPLICATION_ENV);
-$application->getBootstrap()->setOptions(array(
-    'resources' => array(
-        'theme' => array(
-            'basePath' => THEME_DIR,
-            'webBasePath' => WEB_RELATIVE_THEME,
-        )
-    )
-));
-$application->initialize();
+        require_once 'bootstrap.php';
+        require_once 'globals.php';
+
+        $application = new Omeka_Application(APPLICATION_ENV);
+        $application->getBootstrap()->setOptions(array(
+            'resources' => array(
+                'theme' => array(
+                    'basePath' => THEME_DIR,
+                    'webBasePath' => WEB_RELATIVE_THEME,
+                )
+            )
+        ));
+        $application->initialize();
+    }
+}
+
+euk_initialize_omeka();
 
 global $euk_solr;
 $euk_solr = get_theme_option('euk_solr');
