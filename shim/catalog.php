@@ -487,6 +487,4 @@ if (strlen($query_string) > 0) {
 # XXX: Verify that this is not needed.
 # Clean up destination.
 $dest = str_replace("$host//", "$host/", $dest);
-
-# NOTE: The following section is included from aux/catalog-{dev,prod}.php,
-# with the choice made at time of export.
+print file_get_contents($dest);
