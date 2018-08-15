@@ -28,7 +28,7 @@ $fc++;
 <?php endforeach; ?>
 </ul>
 <p class="more-facets-button">
-    <a class="btn" href="#inlinefacets-<?= $facet['field_raw'] ?>" data-lity>More +</a>
+    <a class="btn" href="#inlinefacets-<?= $facet['field_raw'] ?>" data-lity>More <i class="fas fa-plus-circle"></i></a>
 </p>
 </details>
 </article>
