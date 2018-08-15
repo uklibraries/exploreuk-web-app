@@ -169,7 +169,8 @@ $euk_locale = array(
         'source_s' => 'Collection',
         'subject_topic_facet' => 'Library of Congress Subject Headings',
         'usage_display' => 'Rights',
-        'more_items' => 'more items',
+        'open_collection_guide' => 'open collection guide',
+        'more_items' => 'view all items',
     ),
 );
 

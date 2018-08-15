@@ -16,15 +16,18 @@ function render_field($field, $content) {
     global $euk_locale;
     if ($field === 'collection_url') {
         $field_label = $euk_locale['en']['source_s'];
+        $collection_label = $euk_locale['en']['open_collection_guide'];
         $link = "/?f%5Bsource_s%5D%5B%5D=";
         $link_label = $euk_locale['en']['more_items'];
         $lines = array(
             "<h3>$field_label</h3>\n",
             '<p>',
-            render_link(u("/catalog/{$content['base_id']}"), $content['source_s'], true),
-            ' (',
-            render_link(u($link . urlencode($content['source_s'])), $link_label),
-            ')</p>',
+            $content['source_s'],
+            ' ',
+            render_link(u("/catalog/{$content['base_id']}"), $collection_label, true),
+            ' or ',
+            render_link(u($link . urlencode($content['source_s'])), $link_label, true),
+            '</p>',
         );
         return implode('', $lines);
     }
