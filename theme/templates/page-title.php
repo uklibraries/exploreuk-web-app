@@ -9,6 +9,9 @@
 
 <h2><?php echo meta('title_display'); ?></h2>
 <?php foreach ($euk_title_field_order as $field):
+        if (($field === 'collection_url') && (!meta('finding_aid_url_s'))) {
+            continue;
+        }
         $content = meta($field);
         if ($content):
             print render_field($field, $content);
