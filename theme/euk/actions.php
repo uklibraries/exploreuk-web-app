@@ -278,11 +278,12 @@ function euk_index() {
 
     # Title
     if (strlen($data['q']) > 0) {
-        $data['site_title'] = $data['q'] . ' - ' . $site_title;
+       $data['page_title'] = htmlspecialchars($data['q'], ENT_QUOTES, 'UTF-8') . ' - ExploreUK';
     }
     else {
-        $data['site_title'] = $site_title;
+        $data['page_title'] = 'ExploreUK - rare and unique research materials from UK Libraries.';
     }
+    $data['page_description'] = $data['page_title'];
 
     # Facets
     $data['active_facets'] = array();
@@ -454,14 +455,6 @@ function euk_page() {
     $data['search_link'] = "$euk_solr?" . euk_build_search_params();
     $data['back_to_search'] = u('/catalog/' . euk_link_to_query($euk_query));
 
-    # Title
-    if (strlen($data['q']) > 0) {
-        $data['site_title'] = $data['q'] . ' - ' . $site_title;
-    }
-    else {
-        $data['site_title'] = $site_title;
-    }
-
     # Facets
     $data['active_facets'] = array();
     foreach (q('f') as $f_term => $value) {
@@ -573,6 +566,9 @@ function euk_page() {
         }
     }
 
+    # Title
+    $data['page_title'] = euk_brevity(htmlspecialchars($doc['title_display']));
+
     if (array_key_exists('finding_aid_url_s', $doc)) {
         $entry = array(
             'label' => 'Collection guide',
@@ -582,6 +578,21 @@ function euk_page() {
             'link' => true,
         );
         $metadata[] = $entry;
+        $data['page_description'] = htmlspecialchars(
+            $doc['title_display'] . ', ' .
+            implode(', ', $doc['source_s']) . ', ' .
+            'University of Kentucky Libraries - ExploreUK',
+            ENT_QUOTES,
+            'UTF-8'
+        );
+    }
+    else {
+        $data['page_description'] = htmlspecialchars(
+            $doc['title_display'] . ', ' .
+            'University of Kentucky Libraries - ExploreUK',
+            ENT_QUOTES,
+            'UTF-8'
+        );
     }
 
     $flat['metadata'] = $metadata;

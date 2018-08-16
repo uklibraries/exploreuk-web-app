@@ -17,8 +17,9 @@ require_once("$base_dir/euk/euk.php");
 -->
 <html lang="en">
 <head>
-    <title><?php echo m('site_title'); ?></title>
+    <title><?= m('page_title') ?></title>
     <meta charset="utf-8" />
+    <meta name="description" content="<?= m('page_description') ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
 </head>
