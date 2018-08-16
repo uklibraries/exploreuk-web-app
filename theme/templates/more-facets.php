@@ -3,11 +3,14 @@
 
 <h1><?= $list['field_label'] ?></h1>
 
+<div class="tab-wrap">
+<div class="tab-nav">
+
 <ul class="tabs" id="more-facets-tabs-<?= $list['field_raw'] ?>">
 <li id="more-facets-option-<?= $list['field_raw'] ?>-by-count" class="tab-option active"><a href="#more-facets-list-<?= $list['field_raw'] ?>-by-count">Sort by Relevance</a></li>
 <li id="more-facets-option-<?= $list['field_raw'] ?>-by-index" class="tab-option"><a href="#more-facets-list-<?= $list['field_raw'] ?>-by-index">Sort by <?= $list['field_label'] ?></a></li>
 </ul>
-
+</div>
 <?php
 $manners = array('by-count', 'by-index');
 foreach ($manners as $manner):
@@ -20,5 +23,6 @@ foreach ($manners as $manner):
 </ul>
 </div>
 <?php endforeach; ?>
+</div>
 </div>
 <?php endforeach; ?>
