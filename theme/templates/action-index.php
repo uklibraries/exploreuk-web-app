@@ -23,6 +23,21 @@ $p = m('pagination');
 <div id="resultsmain">
 <?php require("pagination.php"); ?>
 
+<?php if (count(m('results')) == 0): ?>
+<div class="row">
+<ul class="result-list">
+<li class="result-item">
+<p class="result-number"></p>
+<div class="result-summary">
+    <h3>No results</h3>
+    <p>
+        Sorry about that.
+    </p>
+</div>
+</li>
+</ul>
+</div>
+<?php else: ?>
 <div class="row">
 <ul class="result-list">
 <?php foreach (m('results') as $r): ?>
@@ -56,6 +71,7 @@ $p = m('pagination');
 <?php endforeach; ?>
 </ul>
 </div>
+<?php endif; ?>
 
 <?php require("pagination.php"); ?>
         </div>
