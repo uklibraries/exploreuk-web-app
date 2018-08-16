@@ -31,7 +31,7 @@ $p = m('pagination');
     <div class="result-summary">
         <h3><a href="<?php echo $r['link']; ?>"><?php echo euk_brevity($r['title']); ?></a></h3>
         <?php if (isset($r['thumb'])): ?>
-        <a class="image-placeholder" href="<?php echo $r['link']; ?>">
+        <a class="image-placeholder" href="<?php echo $r['link']; ?>" aria-label="<?php echo $r['title']; ?>">
             <img class="lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $r['thumb']; ?>" alt="<?php echo $r['title']; ?>" title="<?php echo $r['title']; ?>">
         </a>
         <?php else: ?>

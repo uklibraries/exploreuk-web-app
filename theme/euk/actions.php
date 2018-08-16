@@ -401,10 +401,10 @@ function euk_index() {
                     if (isset($docs[$i][$solr_field])) {
                         $raw_field = $docs[$i][$solr_field];
                         if (is_array($raw_field)) {
-                            $results_data[$field] = $raw_field[0];
+                            $results_data[$field] = htmlspecialchars($raw_field[0], ENT_QUOTES, 'UTF-8');
                         }
                         else {
-                            $results_data[$field] = $raw_field;
+                            $results_data[$field] = htmlspecialchars($raw_field, ENT_QUOTES, 'UTF-8');
                         }
                     }
                 }
