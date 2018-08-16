@@ -10,7 +10,7 @@
 <li id="more-facets-option-<?= $list['field_raw'] ?>-by-count" class="tab-option active"><a href="#more-facets-list-<?= $list['field_raw'] ?>-by-count">Sort by Relevance</a></li>
 <li id="more-facets-option-<?= $list['field_raw'] ?>-by-index" class="tab-option"><a href="#more-facets-list-<?= $list['field_raw'] ?>-by-index">Sort by <?= $list['field_label'] ?></a></li>
 </ul>
-
+</div>
 <?php
 $manners = array('by-count', 'by-index');
 foreach ($manners as $manner):
