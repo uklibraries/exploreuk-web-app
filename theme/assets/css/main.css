@@ -1978,9 +1978,9 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 	display: block;
 	float: left; 
 	padding: 4px 8px;
-	margin: 0 1px 0 0;
+	margin: 0 0 0 0;
 	text-decoration: none;
-	box-shadow: 1px 1px 0 0 #ffffff;
+	box-shadow: 0 1px 0 0 #ffffff;
 }
 
 					  
