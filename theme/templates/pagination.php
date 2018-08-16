@@ -4,6 +4,8 @@ if (!isset($pc)) {
     $pc = 0;
 }
 $pc++;
+
+if (isset($p['count'])):
 ?>
 <div class="row pagination">
 
@@ -46,3 +48,4 @@ foreach ($opts as $opt) {
 </div>
 
 </div>
+<?php endif; ?>
