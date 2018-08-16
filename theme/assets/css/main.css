@@ -1946,6 +1946,57 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     display: none;
 }
 
+.tab-nav {
+    position: absolute;
+    left: 0;
+    top: 0;
+	width: 100%;
+	height: 0;
+}
+
+.tab-nav ul {
+    list-style: none;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+.tab-nav ul li {
+    display: inline;
+}
+
+.tab-nav ul li a {
+    background: #f7f7f7;
+	display: block;
+	padding: 4px 8px;
+	text-decoration: none;
+	display: inline-block;
+}
+
+.tab-nav .active a {
+    background: #ffffff;
+	display: block;
+	float: left;
+	padding: 4px 8px;
+	margin: 0 0 0 0;
+	text-decoration: none;
+	box-shadow: 0 1px 0 0 #ffffff;
+}
+
+.tab-nav:after {
+    content: "";
+    display: block;
+    margin: 0 auto;
+    border-bottom: 1px solid;
+}
+
+.tab-wrap {
+    width: 100%;
+    margin: 100px auto;
+    min-height: 400px;
+	position: relative;
+}
+
 #item-view-tabs,
 .tabs {
     margin: 1em auto -.6em auto;
@@ -1954,10 +2005,11 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 
 .tabs {
     display: flex;
+    margin: 0 !important;
 }
 
 .tabs > li {
-    padding: 0 10px 0 10px;
+    padding: 0;
     border-top: solid 1px #282828;
     border-right: solid 1px #282828;
     border-left: solid 1px #282828;
@@ -1995,7 +2047,7 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 }
 
 #item-view-tabs li a {
-    padding: 1em;
+    padding: .5em;
 }
 /* end item tabs */
 
