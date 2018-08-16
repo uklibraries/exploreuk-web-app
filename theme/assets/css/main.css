@@ -1949,13 +1949,13 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 .tab-nav {
     position: absolute;
     left: 0;
-    top: 0; 
+    top: 0;
 	width: 100%;
 	height: 0;
 }
 
 .tab-nav ul {
-    list-style: none; 
+    list-style: none;
 	position: absolute;
 	bottom: 0;
 	left: 0;
@@ -1971,27 +1971,26 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 	padding: 4px 8px;
 	text-decoration: none;
 	display: inline-block;
-}	
+}
 
 .tab-nav .active a {
     background: #ffffff;
 	display: block;
-	float: left; 
+	float: left;
 	padding: 4px 8px;
 	margin: 0 0 0 0;
 	text-decoration: none;
 	box-shadow: 0 1px 0 0 #ffffff;
 }
 
-					  
 .tab-nav:after {
-    content: "";  
-    display: block; 
-    margin: 0 auto; 
-    border-bottom: 1px solid; 
+    content: "";
+    display: block;
+    margin: 0 auto;
+    border-bottom: 1px solid;
 }
 
-.tab-wrap { 
+.tab-wrap {
     width: 100%;
     margin: 100px auto;
     min-height: 400px;
