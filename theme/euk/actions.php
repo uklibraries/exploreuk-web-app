@@ -443,14 +443,11 @@ function euk_page() {
     global $euk_id;
     global $euk_query;
     global $euk_solr;
-    global $facets;
     global $site_title;
     global $text_field;
     global $theme_path;
     euk_initialize_query();
     euk_initialize_id();
-
-    $result = euk_get_search_results();
 
     $data = array(
         'action' => 'page',
@@ -460,49 +457,6 @@ function euk_page() {
     $data['q'] = q('q');
     $data['search_link'] = "$euk_solr?" . euk_build_search_params();
     $data['back_to_search'] = u('/catalog/' . euk_link_to_query($euk_query));
-
-    # Facets
-    $data['active_facets'] = array();
-    foreach (q('f') as $f_term => $value) {
-        $remove_link = euk_remove_filter($f_term, $value);
-        $field_label = euk_facet_displayname($f_term);
-        if (isset($result['facet_counts']['facet_fields'][$f_term])) {
-        $facet_counts = $result['facet_counts']['facet_fields'][$f_term];
-            $count = 0;
-            if (count($facet_counts) > 0) {
-                $navs_sensible = euk_makeNavsSensible($facet_counts);
-                $count = $navs_sensible[$value];
-            }
-            $data['active_facets'][] = array(
-                'field_label' => $field_label,
-                'remove_link' => $remove_link,
-                'field_raw' => $f_term,
-                'value_label' => $value,
-                'count' => $count,
-            );
-        }
-    }
-
-    $data['facets'] = array();
-    foreach ($facets as $facet) {
-        $facet_counts = $result['facet_counts']['facet_fields'][$facet];
-        if (count($facet_counts) > 2) {
-            $navs_sensible = euk_makeNavsSensible($facet_counts);
-            $values = array();
-            foreach ($navs_sensible as $label => $count) {
-                $add_link = euk_add_filter($facet, $label);
-                $values[] = array(
-                    'add_link' => $add_link,
-                    'value_label' => $label,
-                    'count' => $count,
-                );
-            }
-            $data['facets'][] = array(
-                'field_label' => euk_facet_displayname($facet),
-                'values' => $values,
-            );
-        }
-    }
 
     $doc = euk_get_document($euk_id);
     $format = $doc['format'];
