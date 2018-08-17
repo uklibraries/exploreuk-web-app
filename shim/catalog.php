@@ -106,8 +106,15 @@ function euk_text($id) {
 
 function euk_oai() {
     global $euk_oai_options;
-    require_once('oai.php');
-    $response = euk_oai_response();
+    global $euk_base;
+    global $euk_solr;
+    global $host;
+    require_once('application/libraries/ExploreUK/Oai.php');
+    $response = euk_oai_response(array(
+        'base' => $euk_base,
+        'solr' => $euk_solr,
+        'host' => $host,
+    ));
     $doc = new DOMDocument('1.0', 'utf-8');
     $root = $doc->createElementNS('http://www.openarchives.org/OAI/2.0/', 'OAI-PMH');
     $root = $doc->appendChild($root);
