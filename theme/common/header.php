@@ -11,9 +11,9 @@ require_once("$base_dir/euk/euk.php");
 ?>
 <!DOCTYPE html>
 <!--
-	Prologue by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+    Prologue by HTML5 UP
+    html5up.net | @ajlkn
+    Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html lang="en">
 <head>
@@ -26,7 +26,7 @@ require_once("$base_dir/euk/euk.php");
 <body>
 <a href="#0" class="cd-top js-cd-top">Top</a>
 <div id="main">
-<?php if (euk_on_front_page()): ?>
+<?php if (euk_on_front_page()) : ?>
     <section id="top">
         <div>
 <?php require_once("$base_dir/templates/stickyheader.php"); ?>
@@ -34,7 +34,7 @@ require_once("$base_dir/euk/euk.php");
 <div class="row">
 <?php require_once("$base_dir/templates/nav.php"); ?>
 </div>
-<?php else: ?>
+<?php else : ?>
     <section class="bg-uklblack" id="top2">
         <div>
 <?php require_once("$base_dir/templates/stickyheader.php"); ?>

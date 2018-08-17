@@ -1,4 +1,4 @@
-<?php 
+<?php
 # Move as much of this as possible into user-accessible config.
 
 # Reminder: Omeka does not have "advanced" search for collections.
@@ -19,8 +19,7 @@ SQL;
     $collections = $table->fetchObjects($sql, array(50, $title));
     if (count($collections) > 0) {
         return $collections[0];
-    }
-    else {
+    } else {
         return null;
     }
 }
@@ -70,8 +69,7 @@ if (count($items) > 0) {
         'label' => metadata($item, array('Dublin Core', 'Title')),
         'url' => metadata($item, array('Dublin Core', 'Relation')),
     );
-}
-else {
+} else {
     $featured_image = array(
         'background-image' => '',
         'label' => '',
@@ -102,8 +100,7 @@ foreach ($items as $item) {
             'label' => metadata($item, array('Dublin Core', 'Title')),
             'url' => metadata($item, array('Dublin Core', 'Relation')),
         );
-    }
-    else {
+    } else {
         $popular_resources[] = array(
             'image' => '',
             'label' => '',
@@ -135,8 +132,7 @@ foreach ($items as $item) {
             'label' => metadata($item, array('Dublin Core', 'Title')),
             'url' => metadata($item, array('Dublin Core', 'Relation')),
         );
-    }
-    else {
+    } else {
         $additional_resources[] = array(
             'image' => '',
             'label' => '',
@@ -258,7 +254,8 @@ $hl_snippets = 3;
 global $euk_type_dictionary;
 $euk_type_dictionary = get_theme_option('euk_typedict');
 
-function type_for($format, $type) {
+function type_for($format, $type)
+{
     $type_for = array(
         'archival material' => 'collection',
         'athletic publications' => 'text',
@@ -279,8 +276,7 @@ function type_for($format, $type) {
     );
     if (array_key_exists($format, $type_for)) {
         return $type_for[$format];
-    }
-    else {
+    } else {
         return $type;
     }
 }
@@ -288,17 +284,18 @@ function type_for($format, $type) {
 global $euk_query;
 global $euk_id;
 
-function euk_facet_displayname($facet) {
+function euk_facet_displayname($facet)
+{
     global $euk_locale;
     if (isset($euk_locale['en'][$facet])) {
         return ucfirst($euk_locale['en'][$facet]);
-    }
-    else {
+    } else {
         return 'unknown';
     }
 }
 
-function euk_makeNavsSensible($navs) {
+function euk_makeNavsSensible($navs)
+{
     $newNav = array();
     for ($i =0; $i < count($navs); $i += 2) {
         $newNav[$navs[$i]] = $navs[$i + 1];

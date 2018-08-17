@@ -2,7 +2,8 @@
 global $application;
 $application = null;
 
-function euk_initialize_omeka() {
+function euk_initialize_omeka()
+{
     global $application;
     if (!isset($application)) {
         # We need to construct and initialize the Omeka application
@@ -40,22 +41,24 @@ if (realpath(BASE_DIR) !== realpath($_SERVER['DOCUMENT_ROOT'])) {
 global $euk_findingaid_base_url;
 $euk_findingaid_base_url = get_theme_option('euk_findingaid_base_url');
 
-function euk_findingaid_redirect($id) {
+function euk_findingaid_redirect($id)
+{
     global $euk_findingaid_base_url;
     return "$euk_findingaid_base_url$id";
 }
 
-function euk_initialize_id() {
+function euk_initialize_id()
+{
     global $euk_id;
     if (isset($_GET['id'])) {
         $euk_id = $_GET['id'];
-    }
-    else {
+    } else {
         $euk_id = 'unknown';
     }
 }
 
-function euk_initialize_query() {
+function euk_initialize_query()
+{
     global $euk_query;
     $euk_query = array(
         'q' => null,
@@ -75,15 +78,12 @@ function euk_initialize_query() {
             $value = urldecode($matches['value']);
             if ($key == 'q' and strlen($value) > 0) {
                 $euk_query['q'] = $value;
-            }
-            elseif ($key == 'fq[]') {
+            } elseif ($key == 'fq[]') {
                 $euk_query['fq'][] = $value;
-            }
-            elseif (substr($key, 0, 2) == 'f[') {
+            } elseif (substr($key, 0, 2) == 'f[') {
                 $subkey = substr($key, 2, -3);
                 $euk_query['f'][$subkey] = $value;
-            }
-            elseif ($key == 'offset') {
+            } elseif ($key == 'offset') {
                 $euk_query['offset'] = intval($value);
             }
         }
@@ -91,7 +91,8 @@ function euk_initialize_query() {
     return $euk_query;
 }
 
-function euk_text($id) {
+function euk_text($id)
+{
     global $euk_id;
     $euk_id = $id;
     global $euk_query;
@@ -104,7 +105,8 @@ function euk_text($id) {
     }
 }
 
-function euk_oai() {
+function euk_oai()
+{
     global $euk_oai_options;
     global $euk_base;
     global $euk_solr;
@@ -143,8 +145,7 @@ function euk_oai() {
             $extra = $doc->createElement('extra', $response['extra']);
             $extra = $root->appendChild($extra);
         }
-    }
-    else {
+    } else {
         $node = $doc->createElement($response['verb'], '');
         $node = $root->appendChild($node);
         if ($response['verb'] === 'Identify') {
@@ -172,9 +173,8 @@ function euk_oai() {
                     $child = $node->appendChild($child);
                 }
             }
-        }
         # XXX: seek opportunities to merge code?
-        elseif ($response['verb'] === 'ListMetadataFormats') {
+        } elseif ($response['verb'] === 'ListMetadataFormats') {
             foreach ($response['metadata']['results'] as $result_rows) {
                 $result_node = $doc->createElement('metadataFormat', '');
                 $result_node = $node->appendChild($result_node);
@@ -183,8 +183,7 @@ function euk_oai() {
                     $child = $result_node->appendChild($child);
                 }
             }
-        }
-        elseif ($response['verb'] === 'ListSets') {
+        } elseif ($response['verb'] === 'ListSets') {
             foreach ($response['metadata']['results'] as $result_rows) {
                 $result_node = $doc->createElement('set', '');
                 $result_node = $node->appendChild($result_node);
@@ -193,8 +192,7 @@ function euk_oai() {
                     $child = $result_node->appendChild($child);
                 }
             }
-        }
-        elseif ($response['verb'] === 'GetRecord') {
+        } elseif ($response['verb'] === 'GetRecord') {
             foreach ($response['metadata']['results'] as $record) {
                 $result_node = $doc->createElement('record', '');
                 $result_node = $node->appendChild($result_node);
@@ -221,8 +219,7 @@ function euk_oai() {
                     $child = $oai_dc->appendChild($child);
                 }
             }
-        }
-        elseif ($response['verb'] === 'ListIdentifiers') {
+        } elseif ($response['verb'] === 'ListIdentifiers') {
             foreach ($response['metadata']['results'] as $record) {
                 # header
                 $header = $doc->createElement('header', '');
@@ -234,8 +231,7 @@ function euk_oai() {
             }
             $token = $doc->createElement('resumptionToken', $response['metadata']['resumptionToken']);
             $token = $node->appendChild($token);
-        }
-        elseif ($response['verb'] === 'ListRecords') {
+        } elseif ($response['verb'] === 'ListRecords') {
             foreach ($response['metadata']['results'] as $record) {
                 $result_node = $doc->createElement('record', '');
                 $result_node = $node->appendChild($result_node);
@@ -271,7 +267,8 @@ function euk_oai() {
     print $doc->saveXML();
 }
 
-function euk_find($id) {
+function euk_find($id)
+{
     global $euk_solr;
 
     parse_str($_SERVER['QUERY_STRING'], $params);
@@ -322,8 +319,9 @@ function euk_find($id) {
     print json_encode($response); # . "\n";
 }
 
-function euk_highlight_snippet($text, $raw_terms, $radius) {
-    $terms = preg_split('/\s+/', $raw_terms, NULL, PREG_SPLIT_NO_EMPTY);
+function euk_highlight_snippet($text, $raw_terms, $radius)
+{
+    $terms = preg_split('/\s+/', $raw_terms, null, PREG_SPLIT_NO_EMPTY);
     $words = explode(' ', preg_replace('/\s+/', ' ', $text));
     $wanted = array_fill(0, count($words), 0);
     for ($i = 0; $i < count($words); $i++) {
@@ -349,8 +347,7 @@ function euk_highlight_snippet($text, $raw_terms, $radius) {
         if ($wanted[$i]) {
             $result[] = $words[$i];
             $current = false;
-        }
-        else if (!$current) {
+        } elseif (!$current) {
             $current = true;
             $result[] = '…';
         }
@@ -358,7 +355,8 @@ function euk_highlight_snippet($text, $raw_terms, $radius) {
     return implode(' ', $result);
 }
 
-function euk_download($id) {
+function euk_download($id)
+{
     global $euk_id;
     $euk_id = $id;
     global $euk_query;
@@ -369,16 +367,16 @@ function euk_download($id) {
     }
 
     switch ($_GET['type']) {
-    case 'jpeg':
-        $field = 'reference_image_url_s';
-        $mime = 'image/jpeg';
-        break;
-    case 'pdf':
-        $field = 'pdf_url_display';
-        $mime = 'application/pdf';
-        break;
-    default:
-        return;
+        case 'jpeg':
+            $field = 'reference_image_url_s';
+            $mime = 'image/jpeg';
+            break;
+        case 'pdf':
+            $field = 'pdf_url_display';
+            $mime = 'application/pdf';
+            break;
+        default:
+            return;
     }
 
     $doc = euk_get_document($euk_id);
@@ -398,19 +396,20 @@ function euk_download($id) {
     readfile($url);
 }
 
-function euk_get_document($id) {
+function euk_get_document($id)
+{
     global $euk_solr;
     $url = "$euk_solr?" . euk_document_query($id);
     $result = json_decode(file_get_contents($url), true);
     if (isset($result['response']) and count($result['response']['docs']) > 0) {
         return $result['response']['docs'][0];
-    }
-    else {
+    } else {
         return null;
     }
 }
 
-function euk_document_query($id) {
+function euk_document_query($id)
+{
     $pieces = array();
     $pieces[] = 'fq=' . urlencode("id:$id");
     $pieces[] = 'fl=' . urlencode("*");
@@ -418,19 +417,20 @@ function euk_document_query($id) {
     return implode('&', $pieces);
 }
 
-function euk_get_format($id) {
+function euk_get_format($id)
+{
     global $euk_solr;
     $url = "$euk_solr?" . euk_format_query($id);
     $result = json_decode(file_get_contents($url), true);
     if (isset($result['response']) and count($result['response']['docs']) > 0) {
         return $result['response']['docs'][0]['format'];
-    }
-    else {
+    } else {
         return null;
     }
 }
 
-function euk_format_query($id) {
+function euk_format_query($id)
+{
     $pieces = array();
     $pieces[] = 'fq=' . urlencode("id:$id");
     $pieces[] = 'fl=' . urlencode("format");
@@ -440,8 +440,7 @@ function euk_format_query($id) {
 
 if (isset($_SERVER['HTTP_HOST'])) {
     $host = $_SERVER['HTTP_HOST'];
-}
-else {
+} else {
     $host = $_SERVER['SERVER_NAME'];
 }
 
@@ -451,49 +450,39 @@ $query_string = $_SERVER['QUERY_STRING'];
 if (preg_match("#^/${euk_base}catalog/oai/?#", $request_uri, $matches)) {
     euk_oai();
     exit;
-}
-elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/find/?#", $request_uri, $matches)) {
+} elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/find/?#", $request_uri, $matches)) {
     $id = $matches["id"];
     euk_find($id);
     exit;
-}
-elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/download/?#", $request_uri, $matches)) {
+} elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/download/?#", $request_uri, $matches)) {
     $id = $matches["id"];
     euk_download($id);
     exit;
-}
-elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/paged/?#", $request_uri, $matches)) {
+} elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/paged/?#", $request_uri, $matches)) {
     $id = $matches["id"];
     $dest = "https://$host/${euk_base}index.php?action=paged&id=$id";
-}
-elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/text/?#", $request_uri, $matches)) {
+} elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/text/?#", $request_uri, $matches)) {
     $id = $matches["id"];
     euk_text($id);
     exit;
-}
-elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/zoom/?#", $request_uri, $matches)) {
+} elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/zoom/?#", $request_uri, $matches)) {
     $id = $matches["id"];
     $dest = "https://$host/${euk_base}index.php?action=zoom&id=$id";
-}
-elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/?#", $request_uri, $matches)) {
+} elseif (preg_match("#^/${euk_base}catalog/(?<id>[^/]+)/?#", $request_uri, $matches)) {
     $id = $matches["id"];
     $format = euk_get_format($id);
     if ($format === 'collections') {
         header('Location: ' . euk_findingaid_redirect($id));
         exit;
-    }
-    else {
+    } else {
         $dest = "https://$host/${euk_base}index.php?action=page&id=$id";
     }
-}
-elseif (preg_match("#^/${euk_base}catalog/?#", $request_uri, $matches)) {
+} elseif (preg_match("#^/${euk_base}catalog/?#", $request_uri, $matches)) {
     $dest = "https://$host/${euk_base}index.php?action=index";
-}
-elseif (preg_match("#^/${euk_base}text/(?<id>[^/]+)/?#", $request_uri, $matches)) {
+} elseif (preg_match("#^/${euk_base}text/(?<id>[^/]+)/?#", $request_uri, $matches)) {
     $id = $matches["id"];
     $dest = "https://$host/${euk_base}index.php?action=text&id=$id";
-}
-else {
+} else {
     $dest = "https://$host/${euk_base}index.php?action=index";
 }
 

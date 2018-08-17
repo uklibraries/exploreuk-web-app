@@ -1,7 +1,8 @@
 <?php
 
 /* main entry point */
-function euk_oai_response($host_options) {
+function euk_oai_response($host_options)
+{
     global $euk_oai_options;
     global $euk_oai_sets;
     global $oai_per_page;
@@ -29,25 +30,25 @@ function euk_oai_response($host_options) {
     $oai_per_page = 15;
 
     switch ($_SERVER['REQUEST_METHOD']) {
-    case 'GET':
-        parse_str($_SERVER['QUERY_STRING'], $params);
-        break;
+        case 'GET':
+            parse_str($_SERVER['QUERY_STRING'], $params);
+            break;
 
-    case 'POST':
-        $params = array();
-        if (isset($_REQUEST['verb'])) {
-            $params['verb'] = $_REQUEST['verb'];
-        }
-        foreach ($euk_oai_options as $option) {
-            if (isset($_REQUEST[$option])) {
-                $params[$option] = $_REQUEST[$option];
+        case 'POST':
+            $params = array();
+            if (isset($_REQUEST['verb'])) {
+                $params['verb'] = $_REQUEST['verb'];
             }
-        }
-        break;
+            foreach ($euk_oai_options as $option) {
+                if (isset($_REQUEST[$option])) {
+                    $params[$option] = $_REQUEST[$option];
+                }
+            }
+            break;
 
-    default:
-        return euk_oai_error('badArgument');
-        break;
+        default:
+            return euk_oai_error('badArgument');
+            break;
     }
     $response = array(
         'verb' => null,
@@ -60,8 +61,7 @@ function euk_oai_response($host_options) {
         if ($key === 'verb') {
             if (!isset($response['verb'])) {
                 $response['verb'] = $value;
-            }
-            else {
+            } else {
                 return euk_oai_error('badVerb');
                 break;
             }
@@ -73,16 +73,13 @@ function euk_oai_response($host_options) {
     foreach ($params as $key => $value) {
         if ($key === 'verb') {
             continue;
-        }
-        elseif (!in_array($key, $euk_oai_options)) {
+        } elseif (!in_array($key, $euk_oai_options)) {
             return euk_oai_error('badArgument');
             break;
-        }
-        elseif (isset($options[$key])) {
+        } elseif (isset($options[$key])) {
             return euk_oai_error('badArgument');
             break;
-        }
-        else {
+        } else {
             $response[$key] = $value;
             $options[$key] = $value;
         }
@@ -91,32 +88,31 @@ function euk_oai_response($host_options) {
         return euk_oai_error('badVerb');
     }
     switch ($response['verb']) {
-    case 'Identify':
-        $metadata = euk_oai_identify($options);
-        break;
-    case 'ListMetadataFormats':
-        $metadata = euk_oai_list_metadata_formats($options);
-        break;
-    case 'ListSets':
-        $metadata = euk_oai_list_sets($options);
-        break;
-    case 'GetRecord':
-        $metadata = euk_oai_get_record($options);
-        break;
-    case 'ListIdentifiers':
-        $metadata = euk_oai_list_identifiers($options);
-        break;
-    case 'ListRecords':
-        $metadata = euk_oai_list_records($options);
-        break;
-    default:
-        return euk_oai_error('badVerb');
-        break;
+        case 'Identify':
+            $metadata = euk_oai_identify($options);
+            break;
+        case 'ListMetadataFormats':
+            $metadata = euk_oai_list_metadata_formats($options);
+            break;
+        case 'ListSets':
+            $metadata = euk_oai_list_sets($options);
+            break;
+        case 'GetRecord':
+            $metadata = euk_oai_get_record($options);
+            break;
+        case 'ListIdentifiers':
+            $metadata = euk_oai_list_identifiers($options);
+            break;
+        case 'ListRecords':
+            $metadata = euk_oai_list_records($options);
+            break;
+        default:
+            return euk_oai_error('badVerb');
+            break;
     }
     if (isset($metadata['error'])) {
         $response['error'] = $metadata['error'];
-    }
-    else {
+    } else {
         $response['metadata'] = $metadata;
     }
     return $response;
@@ -124,7 +120,8 @@ function euk_oai_response($host_options) {
 
 /* OAI verbs */
 
-function euk_oai_identify($options) {
+function euk_oai_identify($options)
+{
     global $oai_host_options;
     $host = $oai_host_options['host'];
 
@@ -150,7 +147,8 @@ function euk_oai_identify($options) {
     return $metadata;
 }
 
-function euk_oai_list_metadata_formats($options) {
+function euk_oai_list_metadata_formats($options)
+{
     global $oai_host_options;
     $host = $oai_host_options['host'];
     $solr = $oai_host_options['solr'];
@@ -186,7 +184,8 @@ function euk_oai_list_metadata_formats($options) {
     return $metadata;
 }
 
-function euk_oai_list_sets($options) {
+function euk_oai_list_sets($options)
+{
     global $euk_oai_sets;
     $permitted_options = array(
         'resumptionToken',
@@ -214,7 +213,8 @@ function euk_oai_list_sets($options) {
     return $metadata;
 }
 
-function euk_oai_get_record($options) {
+function euk_oai_get_record($options)
+{
     global $oai_host_options;
     $host = $oai_host_options['host'];
     $solr = $oai_host_options['solr'];
@@ -278,7 +278,8 @@ function euk_oai_get_record($options) {
     return $metadata;
 }
 
-function euk_oai_list_identifiers($options) {
+function euk_oai_list_identifiers($options)
+{
     global $oai_per_page;
     global $euk_oai_sets;
     global $oai_host_options;
@@ -302,8 +303,7 @@ function euk_oai_list_identifiers($options) {
         if (isset($options['error'])) {
             return euk_oai_error('badResumptionToken');
         }
-    }
-    else {
+    } else {
         if (!isset($options['from'])) {
             $options['from'] = euk_oai_earliest_datestamp();
         }
@@ -312,8 +312,7 @@ function euk_oai_list_identifiers($options) {
         }
         if (!isset($options['page'])) {
             $options['page'] = 1;
-        }
-        else {
+        } else {
             $options['page'] = intval($options['page']);
         }
     }
@@ -354,7 +353,8 @@ function euk_oai_list_identifiers($options) {
     return $metadata;
 }
 
-function euk_oai_list_records($options) {
+function euk_oai_list_records($options)
+{
     global $oai_per_page;
     global $euk_oai_sets;
     global $oai_host_options;
@@ -378,8 +378,7 @@ function euk_oai_list_records($options) {
         if (isset($options['error'])) {
             return euk_oai_error('badResumptionToken');
         }
-    }
-    else {
+    } else {
         if (!isset($options['from'])) {
             $options['from'] = euk_oai_earliest_datestamp();
         }
@@ -388,8 +387,7 @@ function euk_oai_list_records($options) {
         }
         if (!isset($options['page'])) {
             $options['page'] = 1;
-        }
-        else {
+        } else {
             $options['page'] = intval($options['page']);
         }
     }
@@ -455,7 +453,8 @@ function euk_oai_list_records($options) {
 
 /* config */
 
-function oai_base() {
+function oai_base()
+{
     global $oai_host_options;
     $host = $oai_host_options['host'];
     $base = $oai_host_options['base'];
@@ -465,7 +464,8 @@ function oai_base() {
     return $oai_base;
 }
 
-function euk_oai_raw_params($options) {
+function euk_oai_raw_params($options)
+{
     global $oai_per_page;
 
     $raw_params = array(
@@ -478,17 +478,16 @@ function euk_oai_raw_params($options) {
 
     if (isset($options['set'])) {
         switch ($options['set']) {
-        case 'primo':
-            $raw_params[] = array('fq', '(sequence_sort:00001) OR (format:collections)');
-            break;
-        case 'umbra':
-            /* fall through */
-        default:
-            $raw_params[] = array('fq', '((sequence_sort:00001) AND (format:archival* OR format:athletic* OR format:yearbooks)) OR (format:collections)');
-            break;
+            case 'primo':
+                $raw_params[] = array('fq', '(sequence_sort:00001) OR (format:collections)');
+                break;
+            case 'umbra':
+                /* fall through */
+            default:
+                $raw_params[] = array('fq', '((sequence_sort:00001) AND (format:archival* OR format:athletic* OR format:yearbooks)) OR (format:collections)');
+                break;
         }
-    }
-    else {
+    } else {
         # XXX: This is not what the legacy site does, but this matches what
         # users can find on the site.
         $raw_params[] = array('fq', 'compound_object_split_b:true');
@@ -497,7 +496,8 @@ function euk_oai_raw_params($options) {
     return $raw_params;
 }
 
-function euk_oai_data_dictionary() {
+function euk_oai_data_dictionary()
+{
     return array(
         array('title', 'title_display'),
         array('date', 'pub_date'),
@@ -518,7 +518,8 @@ function euk_oai_data_dictionary() {
 
 /* error reporting */
 
-function euk_oai_error($code) {
+function euk_oai_error($code)
+{
     return array(
         'error' => array(
             'code' => $code,
@@ -527,7 +528,8 @@ function euk_oai_error($code) {
     );
 }
 
-function euk_oai_error_message($code) {
+function euk_oai_error_message($code)
+{
     $message = array(
         'badArgument' => 'The request includes illegal arguments, is missing required arguments, includes a repeated argument, or values for arguments have an illegal syntax.',
         'badResumptionToken' => 'The value of the resumptionToken argument is invalid or expired.',
@@ -540,15 +542,15 @@ function euk_oai_error_message($code) {
     );
     if (isset($message[$code])) {
         return $message[$code];
-    }
-    else {
+    } else {
         return null;
     }
 }
 
 /* set handling */
 
-function euk_oai_set_memberships($doc, $options) {
+function euk_oai_set_memberships($doc, $options)
+{
     $sets = array();
     if (($doc['sequence_number_display'][0] === '1') || ($doc['format'] === 'collections')) {
         $sets[] = 'primo';
@@ -561,7 +563,8 @@ function euk_oai_set_memberships($doc, $options) {
 
 /* token handling */
 
-function euk_oai_parse_token($string) {
+function euk_oai_parse_token($string)
+{
     # Sample tokens we want to parse
     # oai_dc.f(2017-06-21T20:03:21Z).u(2018-02-01T13:37:31Z):2
     # oai_dc.s(primo).f(2017-06-21T20:03:21Z).u(2018-02-01T13:37:31Z):2
@@ -572,35 +575,34 @@ function euk_oai_parse_token($string) {
         foreach ($pieces as $piece) {
             if (preg_match('/^(.)\(([^)]+)\)$/', $piece, $matches)) {
                 switch ($matches[1]) {
-                case 's':
-                    $options['set'] = $matches[2];
-                    break;
+                    case 's':
+                        $options['set'] = $matches[2];
+                        break;
 
-                case 'f':
-                    $options['from'] = $matches[2];
-                    break;
+                    case 'f':
+                        $options['from'] = $matches[2];
+                        break;
 
-                case 'u':
-                    $options['until'] = $matches[2];
-                    break;
+                    case 'u':
+                        $options['until'] = $matches[2];
+                        break;
 
-                default:
-                    return euk_oai_error('badResumptionToken');
-                    break;
+                    default:
+                        return euk_oai_error('badResumptionToken');
+                        break;
                 }
-            }
-            else {
+            } else {
                 return euk_oai_error('badResumptionToken');
             }
         }
-    }
-    else {
+    } else {
         return euk_oai_error('badResumptionToken');
     }
     return $options;
 }
 
-function euk_oai_mint_token($options) {
+function euk_oai_mint_token($options)
+{
     $prefix = array();
     $prefix[] = $options['metadataPrefix'];
     if (isset($options['set'])) {
@@ -619,33 +621,34 @@ function euk_oai_mint_token($options) {
 
 /* timestamps */
 
-function euk_oai_earliest_datestamp() {
+function euk_oai_earliest_datestamp()
+{
     global $oai_host_options;
     $solr = $oai_host_options['solr'];
     $url = "$solr?wt=json&sort=timestamp+asc&rows=1&fl=timestamp";
     $result = json_decode(file_get_contents($url), true);
     if (isset($result['response']) and $result['response']['docs'] > 0) {
         return $result['response']['docs'][0]['timestamp'];
-    }
-    else {
+    } else {
         return '0000-00-00T00:00:00.000Z';
     }
 }
 
-function euk_oai_latest_datestamp() {
+function euk_oai_latest_datestamp()
+{
     global $oai_host_options;
     $solr = $oai_host_options['solr'];
     $url = "$solr?wt=json&sort=timestamp+desc&rows=1&fl=timestamp";
     $result = json_decode(file_get_contents($url), true);
     if (isset($result['response']) and $result['response']['docs'] > 0) {
         return $result['response']['docs'][0]['timestamp'];
-    }
-    else {
+    } else {
         return '9999-12-31T23:59:59.999Z';
     }
 }
 
-function euk_oai_valid_timestamps($options) {
+function euk_oai_valid_timestamps($options)
+{
     if (!preg_match('/\d\d\d\d-\d\d-\d\d(T\d\d:\d\d:\d\d(\.\d\d\d)?Z)?/', $options['from'])) {
         return false;
     }

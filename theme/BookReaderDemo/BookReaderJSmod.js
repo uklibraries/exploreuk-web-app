@@ -33,7 +33,7 @@ br.search = function (term) {
     this.removeSearchResults();
     this.showProgressPopup('<img id="searchmarker" src="'+this.imagesBaseURL + 'marker_srch-on.png'+'"> Search results will appear below...');
     $.ajax({url:url, dataType:'json', success: br.BRSearchCallback});
-}
+};
 
 // BRSearchCallback()
 //______________________________________________________________________________
@@ -51,10 +51,10 @@ br.BRSearchCallback = function (results) {
             timeout = 5000;
         }
         $(br.popup).html(errStr);
-        setTimeout(function(){
-            $(br.popup).fadeOut('slow', function() {
+        setTimeout(function () {
+            $(br.popup).fadeOut('slow', function () {
                 br.removeProgressPopup();
-            })
+            });
         },timeout);
         return;
     }
@@ -66,58 +66,55 @@ br.BRSearchCallback = function (results) {
     br.updateSearchHilites();
     br.removeProgressPopup();
     br.updateLocationHash();
-}
+};
 
 // Return the width of a given page.  Here we assume all images are 800 pixels wide
-br.getPageWidth = function(index) {
+br.getPageWidth = function (index) {
     if (index >= 0 && index < pages.length) {
-        return parseInt(pages[index]["reference_image_width_s"][0], 10);
-    }
-    else {
+        return parseInt(pages[index].reference_image_width_s[0], 10);
+    } else {
         return 800;
     }
-}
+};
 
 // Return the height of a given page.  Here we assume all images are 1200 pixels high
-br.getPageHeight = function(index) {
+br.getPageHeight = function (index) {
     if (index >= 0 && index < pages.length) {
-        return parseInt(pages[index]["reference_image_height_s"][0], 10);
-    }
-    else {
+        return parseInt(pages[index].reference_image_height_s[0], 10);
+    } else {
         return 1200;
     }
-}
+};
 
 // We load the images from archive.org -- you can modify this function to retrieve images
 // using a different URL structure
-br.getPageURI = function(index, reduce, rotate) {
+br.getPageURI = function (index, reduce, rotate) {
     // reduce and rotate are ignored in this simple implementation, but we
     // could e.g. look at reduce and load images from a different directory
     // or pass the information to an image server
     var url;
     if (index >= 0 && index < pages.length) {
-        url = pages[index]["reference_image_url_s"];
-    }
-    else {
-        url = '/images/logo.png'
+        url = pages[index].reference_image_url_s;
+    } else {
+        url = '/images/logo.png';
     }
 
     return url;
-}
+};
 
 // Return which side, left or right, that a given page should be displayed on
-br.getPageSide = function(index) {
+br.getPageSide = function (index) {
     if (0 == (index & 0x1)) {
         return 'R';
     } else {
         return 'L';
     }
-}
+};
 
 // This function returns the left and right indices for the user-visible
 // spread that contains the given index.  The return values may be
 // null if there is no facing page or the index is invalid.
-br.getSpreadIndices = function(pindex) {
+br.getSpreadIndices = function (pindex) {
     var spreadIndices = [null, null];
     if ('rl' == this.pageProgression) {
         // Right to Left
@@ -142,19 +139,19 @@ br.getSpreadIndices = function(pindex) {
     }
 
     return spreadIndices;
-}
+};
 
 // For a given "accessible page index" return the page number in the book.
 //
 // For example, index 5 might correspond to "Page 1" if there is front matter such
 // as a title page and table of contents.
-br.getPageNum = function(index) {
+br.getPageNum = function (index) {
     return index+1;
-}
+};
 
 br.leafNumToIndex = function (leafNum) {
     return leafNum - 1;
-}
+};
 
 // Total number of leafs
 br.numLeafs = pages.length; //15;
@@ -164,9 +161,9 @@ br.numLeafs = pages.length; //15;
 br.bookTitle = 'ExploreUK';
 br.bookUrl  = '/';
 
-br.getEmbedCode = function(frameWidth, frameHeight, viewParams) {
+br.getEmbedCode = function (frameWidth, frameHeight, viewParams) {
     return "Embed code not supported in bookreader demo.";
-}
+};
 
 // Let's go!
 br.init();
@@ -181,7 +178,8 @@ $('#BRtoolbar').find('.logo').hide();
 $('#BRreturn').hide();
 
 
-function updateOuter() {
+function updateOuter()
+{
     var origin = window.location.protocol + '//' + window.location.hostname;
     var page = parseInt(br.paramsFromFragment(window.location.hash).page, 10) - 1;
     if (json[page]) {
@@ -192,8 +190,7 @@ function updateOuter() {
 if (br.searchTerm) {
     $('#textSrch').val(br.searchTerm);
     br.search(br.searchTerm);
-}
-else if (query) {
+} else if (query) {
     $('#textSrch').val(query);
     br.search(query);
 }

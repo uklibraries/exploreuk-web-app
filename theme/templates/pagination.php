@@ -5,7 +5,7 @@ if (!isset($pc)) {
 }
 $pc++;
 
-if (isset($p['count'])):
+if (isset($p['count'])) :
 ?>
 <div class="row pagination">
 
@@ -17,8 +17,7 @@ $opts = $euk_per_page_opts;
 foreach ($opts as $opt) {
     if (q('rows') == $opt) {
         print "<option value=\"$opt\" selected=\"selected\">$opt</option>\n";
-    }
-    else {
+    } else {
         print "<option value=\"$opt\">$opt</option>\n";
     }
 }
@@ -26,22 +25,22 @@ foreach ($opts as $opt) {
 </select> per page</label>
 <input name="commit" type="hidden" value="search" />
 <input name="search_field" type="hidden" value="all_fields" />
-<input name="q" type="hidden" value="<?php echo q('q'); ?>" />
+<input name="q" type="hidden" value="<?= q('q') ?>" />
     <noscript><input name="commit" type="submit" value="update" /></noscript>
 </form>
 </div>
 
 <div class="page-navigation">
 <p>
-<?php if (isset($p['previous'])): ?>
-    <a href="<?php echo $p['previous']; ?>" class="prev_page">&laquo; Previous</a>
-<?php else: ?>
+<?php if (isset($p['previous'])) : ?>
+    <a href="<?= $p['previous'] ?>" class="prev_page">&laquo; Previous</a>
+<?php else : ?>
     &laquo; Previous
 <?php endif; ?> |
-<?php echo '<strong>' . $p['first'] . '</strong> - <strong>' . $p['last'] . '</strong> of <strong>' . $p['count'] . '</strong>'; ?> |
-<?php if (isset($p['next'])): ?>
-    <a href="<?php echo $p['next']; ?>" class="next_page">Next &raquo;</a>
-<?php else: ?>
+<?= '<strong>' . $p['first'] . '</strong> - <strong>' . $p['last'] . '</strong> of <strong>' . $p['count'] . '</strong>' ?> |
+<?php if (isset($p['next'])) : ?>
+    <a href="<?= $p['next'] ?>" class="next_page">Next &raquo;</a>
+<?php else : ?>
     <span class="disabled next_page">Next &raquo;</span>
 <?php endif; ?>
 </p>

@@ -1,0 +1,5 @@
+theme/BookReader/
+theme/BookReaderDemo/BookReaderJSSimple.js
+theme/javascripts/jquery.*
+theme/javascripts/mediaelementplayer.*
+theme/openseadragon/
