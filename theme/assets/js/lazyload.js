@@ -27,8 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
         lazyImages.forEach(function (lazyImage) {
             lazyImageObserver.observe(lazyImage);
         });
-    }
-    else {
+    } else {
         let active = false;
 
         const lazyLoad = function () {

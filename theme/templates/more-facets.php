@@ -1,4 +1,4 @@
-<?php foreach (m('facet_full_lists') as $list): ?>
+<?php foreach (m('facet_full_lists') as $list) : ?>
 <div id="inlinefacets-<?= $list['field_raw'] ?>" class="more-facets lity-hide">
 
 <h1><?= $list['field_label'] ?></h1>
@@ -13,11 +13,11 @@
 </div>
 <?php
 $manners = array('by-index', 'by-count');
-foreach ($manners as $manner):
+foreach ($manners as $manner) :
 ?>
 <div id="more-facets-list-<?= $list['field_raw'] ?>-<?= $manner ?>" class="tab-content <?= ($manner == 'by-index') ? 'active' : 'hide' ?>">
 <ul class="more-facets-list" id="more-facets-<?= $list['field_raw'] ?>-<?= $manner ?>">
-<?php foreach ($list[$manner] as $value): ?>
+<?php foreach ($list[$manner] as $value) : ?>
     <li><a href="<?= $value['add_link'] ?>"><?= euk_brevity($value['value_label'], 40); ?> <span class="facet-count">(<?= $value['count'] ?>)</span></a></li>
 <?php endforeach; ?>
 </ul>

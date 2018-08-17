@@ -2,10 +2,10 @@
 
 <h2 class="popular-resources-title">Popular Resources</h2>
 <ul class="popular-resources">
-<?php foreach ($popular_resources as $index => $resource): ?>
+<?php foreach ($popular_resources as $index => $resource) : ?>
 
-<li><a id="popular-resource-<?php echo $index; ?>" href="<?php echo $resource['url']; ?>">
-    <h3><span><?php echo $resource['label']; ?></span></h3>
+<li><a id="popular-resource-<?= $index ?>" href="<?= $resource['url'] ?>">
+    <h3><span><?= $resource['label'] ?></span></h3>
 </a></li>
 
 <?php endforeach; ?>
@@ -13,9 +13,9 @@
 
 <h2 class="additional-resources-title">Additional Resources</h2>
 <ul class="additional-resources">
-<?php foreach ($additional_resources as $index => $resource): ?>
+<?php foreach ($additional_resources as $index => $resource) : ?>
 
-<li><a aria-label="<?php echo $resource['label']; ?>" id="additional-resource-<?php echo $index; ?>" href="<?php echo $resource['url']; ?>" target="_blank" rel="noopener"><img class="lazy" src="<?php echo $theme_path; ?>/images/middlegray.png" data-src="<?php echo $resource['image']; ?>" title="<?php echo $resource['label']; ?>"></a></li>
+<li><a aria-label="<?= $resource['label'] ?>" id="additional-resource-<?= $index ?>" href="<?= $resource['url'] ?>" target="_blank" rel="noopener"><img class="lazy" src="<?= $theme_path ?>/images/middlegray.png" data-src="<?= $resource['image'] ?>" title="<?= $resource['label'] ?>"></a></li>
 
 <?php endforeach; ?>
 </ul>
@@ -23,16 +23,16 @@
 
 <style type="text/css">
 #top > div {
-    background-image:url(<?php echo $featured_image['background-image']; ?>);
+    background-image:url(<?= $featured_image['background-image'] ?>);
     height: 100%;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }
 
-<?php foreach ($popular_resources as $index => $resource): ?>
-#popular-resource-<?php echo $index; ?> {
-    background-image:url(<?php echo $resource['image']; ?>);
+<?php foreach ($popular_resources as $index => $resource) : ?>
+#popular-resource-<?= $index ?> {
+    background-image:url(<?= $resource['image'] ?>);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

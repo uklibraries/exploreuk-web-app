@@ -1,1 +1,1 @@
-<?php echo link_to_home_page(theme_logo()); ?>
+<?= link_to_home_page(theme_logo()) ?>

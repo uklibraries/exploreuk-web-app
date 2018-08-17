@@ -1,20 +1,22 @@
 <?php
-function euk_on_front_page() {
+function euk_on_front_page()
+{
     global $euk_query;
     return ($_SERVER['REQUEST_URI'] === '/') || ($_SERVER['REQUEST_URI'] === '/index.php?action=index');
 }
 
-function euk_initialize_id() {
+function euk_initialize_id()
+{
     global $euk_id;
     if (isset($_GET['id'])) {
         $euk_id = $_GET['id'];
-    }
-    else {
+    } else {
         $euk_id = 'unknown';
     }
 }
 
-function euk_initialize_query() {
+function euk_initialize_query()
+{
     global $euk_query;
     $euk_query = array(
         'q' => null,
@@ -35,31 +37,26 @@ function euk_initialize_query() {
             $value = urldecode($matches['value']);
             if ($key == 'q' and strlen($value) > 0) {
                 $euk_query['q'] = $value;
-            }
-            elseif ($key == 'fq[]') {
+            } elseif ($key == 'fq[]') {
                 $euk_query['fq'][] = $value;
-            }
-            elseif (substr($key, 0, 2) == 'f[') {
+            } elseif (substr($key, 0, 2) == 'f[') {
                 $subkey = substr($key, 2, -3);
                 $euk_query['f'][$subkey] = $value;
-            }
-            elseif ($key == 'offset') {
+            } elseif ($key == 'offset') {
                 $euk_query['offset'] = intval($value);
-            }
-            elseif ($key == 'per_page') {
+            } elseif ($key == 'per_page') {
                 $euk_query['rows'] = intval($value);
-            }
-            elseif ($key == 'ui') {
+            } elseif ($key == 'ui') {
                 switch ($value) {
-                case '1':
-                    /* fall through */
-                case '2':
-                    $euk_query['ui'] = $value;
-                    break;
+                    case '1':
+                        /* fall through */
+                    case '2':
+                        $euk_query['ui'] = $value;
+                        break;
 
-                default:
-                    /* do nothing */
-                    break;
+                    default:
+                        /* do nothing */
+                        break;
                 }
             }
         }
@@ -67,7 +64,8 @@ function euk_initialize_query() {
     return $euk_query;
 }
 
-function euk_link_to_query($query) {
+function euk_link_to_query($query)
+{
     $pieces = array();
     if (strlen($query['q']) > 0) {
         $pieces[] = 'q=' . urlencode($query['q']);
@@ -93,13 +91,13 @@ function euk_link_to_query($query) {
     return '?' . implode('&', $pieces);
 }
 
-function euk_previous_link() {
+function euk_previous_link()
+{
     global $euk_query;
     $offset = $euk_query['offset'] - $euk_query['rows'];
     if ($offset > 0) {
         $previous_query['offset'] = $offset;
-    }
-    else {
+    } else {
         $offset = 0;
     }
     return euk_link_to_query(array(
@@ -112,13 +110,13 @@ function euk_previous_link() {
     ));
 }
 
-function euk_next_link() {
+function euk_next_link()
+{
     global $euk_query;
     $offset = $euk_query['offset'] + $euk_query['rows'];
     if ($offset > 0) {
         $previous_query['offset'] = $offset;
-    }
-    else {
+    } else {
         $offset = 0;
     }
     return euk_link_to_query(array(
@@ -131,7 +129,8 @@ function euk_next_link() {
     ));
 }
 
-function euk_add_filter($facet, $label) {
+function euk_add_filter($facet, $label)
+{
     global $euk_query;
     $f = $euk_query['f'];
     $f[$facet] = $label;
@@ -144,7 +143,8 @@ function euk_add_filter($facet, $label) {
     ));
 }
 
-function euk_remove_search_term($label) {
+function euk_remove_search_term($label)
+{
     global $euk_query;
     return euk_link_to_query(array(
         'q' => '',
@@ -155,7 +155,8 @@ function euk_remove_search_term($label) {
     ));
 }
 
-function euk_remove_filter($facet, $label) {
+function euk_remove_filter($facet, $label)
+{
     global $euk_query;
     $f = array();
     foreach ($euk_query['f'] as $potential_term => $label) {
@@ -172,13 +173,15 @@ function euk_remove_filter($facet, $label) {
     ));
 }
 
-function euk_get_facets_by_count() {
+function euk_get_facets_by_count()
+{
     global $euk_solr;
     $url = "$euk_solr?" . euk_build_search_params_by_count();
     return json_decode(file_get_contents($url), true);
 }
 
-function euk_build_search_params_by_count() {
+function euk_build_search_params_by_count()
+{
     global $euk_query;
     global $facets;
     $q = $euk_query['q'];
@@ -212,13 +215,15 @@ function euk_build_search_params_by_count() {
     return implode('&', $pieces);
 }
 
-function euk_get_facets_by_index() {
+function euk_get_facets_by_index()
+{
     global $euk_solr;
     $url = "$euk_solr?" . euk_build_search_params_by_index();
     return json_decode(file_get_contents($url), true);
 }
 
-function euk_build_search_params_by_index() {
+function euk_build_search_params_by_index()
+{
     global $euk_query;
     global $facets;
     $q = $euk_query['q'];
@@ -252,13 +257,15 @@ function euk_build_search_params_by_index() {
     return implode('&', $pieces);
 }
 
-function euk_get_search_results() {
+function euk_get_search_results()
+{
     global $euk_solr;
     $url = "$euk_solr?" . euk_build_search_params();
     return json_decode(file_get_contents($url), true);
 }
 
-function euk_build_search_params() {
+function euk_build_search_params()
+{
     global $euk_query;
     global $facets;
     $q = $euk_query['q'];
@@ -295,19 +302,20 @@ function euk_build_search_params() {
     return implode('&', $pieces);
 }
 
-function euk_get_document($id) {
+function euk_get_document($id)
+{
     global $euk_solr;
     $url = "$euk_solr?" . euk_document_query($id);
     $result = json_decode(file_get_contents($url), true);
     if (isset($result['response']) and count($result['response']['docs']) > 0) {
         return $result['response']['docs'][0];
-    }
-    else {
+    } else {
         return null;
     }
 }
 
-function euk_document_query($id) {
+function euk_document_query($id)
+{
     $pieces = array();
     $pieces[] = 'fq=' . urlencode("id:$id");
     $pieces[] = 'fl=' . urlencode("*");
@@ -315,19 +323,20 @@ function euk_document_query($id) {
     return implode('&', $pieces);
 }
 
-function euk_get_pages($id) {
+function euk_get_pages($id)
+{
     global $euk_solr;
     $url = "$euk_solr?" . euk_pages_query($id);
     $result = json_decode(file_get_contents($url), true);
     if (isset($result['response']) and count($result['response']['docs']) > 0) {
         return $result['response']['docs'];
-    }
-    else {
+    } else {
         return null;
     }
 }
 
-function euk_pages_query($id) {
+function euk_pages_query($id)
+{
     $parent = preg_replace('/_[^_]+$/', '', $id);
     $pieces = array();
     $pieces[] = 'fq=' . urlencode("parent_id_s:$parent");
@@ -338,7 +347,8 @@ function euk_pages_query($id) {
     return implode('&', $pieces);
 }
 
-function euk_back_to_search() {
+function euk_back_to_search()
+{
     global $euk_query;
     return json_encode(euk_link_to_query($euk_query));
 }

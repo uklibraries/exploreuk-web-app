@@ -2,7 +2,8 @@
 
 define('EUK_MAX_LABEL', 80);
 
-function subresource_integrity($path) {
+function subresource_integrity($path)
+{
     global $euk_base;
     global $theme_path;
     $theme_name = Theme::getCurrentThemeName('public');
@@ -12,7 +13,8 @@ function subresource_integrity($path) {
     return $version;
 }
 
-function render_field($field, $content) {
+function render_field($field, $content)
+{
     global $euk_locale;
     if ($field === 'collection_url') {
         if (strlen($content['source_s']) > 0) {
@@ -31,8 +33,7 @@ function render_field($field, $content) {
                 '</p>',
             );
             return implode('', $lines);
-        }
-        else{
+        } else {
             return '';
         }
     }
@@ -44,8 +45,7 @@ function render_field($field, $content) {
     }
     if (isset($euk_locale['en'][$field])) {
         $label = $euk_locale['en'][$field];
-    }
-    else {
+    } else {
         $label = 'Unknown';
     }
     $lines = array("<h3 id=\"page-details-$field\">$label</h3>");
@@ -55,14 +55,14 @@ function render_field($field, $content) {
             $lines[] = "<li>" . render_field_helper($field, $item) . "</li>";
         }
         $lines[] = "</ul>";
-    }
-    else {
+    } else {
         $lines[] = "<p>" . render_field_helper($field, $content) . "</p>";
     }
     return implode("\n", $lines) . "\n";
 }
 
-function render_field_helper($field, $item) {
+function render_field_helper($field, $item)
+{
     global $euk_facetable;
     global $euk_requires_capitalization;
 
@@ -75,23 +75,23 @@ function render_field_helper($field, $item) {
 
     if (strpos($item, 'http') === 0) {
         return render_link($item, $item, true);
-    }
-    elseif (in_array($field, $euk_facetable)) {
+    } elseif (in_array($field, $euk_facetable)) {
         $link = "/?f%5B$field%5D%5B%5D=";
         return render_link(u($link . urlencode($item)), $item);
-    }
-    else {
+    } else {
         return $item;
     }
 }
 
-function render_link($href, $text, $external = false) {
+function render_link($href, $text, $external = false)
+{
     return "<a href=\"$href\" " .
            ($external ? "target=\"_blank\" rel=\"noopener\"" : '') .
            ">$text</a>";
 }
 
-function euk_brevity($message, $length = 0) {
+function euk_brevity($message, $length = 0)
+{
     if ($length == 0) {
         $length = EUK_MAX_LABEL;
     }
@@ -105,16 +105,14 @@ function euk_brevity($message, $length = 0) {
         if (($current_length == 0) || $current_length + strlen($word) <= $length) {
             $target_words[] = $word;
             $current_length += strlen($word);
-        }
-        else {
+        } else {
             break;
         }
     }
     $count = count($target_words);
     if ($count == 0) {
         $message = '…';
-    }
-    else {
+    } else {
         $terminal = $target_words[$count - 1];
         if (preg_match('/^\W+$/', $terminal)) {
             array_pop($target_words);
@@ -124,30 +122,31 @@ function euk_brevity($message, $length = 0) {
     return $message;
 }
 
-function m($arg) {
+function m($arg)
+{
     global $euk_data;
     if (isset($euk_data[$arg])) {
         return $euk_data[$arg];
-    }
-    else {
+    } else {
         return false;
     }
 }
 
-function meta($arg) {
+function meta($arg)
+{
     global $findaidurl;
     if ($arg === 'collection_url') {
         return array(
             'base_id' => meta_raw('object_id_s'),
             'source_s' => meta_raw('source_s'),
         );
-    }
-    else {
+    } else {
         return meta_raw($arg);
     }
 }
 
-function meta_raw($arg) {
+function meta_raw($arg)
+{
     global $euk_data;
     $r = null;
     $sources = array(
@@ -163,65 +162,66 @@ function meta_raw($arg) {
     }
     if ($r && isset($r[$arg])) {
         return $r[$arg];
-    }
-    else {
+    } else {
         return false;
     }
 }
 
-function q($arg) {
+function q($arg)
+{
     global $euk_query;
     if (isset($euk_query[$arg])) {
         return $euk_query[$arg];
-    }
-    else {
+    } else {
         return false;
     }
 }
 
-function euk_handle_action() {
+function euk_handle_action()
+{
     global $euk_data;
-    switch(euk_action()) {
-    case 'oai':
-        euk_oai();
-        break;
-    case 'index':
-        euk_index();
-        break;
-    case 'page':
-        euk_page();
-        break;
-    case 'zoom':
-        euk_zoom();
-        break;
-    case 'download':
-        euk_download();
-        exit;
-        break;
-    case 'paged':
-        euk_paged();
-        break;
-    case 'text':
-        euk_text();
-        break;
-    default:
-        print "<!-- {" . euk_action() . "} -->\n";
-        $euk_data = array('action' => euk_action());
-        break;
+    switch (euk_action()) {
+        case 'oai':
+            euk_oai();
+            break;
+        case 'index':
+            euk_index();
+            break;
+        case 'page':
+            euk_page();
+            break;
+        case 'zoom':
+            euk_zoom();
+            break;
+        case 'download':
+            euk_download();
+            exit;
+            break;
+        case 'paged':
+            euk_paged();
+            break;
+        case 'text':
+            euk_text();
+            break;
+        default:
+            print "<!-- {" . euk_action() . "} -->\n";
+            $euk_data = array('action' => euk_action());
+            break;
     }
 }
 
-function euk_action() {
+function euk_action()
+{
     parse_str($_SERVER['QUERY_STRING'], $params);
     if (isset($params['action'])) {
         return $params['action'];
-    }
-    else {
+    } else {
         return 'index';
     }
 }
 
-function euk_download() {
+function euk_download()
+{
     header("Content-type: image/jpeg");
     header("Content-Disposition: attachment; filename=\"kittens.jpg\"");
     readfile("http://placekitten.com/g/288/144");
@@ -236,16 +236,16 @@ function euk_download() {
     }
 
     switch ($_GET['type']) {
-    case 'jpeg':
-        $field = 'reference_image_url_s';
-        $mime = 'image/jpeg';
-        break;
-    case 'pdf':
-        $field = 'pdf_url_display';
-        $mime = 'application/pdf';
-        break;
-    default:
-        return;
+        case 'jpeg':
+            $field = 'reference_image_url_s';
+            $mime = 'image/jpeg';
+            break;
+        case 'pdf':
+            $field = 'pdf_url_display';
+            $mime = 'application/pdf';
+            break;
+        default:
+            return;
     }
 
     $doc = euk_get_document($euk_id);
@@ -264,7 +264,8 @@ function euk_download() {
     readfile($url);
 }
 
-function euk_index() {
+function euk_index()
+{
     global $euk_data;
     global $euk_solr;
     global $site_title;
@@ -284,9 +285,8 @@ function euk_index() {
 
     # Title
     if (strlen($data['q']) > 0) {
-       $data['page_title'] = htmlspecialchars($data['q'], ENT_QUOTES, 'UTF-8') . ' - ExploreUK';
-    }
-    else {
+        $data['page_title'] = htmlspecialchars($data['q'], ENT_QUOTES, 'UTF-8') . ' - ExploreUK';
+    } else {
         $data['page_title'] = 'ExploreUK - rare and unique research materials from UK Libraries.';
     }
     $data['page_description'] = $data['page_title'];
@@ -391,8 +391,7 @@ function euk_index() {
             }
             if ($pagination_data['last'] <= $pagination_data['count']) {
                 $pagination_data['next'] = u('/catalog/' . euk_next_link());
-            }
-            else {
+            } else {
                 $pagination_data['last'] = $pagination_data['count'];
             }
             $data['pagination'] = $pagination_data;
@@ -409,8 +408,7 @@ function euk_index() {
                         $raw_field = $docs[$i][$solr_field];
                         if (is_array($raw_field)) {
                             $results_data[$field] = htmlspecialchars($raw_field[0], ENT_QUOTES, 'UTF-8');
-                        }
-                        else {
+                        } else {
                             $results_data[$field] = htmlspecialchars($raw_field, ENT_QUOTES, 'UTF-8');
                         }
                     }
@@ -429,8 +427,7 @@ function euk_index() {
             }
             $data['results'] = $results;
         }
-    }
-    else {
+    } else {
         $data['on_front_page'] = true;
     }
 
@@ -438,7 +435,8 @@ function euk_index() {
     return $euk_data;
 }
 
-function euk_page() {
+function euk_page()
+{
     global $euk_data;
     global $euk_id;
     global $euk_query;
@@ -465,14 +463,11 @@ function euk_page() {
         # XXX: Consider adding $euk_repeatable_fields to config.
         if ($key === 'subject_topic_facet') {
             $flat[$key] = $value;
-        }
-        elseif (is_array($value) and count($value) > 0) {
+        } elseif (is_array($value) and count($value) > 0) {
             $flat[$key] = $value[0];
-        }
-        elseif (isset($value)) {
+        } elseif (isset($value)) {
             $flat[$key] = $value;
-        }
-        else {
+        } else {
             $flat[$key] = '';
         }
     }
@@ -499,17 +494,14 @@ function euk_page() {
         $link = false;
         if ($key === 'type_display') {
             $value = type_for($doc['format'], $doc['type_display']);
-        }
-        else {
+        } else {
             if (isset($doc[$key])) {
                 if (is_array($doc[$key])) {
                     $value = implode('.  ', $doc[$key]);
-                }
-                else {
+                } else {
                     $value = $doc[$key];
                 }
-            }
-            else {
+            } else {
                 $value = false;
             }
         }
@@ -545,8 +537,7 @@ function euk_page() {
             ENT_QUOTES,
             'UTF-8'
         );
-    }
-    else {
+    } else {
         $data['page_description'] = htmlspecialchars(
             $doc['title_display'] . ', ' .
             'University of Kentucky Libraries - ExploreUK',
@@ -558,112 +549,116 @@ function euk_page() {
     $flat['metadata'] = $metadata;
 
     switch ($format) {
-    case 'audio':
-        $data['item_audio'] = array_merge(
-            $flat,
-            array(
-                'audio' => array(
-                    'href_id' => "audio_$euk_id",
-                    'href' => $flat['reference_audio_url_s'],
-                ),
-            )
-        );
-        $data['script_media'] = true;
-        $data['downloadable'] = false;
-        break;
-    case 'audiovisual':
-        $data['item_audio'] = array_merge(
-            $flat,
-            array(
-                'video' => array(
-                    'href_id' => "video_$euk_id",
-                    'href' => $flat['reference_video_url_s'],
-                ),
-            )
-        );
-        $data['script_media'] = true;
-        $data['downloadable'] = false;
-        break;
-    case 'drawings (visual works)':
-        /* fall through */
-    case 'images':
-        $data['item_image'] = $flat;
-        $data['script_image'] = array_merge(
-            $flat,
-            array(
-                'osd_id' => 'viewer',
-                'prefix_url' => "$theme_path/openseadragon/images/",
-                'ref_id' => 'reference_image',
-            )
-        );
-        $data['downloadable'] = true;
-        break;
-    case 'annual reports':
-        /* fall through */
-    case 'architectural drawings (visual works)':
-        /* fall through */
-    case 'archival material':
-        /* fall through */
-    case 'athletic publications':
-        /* fall through */
-    case 'booklets':
-        /* fall through */
-    case 'books':
-        /* fall through */
-    case 'course catalogs':
-        /* fall through */
-    case 'directories':
-        /* fall through */
-    case 'indexes (reference sources)':
-        /* fall through */
-    case 'journals':
-        /* fall through */
-    case 'ledgers':
-        /* fall through */
-    case 'maps':
-        /* fall through */
-    case 'minutes':
-        /* fall through */
-    case 'newsletters':
-        /* fall through */
-    case 'newspapers':
-        /* fall through */
-    case 'yearbooks':
-        $flat['embed_url'] = u('/catalog/' . $euk_id . '/paged'
-            . (q('q') ? '?q=' . urlencode(q('q')) : '')
-        );
-        if (array_key_exists($text_field, $doc)) {
-            $flat['text'] = array(
-                'href' => u('/catalog/' . $euk_id . '/text'),
+        case 'audio':
+            $data['item_audio'] = array_merge(
+                $flat,
+                array(
+                    'audio' => array(
+                        'href_id' => "audio_$euk_id",
+                        'href' => $flat['reference_audio_url_s'],
+                    ),
+                )
             );
-        }
-        $data['item_book'] = $flat;
-        $data['downloadable'] = true;
-        break;
-    case 'collections':
-        /* We'll want to embed this eventually */
-        $target = "https://nyx.uky.edu/fa/findingaid/?id=$euk_id";
-        header('Location: '. $target);
-        exit;
-        break;
-    default:
-        $pieces = array();
-        foreach ($doc as $field => $value) {
-            if (is_array($value)) {
-                $value = implode('; ', $value);
+            $data['script_media'] = true;
+            $data['downloadable'] = false;
+            break;
+        case 'audiovisual':
+            $data['item_audio'] = array_merge(
+                $flat,
+                array(
+                    'video' => array(
+                        'href_id' => "video_$euk_id",
+                        'href' => $flat['reference_video_url_s'],
+                    ),
+                )
+            );
+            $data['script_media'] = true;
+            $data['downloadable'] = false;
+            break;
+        case 'drawings (visual works)':
+            /* fall through */
+        case 'images':
+            $data['item_image'] = $flat;
+            $data['script_image'] = array_merge(
+                $flat,
+                array(
+                    'osd_id' => 'viewer',
+                    'prefix_url' => "$theme_path/openseadragon/images/",
+                    'ref_id' => 'reference_image',
+                )
+            );
+            $data['downloadable'] = true;
+            break;
+        case 'annual reports':
+            /* fall through */
+        case 'architectural drawings (visual works)':
+            /* fall through */
+        case 'archival material':
+            /* fall through */
+        case 'athletic publications':
+            /* fall through */
+        case 'booklets':
+            /* fall through */
+        case 'books':
+            /* fall through */
+        case 'course catalogs':
+            /* fall through */
+        case 'directories':
+            /* fall through */
+        case 'indexes (reference sources)':
+            /* fall through */
+        case 'journals':
+            /* fall through */
+        case 'ledgers':
+            /* fall through */
+        case 'maps':
+            /* fall through */
+        case 'minutes':
+            /* fall through */
+        case 'newsletters':
+            /* fall through */
+        case 'newspapers':
+            /* fall through */
+        case 'yearbooks':
+            $flat['embed_url'] = u(implode('', array(
+                '/catalog/',
+                $euk_id,
+                '/paged',
+                q('q') ? ('?q=' . urlencode(q('q'))) : '',
+            )));
+            if (array_key_exists($text_field, $doc)) {
+                $flat['text'] = array(
+                    'href' => u('/catalog/' . $euk_id . '/text'),
+                );
             }
-            $pieces[] = "<b>$field</b>: $value";
-        }
-        $data['item'] = '<ul><li>' . implode('</li><li>', $pieces) . "</li></ul>\n";
-        $url = "$euk_solr?" . document_query($euk_id);
-        $data['item'] .= "<p><a href=\"$url\">$url</a></p>";
-        break;
+            $data['item_book'] = $flat;
+            $data['downloadable'] = true;
+            break;
+        case 'collections':
+            /* We'll want to embed this eventually */
+            $target = "https://nyx.uky.edu/fa/findingaid/?id=$euk_id";
+            header('Location: '. $target);
+            exit;
+            break;
+        default:
+            $pieces = array();
+            foreach ($doc as $field => $value) {
+                if (is_array($value)) {
+                    $value = implode('; ', $value);
+                }
+                $pieces[] = "<b>$field</b>: $value";
+            }
+            $data['item'] = '<ul><li>' . implode('</li><li>', $pieces) . "</li></ul>\n";
+            $url = "$euk_solr?" . document_query($euk_id);
+            $data['item'] .= "<p><a href=\"$url\">$url</a></p>";
+            break;
     }
     $euk_data = $data;
     return $euk_data;
 }
 
-function euk_paged() {
+function euk_paged()
+{
     global $euk_data;
     global $euk_id;
     global $euk_query;
@@ -685,11 +680,9 @@ function euk_paged() {
     foreach ($doc as $key => $value) {
         if (is_array($value) and count($value) > 0) {
             $flat[$key] = $value[0];
-        }
-        elseif (isset($value)) {
+        } elseif (isset($value)) {
             $flat[$key] = $value;
-        }
-        else {
+        } else {
             $flat[$key] = '';
         }
     }
@@ -716,17 +709,14 @@ function euk_paged() {
         $link = false;
         if ($key === 'type_display') {
             $value = type_for($doc['format'], $doc['type_display']);
-        }
-        else {
+        } else {
             if (isset($doc[$key])) {
                 if (is_array($doc[$key])) {
                     $value = implode('.  ', $doc[$key]);
-                }
-                else {
+                } else {
                     $value = $doc[$key];
                 }
-            }
-            else {
+            } else {
                 $value = false;
             }
         }
@@ -797,7 +787,8 @@ function euk_paged() {
     return $euk_data;
 }
 
-function euk_zoom() {
+function euk_zoom()
+{
     global $euk_data;
     $euk_data = euk_page();
     $euk_data['action'] = 'zoom';
@@ -808,7 +799,8 @@ function euk_text()
 {
 }
 
-function euk_oai() {
+function euk_oai()
+{
     header("Content-type: application/xml");
     require_once('oai.php');
     global $euk_data;

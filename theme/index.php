@@ -36,18 +36,18 @@ if (m('action') === 'zoom') {
 echo head();
 
 switch (m('action')) {
-case 'index':
-    require_once('templates/action-index.php');
-    break;
-case 'page':
-    require_once('templates/action-page.php');
-    break;
-default:
-    print "<!-- " . euk_action() . " -->\n";
-    print "<!-- \n";
-    print json_encode($euk_data) . "\n";
-    print " -->\n";
-    break;
+    case 'index':
+        require_once('templates/action-index.php');
+        break;
+    case 'page':
+        require_once('templates/action-page.php');
+        break;
+    default:
+        print "<!-- " . euk_action() . " -->\n";
+        print "<!-- \n";
+        print json_encode($euk_data) . "\n";
+        print " -->\n";
+        break;
 }
 
 echo foot();

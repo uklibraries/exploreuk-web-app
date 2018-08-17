@@ -12,18 +12,18 @@ require_once("$base_dir/euk/euk.php");
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title><?php echo m('site_title'); ?></title>
+    <title><?= m('page_title') ?></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
 <div class="item-container-zoom">
 <main class="item-presentation-zoom">
-<?php if (m('item_image')): ?>
+<?php if (m('item_image')) : ?>
     <?php require("image-viewer.php"); ?>
 <?php endif; ?>
 
-<?php if (m('item_book')): ?>
+<?php if (m('item_book')) : ?>
     <?php require("book-reader.php"); ?>
 <?php endif; ?>
 </main>
@@ -43,17 +43,17 @@ require_once("$base_dir/euk/euk.php");
 <!-- CSS -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.1/lity.min.css" integrity="sha256-0SZxASYAglrmIuTx+ZYHE3hzTnCZWB7XLu+iA8AG0Z0=" crossorigin="anonymous" />
-<link rel="stylesheet" href="<?php echo $theme_path; ?>/assets/css/main.min.css" />
+<link rel="stylesheet" href="<?= $theme_path ?>/assets/css/main.min.css" />
 
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
-<!--[if lte IE 8]><script src="<?php echo $theme_path; ?>/assets/js/ie/respond.min.js"></script><![endif]-->
+<!--[if lte IE 8]><script src="<?= $theme_path ?>/assets/js/ie/respond.min.js"></script><![endif]-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.1/lity.min.js" integrity="sha256-3VzI8FuSG20IfvIDKRptBR+1d4T6G57eDIf6ZEO13iY=" crossorigin="anonymous"></script>
-<script src="<?php echo $theme_path; ?>/assets/js/resize.js"></script>
-<?php if (m('script_media')): ?>
+<script src="<?= $theme_path ?>/assets/js/resize.js"></script>
+<?php if (m('script_media')) : ?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/2.15.1/mediaelementplayer.min.css" integrity="sha256-6DWOIEAEFJqhgMTt7B/BzbsUfdGFD9DUdubbfI2t/eo=" crossorigin="anonymous" />
-<script type="text/javascript" src="<?php echo "$theme_path/javascripts/mediaelementplayer.min.js"; ?>"></script>
+<script type="text/javascript" src="<?= "$theme_path/javascripts/mediaelementplayer.min.js" ?>"></script>
 <script type="text/javascript">
 $('.click-to-play-audio').click(function () {                                                                    var href_id = $(this).attr('data-id');
   var href = $(this).attr('data-href');
@@ -78,26 +78,26 @@ $('.click-to-play-video').click(function () {
 });
 </script>
 <?php endif; ?>
-<?php if (m('script_image')): ?>
+<?php if (m('script_image')) : ?>
 <?php $s = m('script_image'); ?>
 <?php $r = m('item_image'); ?>
-<script type="text/javascript" src="<?php echo "$theme_path/openseadragon/openseadragon.min.js"; ?>"></script>
+<script type="text/javascript" src="<?= "$theme_path/openseadragon/openseadragon.min.js" ?>"></script>
 <script type="text/javascript">
-var id = '<?php echo $s['osd_id']; ?>';
+var id = '<?= $s['osd_id'] ?>';
 var osd_viewer = OpenSeadragon({
     id: id,
-    prefixUrl: "<?php echo $s['prefix_url']; ?>",
+    prefixUrl: "<?= $s['prefix_url'] ?>",
     tileSources: {
         type: 'image',
-        url: '<?php echo $r['reference_image_url_s']; ?>'
+        url: '<?= $r['reference_image_url_s'] ?>'
     }
 });
 $(osd_viewer.element).find('.openseadragon-canvas').css('background-color', 'black');
-$('#<?php echo $s['ref_id']; ?>').hide();
+$('#<?= $s['ref_id'] ?>').hide();
 </script>
 <?php endif; ?>
-<script src="<?php echo $theme_path; ?>/javascripts/back_to_top.js"></script>
-<script src="<?php echo $theme_path; ?>/javascripts/main.js"></script>
-<script src="<?php echo $theme_path; ?>/assets/js/lazyload.js"></script>
-	</body>
+<script src="<?= $theme_path ?>/javascripts/back_to_top.js"></script>
+<script src="<?= $theme_path ?>/javascripts/main.js"></script>
+<script src="<?= $theme_path ?>/assets/js/lazyload.js"></script>
+    </body>
 </html>
