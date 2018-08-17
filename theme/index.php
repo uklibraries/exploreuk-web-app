@@ -37,7 +37,11 @@ echo head();
 
 switch (m('action')) {
     case 'index':
-        require_once('templates/action-index.php');
+        if (count(m('results')) > 0) {
+            require_once('templates/action-index.php');
+        } else {
+            require_once('templates/action-no-results.php');
+        }
         break;
     case 'page':
         require_once('templates/action-page.php');
