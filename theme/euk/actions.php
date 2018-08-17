@@ -426,6 +426,13 @@ function euk_index()
                 $results[] = $results_data;
             }
             $data['results'] = $results;
+        } else {
+            $data['suggestions'] = array();
+            foreach ($result['spellcheck']['suggestions'] as $word) {
+                foreach ($word['suggestion'] as $suggestion) {
+                    $data['suggestions'][] = $suggestion['word'];
+                }
+            }
         }
     } else {
         $data['on_front_page'] = true;

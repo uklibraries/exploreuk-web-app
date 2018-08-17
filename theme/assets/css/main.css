@@ -1045,16 +1045,22 @@ nav a:visited {
         flex-shrink: 0;
     }
 
-    #resultsfacets {
+    .resultsfacets {
         flex-grow: 1;
     }
 }
 
-#resultsfacets {
+.resultsfacets {
     width: 20%;
     float: left;
-    background: #f7f7f7;
     color: #282828;
+}
+.resultsfacets.has-results {
+    background: #f7f7f7;
+}
+
+.suggested-search {
+    text-decoration: underline;
 }
 
 #resultsmain {
@@ -1720,7 +1726,7 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
         font-size: 12px;
     }
 
-    #resultsfacets {
+    .resultsfacets {
         width: 0%;
         float: left;
         display: none;
