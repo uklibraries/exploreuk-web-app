@@ -28,6 +28,14 @@ This stanza should be included just before the line
 
 > RewriteRule ^install/.\*$ install/install.php [L]
 
+Change the Omeka rule
+
+> RewriteRule .\* index.php
+
+to read
+
+> RewriteRule .\* catalog.php
+
 From the root of the downloaded repository, run the command
 
 > bash exe/build.sh

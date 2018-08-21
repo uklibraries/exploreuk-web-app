@@ -1,5 +1,5 @@
 <?php
-$p = m('pagination');
+$p = $m['pagination'];
 if (!isset($pc)) {
     $pc = 0;
 }
@@ -9,11 +9,10 @@ $pc++;
 
 <div class="rows-select">
 <form action="/catalog" class="per_page" method="get">
-<label for="per_page_<?= $pc ?>">Show <select class="pagination-rows" id="per_page_<?= $pc ?>" name="per_page_<?= $pc ?>" onchange="this.form.submit()" title="Number of results to display per page">
+<label for="per_page">Show <select class="pagination-rows" id="per_page_<?= $pc ?>" name="per_page" onchange="this.form.submit()" title="Number of results to display per page">
 <?php
-$opts = $euk_per_page_opts;
-foreach ($opts as $opt) {
-    if (q('rows') == $opt) {
+foreach (EUK_PER_PAGE_OPTS as $opt) {
+    if ($this->q('rows') == $opt) {
         print "<option value=\"$opt\" selected=\"selected\">$opt</option>\n";
     } else {
         print "<option value=\"$opt\">$opt</option>\n";
@@ -23,7 +22,10 @@ foreach ($opts as $opt) {
 </select> per page</label>
 <input name="commit" type="hidden" value="search" />
 <input name="search_field" type="hidden" value="all_fields" />
-<input name="q" type="hidden" value="<?= q('q') ?>" />
+<input name="q" type="hidden" value="<?= $this->q('q') ?>" />
+<?php foreach ($this->q('f') as $f_term => $value) : ?>
+<input type="hidden" name="f[<?= $f_term ?>][]" value="<?= urlencode($value) ?>"/>
+<?php endforeach; ?>
     <noscript><input name="commit" type="submit" value="update" /></noscript>
 </form>
 </div>
