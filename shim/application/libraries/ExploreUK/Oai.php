@@ -1,4 +1,177 @@
 <?php
+namespace ExploreUK;
+
+use DOMDocument;
+use ExploreUK;
+
+class Oai
+{
+    private $config;
+
+    public function __construct($config)
+    {
+        $this->config = $config;
+    }
+
+    public function run()
+    {
+        global $euk_oai_options;
+        #require_once('application/libraries/ExploreUK/Oai.php');
+        $response = euk_oai_response(array(
+            'base' => $this->config['base'],
+            'solr' => $this->config['solr'],
+            'host' => $this->config['host'],
+        ));
+        $doc = new DOMDocument('1.0', 'utf-8');
+        $root = $doc->createElementNS('http://www.openarchives.org/OAI/2.0/', 'OAI-PMH');
+        $root = $doc->appendChild($root);
+        $root->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+        $root->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'schemaLocation', 'http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd');
+
+        $responseDate = $doc->createElement('responseDate', $response['responseDate']);
+        $responseDate = $root->appendChild($responseDate);
+
+        $request = $doc->createElement('request', $response['request']);
+        if (isset($response['verb'])) {
+            $request->setAttribute('verb', $response['verb']);
+        }
+        foreach ($euk_oai_options as $option) {
+            if (isset($response[$option])) {
+                $request->setAttribute($option, $response[$option]);
+            }
+        }
+        $request = $root->appendChild($request);
+
+        if (isset($response['error'])) {
+            $error = $doc->createElement('error', $response['error']['message']);
+            $error->setAttribute('code', $response['error']['code']);
+            $error = $root->appendChild($error);
+            if (isset($response['extra'])) {
+                $extra = $doc->createElement('extra', $response['extra']);
+                $extra = $root->appendChild($extra);
+            }
+        } else {
+            $node = $doc->createElement($response['verb'], '');
+            $node = $root->appendChild($node);
+            if ($response['verb'] === 'Identify') {
+                foreach ($response['metadata'] as $spec) {
+                    $field = $spec[0];
+                    $content = $spec[1];
+                    if ($field === 'description') {
+                        $child = $doc->createElement($field, '');
+                        $child = $node->appendChild($child);
+                        $oai_id = $doc->createElementNS('http://www.openarchives.org/OAI/2.0/oai-identifier', 'oai-identifier');
+                        $oai_id = $child->appendChild($oai_id);
+                        $oai_id->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+                        $oai_id->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'schemaLocation', 'http://www.openarchives.org/OAI/2.0/oai-identifier http://www.openarchives.org/OAI/2.0/oai-identifier.xsd');
+                        foreach ($content as $item) {
+                            $subchild = $doc->createElement($item[0], $item[1]);
+                            $subchild = $oai_id->appendChild($subchild);
+                        }
+                        continue;
+                    }
+                    if (!is_array($content)) {
+                        $content = array($content);
+                    }
+                    foreach ($content as $item) {
+                        $child = $doc->createElement($field, $item);
+                        $child = $node->appendChild($child);
+                    }
+                }
+            # XXX: seek opportunities to merge code?
+            } elseif ($response['verb'] === 'ListMetadataFormats') {
+                foreach ($response['metadata']['results'] as $result_rows) {
+                    $result_node = $doc->createElement('metadataFormat', '');
+                    $result_node = $node->appendChild($result_node);
+                    foreach ($result_rows as $row) {
+                        $child = $doc->createElement($row[0], $row[1]);
+                        $child = $result_node->appendChild($child);
+                    }
+                }
+            } elseif ($response['verb'] === 'ListSets') {
+                foreach ($response['metadata']['results'] as $result_rows) {
+                    $result_node = $doc->createElement('set', '');
+                    $result_node = $node->appendChild($result_node);
+                    foreach ($result_rows as $row) {
+                        $child = $doc->createElement($row[0], $row[1]);
+                        $child = $result_node->appendChild($child);
+                    }
+                }
+            } elseif ($response['verb'] === 'GetRecord') {
+                foreach ($response['metadata']['results'] as $record) {
+                    $result_node = $doc->createElement('record', '');
+                    $result_node = $node->appendChild($result_node);
+                    # header
+                    $header = $doc->createElement('header', '');
+                    $header = $result_node->appendChild($header);
+                    foreach ($record['header'] as $row) {
+                        $child = $doc->createElement($row[0], $row[1]);
+                        $child = $header->appendChild($child);
+                    }
+
+                    # metadata
+                    $metadata = $doc->createElement('metadata', '');
+                    $metadata = $result_node->appendChild($metadata);
+
+                    $oai_dc = $doc->createElementNS('http://www.openarchives.org/OAI/2.0/oai_dc/', 'oai_dc:dc');
+                    $oai_dc = $metadata->appendChild($oai_dc);
+                    $oai_dc->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:dc', 'http://purl.org/dc/elements/1.1/');
+                    $oai_dc->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+                    $oai_dc->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'schemaLocation', 'http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd');
+
+                    foreach ($record['metadata'] as $row) {
+                        $child = $doc->createElement('dc:' . $row[0], $row[1]);
+                        $child = $oai_dc->appendChild($child);
+                    }
+                }
+            } elseif ($response['verb'] === 'ListIdentifiers') {
+                foreach ($response['metadata']['results'] as $record) {
+                    # header
+                    $header = $doc->createElement('header', '');
+                    $header = $node->appendChild($header);
+                    foreach ($record['header'] as $row) {
+                        $child = $doc->createElement($row[0], $row[1]);
+                        $child = $header->appendChild($child);
+                    }
+                }
+                $token = $doc->createElement('resumptionToken', $response['metadata']['resumptionToken']);
+                $token = $node->appendChild($token);
+            } elseif ($response['verb'] === 'ListRecords') {
+                foreach ($response['metadata']['results'] as $record) {
+                    $result_node = $doc->createElement('record', '');
+                    $result_node = $node->appendChild($result_node);
+                    # header
+                    $header = $doc->createElement('header', '');
+                    $header = $result_node->appendChild($header);
+                    foreach ($record['header'] as $row) {
+                        $child = $doc->createElement($row[0], $row[1]);
+                        $child = $header->appendChild($child);
+                    }
+
+                    # metadata
+                    $metadata = $doc->createElement('metadata', '');
+                    $metadata = $result_node->appendChild($metadata);
+
+                    $oai_dc = $doc->createElementNS('http://www.openarchives.org/OAI/2.0/oai_dc/', 'oai_dc:dc');
+                    $oai_dc = $metadata->appendChild($oai_dc);
+                    $oai_dc->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:dc', 'http://purl.org/dc/elements/1.1/');
+                    $oai_dc->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
+                    $oai_dc->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'schemaLocation', 'http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd');
+
+                    foreach ($record['metadata'] as $row) {
+                        $child = $doc->createElement('dc:' . $row[0], $row[1]);
+                        $child = $oai_dc->appendChild($child);
+                    }
+                }
+                $token = $doc->createElement('resumptionToken', $response['metadata']['resumptionToken']);
+                $token = $node->appendChild($token);
+            }
+        }
+
+        header('Content-type: application/xml');
+        print $doc->saveXML();
+    }
+}
 
 /* main entry point */
 function euk_oai_response($host_options)

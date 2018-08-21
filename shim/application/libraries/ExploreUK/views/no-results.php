@@ -1,3 +1,4 @@
+<?php require('header.php'); ?>
 <div class="results">
     <div id="resultsfacets" class="resultsfacets no-results">
         <div id="facet_group">
@@ -12,18 +13,13 @@
             <li class="result-item">
                 <p class="result-number"></p>
                 <div class="result-summary">
-                    <h3>No results found matching your search for '<?= htmlspecialchars(q('q'), ENT_QUOTES, 'UTF-8') ?>'.</h3>
+                    <h3>No results found matching your search for '<?= htmlspecialchars($this->q('q'), ENT_QUOTES, 'UTF-8') ?>'.</h3>
                     <p>
                         Did you mean:
 <?php
-$suggestions = m('suggestions');
+$suggestions = $m['suggestions'];
 foreach ($suggestions as $index => $suggestion) {
-    $link = euk_link_to_query(array_merge(
-        $euk_query,
-        array(
-            'q' => $suggestion,
-        )
-    ));
+    $link = $this->suggestedLink($suggestion);
     echo '<a class="suggested-search" href="' . $link . '">' . $suggestion . '</a>';
     if ($index + 1 < count($suggestions)) {
         echo ' or ';
@@ -38,3 +34,4 @@ foreach ($suggestions as $index => $suggestion) {
         </div>
     </div>
 </div>
+<?php require('footer.php'); ?>

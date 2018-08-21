@@ -1,8 +1,9 @@
+<?php require('header.php'); ?>
 <div class="resources-section bg-uklblack">
 
 <h2 class="popular-resources-title">Popular Resources</h2>
 <ul class="popular-resources">
-<?php foreach ($popular_resources as $index => $resource) : ?>
+<?php foreach ($m['popular_resources'] as $index => $resource) : ?>
 
 <li><a id="popular-resource-<?= $index ?>" href="<?= $resource['url'] ?>">
     <h3><span><?= $resource['label'] ?></span></h3>
@@ -13,9 +14,9 @@
 
 <h2 class="additional-resources-title">Additional Resources</h2>
 <ul class="additional-resources">
-<?php foreach ($additional_resources as $index => $resource) : ?>
+<?php foreach ($m['additional_resources'] as $index => $resource) : ?>
 
-<li><a aria-label="<?= $resource['label'] ?>" id="additional-resource-<?= $index ?>" href="<?= $resource['url'] ?>" target="_blank" rel="noopener"><img class="lazy" src="<?= $theme_path ?>/images/middlegray.png" data-src="<?= $resource['image'] ?>" title="<?= $resource['label'] ?>"></a></li>
+<li><a aria-label="<?= $resource['label'] ?>" id="additional-resource-<?= $index ?>" href="<?= $resource['url'] ?>" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $resource['image'] ?>" title="<?= $resource['label'] ?>"></a></li>
 
 <?php endforeach; ?>
 </ul>
@@ -23,14 +24,14 @@
 
 <style type="text/css">
 #top > div {
-    background-image:url(<?= $featured_image['background-image'] ?>);
+    background-image:url(<?= $m['featured_image']['image'] ?>);
     height: 100%;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
 }
 
-<?php foreach ($popular_resources as $index => $resource) : ?>
+<?php foreach ($m['popular_resources'] as $index => $resource) : ?>
 #popular-resource-<?= $index ?> {
     background-image:url(<?= $resource['image'] ?>);
     background-repeat: no-repeat;
@@ -164,3 +165,4 @@
 }
 
 </style>
+<?php require('footer.php'); ?>

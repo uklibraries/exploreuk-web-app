@@ -1,11 +1,12 @@
+<?php require('header.php'); ?>
 <?php
-$p = m('pagination');
+$p = $m['pagination'];
 ?>
 <div id="facet_group_mobile">
     <div id="facet_group_mobile_top">
         <details id="facet_group_mobile_container" class="facet-menu-mobile bg-uklwhite row">
-            <summary id="facet_group_mobile_head"><?= $euk_locale['en']['facet_menu_title'] ?></summary>
-            <?php require("facets.php"); ?>
+            <summary id="facet_group_mobile_head"><?= $m['facet_menu_title'] ?></summary>
+            <?php require('facets.php'); ?>
         </details>
     </div>
 </div>
@@ -14,33 +15,33 @@ $p = m('pagination');
         <div id="facet_group">
             <div id="facet_group_left">
                 <div class="bg-uklblue" id="facet_group_left_container">
-                    <span id="facet_group_left_head"><?= $euk_locale['en']['facet_menu_title'] ?></span>
+                    <span id="facet_group_left_head"><?= $m['facet_menu_title'] ?></span>
                 </div>
-    <?php require("facets.php"); ?>
+    <?php require('facets.php'); ?>
             </div>
         </div>
     </div>
     <div id="resultsmain">
-<?php require("pagination.php"); ?>
+<?php require('pagination.php'); ?>
         <div class="row">
             <ul class="result-list">
-<?php foreach (m('results') as $r) : ?>
+<?php foreach ($m['results'] as $r) : ?>
                 <li class="result-item">
                     <p class="result-number"><?= $r['number'] ?>.</p>
                     <div class="result-summary">
-                        <h3><a href="<?= $r['link'] ?>"><?= euk_brevity($r['title']) ?></a></h3>
+                        <h3><a href="<?= $r['link'] ?>"><?= $this->brevity($r['title']) ?></a></h3>
         <?php if (isset($r['thumb'])) : ?>
                         <a class="image-placeholder" href="<?= $r['link'] ?>" aria-label="<?= $r['title'] ?>">
-                            <img class="lazy" src="<?= $theme_path ?>/images/middlegray.png" data-src="<?= $r['thumb'] ?>" alt="<?= $r['title'] ?>" title="<?= $r['title'] ?>">
+                            <img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $r['thumb'] ?>" alt="<?= $r['title'] ?>" title="<?= $r['title'] ?>">
         </a>
         <?php else : ?>
                         <div class="image-placeholder"></div>
         <?php endif; ?>
                         <ul class="result-metadata">
-            <?php foreach ($euk_result_facet_order as $field) : ?>
+            <?php foreach (EUK_RESULT_FACET_ORDER as $field) : ?>
                 <?php if (isset($r[$field])) : ?>
-                    <?php $label = $euk_locale['en'][$hit_fields[$field]]; ?>
-                    <?php if (in_array($field, $euk_result_drop_fields)) : ?>
+                    <?php $label = EUK_LOCALE['en'][EUK_HIT_FIELDS[$field]]; ?>
+                    <?php if (in_array($field, EUK_RESULT_DROP_FIELDS)) : ?>
                         <?php $lclass = ' class="result-metadata-drop"'; ?>
                     <?php else : ?>
                         <?php $lclass = ''; ?>
@@ -55,7 +56,8 @@ $p = m('pagination');
 <?php endforeach; ?>
             </ul>
         </div>
-<?php require("pagination.php"); ?>
+<?php require('pagination.php'); ?>
     </div>
 </div>
-<?php require("more-facets.php"); ?>
+<?php require('more-facets.php'); ?>
+<?php require('footer.php'); ?>

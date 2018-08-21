@@ -1,13 +1,13 @@
-<?php $r = m('item_image'); ?>
+<?php $r = $m['item_image']; ?>
 
-<?php if (m('action') === 'zoom') : ?>
+<?php if ($m['action'] === 'zoom') : ?>
 <div id="image_viewer">
     <a href="<?= $r['reference_image_url_s'] ?>"><img class="reference_image" id="reference_image" src="<?= $r['front_thumbnail_url_s'] ?>" alt="<?= $r['title_display'] ?>" title="<?= $r['title_display'] ?>"></a>
     <div id="viewer" class="full-viewport"></div>
 </div>
 <?php else : ?>
     <?php
-    $ui = q('ui');
+    $ui = $this->q('ui');
     if (!isset($ui) || !$ui) {
         $ui = "1";
     }

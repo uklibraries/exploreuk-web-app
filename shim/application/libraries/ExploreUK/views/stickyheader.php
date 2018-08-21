@@ -10,10 +10,10 @@
 </div>
 <div class="row bg-uklblue">
     <div>
-<?php require_once("$base_dir/templates/sitetitle.php"); ?>
+<?php require('sitetitle.php'); ?>
 </div>
 <div id="navlinks">
-<?php require_once("$base_dir/templates/nav.php"); ?>
+<?php require('nav.php'); ?>
 </div>
 </div>
 </header>
