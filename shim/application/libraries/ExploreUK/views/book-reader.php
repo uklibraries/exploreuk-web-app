@@ -1,6 +1,6 @@
 <?php $r = $m['item_book']; ?>
     <div id="books_viewer">
-    <iframe id="books_frame" src="<?= $r['embed_url'] ?>" width="100%" height="600px" name="book"></iframe><br/>
+    <iframe title="<?= $r['title_display'] ?>" id="books_frame" src="<?= $r['embed_url'] ?>" width="100%" height="600px" name="book"></iframe><br/>
 <script type="text/javascript">
 /* Communication from the outer frame to the inner frame should happen only on
    initialization.  From now on, the inner frame will send messages to the outer
