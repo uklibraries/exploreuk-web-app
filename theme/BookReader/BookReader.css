@@ -1,7 +1,6 @@
 body {
  /* XXX we shouldn't change the body CSS, just within our container */
  background-color: #9A9B9D;  /* Pantone Cool Grey 7 C */
- font-size: 67.5%;
  margin: 0;
  padding: 0;
 }
