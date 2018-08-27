@@ -561,6 +561,14 @@ class ExploreUK
                 'value' => $this->path('/catalog/' . $doc['object_id_s'][0] . $metadata['query']->link()),
                 'link' => true,
             );
+            $details['collection_url'] = array(
+                'label' => EUK_LOCALE['en']['collection_url'],
+                'key' => 'collection_url',
+                'value' => array(
+                    'base_id' => $doc['object_id_s'][0],
+                    'source_s' => $doc['source_s'][0],
+                ),
+            );
             $details['collection_guide'] = $entry;
             $metadata['page_description'] = htmlspecialchars(
                 $doc['title_display'] . ', ' .
@@ -856,6 +864,7 @@ class ExploreUK
                     }
                     $results_data['link'] = $this->path('/catalog/' . $docs[$i]['id'] . $metadata['query']->link());
                     $results_data['number'] = $metadata['query']->q('offset') + $i + 1;
+                    $results_data['target'] = '';
                     if ($results_data['format'] === 'collections') {
                         $results_data['target'] = ' target="_blank" rel="noopener"';
                     }
