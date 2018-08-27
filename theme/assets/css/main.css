@@ -1793,6 +1793,7 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     border: 1px solid #282828;
     padding: 1em;
     margin: 1em auto;
+    overflow: auto;
 }
 
 .page-title,
@@ -1839,6 +1840,7 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 
 .download,
 .media-player {
+    max-width: 300px;
     background: #ffffff;
     color: #282828;
     border: 1px solid #282828;
@@ -1860,6 +1862,17 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 .download a > *,
 .media-player a > * {
     margin: auto;
+}
+
+.download-contact-offer {
+    font-size: 20px;
+}
+
+.download-contact-offer a {
+    display: inline !important;
+    color: #005dab;
+    text-decoration: underline;
+    text-align: left;
 }
 
 @supports (display: grid) {

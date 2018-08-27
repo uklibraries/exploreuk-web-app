@@ -656,6 +656,7 @@ class ExploreUK
                 }
                 $metadata['item_book'] = $flat;
                 $metadata['downloadable'] = true;
+                $metadata['downloadable_extra'] = '<br>of this page';
                 break;
             default:
                 $pieces = array();
