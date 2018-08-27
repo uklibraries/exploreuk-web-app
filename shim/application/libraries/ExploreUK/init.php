@@ -102,6 +102,7 @@ class ExploreUK
         $this->config['solr'] = $this->omeka->getThemeOption('euk_solr');
         $this->config['query'] = new Query(array(), $this->config['solr']);
         $this->config['fa_base'] = $this->omeka->getThemeOption('euk_findingaid_base_url');
+        $this->config['logo'] = $this->omeka->getThemeOption('logo');
         $this->config['simple_pages'] = $this->omeka->getSimplePages();
     }
 
@@ -313,6 +314,7 @@ class ExploreUK
     {
         $metadata = array(
             'base' => $this->config['base'],
+            'logo' => $this->config['logo'],
             'front_page' => false,
             'page_title' => 'ExploreUK - rare and unique research materials from UK Libraries.',
             'theme' => $this->config['theme'],
@@ -350,6 +352,7 @@ class ExploreUK
 
         $metadata = array(
             'id' => $id,
+            'logo' => $this->config['logo'],
             'action' => 'zoom',
             'base' => $this->config['base'],
             'front_page' => false,
@@ -554,6 +557,7 @@ class ExploreUK
 
         $metadata = array(
             'id' => $id,
+            'logo' => $this->config['logo'],
             'action' => 'page',
             'base' => $this->config['base'],
             'front_page' => false,
@@ -751,6 +755,7 @@ class ExploreUK
         $raw_pages = json_decode($this->omeka->getOption('public_navigation_main'), true);
         $metadata = array(
             'base' => $this->config['base'],
+            'logo' => $this->config['logo'],
             'theme' => $this->config['theme'],
             'query' => $this->config['query'],
             'nav' => $this->getVisiblePages($raw_pages),
@@ -974,6 +979,7 @@ class ExploreUK
         $raw_pages = json_decode($this->omeka->getOption('public_navigation_main'), true);
         $metadata = array(
             'action' => 'simple-page',
+            'logo' => $this->config['logo'],
             'front_page' => false,
             'base' => $this->config['base'],
             'theme' => $this->config['theme'],
