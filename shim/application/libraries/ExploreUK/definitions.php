@@ -155,3 +155,39 @@ function navsHashFromFlatList($navs)
     }
     return $hash;
 }
+
+function highlight_snippet($text, $raw_terms, $radius)
+{
+    $terms = preg_split('/\s+/', $raw_terms, null, PREG_SPLIT_NO_EMPTY);
+    $words = explode(' ', preg_replace('/\s+/', ' ', $text));
+    $wanted = array_fill(0, count($words), 0);
+    for ($i = 0; $i < count($words); $i++) {
+        foreach ($terms as $term) {
+            if (preg_match("/\b$term\b/i", $words[$i])) {
+                $words[$i] = '{{{' . $words[$i] . '}}}';
+                $low = $i - $radius;
+                if ($low < 0) {
+                    $low = 0;
+                }
+                $high = $i + $radius;
+                if ($high >= count($words)) {
+                    $high = count($words) - 1;
+                }
+                $len = $high - $low + 1;
+                array_splice($wanted, $low, $len, array_fill(0, $len, 1));
+            }
+        }
+    }
+    $result = array();
+    $current = false;
+    for ($i = 0; $i < count($wanted); $i++) {
+        if ($wanted[$i]) {
+            $result[] = $words[$i];
+            $current = false;
+        } elseif (!$current) {
+            $current = true;
+            $result[] = '…';
+        }
+    }
+    return implode(' ', $result);
+}

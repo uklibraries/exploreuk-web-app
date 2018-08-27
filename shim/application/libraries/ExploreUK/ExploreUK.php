@@ -11,7 +11,7 @@ class ExploreUK
         $this->omeka = new OmekaShim();
         $this->config = array(
             'base' => '',
-            'theme' => $this->omeka->getThemeOption('public_theme'),
+            'theme' => $this->omeka->getOption('public_theme'),
         );
         if (realpath(EUK_BASE_DIR) !== realpath($_SERVER['DOCUMENT_ROOT'])) {
             $this->config['base'] = basename(EUK_BASE_DIR) . '/';
@@ -139,7 +139,7 @@ class ExploreUK
         if (isset($result['response']) && (count($result['response']['docs']) > 0)) {
             foreach ($result['response']['docs'] as $doc) {
                 if (isset($doc['text_s'])) {
-                    $snippet = euk_highlight_snippet($doc['text_s'][0], $q, 5);
+                    $snippet = highlight_snippet($doc['text_s'][0], $q, 5);
                     if (strlen($snippet) > 5) {
                         $response['matches'][] = array(
                             'text' => $snippet,
