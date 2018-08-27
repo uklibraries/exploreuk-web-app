@@ -1,8 +1,10 @@
 #!/bin/bash
 if [[ "$1" == "strict" ]]; then
     OPTS='-w'
-else
+elif [[ "$1" == "errorsonly" ]]; then
     OPTS='-n'
+else
+    OPTS='-w --exclude=Generic.Files.LineLength'
 fi
 
 while true; do
