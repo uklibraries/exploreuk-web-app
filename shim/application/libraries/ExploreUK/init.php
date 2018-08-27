@@ -1,6 +1,8 @@
 <?php
 namespace ExploreUK;
 
+define('EUK_BASE_DIR', dirname(dirname(dirname(dirname(__FILE__)))));
+
 define('EUK_BACK_TO_SEARCH_TEXT', 'Back to Search Results');
 define('EUK_DETAIL_FIELD_ORDER', array(
     'usage_display',
