@@ -759,7 +759,7 @@ class ExploreUK
         $metadata['q'] = $metadata['query']->q('q');
         $metadata['search_link'] = $this->config['solr'] . '?' . $metadata['query']->searchParams();
         $metadata['back_to_search'] = $this->path('/catalog/' . $metadata['query']->link());
-        if (strlen($metadata['q']) > 0) {
+        if ($this->config['query']->nontrivial()) {
             $result = $this->config['query']->search();
             $metadata['page_title'] = htmlspecialchars($metadata['q'], ENT_QUOTES, 'UTF-8') . ' - ExploreUK';
 
