@@ -118,7 +118,7 @@ class ExploreUK
         $query_string = $_SERVER['QUERY_STRING'];
 
         $base = $this->config['base'];
-        if (preg_match("#^/{$base}catalog/(?<slug>[^/]+)/?#", $request_uri, $matches)) {
+        if (preg_match("#^/{$base}(catalog/)?(?<slug>[^/]+)/?#", $request_uri, $matches)) {
             $slug = $matches['slug'];
             foreach ($this->config['simple_pages'] as $page) {
                 if ($page->slug === $slug) {
