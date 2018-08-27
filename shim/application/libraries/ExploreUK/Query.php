@@ -58,6 +58,13 @@ class Query
         );
     }
 
+    public function nontrivial()
+    {
+        return ((strlen($this->query['q']) > 0) ||
+                (count($this->query['fq']) > 0) ||
+                (count($this->query['f']) > 0));
+    }
+
     public function q($key)
     {
         if (isset($this->query[$key])) {
