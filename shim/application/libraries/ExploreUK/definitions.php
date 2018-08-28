@@ -8,7 +8,7 @@ define('EUK_DETAIL_FIELD_ORDER', array(
     'accession_number_s',
     'container_list_s',
     'contributor_s',
-    'coverage_display',
+    'coverage_s',
     'subject_topic_facet',
     'publisher_display',
     'format',
@@ -17,6 +17,7 @@ define('EUK_DETAIL_FIELD_ORDER', array(
     'mets_url_display',
 ));
 define('EUK_FACETABLE', array(
+    'coverage_s',
     'source_s',
     'subject_topic_facet',
     'format',
@@ -36,7 +37,7 @@ define('EUK_LOCALE', array(
         'author_display' => 'Creator',
         'container_list_s' => 'Containers',
         'contributor_s' => 'Contributor',
-        'coverage_display' => 'Geographic Subject',
+        'coverage_s' => 'Geographic Subject',
         'description_display' => 'Description',
         'facet_menu_title' => 'Filter Your Results',
         'finding_aid_url_s' => 'XML Collection Guide',
