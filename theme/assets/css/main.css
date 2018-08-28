@@ -1952,7 +1952,7 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 /* end   Simple Pages */
 
 /* begin item tabs */
-.tab-content p a {
+.tab-content a {
     color: #005dab;
     text-decoration: underline;
 }
