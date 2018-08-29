@@ -421,6 +421,8 @@ class ExploreUK
                 /* fall through */
             case 'directories':
                 /* fall through */
+            case 'handscrolls':
+                /* fall through */
             case 'indexes (reference sources)':
                 /* fall through */
             case 'journals':
@@ -631,6 +633,8 @@ class ExploreUK
             case 'course catalogs':
                 /* fall through */
             case 'directories':
+                /* fall through */
+            case 'handscrolls':
                 /* fall through */
             case 'indexes (reference sources)':
                 /* fall through */
