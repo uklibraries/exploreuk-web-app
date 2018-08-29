@@ -21,14 +21,14 @@ define('EUK_FACETABLE', array(
     'source_s',
     'subject_topic_facet',
     'format',
-    'pub_date',
+    'pub_date_sort',
 ));
-define('EUK_FACETS', array('format', 'pub_date', 'source_s'));
+define('EUK_FACETS', array('format', 'pub_date_sort', 'source_s'));
 define('EUK_HIT_FIELDS', array(
     'title' => 'title_display',
     'thumb' => 'thumbnail_url_s',
     'source' => 'source_s',
-    'pubdate' => 'pub_date',
+    'pubdate' => 'pub_date_sort',
     'format' => 'format',
 ));
 define('EUK_LOCALE', array(
@@ -45,7 +45,7 @@ define('EUK_LOCALE', array(
         'id' => 'Permalink',
         'language_display' => 'Language',
         'mets_url_display' => 'XML Metadata',
-        'pub_date' => 'Date',
+        'pub_date_sort' => 'Date',
         'publisher_display' => 'Publisher',
         'collection_url' => 'Collection',
         'source_s' => 'Collection',
@@ -70,7 +70,7 @@ define('EUK_RESULT_FACET_ORDER', array(
 ));
 define('EUK_TEMPLATE_DIR', dirname(__FILE__) . '/templates');
 define('EUK_TITLE_FIELD_ORDER', array(
-    'pub_date',
+    'pub_date_sort',
     'author_display',
     'language_display',
     'collection_url', # NOTE: this implies source_s

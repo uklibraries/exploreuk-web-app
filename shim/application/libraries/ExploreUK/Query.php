@@ -186,7 +186,7 @@ class Query
         }
         if (count($f) > 0) {
             foreach ($f as $label => $value) {
-                $pieces[] = 'fq=' . urlencode("{!raw f=$label}$value");
+                $pieces[] = 'fq=' . urlencode("$label:$value");
             }
         }
         # compound object
@@ -221,7 +221,7 @@ class Query
         }
         if (count($f) > 0) {
             foreach ($f as $label => $value) {
-                $pieces[] = 'fq=' . urlencode("{!raw f=$label}$value");
+                $pieces[] = 'fq=' . urlencode("$label:$value");
             }
         }
         # compound object
@@ -256,7 +256,7 @@ class Query
         }
         if (count($f) > 0) {
             foreach ($f as $label => $value) {
-                $pieces[] = 'fq=' . urlencode("{!raw f=$label}$value");
+                $pieces[] = 'fq=' . urlencode("$label:$value");
             }
         }
         # compound object
