@@ -186,7 +186,11 @@ class Query
         }
         if (count($f) > 0) {
             foreach ($f as $label => $value) {
-                $pieces[] = 'fq=' . urlencode("$label:$value");
+                if ($label === 'pub_date_sort') {
+                    $pieces[] = 'fq=' . urlencode("$label:$value");
+                } else {
+                    $pieces[] = 'fq=' . urlencode("{!raw f=$label}$value");
+                }
             }
         }
         # compound object
@@ -221,7 +225,11 @@ class Query
         }
         if (count($f) > 0) {
             foreach ($f as $label => $value) {
-                $pieces[] = 'fq=' . urlencode("$label:$value");
+                if ($label === 'pub_date_sort') {
+                    $pieces[] = 'fq=' . urlencode("$label:$value");
+                } else {
+                    $pieces[] = 'fq=' . urlencode("{!raw f=$label}$value");
+                }
             }
         }
         # compound object
@@ -256,7 +264,11 @@ class Query
         }
         if (count($f) > 0) {
             foreach ($f as $label => $value) {
-                $pieces[] = 'fq=' . urlencode("$label:$value");
+                if ($label === 'pub_date_sort') {
+                    $pieces[] = 'fq=' . urlencode("$label:$value");
+                } else {
+                    $pieces[] = 'fq=' . urlencode("{!raw f=$label}$value");
+                }
             }
         }
         # compound object
