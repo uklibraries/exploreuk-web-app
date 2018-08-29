@@ -61,7 +61,7 @@ class ExploreUK
         } elseif (preg_match("#^/{$base}catalog/(?<id>[^/]+)/text/?#", $request_uri, $matches)) {
             $this->text($matches['id']);
         } elseif (preg_match("#^/{$base}catalog/(?<id>[^/]+)/zoom/?#", $request_uri, $matches)) {
-            $this->zoomViewer($matches['id']);
+            $this->pageViewer($matches['id'], 'zoom');
         } elseif (preg_match("#^/{$base}catalog/(?<id>[^/]+)/?#", $request_uri, $matches)) {
             $this->pageViewer($matches['id']);
         } elseif (preg_match("#^/{$base}catalog/?#", $request_uri, $matches)) {
@@ -262,214 +262,7 @@ class ExploreUK
         $view->render();
     }
 
-    public function zoomViewer($id)
-    {
-        $doc = $this->document($id);
-        $format = $doc['format'];
-        if ($format === 'collections') {
-            header('Location: ' . $this->config['fa_base'] . $id);
-            return;
-        }
-
-        $metadata = array(
-            'id' => $id,
-            'logo' => $this->config['logo'],
-            'action' => 'zoom',
-            'base' => $this->config['base'],
-            'front_page' => false,
-            'theme' => $this->config['theme'],
-            'query' => $this->config['query'],
-        );
-
-        $metadata['page_title'] = 'foo';
-        $metadata['page_description'] = $metadata['page_title'];
-        $metadata['search_link'] = $this->config['solr'] . '?' . $metadata['query']->searchParams();
-        $metadata['back_to_search'] = $this->path('/catalog/' . $metadata['query']->link());
-        $metadata['back_to_search_text'] = EUK_BACK_TO_SEARCH_TEXT;
-
-        $flat = array();
-        foreach ($doc as $key => $value) {
-            # XXX: Consider adding $euk_repeatable_fields to config.
-            if ($key === 'subject_topic_facet') {
-                $flat[$key] = $value;
-            } elseif (is_array($value) and count($value) > 0) {
-                $flat[$key] = $value[0];
-            } elseif (isset($value)) {
-                $flat[$key] = $value;
-            } else {
-                $flat[$key] = '';
-            }
-        }
-        $details = array();
-        $pageMetadata = array();
-        $desired = array(
-            array('Title', 'title_display'),
-            array('Creator', 'author_display'),
-            array('Format', 'format'),
-            array('Publication date', 'pub_date_sort'),
-            array('Date uploaded', 'date_digitized_display'),
-            array('Language', 'language_display'),
-            array('Publisher', 'publisher_display'),
-            array('Type', 'type_display'),
-            array('Accession number', 'accession_number_display'),
-            array('Source', 'source_s'),
-            array('Coverage', 'coverage_s'),
-            array('Finding aid', 'finding_aid_url_s'),
-            array('Metadata record', 'mets_url_display'),
-            array('Rights', 'usage_display'),
-        );
-        foreach ($desired as $row) {
-            $label = $row[0];
-            $key = $row[1];
-            $link = false;
-            if ($key === 'type_display') {
-                $value = type_for($doc['format'], $doc['type_display']);
-            } else {
-                if (isset($doc[$key])) {
-                    $value = $doc[$key];
-                } else {
-                    $value = false;
-                }
-            }
-            if ($key === 'finding_aid_url_s' or $key === 'mets_url_display') {
-                $link = true;
-            }
-            if ($value) {
-                $details[$key] = array(
-                    'label' => $label,
-                    'key' => $key,
-                    'value' => $value,
-                    'link' => $link,
-                );
-            }
-        }
-        $details['id'] = array(
-            'label' => 'Permalink',
-            'key' => 'id',
-            'value' => $id,
-        );
-
-        $metadata['page_title'] = brevity(htmlspecialchars($doc['title_display']));
-        if (array_key_exists('finding_aid_url_s', $doc)) {
-            $entry = array(
-                'label' => 'Collection guide',
-                'anchor' => true,
-                'key' => 'collection_guide',
-                'value' => $this->path('/catalog/' . $doc['object_id_s'][0] . $metadata['query']->link()),
-                'link' => true,
-            );
-            $details['collection_guide'] = $entry;
-            $metadata['page_description'] = htmlspecialchars(
-                $doc['title_display'] . ', ' .
-                implode(', ', $doc['source_s']) . ', ' .
-                'University of Kentucky Libraries - ExploreUK',
-                ENT_QUOTES,
-                'UTF-8'
-            );
-        } else {
-            $metadata['page_description'] = htmlspecialchars(
-                $doc['title_display'] . ', ' .
-                'University of Kentucky Libraries - ExploreUK',
-                ENT_QUOTES,
-                'UTF-8'
-            );
-        }
-
-        switch ($format) {
-            case 'audio':
-                $metadata['item_audio'] = array(
-                    'audio' => array(
-                        'href_id' => "audio_$id",
-                        'href' => $flat['reference_audio_url_s'],
-                    ),
-                );
-                $metadata['script_media'] = true;
-                break;
-            case 'audiovisual':
-                $metadata['item_audio'] = array(
-                    'video' => array(
-                        'href_id' => "video_$id",
-                        'href' => $flat['reference_video_url_s'],
-                    ),
-                );
-                $metadata['script_media'] = true;
-                break;
-            case 'drawings (visual works)':
-                /* fall through */
-            case 'images':
-                $metadata['item_image'] = $flat;
-                $metadata['script_image'] = array(
-                    'osd_id' => 'viewer',
-                    'prefix_url' => $this->themePath('openseadragon/images/'),
-                    'ref_id' => 'reference_image',
-                );
-                $metadata['downloadable'] = true;
-                break;
-            case 'annual reports':
-                /* fall through */
-            case 'architectural drawings (visual works)':
-                /* fall through */
-            case 'archival material':
-                /* fall through */
-            case 'athletic publications':
-                /* fall through */
-            case 'booklets':
-                /* fall through */
-            case 'books':
-                /* fall through */
-            case 'course catalogs':
-                /* fall through */
-            case 'directories':
-                /* fall through */
-            case 'handscrolls':
-                /* fall through */
-            case 'indexes (reference sources)':
-                /* fall through */
-            case 'journals':
-                /* fall through */
-            case 'ledgers':
-                /* fall through */
-            case 'maps':
-                /* fall through */
-            case 'minutes':
-                /* fall through */
-            case 'newsletters':
-                /* fall through */
-            case 'newspapers':
-                /* fall through */
-            case 'yearbooks':
-                $flat['embed_url'] = $this->path("/catalog/$id/paged" . $metadata['query']->link());
-                $text_field = 'text_s';
-                if (array_key_exists($text_field, $doc)) {
-                    $flat['text'] = array(
-                        'href' => $this->path("/catalog/$id/text"),
-                    );
-                }
-                $metadata['item_book'] = $flat;
-                $metadata['downloadable'] = true;
-                break;
-            default:
-                $pieces = array();
-                foreach ($doc as $field => $value) {
-                    if (is_array($value)) {
-                        $value = implode('; ', $value);
-                    }
-                    $pieces[] = "<b>$field</b>: $value";
-                }
-                $metadata['item'] = '<ul><li>' . implode('</li><li>', $pieces) . "</li></ul>\n";
-                break;
-        }
-
-        $metadata['flat'] = $flat;
-        $metadata['details'] = $details;
-
-        $raw_pages = json_decode($this->omeka->getOption('public_navigation_main'), true);
-        $metadata['nav'] = $this->getVisiblePages($raw_pages);
-        $view = new View($metadata, 'zoom');
-        $view->render();
-    }
-
-    public function pageViewer($id)
+    public function pageViewer($id, $template = 'page')
     {
         $doc = $this->document($id);
         $format = $doc['format'];
@@ -680,7 +473,7 @@ class ExploreUK
         $raw_pages = json_decode($this->omeka->getOption('public_navigation_main'), true);
         $metadata['nav'] = $this->getVisiblePages($raw_pages);
         $metadata['z_simple_pages'] = $this->config['simple_pages'];
-        $view = new View($metadata, 'page');
+        $view = new View($metadata, $template);
         $view->render();
     }
 
