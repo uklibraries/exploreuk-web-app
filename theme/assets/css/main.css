@@ -1823,7 +1823,7 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     font-size: 1em;
 }
 
-.page-title p a {
+.page-title a {
     color: #005dab;
     text-decoration: underline;
 }
@@ -1859,6 +1859,8 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 .download a,
 .media-player a {
     text-align: center;
+    color: #ffffff;
+    text-decoration: none;
 }
 
 .download a > *,

@@ -74,6 +74,7 @@ define('EUK_TITLE_FIELD_ORDER', array(
     'author_display',
     'language_display',
     'collection_url', # NOTE: this implies source_s
+    'source_s',
     'description_display',
 ));
 
