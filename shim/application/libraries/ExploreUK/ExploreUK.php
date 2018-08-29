@@ -180,6 +180,7 @@ class ExploreUK
         }
 
         $doc = $this->document($id);
+        # XXX handle null document
 
         $url = $doc[$field];
         if (is_array($url)) {
@@ -199,6 +200,8 @@ class ExploreUK
     public function text($id)
     {
         $doc = $this->document($id);
+        # XXX handle null document
+
         $text_field = 'text_s';
 
         if (array_key_exists($text_field, $doc)) {
@@ -265,6 +268,11 @@ class ExploreUK
     public function pageViewer($id, $template = 'page')
     {
         $doc = $this->document($id);
+        if (is_null($doc)) {
+            header('Location: /');
+            return;
+        }
+
         $format = $doc['format'];
         if ($format === 'collections') {
             header('Location: ' . $this->config['fa_base'] . $id);
