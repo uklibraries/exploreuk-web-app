@@ -785,7 +785,7 @@ class ExploreUK
         }
         $metadata['page_description'] = $metadata['page_title'];
 
-        if (preg_match('/^\/(catalog\/?)?$/', $_SERVER['REQUEST_URI'])) {
+        if (!$this->config['query']->nontrivial()) {
             $metadata['front_page'] = true;
             $metadata['search_items_count_text'] = $this->omeka->getThemeOption('search_items_count_text');
 
