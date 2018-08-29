@@ -128,7 +128,7 @@ class View
             return $this->renderLink($item, $item, true);
         } elseif (in_array($field, $euk_facetable)) {
             $link = "/?f%5B$field%5D%5B%5D=";
-            return $this->renderLink($this->path($link . urlencode($item)), $item);
+            return $this->renderLink($this->path($link . urlencode($item)), $item, true);
         } else {
             return $item;
         }

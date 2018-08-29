@@ -12,6 +12,8 @@ if (isset($m['item_audio'])) {
 foreach (EUK_TITLE_FIELD_ORDER as $field) {
     if (($field === 'collection_url') && (!isset($m['details']['finding_aid_url_s']))) {
         continue;
+    } elseif (($field === 'source_s') && (isset($m['details']['finding_aid_url_s']))) {
+        continue;
     }
     if (isset($m['details'][$field])) {
         $content = $m['details'][$field];
