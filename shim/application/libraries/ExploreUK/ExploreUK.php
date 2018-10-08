@@ -399,7 +399,7 @@ class ExploreUK
             );
         }
 
-        if ($object_type === 'section') {
+        if ($object_type === 'section' && ($format !== 'audio' && $format !== 'audiovisual')) {
             $flat['embed_url'] = $this->path("/catalog/$id/paged" . $metadata['query']->link());
             $text_field = 'text_s';
             if (array_key_exists($text_field, $doc)) {
