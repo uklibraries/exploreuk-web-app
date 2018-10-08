@@ -91,9 +91,15 @@ class ExploreUK
 
     public function pages($id)
     {
-        $parent = preg_replace('/_[^_]+$/', '', $id);
+        $doc = $this->document($id);
+        if ($doc['object_type_s'][0] === 'section') {
+            $parent = $id;
+        } else {
+            $parent = preg_replace('/_[^_]+$/', '', $id);
+        }
         $pieces = array();
         $pieces[] = 'fq=' . urlencode("parent_id_s:$parent");
+        $pieces[] = 'fq=' . urlencode("object_type_s:page");
         $pieces[] = 'wt=json';
         $pieces[] = 'fl=' . urlencode('id,reference_image_url_s,reference_image_width_s,reference_image_height_s');
         $pieces[] = 'rows=10000';
@@ -274,7 +280,11 @@ class ExploreUK
         }
 
         $format = $doc['format'];
-        if ($format === 'collections') {
+        $object_type = $doc['object_type_s'];
+        if (is_array($object_type)) {
+            $object_type = $object_type[0];
+        }
+        if ($format === 'collections' && $object_type === 'collection') {
             header('Location: ' . $this->config['fa_base'] . $id);
             return;
         }
@@ -389,90 +399,103 @@ class ExploreUK
             );
         }
 
-        switch ($format) {
-            case 'audio':
-                $metadata['item_audio'] = array(
-                    'audio' => array(
-                        'href_id' => "audio_$id",
-                        'href' => $flat['reference_audio_url_s'],
-                    ),
+        if ($object_type === 'section') {
+            $flat['embed_url'] = $this->path("/catalog/$id/paged" . $metadata['query']->link());
+            $text_field = 'text_s';
+            if (array_key_exists($text_field, $doc)) {
+                $flat['text'] = array(
+                    'href' => $this->path("/catalog/$id/text"),
                 );
-                $metadata['script_media'] = true;
-                break;
-            case 'audiovisual':
-                $metadata['item_audio'] = array(
-                    'video' => array(
-                        'href_id' => "video_$id",
-                        'href' => $flat['reference_video_url_s'],
-                    ),
-                );
-                $metadata['script_media'] = true;
-                break;
-            case 'drawings (visual works)':
-                /* fall through */
-            case 'images':
-                $metadata['item_image'] = $flat;
-                $metadata['script_image'] = array(
-                    'osd_id' => 'viewer',
-                    'prefix_url' => $this->themePath('openseadragon/images/'),
-                    'ref_id' => 'reference_image',
-                );
-                $metadata['downloadable'] = true;
-                break;
-            case 'annual reports':
-                /* fall through */
-            case 'architectural drawings (visual works)':
-                /* fall through */
-            case 'archival material':
-                /* fall through */
-            case 'athletic publications':
-                /* fall through */
-            case 'booklets':
-                /* fall through */
-            case 'books':
-                /* fall through */
-            case 'course catalogs':
-                /* fall through */
-            case 'directories':
-                /* fall through */
-            case 'handscrolls':
-                /* fall through */
-            case 'indexes (reference sources)':
-                /* fall through */
-            case 'journals':
-                /* fall through */
-            case 'ledgers':
-                /* fall through */
-            case 'maps':
-                /* fall through */
-            case 'minutes':
-                /* fall through */
-            case 'newsletters':
-                /* fall through */
-            case 'newspapers':
-                /* fall through */
-            case 'yearbooks':
-                $flat['embed_url'] = $this->path("/catalog/$id/paged" . $metadata['query']->link());
-                $text_field = 'text_s';
-                if (array_key_exists($text_field, $doc)) {
-                    $flat['text'] = array(
-                        'href' => $this->path("/catalog/$id/text"),
+            }
+            $metadata['item_book'] = $flat;
+            $metadata['downloadable'] = true;
+            $metadata['downloadable_extra'] = '<br>of this page';
+        } else {
+            switch ($format) {
+                case 'audio':
+                    $metadata['item_audio'] = array(
+                        'audio' => array(
+                            'href_id' => "audio_$id",
+                            'href' => $flat['reference_audio_url_s'],
+                        ),
                     );
-                }
-                $metadata['item_book'] = $flat;
-                $metadata['downloadable'] = true;
-                $metadata['downloadable_extra'] = '<br>of this page';
-                break;
-            default:
-                $pieces = array();
-                foreach ($doc as $field => $value) {
-                    if (is_array($value)) {
-                        $value = implode('; ', $value);
+                    $metadata['script_media'] = true;
+                    break;
+                case 'audiovisual':
+                    $metadata['item_audio'] = array(
+                        'video' => array(
+                            'href_id' => "video_$id",
+                            'href' => $flat['reference_video_url_s'],
+                        ),
+                    );
+                    $metadata['script_media'] = true;
+                    break;
+                case 'drawings (visual works)':
+                    /* fall through */
+                case 'images':
+                    $metadata['item_image'] = $flat;
+                    $metadata['script_image'] = array(
+                        'osd_id' => 'viewer',
+                        'prefix_url' => $this->themePath('openseadragon/images/'),
+                        'ref_id' => 'reference_image',
+                    );
+                    $metadata['downloadable'] = true;
+                    break;
+                case 'annual reports':
+                    /* fall through */
+                case 'architectural drawings (visual works)':
+                    /* fall through */
+                case 'archival material':
+                    /* fall through */
+                case 'athletic publications':
+                    /* fall through */
+                case 'booklets':
+                    /* fall through */
+                case 'books':
+                    /* fall through */
+                case 'course catalogs':
+                    /* fall through */
+                case 'directories':
+                    /* fall through */
+                case 'handscrolls':
+                    /* fall through */
+                case 'indexes (reference sources)':
+                    /* fall through */
+                case 'journals':
+                    /* fall through */
+                case 'ledgers':
+                    /* fall through */
+                case 'maps':
+                    /* fall through */
+                case 'minutes':
+                    /* fall through */
+                case 'newsletters':
+                    /* fall through */
+                case 'newspapers':
+                    /* fall through */
+                case 'yearbooks':
+                    $flat['embed_url'] = $this->path("/catalog/$id/paged" . $metadata['query']->link());
+                    $text_field = 'text_s';
+                    if (array_key_exists($text_field, $doc)) {
+                        $flat['text'] = array(
+                            'href' => $this->path("/catalog/$id/text"),
+                        );
                     }
-                    $pieces[] = "<b>$field</b>: $value";
-                }
-                $metadata['item'] = '<ul><li>' . implode('</li><li>', $pieces) . "</li></ul>\n";
-                break;
+                    $metadata['item_book'] = $flat;
+                    $metadata['downloadable'] = true;
+                    $metadata['downloadable_extra'] = '<br>of this page';
+                    break;
+                default:
+                    $pieces = array();
+                    foreach ($doc as $field => $value) {
+                        if (is_array($value)) {
+                            $value = implode('; ', $value);
+                        }
+                        $pieces[] = "<b>$field</b>: $value";
+                    }
+                    $metadata['item'] = '<ul><li>' . implode('</li><li>', $pieces) . "</li></ul>\n";
+                    break;
+            }
         }
 
         $metadata['flat'] = $flat;
