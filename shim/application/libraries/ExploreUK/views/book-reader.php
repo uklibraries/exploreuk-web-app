@@ -27,13 +27,15 @@ window.addEventListener('message', function (e) {
 
     var url = 'https://' + window.location.hostname
         + '<?= $this->path('/catalog/') ?>'
-        + page.id
+        + '<?= $m['id'] ?>'
         + window.location.search
-        + window.location.hash
+        + window.location.hash;
 
     var permalink = 'https://' + window.location.hostname
         + '<?= $this->path('/catalog/') ?>'
-        + page.id;
+        + '<?= $m['id'] ?>'
+        + window.location.hash;
+        /*+ page.id;*/
 
     var anchor = document.getElementById('page-details-id').nextElementSibling.childNodes[0];
     anchor.href = permalink;
