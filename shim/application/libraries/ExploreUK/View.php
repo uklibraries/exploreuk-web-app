@@ -25,6 +25,18 @@ class View
         return $this->query->q($key);
     }
 
+    public function hiddenSearchFields()
+    {
+        $fields = array();
+        foreach ($this->metadata['active_facets'] as $spec) {
+            $fields[] = array(
+                'name' => 'f[' . $spec['field_raw'] . '][]',
+                'value' => $spec['value_label'],
+            );
+        }
+        return $fields;
+    }
+
     public function suggestedLink($term)
     {
         return $this->query->suggestedLink($term);
