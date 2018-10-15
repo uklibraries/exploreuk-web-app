@@ -280,6 +280,7 @@ class Query
     {
         $query = $this->query;
         $query['f'] = array();
+        $query['offset'] = 0;
         foreach ($this->query['f'] as $potential_term => $label) {
             if ($potential_term != $facet) {
                 $query['f'][$potential_term] = $label;
@@ -293,6 +294,7 @@ class Query
     {
         $query = $this->query;
         $query['f'][$facet] = $label;
+        $query['offset'] = 0;
         $addFilter = new Query($query, $this->solr);
         return $addFilter->link();
     }
