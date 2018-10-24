@@ -371,14 +371,14 @@ class ExploreUK
                 'label' => 'Collection guide',
                 'anchor' => true,
                 'key' => 'collection_guide',
-                'value' => $this->path('/catalog/' . $doc['object_id_s'][0] . $metadata['query']->link()),
+                'value' => $this->path('/catalog/' . preg_replace('/_.*/', '', $doc['object_id_s'][0]) . $metadata['query']->link()),
                 'link' => true,
             );
             $details['collection_url'] = array(
                 'label' => EUK_LOCALE['en']['collection_url'],
                 'key' => 'collection_url',
                 'value' => array(
-                    'base_id' => $doc['object_id_s'][0],
+                    'base_id' => preg_replace('/_.*/', '', $doc['object_id_s'][0]),
                     'source_s' => $doc['source_s'][0],
                 ),
             );
