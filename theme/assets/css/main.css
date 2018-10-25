@@ -1953,6 +1953,11 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     font-size: 16px;
     line-height: 1.5em;
 }
+
+#primary a {
+    color: #005dab;
+    text-decoration: underline;
+}
 /* end   Simple Pages */
 
 /* begin item tabs */
