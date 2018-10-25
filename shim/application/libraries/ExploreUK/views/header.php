@@ -6,6 +6,13 @@
     <meta name="description" content="<?= $m['page_description'] ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23584444-4"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-23584444-4', { 'anonymize_ip': true });
+    </script>
 </head>
 <body>
 <a href="#0" class="cd-top js-cd-top">Top</a>
