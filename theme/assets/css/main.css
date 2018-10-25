@@ -1945,7 +1945,18 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     padding: 2em;
 }
 
-#primary p {
+#primary ul {
+    list-style: initial;
+    margin: initial;
+    padding: 0 0 0 40px;
+}
+
+#primary li {
+    display: list-item;
+}
+
+#primary p,
+#primary ul {
     width: 90%;
     max-width: 70em;
     margin-left: auto;
