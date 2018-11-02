@@ -605,7 +605,10 @@ function euk_oai_list_records($options)
         $record['metadata'] = array();
         foreach ($data_dictionary as $row) {
             $field = $row[0];
-            $values = $doc[$row[1]];
+            $values = null;
+            if (isset($doc[$row[1]])) {
+                $values = $doc[$row[1]];
+            }
             if ($values) {
                 if (!is_array($values)) {
                     $values = array($values);
