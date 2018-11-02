@@ -120,7 +120,8 @@ class Oai
                     $oai_dc->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'schemaLocation', 'http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd');
 
                     foreach ($record['metadata'] as $row) {
-                        $child = $doc->createElement('dc:' . $row[0], $row[1]);
+                        $child = $doc->createElement('dc:' . $row[0]);
+                        $child->appendChild($doc->createTextNode($row[1]));
                         $child = $oai_dc->appendChild($child);
                     }
                 }
@@ -159,7 +160,8 @@ class Oai
                     $oai_dc->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'schemaLocation', 'http://www.openarchives.org/OAI/2.0/oai_dc/ http://www.openarchives.org/OAI/2.0/oai_dc.xsd');
 
                     foreach ($record['metadata'] as $row) {
-                        $child = $doc->createElement('dc:' . $row[0], $row[1]);
+                        $child = $doc->createElement('dc:' . $row[0]);
+                        $child->appendChild($doc->createTextNode($row[1]));
                         $child = $oai_dc->appendChild($child);
                     }
                 }
