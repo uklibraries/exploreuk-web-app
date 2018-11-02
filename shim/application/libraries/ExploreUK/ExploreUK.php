@@ -188,9 +188,12 @@ class ExploreUK
         $doc = $this->document($id);
         # XXX handle null document
 
-        $url = $doc[$field];
-        if (is_array($url)) {
-            $url = $url[0];
+        $url = null;
+        if (isset($doc[$field])) {
+            $url = $doc[$field];
+            if (is_array($url)) {
+                $url = $url[0];
+            }
         }
 
         /* TODO: maybe have a metadata-determined filename? */
@@ -703,10 +706,12 @@ class ExploreUK
                 $view = new View($metadata, 'search-results');
             } else {
                 $metadata['suggestions'] = array();
-                foreach ($result['spellcheck']['suggestions'] as $word) {
-                    if (isset($word['suggestion'])) {
-                        foreach ($word['suggestion'] as $suggestion) {
-                            $metadata['suggestions'][] = $suggestion['word'];
+                if (isset($result['spellcheck'])) {
+                    foreach ($result['spellcheck']['suggestions'] as $word) {
+                        if (isset($word['suggestion'])) {
+                            foreach ($word['suggestion'] as $suggestion) {
+                                $metadata['suggestions'][] = $suggestion['word'];
+                            }
                         }
                     }
                 }

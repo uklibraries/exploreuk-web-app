@@ -28,11 +28,13 @@ class View
     public function hiddenSearchFields()
     {
         $fields = array();
-        foreach ($this->metadata['active_facets'] as $spec) {
-            $fields[] = array(
-                'name' => 'f[' . $spec['field_raw'] . '][]',
-                'value' => $spec['value_label'],
-            );
+        if (isset($this->metadata['active_facets'])) {
+            foreach ($this->metadata['active_facets'] as $spec) {
+                $fields[] = array(
+                    'name' => 'f[' . $spec['field_raw'] . '][]',
+                    'value' => $spec['value_label'],
+                );
+            }
         }
         return $fields;
     }
