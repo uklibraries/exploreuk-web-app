@@ -135,8 +135,10 @@ class Oai
                         $child = $header->appendChild($child);
                     }
                 }
-                $token = $doc->createElement('resumptionToken', $response['metadata']['resumptionToken']);
-                $token = $node->appendChild($token);
+                if (isset($response['metadata']['resumptionToken'])) {
+                    $token = $doc->createElement('resumptionToken', $response['metadata']['resumptionToken']);
+                    $token = $node->appendChild($token);
+                }
             } elseif ($response['verb'] === 'ListRecords') {
                 foreach ($response['metadata']['results'] as $record) {
                     $result_node = $doc->createElement('record', '');
@@ -165,8 +167,10 @@ class Oai
                         $child = $oai_dc->appendChild($child);
                     }
                 }
-                $token = $doc->createElement('resumptionToken', $response['metadata']['resumptionToken']);
-                $token = $node->appendChild($token);
+                if (isset($response['metadata']['resumptionToken'])) {
+                    $token = $doc->createElement('resumptionToken', $response['metadata']['resumptionToken']);
+                    $token = $node->appendChild($token);
+                }
             }
         }
 
@@ -523,7 +527,9 @@ function euk_oai_list_identifiers($options)
         $metadata['results'][] = $record;
     }
 
-    $metadata['resumptionToken'] = euk_oai_mint_token($options);
+    if (($result['response']['numFound'] - $result['response']['start']) >= $oai_per_page) {
+        $metadata['resumptionToken'] = euk_oai_mint_token($options);
+    }
 
     return $metadata;
 }
@@ -624,7 +630,9 @@ function euk_oai_list_records($options)
         $metadata['results'][] = $record;
     }
 
-    $metadata['resumptionToken'] = euk_oai_mint_token($options);
+    if (($result['response']['numFound'] - $result['response']['start']) >= $oai_per_page) {
+        $metadata['resumptionToken'] = euk_oai_mint_token($options);
+    }
 
     return $metadata;
 }
