@@ -5,6 +5,7 @@ bash exe/minify.sh
 
 rm -rf dist
 mkdir -p "dist/pack/themes/$THEME"
+rsync -crlpt favicon/ dist/pack/
 rsync -crlpt shim/ dist/pack/
 rsync -crlpt theme/ "dist/pack/themes/$THEME/"
 cd dist/pack
