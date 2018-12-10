@@ -95,11 +95,11 @@ class ExploreUK
                 $result[$key] = array();
                 foreach ($value as $item) {
                     if (strpos($item, 'https://nyx.uky.edu/dips/') === 0) {
-                        $value = preg_replace('/dips/', 'dipstest', $item);
+                        $item = preg_replace('/dips/', 'dipstest', $item);
                     } elseif (strpos($item, 'http://nyx.uky.edu/dips/') === 0) {
-                        $value = preg_replace('/dips/', 'dipstest', $item);
+                        $item = preg_replace('/dips/', 'dipstest', $item);
                     }
-                    $result[$key][] = $value;
+                    $result[$key][] = $item;
                 }
             } else {
                 $result[$key] = $value;
