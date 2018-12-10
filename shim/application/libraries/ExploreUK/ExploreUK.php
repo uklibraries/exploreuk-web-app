@@ -16,6 +16,11 @@ class ExploreUK
         if (realpath(EUK_BASE_DIR) !== realpath($_SERVER['DOCUMENT_ROOT'])) {
             $this->config['base'] = basename(EUK_BASE_DIR) . '/';
         }
+        if ($this->omeka->getThemeOption('euk_dip_store_base_url') === 'https://nyx.uky.edu/dips') {
+            $this->config['prod'] = true;
+        } else {
+            $this->config['prod'] = false;
+        }
     }
 
     private function configure()
@@ -73,6 +78,47 @@ class ExploreUK
         }
     }
 
+    public function cleanup_doc($doc) {
+        if ($this->config['prod']) {
+            return $doc;
+        }
+        $result = array();
+        foreach ($doc as $key => $value) {
+            if (is_string($value)) {
+                if (strpos($value, 'https://nyx.uky.edu/dips/') === 0) {
+                    $value = preg_replace('/dips/', 'dipstest', $value);
+                } elseif (strpos($value, 'http://nyx.uky.edu/dips/') === 0) {
+                    $value = preg_replace('/dips/', 'dipstest', $value);
+                }
+                $result[$key] = $value;
+            } elseif (is_array($value)) {
+                $result[$key] = array();
+                foreach ($value as $item) {
+                    if (strpos($item, 'https://nyx.uky.edu/dips/') === 0) {
+                        $value = preg_replace('/dips/', 'dipstest', $item);
+                    } elseif (strpos($item, 'http://nyx.uky.edu/dips/') === 0) {
+                        $value = preg_replace('/dips/', 'dipstest', $item);
+                    }
+                    $result[$key][] = $value;
+                }
+            } else {
+                $result[$key] = $value;
+            }
+        }
+        return $result;
+    }
+
+    public function cleanup_docs($docs) {
+        if ($this->config['prod']) {
+            return $docs;
+        }
+        $result = array();
+        foreach ($docs as $doc) {
+            $result[] = $this->cleanup_doc($doc);
+        }
+        return $result;
+    }
+
     public function document($id)
     {
         $pieces = array();
@@ -83,7 +129,7 @@ class ExploreUK
         $url = $this->config['solr'] . '?' . $query;
         $result = json_decode(file_get_contents($url), true);
         if (isset($result['response']) and count($result['response']['docs']) > 0) {
-            return $result['response']['docs'][0];
+            return $this->cleanup_doc($result['response']['docs'][0]);
         } else {
             return null;
         }
@@ -108,7 +154,7 @@ class ExploreUK
         $url = $this->config['solr'] . '?' . $query;
         $result = json_decode(file_get_contents($url), true);
         if (isset($result['response']) and count($result['response']['docs']) > 0) {
-            return $result['response']['docs'];
+            return $this->cleanup_docs($result['response']['docs']);
         } else {
             return null;
         }
