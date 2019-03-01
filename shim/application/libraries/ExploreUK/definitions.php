@@ -29,6 +29,7 @@ define('EUK_HIT_FIELDS', array(
     'thumb' => 'thumbnail_url_s',
     'source' => 'source_s',
     'pubdate' => 'pub_date_sort',
+    'pubdate_display' => 'pub_date_display',
     'format' => 'format',
 ));
 define('EUK_LOCALE', array(
@@ -46,6 +47,7 @@ define('EUK_LOCALE', array(
         'language_display' => 'Language',
         'mets_url_display' => 'XML Metadata',
         'pub_date_sort' => 'Date',
+        'pub_date_display' => 'Date',
         'publisher_display' => 'Publisher',
         'collection_url' => 'Collection',
         'source_s' => 'Collection',
@@ -70,7 +72,7 @@ define('EUK_RESULT_FACET_ORDER', array(
 ));
 define('EUK_TEMPLATE_DIR', dirname(__FILE__) . '/templates');
 define('EUK_TITLE_FIELD_ORDER', array(
-    'pub_date_sort',
+    'pub_date_display',
     'author_display',
     'language_display',
     'collection_url', # NOTE: this implies source_s

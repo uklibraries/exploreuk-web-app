@@ -371,7 +371,7 @@ class ExploreUK
             array('Title', 'title_display'),
             array('Creator', 'author_display'),
             array('Format', 'format'),
-            array('Publication date', 'pub_date_sort'),
+            array('Publication date', 'pub_date_display'),
             array('Date uploaded', 'date_digitized_display'),
             array('Language', 'language_display'),
             array('Publisher', 'publisher_display'),
