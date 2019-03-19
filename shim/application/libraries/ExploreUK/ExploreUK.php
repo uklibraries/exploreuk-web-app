@@ -18,6 +18,8 @@ class ExploreUK
         }
         if ($this->omeka->getThemeOption('euk_dip_store_base_url') === 'https://nyx.uky.edu/dips') {
             $this->config['prod'] = true;
+        } else if ($this->omeka->getThemeOption('euk_dip_store_base_url') === 'https://exploreuk.uky.edu/dips') {
+            $this->config['prod'] = true;
         } else {
             $this->config['prod'] = false;
         }
@@ -78,6 +80,11 @@ class ExploreUK
         }
     }
 
+    public function cleanup_host($value) {
+        $value = preg_replace('#https://nyx#', 'https://exploreuk', $value);
+        return $value;
+    }
+
     public function cleanup_doc($doc) {
         if ($this->config['prod']) {
             return $doc;
@@ -90,6 +97,7 @@ class ExploreUK
                 } elseif (strpos($value, 'http://nyx.uky.edu/dips/') === 0) {
                     $value = preg_replace('/dips/', 'dipstest', $value);
                 }
+                $value = preg_replace('#https://nyx#', 'https://exploreuk', $value);
                 $result[$key] = $value;
             } elseif (is_array($value)) {
                 $result[$key] = array();
@@ -99,6 +107,7 @@ class ExploreUK
                     } elseif (strpos($item, 'http://nyx.uky.edu/dips/') === 0) {
                         $item = preg_replace('/dips/', 'dipstest', $item);
                     }
+                    $item = preg_replace('#https://nyx#', 'https://exploreuk', $item);
                     $result[$key][] = $item;
                 }
             } else {
@@ -200,7 +209,7 @@ class ExploreUK
                                 'page' => intval($doc['sequence_number_display'][0]),
                                 'page_width' => intval($doc['reference_image_width_s'][0]),
                                 'page_height' => intval($doc['reference_image_height_s'][0]),
-                                'page_image' => $doc['reference_image_url_s'][0],
+                                'page_image' => $this->cleanup_host($doc['reference_image_url_s'][0]),
                             )),
                         );
                     }
@@ -241,6 +250,7 @@ class ExploreUK
                 $url = $url[0];
             }
         }
+        $url = $this->cleanup_host($url);
 
         /* TODO: maybe have a metadata-determined filename? */
         $name = basename($url);
@@ -358,9 +368,17 @@ class ExploreUK
             if ($key === 'subject_topic_facet') {
                 $flat[$key] = $value;
             } elseif (is_array($value) and count($value) > 0) {
-                $flat[$key] = $value[0];
+                if (preg_match('/_url/', $key)) {
+                    $flat[$key] = $this->cleanup_host($value[0]);
+                } else {
+                    $flat[$key] = $value[0];
+                }
             } elseif (isset($value)) {
-                $flat[$key] = $value;
+                if (preg_match('/_url/', $key)) {
+                    $flat[$key] = $this->cleanup_host($value);
+                } else {
+                    $flat[$key] = $value;
+                }
             } else {
                 $flat[$key] = '';
             }
@@ -465,7 +483,7 @@ class ExploreUK
                     $metadata['item_audio'] = array(
                         'audio' => array(
                             'href_id' => "audio_$id",
-                            'href' => $flat['reference_audio_url_s'],
+                            'href' => $this->cleanup_host($flat['reference_audio_url_s']),
                         ),
                     );
                     $metadata['script_media'] = true;
@@ -474,7 +492,7 @@ class ExploreUK
                     $metadata['item_audio'] = array(
                         'video' => array(
                             'href_id' => "video_$id",
-                            'href' => $flat['reference_video_url_s'],
+                            'href' => $this->cleanup_host($flat['reference_video_url_s']),
                         ),
                     );
                     $metadata['script_media'] = true;
@@ -739,6 +757,7 @@ class ExploreUK
                     if (isset($results_data['thumb'])) {
                         $results_data['thumb'] = str_replace('http:', 'https:', $results_data['thumb']);
                         $results_data['thumb'] = str_replace('_tb.jpg', '_ftb.jpg', $results_data['thumb']);
+                        $results_data['thumb'] = $this->cleanup_host($results_data['thumb']);
                     }
                     $results_data['link'] = $this->path('/catalog/' . $docs[$i]['id'] . $metadata['query']->link());
                     $results_data['number'] = $metadata['query']->q('offset') + $i + 1;
