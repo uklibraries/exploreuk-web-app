@@ -183,7 +183,9 @@ class ExploreUK
         }
 
         $pieces = array();
-        $pieces[] = 'q=' . urlencode($q);
+        foreach (explode(" ", $q) as $word) {
+            $pieces[] = 'q=' . urlencode($word);
+        }
         $pieces[] = 'fq=' . urlencode("parent_id_s:$id");
         $pieces[] = 'wt=json';
         $pieces[] = 'rows=10000';
