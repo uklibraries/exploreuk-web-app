@@ -168,6 +168,7 @@ class Query
         $pieces[] = 'rows=' . $this->query['rows'];
         $pieces[] = 'wt=json';
         $pieces[] = 'q=' . urlencode($q);
+        $pieces[] = 'mm=1';
         if ($offset > 0) {
             $pieces[] = "start=$offset";
         }

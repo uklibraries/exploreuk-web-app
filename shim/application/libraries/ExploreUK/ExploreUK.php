@@ -184,6 +184,7 @@ class ExploreUK
 
         $pieces = array();
         $pieces[] = 'q=' . urlencode($q);
+        $pieces[] = 'mm=1';
         $pieces[] = 'fq=' . urlencode("parent_id_s:$id");
         $pieces[] = 'wt=json';
         $pieces[] = 'rows=10000';
