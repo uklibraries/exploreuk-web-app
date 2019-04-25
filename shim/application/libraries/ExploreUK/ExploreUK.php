@@ -740,7 +740,7 @@ class ExploreUK
                 $metadata['pagination'] = $pagination_data;
 
                 # results
-                $docs = $result['response']['docs'];
+                $docs = $this->cleanup_docs($result['response']['docs']);
                 $results = array();
                 for ($i = 0; $i < count($docs); $i++) {
                     $results_data = array();
