@@ -186,6 +186,7 @@ class ExploreUK
         $pieces[] = 'q=' . urlencode($q);
         $pieces[] = 'mm=1';
         $pieces[] = 'fq=' . urlencode("parent_id_s:$id");
+        $pieces[] = 'fq=' . urlencode("object_type_s:page");
         $pieces[] = 'wt=json';
         $pieces[] = 'rows=10000';
         $pieces[] = 'fl=' . urlencode('id,reference_image_url_s,reference_image_width_s,reference_image_height_s,text_s,sequence_number_display');
@@ -319,13 +320,11 @@ class ExploreUK
             $search_host = 'https://' . $_SERVER['HTTP_HOST'] . '/catalog/' . $parent . '/find';
             $images_base_url = 'https://' . $_SERVER['HTTP_HOST'] . '/themes/' . $metadata['theme'] . '/BookReader/images/';
 
-            $dequoted_query = str_replace('"', '', $metadata['query']->q('q'));
-
             $metadata['script'] = array(
                 'json' => json_encode($pages),
                 'search_host' => json_encode($search_host),
                 'imagesBaseURL' => json_encode($images_base_url),
-                'query' => json_encode($dequoted_query),
+                'query' => json_encode($metadata['query']->q('q')),
             );
         }
 
