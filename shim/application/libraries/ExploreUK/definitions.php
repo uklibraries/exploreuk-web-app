@@ -162,6 +162,7 @@ function navsHashFromFlatList($navs)
 
 function highlight_snippet($text, $raw_terms, $radius)
 {
+    $raw_terms = preg_replace('/"/', '', $raw_terms);
     $terms = preg_split('/\s+/', $raw_terms, null, PREG_SPLIT_NO_EMPTY);
     $words = explode(' ', preg_replace('/\s+/', ' ', $text));
     $wanted = array_fill(0, count($words), 0);
