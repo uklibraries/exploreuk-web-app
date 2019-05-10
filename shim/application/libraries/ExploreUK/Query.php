@@ -32,7 +32,10 @@ class Query
                     $this->query['fq'][] = $value;
                 } elseif (substr($key, 0, 2) == 'f[') {
                     $subkey = substr($key, 2, -3);
-                    $this->query['f'][$subkey] = $value;
+                    if (!isset($this->query['f'][$subkey])) {
+                        $this->query['f'][$subkey] = array();
+                    }
+                    $this->query['f'][$subkey][$value] = TRUE;
                 } elseif ($key == 'offset') {
                     $this->query['offset'] = intval($value);
                 } elseif ($key == 'per_page') {
@@ -84,8 +87,10 @@ class Query
         foreach ($query['fq'] as $fq_term) {
             $pieces[] = 'fq[]=' . urlencode($fq_term);
         }
-        foreach ($query['f'] as $f_term => $value) {
-            $pieces[] = urlencode("f[$f_term][]") . '=' . urlencode($value);
+        foreach ($query['f'] as $f_term => $ary) {#$value) {
+            foreach ($ary as $key => $truth) {
+                $pieces[] = urlencode("f[$f_term][]") . '=' . urlencode($key);
+            }
         }
         if (!isset($query['offset'])) {
             $query['offset'] = 0;
@@ -186,11 +191,13 @@ class Query
             }
         }
         if (count($f) > 0) {
-            foreach ($f as $label => $value) {
-                if ($label === 'pub_date_sort') {
-                    $pieces[] = 'fq=' . urlencode("$label:$value");
-                } else {
-                    $pieces[] = 'fq=' . urlencode("{!raw f=$label}$value");
+            foreach ($f as $label => $ary) {
+                foreach ($ary as $key => $truth) {
+                    if ($label === 'pub_date_sort') {
+                        $pieces[] = 'fq=' . urlencode("$label:$key");
+                    } else {
+                        $pieces[] = 'fq=' . urlencode("{!raw f=$label}$key");
+                    }
                 }
             }
         }
@@ -225,11 +232,13 @@ class Query
             }
         }
         if (count($f) > 0) {
-            foreach ($f as $label => $value) {
-                if ($label === 'pub_date_sort') {
-                    $pieces[] = 'fq=' . urlencode("$label:$value");
-                } else {
-                    $pieces[] = 'fq=' . urlencode("{!raw f=$label}$value");
+            foreach ($f as $label => $ary) {
+                foreach ($ary as $key => $truth) {
+                    if ($label === 'pub_date_sort') {
+                        $pieces[] = 'fq=' . urlencode("$label:$key");
+                    } else {
+                        $pieces[] = 'fq=' . urlencode("{!raw f=$label}$key");
+                    }
                 }
             }
         }
@@ -264,11 +273,13 @@ class Query
             }
         }
         if (count($f) > 0) {
-            foreach ($f as $label => $value) {
-                if ($label === 'pub_date_sort') {
-                    $pieces[] = 'fq=' . urlencode("$label:$value");
-                } else {
-                    $pieces[] = 'fq=' . urlencode("{!raw f=$label}$value");
+            foreach ($f as $label => $ary) {
+                foreach ($ary as $key => $truth) {
+                    if ($label === 'pub_date_sort') {
+                        $pieces[] = 'fq=' . urlencode("$label:$key");
+                    } else {
+                        $pieces[] = 'fq=' . urlencode("{!raw f=$label}$key");
+                    }
                 }
             }
         }
@@ -282,9 +293,21 @@ class Query
         $query = $this->query;
         $query['f'] = array();
         $query['offset'] = 0;
-        foreach ($this->query['f'] as $potential_term => $label) {
+        foreach ($this->query['f'] as $potential_term => $ary) {
             if ($potential_term != $facet) {
-                $query['f'][$potential_term] = $label;
+                $query['f'][$potential_term] = $ary;
+            } else {
+                if (!isset($query['f'][$potential_term])) {
+                    $query['f'][$potential_term] = array();
+                }
+                foreach ($ary as $key => $truth) {
+                    if ($key != $label) {
+                        $query['f'][$potential_term][$key] = TRUE;
+                    }
+                }
+                if (count($query['f'][$potential_term]) == 0) {
+                    unset($query['f'][$potential_term]);
+                }
             }
         }
         $removeFilter = new Query($query, $this->solr);
@@ -294,7 +317,10 @@ class Query
     public function addFilterLink($facet, $label)
     {
         $query = $this->query;
-        $query['f'][$facet] = $label;
+        if (!isset($query['f'][$facet])) {
+            $query['f'][$facet] = array();
+        }
+        $query['f'][$facet][$label] = TRUE;
         $query['offset'] = 0;
         $addFilter = new Query($query, $this->solr);
         return $addFilter->link();

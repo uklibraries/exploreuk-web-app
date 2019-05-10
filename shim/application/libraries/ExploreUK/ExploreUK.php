@@ -595,25 +595,36 @@ class ExploreUK
             $result = $this->config['query']->search();
             $metadata['page_title'] = htmlspecialchars($metadata['q'], ENT_QUOTES, 'UTF-8') . ' - ExploreUK';
 
+            $euk_requires_capitalization = EUK_REQUIRES_CAPITALIZATION;
+
             # Facets
             $metadata['active_facets'] = array();
-            foreach ($metadata['query']->q('f') as $f_term => $value) {
-                $remove_link = $metadata['query']->removeFilterLink($f_term, $value);
-                $field_label = facet_displayname($f_term);
-                if (isset($result['facet_counts']['facet_fields'][$f_term])) {
-                    $facet_counts = $result['facet_counts']['facet_fields'][$f_term];
-                    $count = 0;
-                    if (count($facet_counts) > 0) {
-                        $navs = navsHashFromFlatList($facet_counts);
-                        $count = $navs[$value];
+            foreach ($metadata['query']->q('f') as $f_term => $ary) {
+                foreach ($ary as $value => $truth) {
+                    $remove_link = $metadata['query']->removeFilterLink($f_term, $value);
+                    $field_label = facet_displayname($f_term);
+                    if (isset($result['facet_counts']['facet_fields'][$f_term])) {
+                        $facet_counts = $result['facet_counts']['facet_fields'][$f_term];
+                        $count = 0;
+                        if (count($facet_counts) > 0) {
+                            $navs = navsHashFromFlatList($facet_counts);
+                            $count = $navs[$value];
+                        }
+                        $value_label = $value;
+                        if (in_array($f_term, $euk_requires_capitalization)) {
+                            $value_label = ucfirst($value);
+                        }
+                        if ($value_label === 'Japanes') {
+                            $value_label = 'Japanese';
+                        }
+                        $metadata['active_facets'][] = array(
+                            'field_label' => $field_label,
+                            'remove_link' => $this->path('/catalog/' . $remove_link),
+                            'field_raw' => $f_term,
+                            'value_label' => $value_label,
+                            'count' => $count,
+                        );
                     }
-                    $metadata['active_facets'][] = array(
-                        'field_label' => $field_label,
-                        'remove_link' => $this->path('/catalog/' . $remove_link),
-                        'field_raw' => $f_term,
-                        'value_label' => $value,
-                        'count' => $count,
-                    );
                 }
             }
 
@@ -624,19 +635,33 @@ class ExploreUK
                 if (count($facet_counts) > 2) {
                     $navs = navsHashFromFlatList($facet_counts);
                     $values = array();
+                    $qf = $metadata['query']->q('f');
+                    $nontrivial = FALSE;
                     foreach ($navs as $label => $count) {
-                        $add_link = $metadata['query']->addFilterLink($facet, $label);
-                        $values[] = array(
-                            'add_link' => $this->path('/catalog/' . $add_link),
-                            'value_label' => $label,
-                            'count' => $count,
+                        if (!isset($qf[$facet][$label])) {
+                            $nontrivial = TRUE;
+                            $add_link = $metadata['query']->addFilterLink($facet, $label);
+                            $value_label = $label;
+                            if (in_array($facet, $euk_requires_capitalization)) {
+                                $value_label = ucfirst($label);
+                            }
+                            if ($value_label === 'Japanes') {
+                                $value_label = 'Japanese';
+                            }
+                            $values[] = array(
+                                'add_link' => $this->path('/catalog/' . $add_link),
+                                'value_label' => $value_label,
+                                'count' => $count,
+                            );
+                        }
+                    }
+                    if ($nontrivial) {
+                        $metadata['facets'][] = array(
+                            'field_label' => facet_displayname($facet),
+                            'values' => $values,
+                            'field_raw' => $facet,
                         );
                     }
-                    $metadata['facets'][] = array(
-                        'field_label' => facet_displayname($facet),
-                        'values' => $values,
-                        'field_raw' => $facet,
-                    );
                 }
             }
 
@@ -656,9 +681,16 @@ class ExploreUK
                     $navs = navsHashFromFlatList($facet_counts);
                     foreach ($navs as $label => $count) {
                         $add_link = $metadata['query']->addFilterLink($facet, $label);
+                        $value_label = $label;
+                        if (in_array($facet, $euk_requires_capitalization)) {
+                            $value_label = ucfirst($label);
+                        }
+                        if ($value_label === 'Japanes') {
+                            $value_label = 'Japanese';
+                        }
                         $metadata['facet_full_lists'][$facet]['by-count'][] = array(
                             'add_link' => $this->path('/catalog/' . $add_link),
-                            'value_label' => $label,
+                            'value_label' => $value_label,
                             'count' => $count,
                         );
                     }
@@ -669,9 +701,16 @@ class ExploreUK
                     $navs = navsHashFromFlatList($facet_counts);
                     foreach ($navs as $label => $count) {
                         $add_link = $metadata['query']->addFilterLink($facet, $label);
+                        $value_label = $label;
+                        if (in_array($facet, $euk_requires_capitalization)) {
+                            $value_label = ucfirst($label);
+                        }
+                        if ($value_label === 'Japanes') {
+                            $value_label = 'Japanese';
+                        }
                         $metadata['facet_full_lists'][$facet]['by-index'][] = array(
                             'add_link' => $this->path('/catalog/' . $add_link),
-                            'value_label' => $label,
+                            'value_label' => $value_label,
                             'count' => $count,
                         );
                     }

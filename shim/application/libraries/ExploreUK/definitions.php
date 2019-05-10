@@ -22,8 +22,9 @@ define('EUK_FACETABLE', array(
     'subject_topic_facet',
     'format',
     'pub_date_sort',
+    'dc_language_t',
 ));
-define('EUK_FACETS', array('format', 'pub_date_sort', 'source_s'));
+define('EUK_FACETS', array('format', 'pub_date_sort', 'source_s', 'dc_language_t'));
 define('EUK_HIT_FIELDS', array(
     'title' => 'title_display',
     'thumb' => 'thumbnail_url_s',
@@ -39,6 +40,7 @@ define('EUK_LOCALE', array(
         'container_list_s' => 'Containers',
         'contributor_s' => 'Contributor',
         'coverage_s' => 'Geographic Subject',
+        'dc_language_t' => 'Language',
         'description_display' => 'Description',
         'facet_menu_title' => 'Filter Your Results',
         'finding_aid_url_s' => 'XML Collection Guide',
@@ -60,6 +62,7 @@ define('EUK_LOCALE', array(
 define('EUK_MAX_LABEL', 80);
 define('EUK_PER_PAGE_OPTS', array(20, 50, 100));
 define('EUK_REQUIRES_CAPITALIZATION', array(
+    'dc_language_t',
     'language_display',
 ));
 define('EUK_RESULT_DROP_FIELDS', array(
