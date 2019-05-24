@@ -487,7 +487,6 @@ class ExploreUK
                 $metadata['downloadable_single_extra'] = '<br>of this entire item/folder';
             } else {
                 $metadata['downloadable_single'] = true;
-                $metadata['downloadable_single_extra'] = '<br>of this syzygy';
             }
         } else {
             switch ($format) {
