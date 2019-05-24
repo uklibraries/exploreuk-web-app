@@ -484,9 +484,10 @@ class ExploreUK
             $pdf_url = 'pdf_url_display';
             if (array_key_exists($pdf_url, $doc)) {
                 $metadata['downloadable_single'] = false;
-                $metadata['downloadable_single_extra'] = '<br>of this entire item/folder';
+                $metadata['downloadable_single_extra'] = '<br>of entire item';
             } else {
                 $metadata['downloadable_single'] = true;
+                $metadata['downloadable_single_extra'] = $metadata['downloadable_extra'];
             }
         } else {
             switch ($format) {
