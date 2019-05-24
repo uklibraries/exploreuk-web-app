@@ -479,6 +479,16 @@ class ExploreUK
             $metadata['item_book'] = $flat;
             $metadata['downloadable'] = true;
             $metadata['downloadable_extra'] = '<br>of this page';
+
+            # Do we have a multipage item here?
+            $pdf_url = 'pdf_url_display';
+            if (array_key_exists($pdf_url, $doc)) {
+                $metadata['downloadable_single'] = false;
+                $metadata['downloadable_single_extra'] = '<br>of this entire item/folder';
+            } else {
+                $metadata['downloadable_single'] = true;
+                $metadata['downloadable_single_extra'] = '<br>of this syzygy';
+            }
         } else {
             switch ($format) {
                 case 'audio':

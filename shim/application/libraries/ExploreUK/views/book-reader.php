@@ -22,8 +22,10 @@ window.addEventListener('message', function (e) {
     var jpeg_href = '<?= $this->path('/catalog/') ?>' + page.id + '/download/?type=jpeg';
     document.getElementById('jpeg_href').href = jpeg_href;
 
+    <?php if ($m['downloadable_single']) : ?>
     var pdf_href = '<?= $this->path('/catalog/') ?>' + page.id + '/download/?type=pdf';
     document.getElementById('pdf_href').href = pdf_href;
+    <?php endif; ?>
 
     var url = 'https://' + window.location.hostname
         + '<?= $this->path('/catalog/') ?>'
