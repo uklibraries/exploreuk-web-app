@@ -1863,6 +1863,14 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     text-decoration: none;
 }
 
+.download li {
+    text-align: center;
+}
+
+.download i {
+    margin-right: 0.2em !important;
+}
+
 .download a > *,
 .media-player a > * {
     margin: auto;
