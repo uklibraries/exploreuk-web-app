@@ -622,14 +622,9 @@ class ExploreUK
                         }
                         $value_label = $value;
                         if (in_array($f_term, $euk_requires_capitalization)) {
-                            $value_label = ucfirst($value);
+                            $value_label = ucfirst($value_label);
                         }
-                        if ($value_label === 'collections') {
-                            $value_label = 'collection guides';
-                        }
-                        if ($value_label === 'Japanes') {
-                            $value_label = 'Japanese';
-                        }
+                        $value_label = value_label_cleanup($value_label);
                         $metadata['active_facets'][] = array(
                             'field_label' => $field_label,
                             'remove_link' => $this->path('/catalog/' . $remove_link),
@@ -656,11 +651,9 @@ class ExploreUK
                             $add_link = $metadata['query']->addFilterLink($facet, $label);
                             $value_label = $label;
                             if (in_array($facet, $euk_requires_capitalization)) {
-                                $value_label = ucfirst($label);
+                                $value_label = ucfirst($value_label);
                             }
-                            if ($value_label === 'Japanes') {
-                                $value_label = 'Japanese';
-                            }
+                            $value_label = value_label_cleanup($value_label);
                             $values[] = array(
                                 'add_link' => $this->path('/catalog/' . $add_link),
                                 'value_label' => $value_label,
@@ -696,11 +689,9 @@ class ExploreUK
                         $add_link = $metadata['query']->addFilterLink($facet, $label);
                         $value_label = $label;
                         if (in_array($facet, $euk_requires_capitalization)) {
-                            $value_label = ucfirst($label);
+                            $value_label = ucfirst($value_label);
                         }
-                        if ($value_label === 'Japanes') {
-                            $value_label = 'Japanese';
-                        }
+                        $value_label = value_label_cleanup($value_label);
                         $metadata['facet_full_lists'][$facet]['by-count'][] = array(
                             'add_link' => $this->path('/catalog/' . $add_link),
                             'value_label' => $value_label,
@@ -716,11 +707,9 @@ class ExploreUK
                         $add_link = $metadata['query']->addFilterLink($facet, $label);
                         $value_label = $label;
                         if (in_array($facet, $euk_requires_capitalization)) {
-                            $value_label = ucfirst($label);
+                            $value_label = ucfirst($value_label);
                         }
-                        if ($value_label === 'Japanes') {
-                            $value_label = 'Japanese';
-                        }
+                        $value_label = value_label_cleanup($value_label);
                         $metadata['facet_full_lists'][$facet]['by-index'][] = array(
                             'add_link' => $this->path('/catalog/' . $add_link),
                             'value_label' => $value_label,
@@ -804,6 +793,9 @@ class ExploreUK
                                 $results_data[$field] = htmlspecialchars($raw_field[0], ENT_QUOTES, 'UTF-8');
                             } else {
                                 $results_data[$field] = htmlspecialchars($raw_field, ENT_QUOTES, 'UTF-8');
+                            }
+                            if ($results_data[$field] === 'collections') {
+                                $results_data[$field] = 'collection guides';
                             }
                         }
                     }
