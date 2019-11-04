@@ -624,6 +624,9 @@ class ExploreUK
                         if (in_array($f_term, $euk_requires_capitalization)) {
                             $value_label = ucfirst($value);
                         }
+                        if ($value_label === 'collections') {
+                            $value_label = 'collection guides';
+                        }
                         if ($value_label === 'Japanes') {
                             $value_label = 'Japanese';
                         }
