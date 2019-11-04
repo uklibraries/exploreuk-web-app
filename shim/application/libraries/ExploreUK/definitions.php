@@ -85,6 +85,20 @@ define('EUK_TITLE_FIELD_ORDER', array(
 
 /* helper functions */
 
+function value_label_cleanup($label)
+{
+    switch ($label) {
+        case "Japanes":
+            return "Japanese";
+            break;
+        case "collections":
+            return "collection guides";
+            break;
+        default:
+            return $label;
+    }
+}
+
 function type_for($format, $type)
 {
     $type_for = array(
