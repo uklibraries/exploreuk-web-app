@@ -109,6 +109,7 @@ class OmekaShim
         if (count($result) == 0) {
             return null;
         }
+        $position = 0;
         foreach ($result as $row) {
             if ($row->field == 50) {
                 $label = $row->value;
