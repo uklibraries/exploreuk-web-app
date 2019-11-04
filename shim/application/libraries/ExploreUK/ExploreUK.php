@@ -729,7 +729,7 @@ class ExploreUK
 
             $colln = $this->omeka->getCollectionByTitle('Background image rotation');
             $metadata['colln'] = $colln;
-            $items = $this->omeka->getItems($colln->id, true);
+            $items = $this->omeka->getItems($colln->id, array('featured' => true));
             if (count($items) > 0) {
                 $index = array_rand($items);
                 $item = $items[$index];
@@ -743,17 +743,29 @@ class ExploreUK
             }
 
             $metadata['popular_resources'] = array();
+            $popular_resources = array();
             $colln = $this->omeka->getCollectionByTitle('Popular Resources');
             $items = $this->omeka->getItems($colln->id);
             foreach ($items as $item) {
-                $metadata['popular_resources'][] = $this->omeka->getItemMetadata($item->id);
+                $im = $this->omeka->getItemMetadata($item->id);
+                $popular_resources[$im['position']] = $im;
+            }
+            ksort($popular_resources);
+            foreach ($popular_resources as $key => $im) {
+                $metadata['popular_resources'][] = $im;
             }
 
             $metadata['additional_resources'] = array();
+            $additional_resources = array();
             $colln = $this->omeka->getCollectionByTitle('Additional Resources');
             $items = $this->omeka->getItems($colln->id);
             foreach ($items as $item) {
-                $metadata['additional_resources'][] = $this->omeka->getItemMetadata($item->id);
+                $im = $this->omeka->getItemMetadata($item->id);
+                $additional_resources[$im['position']] = $im;
+            }
+            ksort($additional_resources);
+            foreach ($additional_resources as $key => $im) {
+                $metadata['additional_resources'][] = $im;
             }
             $view = new View($metadata, 'front-page');
         } else {
