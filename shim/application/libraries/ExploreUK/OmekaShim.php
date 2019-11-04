@@ -75,14 +75,17 @@ class OmekaShim
         }
     }
 
-    public function getItems($collnId, $featured = false)
+    public function getItems($collnId, $options = array())
     {
         $itemsTable = $this->getTableName('items');
         $query = "SELECT id FROM `$itemsTable`
                   WHERE `collection_id` = ?";
-        if ($featured) {
+        if (isset($options['featured']) && $options['featured']) {
             $query .= ' AND `featured` = 1';
         }
+        #if (isset($options['sort'])) {
+        #    $query .= ' ORDER BY
+        #}
         $handle = $this->link->prepare($query);
         $handle->bindValue(1, $collnId);
         $handle->execute();
@@ -98,7 +101,7 @@ class OmekaShim
                   INNER JOIN `$textsTable` et
                       ON et.record_type = 'Item' AND et.record_id = i.id
                   WHERE (i.id = ?)
-                      AND (et.element_id = 50 OR et.element_id = 46)";
+                      AND (et.element_id = 50 OR et.element_id = 46 OR et.element_id = 43)";
         $handle = $this->link->prepare($query);
         $handle->bindValue(1, $itemId);
         $handle->execute();
@@ -111,6 +114,8 @@ class OmekaShim
                 $label = $row->value;
             } elseif ($row->field == 46) {
                 $url = $row->value;
+            } elseif ($row->field == 43) {
+                $position = $row->value;
             }
         }
         $image = $this->getFile($itemId);
@@ -118,6 +123,7 @@ class OmekaShim
             'image' => $image,
             'label' => $label,
             'url' => $url,
+            'position' => $position,
         );
     }
 
