@@ -24,7 +24,9 @@ foreach (EUK_PER_PAGE_OPTS as $opt) {
 <input name="search_field" type="hidden" value="all_fields" />
 <input name="q" type="hidden" value="<?= $this->q('q') ?>" />
 <?php foreach ($this->q('f') as $f_term => $value) : ?>
-<input type="hidden" name="f[<?= $f_term ?>][]" value="<?= urlencode($value) ?>"/>
+    <?php foreach ($value as $key => $truth) : ?>
+<input type="hidden" name="f[<?= $f_term ?>][]" value="<?= urlencode($key) ?>"/>
+    <?php endforeach; ?>
 <?php endforeach; ?>
     <noscript><input name="commit" type="submit" value="update" /></noscript>
 </form>
