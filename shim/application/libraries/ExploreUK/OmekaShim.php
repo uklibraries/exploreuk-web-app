@@ -181,7 +181,7 @@ class OmekaShim
         # i.e., a single array of strings
 
         $options = array();
-        preg_match('/^a:\d+:{(.*)}$/', $string, $matches);
+        preg_match('/^a:\d+:{(.*)}$/s', $string, $matches);
         $rest = $matches[1];
         while (strlen($rest) > 0) {
             # read a key
