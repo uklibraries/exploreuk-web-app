@@ -625,11 +625,16 @@ class ExploreUK
                             $value_label = ucfirst($value_label);
                         }
                         $value_label = value_label_cleanup($value_label);
+                        $hidden_value_label = $value_label;
+                        if ($hidden_value_label === 'collection guides') {
+                            $hidden_value_label = 'collections';
+                        }
                         $metadata['active_facets'][] = array(
                             'field_label' => $field_label,
                             'remove_link' => $this->path('/catalog/' . $remove_link),
                             'field_raw' => $f_term,
                             'value_label' => $value_label,
+                            'hidden_value_label' => $hidden_value_label,
                             'count' => $count,
                         );
                     }

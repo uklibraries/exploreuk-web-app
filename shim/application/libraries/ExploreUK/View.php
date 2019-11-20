@@ -32,7 +32,7 @@ class View
             foreach ($this->metadata['active_facets'] as $spec) {
                 $fields[] = array(
                     'name' => 'f[' . $spec['field_raw'] . '][]',
-                    'value' => $spec['value_label'],
+                    'value' => $spec['hidden_value_label'],
                 );
             }
         }
