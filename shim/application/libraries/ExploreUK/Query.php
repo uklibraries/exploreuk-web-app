@@ -209,14 +209,18 @@ class Query
     public function facetsByCountParams()
     {
         $facets = EUK_FACETS;
-        $query = $this->query;
-        $q = $query['q'];
-        $f = $query['f'];
-        $fq = $query['fq'];
+        $q = $this->query['q'];
+        $fq = $this->query['fq'];
+        $f = $this->query['f'];
+        $offset = $this->query['offset'];
         $pieces = array();
-        $pieces[] = 'rows=0';
+        $pieces[] = 'rows=' . $this->query['rows'];
         $pieces[] = 'wt=json';
         $pieces[] = 'q=' . urlencode($q);
+        $pieces[] = 'mm=1';
+        if ($offset > 0) {
+            $pieces[] = "start=$offset";
+        }
         if (count($facets) > 0) {
             $pieces[] = 'facet=true';
             $pieces[] = 'facet.mincount=1';
@@ -250,14 +254,18 @@ class Query
     public function facetsByIndexParams()
     {
         $facets = EUK_FACETS;
-        $query = $this->query;
-        $q = $query['q'];
-        $f = $query['f'];
-        $fq = $query['fq'];
+        $q = $this->query['q'];
+        $fq = $this->query['fq'];
+        $f = $this->query['f'];
+        $offset = $this->query['offset'];
         $pieces = array();
-        $pieces[] = 'rows=0';
+        $pieces[] = 'rows=' . $this->query['rows'];
         $pieces[] = 'wt=json';
         $pieces[] = 'q=' . urlencode($q);
+        $pieces[] = 'mm=1';
+        if ($offset > 0) {
+            $pieces[] = "start=$offset";
+        }
         if (count($facets) > 0) {
             $pieces[] = 'facet=true';
             $pieces[] = 'facet.mincount=1';
