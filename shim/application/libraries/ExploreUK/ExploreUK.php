@@ -87,7 +87,21 @@ class ExploreUK
 
     public function cleanup_doc($doc) {
         if ($this->config['prod']) {
-            return $doc;
+            $result = array();
+            foreach ($doc as $key => $value) {
+                if (is_string($value)) {
+                    $value = $this->cleanup_host($value);
+                    $result[$key] = $value;
+                } elseif (is_array($value)) {
+                    $result[$key] = array();
+                    foreach ($value as $item) {
+                        $item = $this->cleanup_host($item);
+                        $result[$key][] = $item;
+                    }
+                }
+            }
+            return $result;
+            #return $doc;
         }
         $result = array();
         foreach ($doc as $key => $value) {
@@ -118,9 +132,9 @@ class ExploreUK
     }
 
     public function cleanup_docs($docs) {
-        if ($this->config['prod']) {
-            return $docs;
-        }
+        #if ($this->config['prod']) {
+        #    return $docs;
+        #}
         $result = array();
         foreach ($docs as $doc) {
             $result[] = $this->cleanup_doc($doc);
@@ -417,6 +431,7 @@ class ExploreUK
                 }
             }
             if ($key === 'finding_aid_url_s' or $key === 'mets_url_display') {
+                $value = $this->cleanup_host($value);
                 $link = true;
             }
             if ($value) {
