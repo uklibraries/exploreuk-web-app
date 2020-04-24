@@ -25,6 +25,11 @@ define('EUK_FACETABLE', array(
     'dc_language_t',
 ));
 define('EUK_FACETS', array('format', 'pub_date_sort', 'source_s', 'dc_language_t'));
+define('EUK_FORMAT_ICONS', array(
+    'collection guides' => 'archive',
+    'audio' => 'volume-up',
+    'audiovisual' => 'video',
+));
 define('EUK_HIT_FIELDS', array(
     'title' => 'title_display',
     'thumb' => 'thumbnail_url_s',

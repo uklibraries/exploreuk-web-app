@@ -34,6 +34,8 @@ $p = $m['pagination'];
                         <a class="image-placeholder" href="<?= $r['link'] ?>"<?= $r['target'] ?> aria-label="<?= $r['title'] ?>">
                             <img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $r['thumb'] ?>" alt="<?= $r['title'] ?>" title="<?= $r['title'] ?>">
         </a>
+        <?php elseif (isset($r['format']) && isset(EUK_FORMAT_ICONS[$r['format']])) : ?>
+                        <a class="image-placeholder" href="<?= $r['link'] ?>"<?= $r['target'] ?> aria-label="<?= $r['title'] ?>"><i class="fas fa-<?= EUK_FORMAT_ICONS[$r['format']] ?> fa-7x"></i></a>
         <?php else : ?>
                         <div class="image-placeholder"></div>
         <?php endif; ?>
