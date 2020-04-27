@@ -1566,6 +1566,7 @@ a:hover {
 
 .result-item .result-summary {
     width: 100%;
+    padding-bottom: 1em;
 }
 
 .result-summary {
@@ -1606,7 +1607,8 @@ a:hover {
 
 @media all and (min-width:800px) {
     .image-placeholder,
-    .image-placeholder img {
+    .image-placeholder img,
+    .image-placeholder i {
         float: right;
     }
 }

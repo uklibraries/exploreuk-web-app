@@ -29,7 +29,6 @@ $p = $m['pagination'];
                 <li class="result-item">
                     <p class="result-number"><?= $r['number'] ?>.</p>
                     <div class="result-summary">
-                        <h3><a href="<?= $r['link'] ?>"<?= $r['target'] ?>><?= $this->brevity($r['title']) ?></a></h3>
         <?php if (isset($r['thumb'])) : ?>
                         <a class="image-placeholder" href="<?= $r['link'] ?>"<?= $r['target'] ?> aria-label="<?= $r['title'] ?>">
                             <img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $r['thumb'] ?>" alt="<?= $r['title'] ?>" title="<?= $r['title'] ?>">
@@ -39,6 +38,7 @@ $p = $m['pagination'];
         <?php else : ?>
                         <div class="image-placeholder"></div>
         <?php endif; ?>
+                        <h3><a href="<?= $r['link'] ?>"<?= $r['target'] ?>><?= $this->brevity($r['title']) ?></a></h3>
                         <ul class="result-metadata">
             <?php foreach (EUK_RESULT_FACET_ORDER as $field) : ?>
                 <?php if (isset($r[$field])) : ?>
