@@ -408,7 +408,7 @@ class ExploreUK
             array('Title', 'title_display'),
             array('Creator', 'author_display'),
             array('Format', 'format'),
-            array('Publication date', 'pub_date_display'),
+            array('Publication date', 'dc_date_display'),
             array('Date uploaded', 'date_digitized_display'),
             array('Language', 'language_display'),
             array('Publisher', 'publisher_display'),
@@ -825,7 +825,13 @@ class ExploreUK
                         if (isset($docs[$i][$solr_field])) {
                             $raw_field = $docs[$i][$solr_field];
                             if (is_array($raw_field)) {
-                                $results_data[$field] = htmlspecialchars($raw_field[0], ENT_QUOTES, 'UTF-8');
+                                $results_data[$field] = array();
+                                foreach ($raw_field as $raw_entry) {
+                                    $results_data[$field][] = htmlspecialchars($raw_entry, ENT_QUOTES, 'UTF-8');
+                                }
+                                if ($field == 'thumb') {
+                                    $results_data[$field] = $results_data[$field][0];
+                                }
                             } else {
                                 $results_data[$field] = htmlspecialchars($raw_field, ENT_QUOTES, 'UTF-8');
                             }

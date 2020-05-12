@@ -48,8 +48,15 @@ $p = $m['pagination'];
                     <?php else : ?>
                         <?php $lclass = ''; ?>
                     <?php endif; ?>
+                        <?php if (is_array($r[$field])): ?>
+                            <?php foreach ($r[$field] as $entry): ?>
+                            <li<?= $lclass ?>><span class="result-metadata-label"><?= $label ?>:</span>
+                    <?= $entry ?></li>
+                            <?php endforeach; ?>
+                        <?php else: ?>
                             <li<?= $lclass ?>><span class="result-metadata-label"><?= $label ?>:</span>
                     <?= $r[$field] ?></li>
+                         <?php endif; ?>
                 <?php endif; ?>
             <?php endforeach; ?>
                         </ul>
