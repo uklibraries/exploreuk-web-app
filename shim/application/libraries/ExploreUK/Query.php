@@ -201,6 +201,7 @@ class Query
                 }
             }
         }
+        $pieces[] = 'fl=' . urlencode($this->getHitFields());
         # compound object
         $pieces[] = 'fq=' . urlencode("compound_object_split_b:true");
         return implode('&', $pieces);
@@ -332,5 +333,10 @@ class Query
         $query['offset'] = 0;
         $addFilter = new Query($query, $this->solr);
         return $addFilter->link();
+    }
+
+    public function getHitFields()
+    {
+        return implode(',', array_values(EUK_HIT_FIELDS));
     }
 }
