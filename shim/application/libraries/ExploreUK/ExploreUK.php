@@ -419,6 +419,7 @@ class ExploreUK
             array('Finding aid', 'finding_aid_url_s'),
             array('Metadata record', 'mets_url_display'),
             array('Rights', 'usage_display'),
+            array('Description', 'description_display'),
         );
         foreach ($desired as $row) {
             $label = $row[0];
