@@ -445,6 +445,7 @@ class ExploreUK
             array('Metadata record', 'mets_url_display'),
             array('Rights', 'usage_display'),
             array('Description', 'description_display'),
+            array('Subject', 'subject_topic_facet'),
         );
         foreach ($desired as $row) {
             $label = $row[0];
