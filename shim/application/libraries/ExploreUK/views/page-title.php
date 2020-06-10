@@ -3,9 +3,6 @@
 if (isset($m['downloadable'])) {
     require('download-menu.php');
 }
-if (isset($m['item_audio'])) {
-    require('audio-video-player.php');
-}
 ?>
 <h2><?= $m['flat']['title_display'] ?></h2>
 <?php

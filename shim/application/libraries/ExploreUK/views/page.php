@@ -35,6 +35,10 @@ if (isset($m['item_image'])) {
 if (isset($m['item_book'])) {
     require('book-reader.php');
 }
+
+if (isset($m['item_videolike'])) {
+    require('videolike-player.php');
+}
 ?>
 </main>
 

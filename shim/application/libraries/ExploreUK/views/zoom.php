@@ -32,33 +32,6 @@ if (isset($m['item_book'])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.1/lity.min.js" integrity="sha256-3VzI8FuSG20IfvIDKRptBR+1d4T6G57eDIf6ZEO13iY=" crossorigin="anonymous"></script>
 <script src="<?= $this->themePath('assets/js/resize.js') ?>"></script>
-<?php if (isset($m['script_media'])) : ?>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mediaelement/2.15.1/mediaelementplayer.min.css" integrity="sha256-6DWOIEAEFJqhgMTt7B/BzbsUfdGFD9DUdubbfI2t/eo=" crossorigin="anonymous" />
-<script type="text/javascript" src="<?= $this->themePath('javascripts/mediaelementplayer.min.js') ?>" ?>"></script>
-<script type="text/javascript">
-$('.click-to-play-audio').click(function () {                                                                    var href_id = $(this).attr('data-id');
-  var href = $(this).attr('data-href');
-  $(this).after('<audio id="' + href_id + '" src="' + href  + '" style="display:block, width: 305px; height: 30px;" width="305" height="30"></audio>');
-  $('#' + href_id).mediaelementplayer();
-  var player = new MediaElement(href_id);
-  player.pause();
-  player.setSrc(href);
-  player.play();
-  $(this).remove();
-});
-$('.click-to-play-video').click(function () {
-  var href_id = $(this).attr('data-id');
-  var href = $(this).attr('data-href');
-  $(this).after('<video id="' + href_id + '" src="' + href  + '" style="display:block, width: 360px; height: 240px;" width="360" height="240"></audio>');
-  $('#' + href_id).mediaelementplayer();
-  var player = new MediaElement(href_id);
-  player.pause();
-  player.setSrc(href);
-  player.play();
-  $(this).remove();
-});
-</script>
-<?php endif; ?>
 <?php if (isset($m['script_image'])) : ?>
 <?php $s = $m['script_image']; ?>
 <?php $r = $m['item_image']; ?>
