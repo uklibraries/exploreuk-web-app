@@ -29,6 +29,7 @@ define('EUK_FORMAT_ICONS', array(
     'collection guides' => 'archive',
     'audio' => 'volume-up',
     'audiovisual' => 'video',
+    '16mm (photographic film size)' => 'video',
 ));
 define('EUK_HIT_FIELDS', array(
     'id' => 'id',

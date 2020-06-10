@@ -1842,6 +1842,19 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     margin: 1em auto;
 }
 
+.big-media-player {
+    max-width: 100% !important;
+    height: auto !important;
+    padding-top: 1em;
+}
+
+.big-media-player > audio,
+.big-media-player > video {
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 30px;
+}
+
 .download,
 .media-player {
     max-width: 300px;

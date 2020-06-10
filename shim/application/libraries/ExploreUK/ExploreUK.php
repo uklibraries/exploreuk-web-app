@@ -186,6 +186,31 @@ class ExploreUK
         }
     }
 
+    public function videos($id)
+    {
+        $doc = $this->document($id);
+        if ($doc['object_type_s'][0] === 'section') {
+            $parent = $id;
+        } else {
+            $parent = preg_replace('/_[^_]+$/', '', $id);
+        }
+        $pieces = array();
+        $pieces[] = 'fq=' . urlencode("parent_id_s:$parent");
+        $pieces[] = 'fq=' . urlencode("object_type_s:video");
+        $pieces[] = 'wt=json';
+        $pieces[] = 'fl=' . urlencode('id,reference_video_url_s');
+        $pieces[] = 'rows=10000';
+        $pieces[] = 'sort=browse_key_sort+asc';
+        $query = implode('&', $pieces);
+        $url = $this->config['solr'] . '?' . $query;
+        $result = json_decode(file_get_contents($url), true);
+        if (isset($result['response']) and count($result['response']['docs']) > 0) {
+            return $this->cleanupDocs($result['response']['docs']);
+        } else {
+            return null;
+        }
+    }
+
     public function find($id)
     {
         $euk_solr = $this->config['solr'];
@@ -487,7 +512,39 @@ class ExploreUK
             );
         }
 
-        if ($object_type === 'section' && ($format !== 'audio' && $format !== 'audiovisual')) {
+        #
+        # "Paged video"
+        #
+        # We are testing this for 16mm (photographic film size), but ultimately we
+        # will probably want to use this for all videolike objects.
+        #
+        if ($object_type === 'section' && $format === '16mm (photographic film size)') {
+            # XXX new style - embed video?
+            $pages = $this->videos($id);
+            if ($pages) {
+                $metadata['videos'] = array();
+                $metadata['script_media'] = true;
+                foreach ($pages as $page) {
+                    $metadata['videos'][] = array(
+                        'video' => array(
+                            'href_id' => "video_" . $page['id'],
+                            'href' => $this->cleanupHost($page['reference_video_url_s'][0]),
+                        ),
+                    );
+                }
+            }
+
+            # XXX: videolike trim
+            # We may well have text, but often won't
+            $text_field = 'text_s';
+            if (array_key_exists($text_field, $doc)) {
+                $flat['text'] = array(
+                    'href' => $this->path("/catalog/$id/text"),
+                );
+            }
+            $metadata['item_videolike'] = $flat;
+            $metadata['script_media'] = true;
+        } elseif ($object_type === 'section' && ($format !== 'audio' && $format !== 'audiovisual')) {
             $flat['embed_url'] = $this->path("/catalog/$id/paged" . $metadata['query']->link());
             $text_field = 'text_s';
             if (array_key_exists($text_field, $doc)) {
@@ -511,21 +568,23 @@ class ExploreUK
         } else {
             switch ($format) {
                 case 'audio':
-                    $metadata['item_audio'] = array(
+                    $metadata['audios'] = array(array(
                         'audio' => array(
                             'href_id' => "audio_$id",
                             'href' => $this->cleanupHost($flat['reference_audio_url_s']),
                         ),
-                    );
+                    ));
+                    $metadata['item_videolike'] = $flat;
                     $metadata['script_media'] = true;
                     break;
                 case 'audiovisual':
-                    $metadata['item_audio'] = array(
+                    $metadata['videos'] = array(array(
                         'video' => array(
                             'href_id' => "video_$id",
                             'href' => $this->cleanupHost($flat['reference_video_url_s']),
                         ),
-                    );
+                    ));
+                    $metadata['item_videolike'] = $flat;
                     $metadata['script_media'] = true;
                     break;
                 case 'drawings (visual works)':
