@@ -382,6 +382,14 @@ class ExploreUK
             return;
         }
 
+        $split = $doc['compound_object_split_b'];
+        if ($split === false) {
+            $dest_id = $doc['parent_id_s'][0];
+            $page_number = $doc['sequence_number_display'][0];
+            header('Location: ' . $this->path('/catalog/' . $dest_id . '#page/' . $page_number . '/mode/1up'));
+            return;
+        }
+
         $format = $doc['format'];
         $object_type = $doc['object_type_s'];
         if (is_array($object_type)) {
