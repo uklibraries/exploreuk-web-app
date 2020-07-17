@@ -357,9 +357,8 @@ class ExploreUK
 
         $pages = $this->pages($id);
         if ($pages) {
-            $parent = preg_replace('/_[^_]+$/', '', $id);
             $sequence = intval(preg_replace('/.*[^_]+_/', '', $id)) - 1;
-            $search_host = 'https://' . $_SERVER['HTTP_HOST'] . '/catalog/' . $parent . '/find';
+            $search_host = 'https://' . $_SERVER['HTTP_HOST'] . '/catalog/' . $id . '/find';
             $images_base_url = 'https://' . $_SERVER['HTTP_HOST'] . '/themes/' . $metadata['theme'] . '/BookReader/images/';
 
             $metadata['script'] = array(
