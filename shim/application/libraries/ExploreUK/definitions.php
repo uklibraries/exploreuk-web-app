@@ -193,7 +193,7 @@ function highlight_snippet($text, $raw_terms, $radius)
     $wanted = array_fill(0, count($words), 0);
     for ($i = 0; $i < count($words); $i++) {
         foreach ($terms as $term) {
-            if (preg_match("/\b$term\b/i", $words[$i])) {
+            if (preg_match("/\b$term/i", $words[$i])) {
                 $words[$i] = '{{{' . $words[$i] . '}}}';
                 $low = $i - $radius;
                 if ($low < 0) {
