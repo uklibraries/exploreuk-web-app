@@ -1830,16 +1830,13 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     text-decoration: underline;
 }
 
-.item-details {
-    word-wrap: break-word;
-}
-
 .item-details,
 .item-text {
     border: 1px solid #282828;
     padding: 1em;
     /*margin: 1em;*/
     margin: 1em auto;
+    white-space: pre-wrap;
 }
 
 .big-media-player {
@@ -2131,7 +2128,7 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
  */
 
 a {
-    word-wrap: break-word;
+    white-space: pre-wrap;
 }
 
 @media (min-width: 48em) {

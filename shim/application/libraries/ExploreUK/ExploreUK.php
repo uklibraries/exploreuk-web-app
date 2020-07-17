@@ -314,7 +314,7 @@ class ExploreUK
         $text_field = 'text_s';
 
         if (array_key_exists($text_field, $doc)) {
-            print '<pre>' . implode("\n", $doc[$text_field]) . "</pre>\n";
+            print '<pre style="white-space: pre-wrap">' . implode("\n", $doc[$text_field]) . "</pre>\n";
         }
     }
 

@@ -23,7 +23,7 @@ foreach (EUK_DETAIL_FIELD_ORDER as $field) {
 <?php $r = $m['item_book']['text']; ?>
 <div id="item-text" class="tab-content hide">
     <p>The text may or may not be an accurate representation of the original.</p>
-    <iframe id="text_frame" src="<?= $r['href'] ?>" width="100%" name="text"></iframe>
+    <iframe id="text_frame" src="<?= $r['href'] ?>" width="100%" height="300" name="text"></iframe>
 </div>
 </div>
 <?php endif; ?>
