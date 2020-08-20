@@ -446,6 +446,7 @@ class ExploreUK
             array('Publisher', 'publisher_display'),
             array('Type', 'type_display'),
             array('Accession number', 'accession_number_display'),
+            array('Identifier', 'dc_identifier_display'),
             array('Source', 'source_s'),
             array('Coverage', 'coverage_s'),
             array('Finding aid', 'finding_aid_url_s'),
