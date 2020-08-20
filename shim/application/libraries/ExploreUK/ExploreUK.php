@@ -100,6 +100,8 @@ class ExploreUK
                         $item = $this->cleanupHost($item);
                         $result[$key][] = $item;
                     }
+                } else {
+                    $result[$key] = $value;
                 }
             }
             return $result;
