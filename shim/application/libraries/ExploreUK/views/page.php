@@ -44,6 +44,8 @@ if (isset($m['item_videolike'])) {
 
 <?php require('page-title.php'); ?>
 
+<?php require('page-harmful-language-statement.php'); ?>
+
 <?php require('page-details.php'); ?>
 </div>
 
