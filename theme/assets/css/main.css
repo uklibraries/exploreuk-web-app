@@ -732,6 +732,11 @@
     width: 100%;
 }
 
+.bg-uklsky {
+    background: #b1c9e8;
+    color: #282828;
+}
+
 .bg-uklgray {
     background: #f7f7f7;
     color: #282828;
@@ -1793,6 +1798,19 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     margin-right: auto;
 }
 
+.page-harmful-language-statement {
+    border: 1px solid #282828;
+    padding: 1em;
+    margin: 1em auto;
+    overflow: auto;
+    font-size: 16px;
+    line-height: 1.5em;
+}
+
+.page-harmful-language-statement, p {
+    margin-bottom: 0px;
+}
+
 .page-title {
     border: 1px solid #282828;
     padding: 1em;
@@ -1823,6 +1841,11 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 #item-details h3,
 .item-details h3 {
     font-size: 1em;
+}
+
+.page-harmful-language-statement a {
+    color: #005dab;
+    text-decoration: underline;
 }
 
 .page-title a {
@@ -1905,6 +1928,26 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
         display: grid;
         grid-template-columns: 1fr 3fr;
         align-items: center;
+        justify-items: center;
+    }
+}
+
+@media (min-width: 800px) {
+    .page-harmful-language-statement {
+        display: grid;
+        grid-template-columns: minmax(300px, 1fr) 300px;
+        gap: 1em;
+        align-items: left;
+        justify-items: center;
+    }
+}
+
+@media (max-width: 799px) {
+    .page-harmful-language-statement {
+        display: grid;
+        grid-auto-flow: row;
+        gap: 1em;
+        align-items: left;
         justify-items: center;
     }
 }
@@ -2051,7 +2094,7 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
 
 .tab-wrap {
     width: 100%;
-    margin: 100px auto;
+    margin: 72px auto 100px;
     min-height: 400px;
     position: relative;
 }
