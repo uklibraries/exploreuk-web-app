@@ -4,6 +4,6 @@
         <span class="input-group-btn"></span><button type="submit" class="btn btn-default" value="search">Search</button>
     </div>
 <?php foreach ($this->hiddenSearchFields() as $field) : ?>
-    <input type="hidden" name="<?= $field['name'] ?>" value="<?= $field['value'] ?>"/>
+    <input type="hidden" name="<?= $field['name'] ?>" value="<?= htmlspecialchars($field['value']) ?>"/>
 <?php endforeach; ?>
 </form>
