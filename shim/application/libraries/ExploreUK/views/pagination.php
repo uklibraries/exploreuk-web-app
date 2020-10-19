@@ -22,7 +22,7 @@ foreach (EUK_PER_PAGE_OPTS as $opt) {
 </select> per page</label>
 <input name="commit" type="hidden" value="search" />
 <input name="search_field" type="hidden" value="all_fields" />
-<input name="q" type="hidden" value="<?= $this->q('q') ?>" />
+<input name="q" type="hidden" value="<?= htmlspecialchars($this->q('q')) ?>" />
 <?php foreach ($this->q('f') as $f_term => $value) : ?>
     <?php foreach ($value as $key => $truth) : ?>
 <input type="hidden" name="f[<?= $f_term ?>][]" value="<?= urlencode($key) ?>"/>
