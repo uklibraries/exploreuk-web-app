@@ -198,12 +198,20 @@ function euk_oai_response($host_options)
     );
     $euk_oai_sets = array(
         array(
+            'spec' => 'default',
+            'name' => 'RECOMMENDED: ExploreUK records for general OAI harvesting',
+        ),
+        array(
             'spec' => 'primo',
             'name' => 'ExploreUK records ready for Primo import',
         ),
         array(
             'spec' => 'umbra',
             'name' => 'ExploreUK records ready for Umbra import',
+        ),
+        array(
+            'spec' => 'unrestricted',
+            'name' => 'All ExploreUK records regardless of type',
         ),
     );
     $oai_per_page = 15;
@@ -415,6 +423,7 @@ function euk_oai_get_record($options)
     foreach ($data_dictionary as $row) {
         $desired_fields[] = $row[1];
     }
+    $desired_fields[] = 'compound_object_split_b';
     $desired_fields[] = 'timestamp';
     $desired_fields[] = 'sequence_number_display';
     $fl = urlencode(implode(',', $desired_fields));
@@ -524,6 +533,9 @@ function euk_oai_list_identifiers($options)
                 array('datestamp', $doc['timestamp']),
             ),
         );
+        foreach (euk_oai_set_memberships($doc, $options) as $set) {
+            $record['header'][] = array('setSpec', $set);
+        }
         $metadata['results'][] = $record;
     }
 
@@ -609,6 +621,9 @@ function euk_oai_list_records($options)
                 array('datestamp', $doc['timestamp']),
             ),
         );
+        foreach (euk_oai_set_memberships($doc, $options) as $set) {
+            $record['header'][] = array('setSpec', $set);
+        }
 
         $record['metadata'] = array();
         foreach ($data_dictionary as $row) {
@@ -664,6 +679,12 @@ function euk_oai_raw_params($options)
 
     if (isset($options['set'])) {
         switch ($options['set']) {
+            case 'unrestricted':
+                /* do nothing */
+                break;
+            case 'default':
+                $raw_params[] = array('fq', 'compound_object_split_b:true');
+                break;
             case 'primo':
                 $raw_params[] = array('fq', '(sequence_sort:00001) OR (format:collections)');
                 break;
@@ -676,7 +697,8 @@ function euk_oai_raw_params($options)
     } else {
         # XXX: This is not what the legacy site does, but this matches what
         # users can find on the site.
-        $raw_params[] = array('fq', 'compound_object_split_b:true');
+        # XXX: 2021-01-13: Allow all records to be returned if no set is specified.
+        #$raw_params[] = array('fq', 'compound_object_split_b:true');
     }
 
     return $raw_params;
@@ -744,6 +766,10 @@ function euk_oai_set_memberships($doc, $options)
     if ((($doc['sequence_number_display'][0] === '1') && (in_array($doc['format'], array('archival material', 'athletic publications', 'yearbooks')))) || ($doc['format'] === 'collections')) {
         $sets[] = 'umbra';
     }
+    if ($doc['compound_object_split_b'] == true) {
+        $sets[]= 'default';
+    }
+    $sets[] = 'unrestricted';
     return $sets;
 }
 
