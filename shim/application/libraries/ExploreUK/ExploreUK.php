@@ -16,9 +16,7 @@ class ExploreUK
         if (realpath(EUK_BASE_DIR) !== realpath($_SERVER['DOCUMENT_ROOT'])) {
             $this->config['base'] = basename(EUK_BASE_DIR) . '/';
         }
-        if ($this->omeka->getThemeOption('euk_dip_store_base_url') === 'https://nyx.uky.edu/dips') {
-            $this->config['prod'] = true;
-        } elseif ($this->omeka->getThemeOption('euk_dip_store_base_url') === 'https://exploreuk.uky.edu/dips') {
+        if ($this->omeka->getThemeOption('euk_dip_store_base_url') === 'https://exploreuk.uky.edu/dips') {
             $this->config['prod'] = true;
         } else {
             $this->config['prod'] = false;
@@ -82,6 +80,11 @@ class ExploreUK
 
     public function cleanupHost($value)
     {
+        if (!$this->config['prod']) {
+            if (strpos($value, '/dips/') !== false) {
+                $value = preg_replace('/\/dips\//', '/dipstest/', $value);
+            }
+        }
         $value = preg_replace('#https://nyx#', 'https://exploreuk', $value);
         return $value;
     }
@@ -110,16 +113,16 @@ class ExploreUK
         $result = array();
         foreach ($doc as $key => $value) {
             if (is_string($value)) {
-                if (strpos($value, '/dips/') === 0) {
-                    $value = preg_replace('/dips/', 'dipstest', $value);
+                if (strpos($value, '/dips/') !== false) {
+                    $value = preg_replace('/\/dips\//', '/dipstest/', $value);
                 }
                 $value = preg_replace('#https://nyx#', 'https://exploreuk', $value);
                 $result[$key] = $value;
             } elseif (is_array($value)) {
                 $result[$key] = array();
                 foreach ($value as $item) {
-                    if (strpos($value, '/dips/') === 0) {
-                        $value = preg_replace('/dips/', 'dipstest', $value);
+                    if (strpos($value, '/dips/') !== false) {
+                        $value = preg_replace('/\/dips\//', '/dipstest/', $value);
                     }
                     $item = preg_replace('#https://nyx#', 'https://exploreuk', $item);
                     $result[$key][] = $item;
