@@ -110,9 +110,7 @@ class ExploreUK
         $result = array();
         foreach ($doc as $key => $value) {
             if (is_string($value)) {
-                if (strpos($value, 'https://nyx.uky.edu/dips/') === 0) {
-                    $value = preg_replace('/dips/', 'dipstest', $value);
-                } elseif (strpos($value, 'http://nyx.uky.edu/dips/') === 0) {
+                if (strpos($value, '/dips/') === 0) {
                     $value = preg_replace('/dips/', 'dipstest', $value);
                 }
                 $value = preg_replace('#https://nyx#', 'https://exploreuk', $value);
@@ -120,10 +118,8 @@ class ExploreUK
             } elseif (is_array($value)) {
                 $result[$key] = array();
                 foreach ($value as $item) {
-                    if (strpos($item, 'https://nyx.uky.edu/dips/') === 0) {
-                        $item = preg_replace('/dips/', 'dipstest', $item);
-                    } elseif (strpos($item, 'http://nyx.uky.edu/dips/') === 0) {
-                        $item = preg_replace('/dips/', 'dipstest', $item);
+                    if (strpos($value, '/dips/') === 0) {
+                        $value = preg_replace('/dips/', 'dipstest', $value);
                     }
                     $item = preg_replace('#https://nyx#', 'https://exploreuk', $item);
                     $result[$key][] = $item;
