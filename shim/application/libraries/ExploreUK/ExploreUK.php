@@ -108,7 +108,6 @@ class ExploreUK
                 }
             }
             return $result;
-            #return $doc;
         }
         $result = array();
         foreach ($doc as $key => $value) {
@@ -121,8 +120,8 @@ class ExploreUK
             } elseif (is_array($value)) {
                 $result[$key] = array();
                 foreach ($value as $item) {
-                    if (strpos($value, '/dips/') !== false) {
-                        $value = preg_replace('/\/dips\//', '/dipstest/', $value);
+                    if (strpos($item, '/dips/') !== false) {
+                        $item = preg_replace('/\/dips\//', '/dipstest/', $item);
                     }
                     $item = preg_replace('#https://nyx#', 'https://exploreuk', $item);
                     $result[$key][] = $item;
