@@ -382,7 +382,12 @@ class ExploreUK
         }
 
         $split = $doc['compound_object_split_b'];
-        if ($split === false) {
+        $object_type = $doc['object_type_s'];
+        if (is_array($object_type)) {
+            $object_type = $object_type[0];
+        }
+        if ((($split === false) && ($object_type !== 'section')) ||
+            (($split === true) && ($object_type === 'page'))) {
             $dest_id = $doc['parent_id_s'][0];
             $page_number = $doc['sequence_number_display'][0];
             header('Location: ' . $this->path('/catalog/' . $dest_id . '#page/' . $page_number . '/mode/1up'));
@@ -390,10 +395,6 @@ class ExploreUK
         }
 
         $format = $doc['format'];
-        $object_type = $doc['object_type_s'];
-        if (is_array($object_type)) {
-            $object_type = $object_type[0];
-        }
         if ($format === 'collections' && $object_type === 'collection') {
             header('Location: ' . $this->config['fa_base'] . $id);
             return;
