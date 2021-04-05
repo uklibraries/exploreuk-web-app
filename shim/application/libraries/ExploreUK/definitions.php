@@ -62,6 +62,7 @@ define('EUK_LOCALE', array(
         'dc_date_display' => 'Date',
         'publisher_display' => 'Publisher',
         'collection_url' => 'Collection',
+        'scopecontent_s' => '',
         'source_s' => 'Collection',
         'subject_topic_facet' => 'Library of Congress Subject Headings',
         'usage_display' => 'Rights',
@@ -85,6 +86,7 @@ define('EUK_RESULT_FACET_ORDER', array(
 ));
 define('EUK_TEMPLATE_DIR', dirname(__FILE__) . '/templates');
 define('EUK_TITLE_FIELD_ORDER', array(
+    'scopecontent_s',
     'dc_date_display',
     'author_display',
     'language_display',
