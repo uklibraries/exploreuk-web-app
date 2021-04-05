@@ -102,6 +102,13 @@ class View
                 return '';
             }
         }
+        if ($field === 'scopecontent_s') {
+            # XXX for now
+            if (is_array($content)) {
+                $content = implode('', $content);
+            }
+            $content = fa_render_string($content);
+        }
         /* XXX - special handling for old rights statements
         * Please remove when the index is clean.
         */
@@ -121,7 +128,9 @@ class View
             }
             $lines[] = "</ul>";
         } else {
-            $lines[] = "<p>" . $this->renderHelper($field, $content) . "</p>";
+            $lines[] = "<ul>";
+            $lines[] = $this->renderHelper($field, $content);
+            $lines[] = "</ul>";
         }
         return implode("\n", $lines) . "\n";
     }

@@ -439,6 +439,7 @@ class ExploreUK
         $pageMetadata = array();
         $desired = array(
             array('Title', 'title_display'),
+            array('', 'scopecontent_s'),
             array('Creator', 'author_display'),
             array('Format', 'format'),
             array('Publication date', 'dc_date_display'),
