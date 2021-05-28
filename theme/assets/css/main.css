@@ -1843,6 +1843,11 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
     font-size: 1em;
 }
 
+.page-title li {
+    padding-top: 0.25em;
+    padding-bottom: 0.25em;
+}
+
 .page-harmful-language-statement a {
     color: #005dab;
     text-decoration: underline;
