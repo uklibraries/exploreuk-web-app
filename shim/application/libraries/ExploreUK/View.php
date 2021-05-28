@@ -89,13 +89,13 @@ class View
                 $link_label = $euk_locale['en']['more_items'];
                 $lines = array(
                     "<h3>$field_label</h3>\n",
-                    '<p>',
+                    '<ul><li>',
                     $content['source_s'],
                     ' | ',
                     $this->renderLink($this->path("/catalog/{$content['base_id']}"), $collection_label, true),
                     ' | ',
                     $this->renderLink($this->path($link . urlencode($content['source_s'])), $link_label, true),
-                    '</p>',
+                    '</li></ul>',
                 );
                 return implode('', $lines);
             } else {
