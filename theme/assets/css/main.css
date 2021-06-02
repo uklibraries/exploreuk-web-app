@@ -762,6 +762,7 @@
 
 body {
     font-family: Muli, sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
 a {
