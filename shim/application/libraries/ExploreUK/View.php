@@ -153,7 +153,11 @@ class View
             $link = "/?f%5B$field%5D%5B%5D=";
             return $this->renderLink($this->path($link . urlencode($item)), $item, true);
         } else {
-            return $item;
+            if ($field === 'description_display') {
+                return strip_tags($item, '<b>');
+            } else {
+                return htmlspecialchars($item);
+            }
         }
     }
 
