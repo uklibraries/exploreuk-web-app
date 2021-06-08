@@ -70,7 +70,7 @@ define('EUK_LOCALE', array(
         'more_items' => 'more from this collection',
     ),
 ));
-define('EUK_MAX_LABEL', 80);
+define('EUK_MAX_LABEL', 160);
 define('EUK_PER_PAGE_OPTS', array(20, 50, 100));
 define('EUK_REQUIRES_CAPITALIZATION', array(
     'dc_language_t',
