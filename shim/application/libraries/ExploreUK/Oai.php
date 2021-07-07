@@ -492,11 +492,17 @@ function euk_oai_list_identifiers($options)
             return euk_oai_error('badResumptionToken');
         }
     } else {
-        if (!isset($options['from'])) {
+        if ((!isset($options['from']) && (!isset($options['until'])))) {
             $options['from'] = euk_oai_earliest_datestamp();
-        }
-        if (!isset($options['until'])) {
             $options['until'] = euk_oai_latest_datestamp();
+        }
+        if ((!isset($options['from']) && (isset($options['until'])))) {
+            $granularity = strlen($options['until']);
+            $options['from'] = substr(euk_oai_earliest_datestamp(), 0, $granularity);
+        }
+        if ((isset($options['from']) && (!isset($options['until'])))) {
+            $granularity = strlen($options['from']);
+            $options['until'] = substr(euk_oai_latest_datestamp(), 0, $granularity);
         }
         if (!isset($options['page'])) {
             $options['page'] = 1;
