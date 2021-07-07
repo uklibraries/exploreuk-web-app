@@ -578,11 +578,17 @@ function euk_oai_list_records($options)
             return euk_oai_error('badResumptionToken');
         }
     } else {
-        if (!isset($options['from'])) {
+        if ((!isset($options['from']) && (!isset($options['until'])))) {
             $options['from'] = euk_oai_earliest_datestamp();
-        }
-        if (!isset($options['until'])) {
             $options['until'] = euk_oai_latest_datestamp();
+        }
+        if ((!isset($options['from']) && (isset($options['until'])))) {
+            $granularity = strlen($options['until']);
+            $options['from'] = substr(euk_oai_earliest_datestamp(), 0, $granularity);
+        }
+        if ((isset($options['from']) && (!isset($options['until'])))) {
+            $granularity = strlen($options['from']);
+            $options['until'] = substr(euk_oai_latest_datestamp(), 0, $granularity);
         }
         if (!isset($options['page'])) {
             $options['page'] = 1;
@@ -867,6 +873,8 @@ function euk_oai_latest_datestamp()
 
 function euk_oai_valid_timestamps($options)
 {
+error_log("ZUBAT " . $options['from']);
+error_log("ZUBAT " . $options['until']);
     if (!preg_match('/\d\d\d\d-\d\d-\d\d(T\d\d:\d\d:\d\d(\.\d\d\d)?Z)?/', $options['from'])) {
         return false;
     }
