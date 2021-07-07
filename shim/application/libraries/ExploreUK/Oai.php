@@ -873,8 +873,8 @@ function euk_coerce_granularity($template, $datestamp)
     elseif (preg_match('/\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ/', $template)) {
         return substr($datestamp, 0, 19) . 'Z';
     }
-    elseif (preg_match('/\d\d\d\d-\d\d-\d\d/', $template)) {
-        return substr($datestamp, 0, 10);
+    elseif (preg_match('/\d\d\d\d-\d\d-\d\dZ/', $template)) {
+        return substr($datestamp, 0, 10) . 'Z';
     }
 }
 
