@@ -835,6 +835,10 @@ function euk_ensure_from_and_until($options)
     if ((isset($options['from']) && (!isset($options['until'])))) {
         $options['until'] = euk_coerce_granularity($options['from'], euk_oai_latest_datestamp());
     }
+    if (strlen($options['from']) == 10) {
+        $options['from'] .= 'T00:00:00Z';
+        $options['until'] .= 'T23:59:59Z';
+    }
     return $options;
 }
 
@@ -873,8 +877,8 @@ function euk_coerce_granularity($template, $datestamp)
     elseif (preg_match('/\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ/', $template)) {
         return substr($datestamp, 0, 19) . 'Z';
     }
-    elseif (preg_match('/\d\d\d\d-\d\d-\d\dZ/', $template)) {
-        return substr($datestamp, 0, 10) . 'Z';
+    elseif (preg_match('/\d\d\d\d-\d\d-\d\d/', $template)) {
+        return substr($datestamp, 0, 10);
     }
 }
 
