@@ -155,6 +155,8 @@ class View
         } else {
             if ($field === 'description_display') {
                 return strip_tags($item, '<b>');
+            } elseif ($field === 'usage_display') {
+                return strip_tags($item, '<a>');
             } else {
                 return htmlspecialchars($item);
             }
