@@ -71,6 +71,16 @@ define('EUK_LOCALE', array(
     ),
 ));
 define('EUK_MAX_LABEL', 160);
+define('EUK_OBJECT_TYPES_LEAF', array(
+    'audio',
+    'image',
+    'page',
+    'video',
+));
+define('EUK_OBJECT_TYPES_SECTION', array(
+    'collection',
+    'section',
+));
 define('EUK_PER_PAGE_OPTS', array(20, 50, 100));
 define('EUK_REQUIRES_CAPITALIZATION', array(
     'dc_language_t',
