@@ -156,6 +156,11 @@ class Query
         return $this->searchByParams($this->facetsByIndexParams());
     }
 
+    public function getFacetsByObjectType()
+    {
+        return $this->searchByParams($this->facetsByObjectType());
+    }
+
     public function searchByParams($params)
     {
         $url = $this->solr . '?' . $params;
@@ -294,6 +299,24 @@ class Query
         }
         # compound object
         $pieces[] = 'fq=' . urlencode("compound_object_split_b:true");
+        return implode('&', $pieces);
+    }
+
+    public function facetsByObjectType()
+    {
+        $facets = array('object_type_s');
+        $pieces = array();
+        $pieces[] = 'wt=json';
+        $pieces[] = 'mm=1';
+        if (count($facets) > 0) {
+            $pieces[] = 'facet=true';
+            $pieces[] = 'facet.mincount=1';
+            $pieces[] = 'facet.limit=-1';
+            foreach ($facets as $facet) {
+                $pieces[] = "facet.field=$facet";
+            }
+            $pieces[] = 'facet.sort=index';
+        }
         return implode('&', $pieces);
     }
 

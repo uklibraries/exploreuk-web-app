@@ -57,6 +57,8 @@ class ExploreUK
         if (preg_match("#^/{$base}catalog/oai?#", $request_uri, $matches)) {
             $oai = new Oai($this->config);
             $oai->run();
+        } elseif (preg_match("#^/{$base}catalog/stats#", $request_uri, $matches)) {
+            $this->statsViewer();
         } elseif (preg_match("#^/{$base}catalog/(?<id>[^/]+)/find/?#", $request_uri, $matches)) {
             $this->find($matches['id']);
         } elseif (preg_match("#^/{$base}catalog/(?<id>[^/]+)/download/?#", $request_uri, $matches)) {
@@ -341,6 +343,50 @@ class ExploreUK
             }
         }
         return $visiblePages;
+    }
+
+    public function statsViewer()
+    {
+        $metadata = array(
+            'base' => $this->config['base'],
+            'logo' => $this->config['logo'],
+            'front_page' => false,
+            'page_title' => 'ExploreUK - rare and unique research materials from UK Libraries.',
+            'theme' => $this->config['theme'],
+            'query' => $this->config['query'],
+        );
+        $metadata['page_description'] = $metadata['page_title'];
+
+        $raw_stats = $metadata['query']->getFacetsByObjectType();
+        $facet_counts = $raw_stats['facet_counts']['facet_fields']['object_type_s'];
+        if (count($facet_counts)> 2) {
+            $navs = navsHashFromFlatList($facet_counts);
+        }
+
+        $stats = array(
+            'leaf' => array(
+                'count' => 0,
+                'count_by_type' => array(),
+            ),
+            'section' => array(
+                'count' => 0,
+                'count_by_type' => array(),
+            ),
+        );
+
+        foreach (EUK_OBJECT_TYPES_LEAF as $leaf_type) {
+            $stats['leaf']['count'] += $navs[$leaf_type];
+            $stats['leaf']['count_by_type'][$leaf_type] = $navs[$leaf_type];
+        }
+        foreach (EUK_OBJECT_TYPES_SECTION as $leaf_type) {
+            $stats['section']['count'] += $navs[$leaf_type];
+            $stats['section']['count_by_type'][$leaf_type] = $navs[$leaf_type];
+        }
+            
+        $metadata['stats'] = $stats;
+
+        $view = new View($metadata, 'stats');
+        $view->render();
     }
 
     public function embedPagedViewer($id)
