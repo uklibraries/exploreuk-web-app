@@ -687,6 +687,8 @@ class ExploreUK
                     /* fall through */
                 case 'newspapers':
                     /* fall through */
+                case 'theses':
+                    /* fall through */
                 case 'yearbooks':
                     $flat['embed_url'] = $this->path("/catalog/$id/paged" . $metadata['query']->link());
                     $text_field = 'text_s';
