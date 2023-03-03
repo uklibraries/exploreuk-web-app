@@ -65,7 +65,7 @@ programs are required:
 Licenses
 --------
 
-Copyright (C) 2018 Michael Slone and Eric Weig.
+Copyright (C) 2018-2023 MLE Slone and Eric Weig.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
