@@ -9,7 +9,7 @@
             <li><a href="https://www.clir.org/" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/clir-n.png') ?>" alt="Council on Library and Information Resources" width="167" height="76"/></a></li>
             <li><a href="https://www.neh.gov/" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/neh-n.jpg') ?>" alt="National Endowment for the Humanities" width="214" height="99"/></a></li>
             <li><a href="https://www.archives.gov/nhprc" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/nhprc-n.jpg') ?>" alt="National Archives - National Historical Publications and Records Commission" width="117" height="147"/></a></li>
-            <li><a href="https://libraries.uky.edu/page.php?lweb_id=1114" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/heyburn-n.png') ?>" alt="The John G. Heyburn II Initiative for Excellence in the Federal Judiciary" width="118" height="89"/></a></li>
+            <li><a href="https://heyburncollections.org/" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/heyburn-n.png') ?>" alt="The John G. Heyburn II Initiative for Excellence in the Federal Judiciary" width="118" height="89"/></a></li>
         </ul>
     </div>
     <div id="copyright-bar" class="row bg-uklblack">
