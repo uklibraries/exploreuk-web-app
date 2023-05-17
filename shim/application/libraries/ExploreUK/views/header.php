@@ -13,13 +13,15 @@
     <link rel="shortcut icon" href="/favicon.ico?v=m2LeKYRNPO">
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#005dab">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23584444-4"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FPRYLHP028"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
+    function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'UA-23584444-4', { 'anonymize_ip': true });
+    gtag('config', 'G-FPRYLHP028', { 'anonymize_ip': true });
     </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23584444-4"></script>
 </head>
 <body>
 <a href="#0" class="cd-top js-cd-top">Top</a>
