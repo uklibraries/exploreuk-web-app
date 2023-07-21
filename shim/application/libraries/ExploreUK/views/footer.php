@@ -13,7 +13,7 @@
         </ul>
     </div>
     <div id="copyright-bar" class="row bg-uklblack">
-        <span id="copyright">Copyright © UK Libraries. For questions or comments about this website, contact <a href="mailto:sarah.dorpinghaus@uky.edu">Sarah Dorpinghaus</a>.</span>
+        <span id="copyright">Copyright © UK Libraries</span>
         <ul>
             <li><a aria-label="Special Collections Research Center on Facebook" href="https://www.facebook.com/ukscrc/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a></li>
             <li><a aria-label="University of Kentucky Libraries on Twitter" href="https://twitter.com/UKLibraries" target="_blank" rel="noopener"><i class="fab fa-twitter"></i></a></li>
