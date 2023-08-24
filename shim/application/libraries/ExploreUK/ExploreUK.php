@@ -305,7 +305,13 @@ class ExploreUK
         header("Content-Disposition: attachment; filename=\"$name\"");
 
         /* TODO: maybe stream this instead */
-        readfile($url);
+        $file_headers = @get_headers($url);
+        if ($file_headers[0] === 'HTTP/1.1 404 Not Found') {
+            error_log("hwz WARNING: expected $url to be available, but it is not");
+        }
+        else {
+            readfile($url);
+        }
     }
 
     public function text($id)
