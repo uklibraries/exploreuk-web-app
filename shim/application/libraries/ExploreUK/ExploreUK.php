@@ -166,10 +166,15 @@ class ExploreUK
     public function pages($id)
     {
         $doc = $this->document($id);
-        if ($doc['object_type_s'][0] === 'section') {
-            $parent = $id;
-        } else {
+        if (!array_key_exists('object_type_s', $doc)) {
+            error_log("hwz NOTICE: object_type_s not found for $id");
             $parent = preg_replace('/_[^_]+$/', '', $id);
+        } else {
+            if ($doc['object_type_s'][0] === 'section') {
+                $parent = $id;
+            } else {
+                $parent = preg_replace('/_[^_]+$/', '', $id);
+            }
         }
         $pieces = array();
         $pieces[] = 'fq=' . urlencode("parent_id_s:$parent");
