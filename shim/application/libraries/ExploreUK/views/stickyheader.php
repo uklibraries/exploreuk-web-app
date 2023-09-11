@@ -12,6 +12,10 @@
     <div>
 <?php require('sitetitle.php'); ?>
 </div>
+<div class="clearfix">
+<p><strong><span style="font-size:16px;"><span style="">Scheduled Maintenance at SCRC to Begin September 5</span>&nbsp;</span></strong><span style="font-size:16px;">- <a href="https://libraries.uky.edu/news/scheduled-maintenance-scrc-begin-september-5">find more information here</a></span></p>
+</div>
+
 <div id="navlinks">
 <?php require('nav.php'); ?>
 </div>
