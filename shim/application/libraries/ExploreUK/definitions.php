@@ -203,7 +203,7 @@ function highlight_snippet($text, $raw_terms, $radius)
 {
     $raw_terms = str_replace(array(
         '.', '\\', '+', '*', '?', '[', '^', ']', '$', '(', ')', '{', '}',
-        '=', '!', '<', '>', '|', ':', '#', '"', '\'',
+        '=', '!', '<', '>', '|', ':', '#', '"', '\'', '%', '/',
     ), '', $raw_terms);
     $terms = preg_split('/\s+/', $raw_terms, null, PREG_SPLIT_NO_EMPTY);
     $words = explode(' ', preg_replace('/\s+/', ' ', $text));
