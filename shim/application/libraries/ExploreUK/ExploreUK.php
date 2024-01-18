@@ -83,6 +83,9 @@ class ExploreUK
     public function cleanupHost($value)
     {
         if (!$this->config['prod']) {
+            if (is_array($value) and count($value) > 0) {
+                $value = $value[0];
+            }
             if (strpos($value, '/dips/') !== false) {
                 $value = preg_replace('/\/dips\//', '/dipstest/', $value);
             }
