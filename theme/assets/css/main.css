@@ -1677,6 +1677,10 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
         margin-top: 1em;
     }
 
+    #top2_bottom form input[type=text] {
+        margin-top: 0em;
+    }
+
     .button,
     button,
     input[type=button],
@@ -1685,12 +1689,6 @@ form input[type="text"], form input[type="email"], form input[type="password"], 
         margin-bottom: 15px;
     }
 }
-
-@media screen and (max-width: 1400px)
-#top2_bottom form input[type=text] {
-    margin-top: 0em;
-}
-
 
 #top {
     padding: 0px 0px !important;
