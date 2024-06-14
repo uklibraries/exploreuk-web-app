@@ -1,8 +1,9 @@
-omeka-solr-shim
-===============
+exploreuk-web-app
+=================
 
-This is the main portion of the Omeuka application, which serves
-ExploreUK to users atop Omeka, pulling metadata from Solr.
+This is the main portion of the ExploreUK web application. Document
+data is pulled from Solr, and other settings are managed in Omeka
+admin mode.
 
 This is based in part on euk: https://github.com/uklibraries/euk/ .
 
@@ -65,7 +66,7 @@ programs are required:
 Licenses
 --------
 
-Copyright (C) 2018-2023 MLE Slone and Eric Weig.
+Copyright (C) 2018-2024 MLE Slone and Eric Weig.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
