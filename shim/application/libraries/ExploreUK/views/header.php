@@ -30,7 +30,7 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23584444-4"></script>
     <!-- universal header/footer files start -->
     <link id="ukl-header-styles" rel="stylesheet" href="https://lib.uky.edu/webparts/ukhdr/prod/css/global_header_footer.min.css" media="all" />
-    <script id="ukl-header-script" type="module" src="https://lib.uky.edu/webparts/ukhdr/prod/js/_universalheader.js" onerror="
+    <script id="ukl-header-script" type="module" src="https://lib.uky.edu/webparts/ukhdr/prod/js/universalheader.min.js" onerror="
 			(() => {
 				// Remove this script
 				old_script = document.querySelector('#ukl-header-script');
@@ -57,7 +57,7 @@
 				footer_script.src='https://cdn.jsdelivr.net/gh/uklibraries/UKL_HeaderFooter@dev/js/combofootershared.js';
 				document.body.appendChild(footer_script);
 			})();
-			" data-base_path="libcal"></script>
+			" data-base_path="exploreuk"></script>
 </head>
 
 <body>

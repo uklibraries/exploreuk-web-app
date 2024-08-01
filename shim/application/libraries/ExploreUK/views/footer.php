@@ -2,7 +2,7 @@
     </div>
 
     <div id="footer">
-        <script src="https://cdn.jsdelivr.net/gh/uklibraries/UKL_HeaderFooter@dev/js/combofootershared.js"></script>
+        <script src="https://lib.uky.edu/webparts/ukhdr/prod/css/global_header_footer.min.css"></script>
     </div>
 
     <!-- CSS -->
