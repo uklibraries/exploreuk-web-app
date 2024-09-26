@@ -1,4 +1,5 @@
 <?php
+
 namespace ExploreUK;
 
 class View

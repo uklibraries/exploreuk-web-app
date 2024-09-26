@@ -40,14 +40,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.1/lity.min.js" integrity="sha256-3VzI8FuSG20IfvIDKRptBR+1d4T6G57eDIf6ZEO13iY=" crossorigin="anonymous"></script>
 <script src="<?= $this->themePath('assets/js/resize.js') ?>"></script>
 <?php if (isset($m['script_image'])) : ?>
-<?php $s = $m['script_image']; ?>
-<?php $r = $m['item_image']; ?>
-<?php
-$ui = $this->q('ui');
-if (!isset($ui) || !$ui) {
-    $ui = "1";
-}
-if ($ui === "1") : ?>
+        <?php $s = $m['script_image']; ?>
+        <?php $r = $m['item_image']; ?>
+        <?php
+        $ui = $this->q('ui');
+        if (!isset($ui) || !$ui) {
+            $ui = "1";
+        }
+        if ($ui === "1") : ?>
 <script type="text/javascript" src="<?= $this->themePath('openseadragon/openseadragon.min.js') ?>"></script>
 <script type="text/javascript">
 $(function () {
@@ -112,7 +112,7 @@ $(function () {
     initialize_osd();
 });
 </script>
-<?php endif; ?>
+        <?php endif; ?>
 <?php endif; ?>
 <script src="<?= $this->themePath('javascripts/back_to_top.js') ?>"></script>
 <script src="<?= $this->themePath('javascripts/main.js') ?>"></script>

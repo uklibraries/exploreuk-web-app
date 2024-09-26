@@ -1,4 +1,5 @@
 <?php
+
 namespace ExploreUK;
 
 require_once('definitions.php');

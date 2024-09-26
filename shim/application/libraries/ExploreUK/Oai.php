@@ -1,4 +1,5 @@
 <?php
+
 namespace ExploreUK;
 
 use DOMDocument;
@@ -476,9 +477,11 @@ function euk_oai_list_identifiers($options)
 
     # resumptionToken is exclusive, but if it is not set, then metadataPrefix
     # must be specified.  Everything else but identifier is permitted.
-    if ((isset($options['identifier'])) ||
+    if (
+        (isset($options['identifier'])) ||
         !(isset($options['metadataPrefix']) || isset($options['resumptionToken'])) ||
-        (isset($options['resumptionToken']) && count($options) > 1)) {
+        (isset($options['resumptionToken']) && count($options) > 1)
+    ) {
         return euk_oai_error('badArgument');
     }
 
@@ -551,9 +554,11 @@ function euk_oai_list_records($options)
 
     # resumptionToken is exclusive, but if it is not set, then metadataPrefix
     # must be specified.  Everything else but identifier is permitted.
-    if ((isset($options['identifier'])) ||
+    if (
+        (isset($options['identifier'])) ||
         !(isset($options['metadataPrefix']) || isset($options['resumptionToken'])) ||
-        (isset($options['resumptionToken']) && count($options) > 1)) {
+        (isset($options['resumptionToken']) && count($options) > 1)
+    ) {
         return euk_oai_error('badArgument');
     }
 
@@ -757,7 +762,7 @@ function euk_oai_set_memberships($doc, $options)
         $sets[] = 'umbra';
     }
     if ($doc['compound_object_split_b'] == true) {
-        $sets[]= 'default';
+        $sets[] = 'default';
     }
     $sets[] = 'unrestricted';
     return $sets;
@@ -873,11 +878,9 @@ function euk_coerce_granularity($template, $datestamp)
 {
     if (preg_match('/\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\.\d\d\dZ/', $template)) {
         return $datestamp;
-    }
-    elseif (preg_match('/\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ/', $template)) {
+    } elseif (preg_match('/\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ/', $template)) {
         return substr($datestamp, 0, 19) . 'Z';
-    }
-    elseif (preg_match('/\d\d\d\d-\d\d-\d\d/', $template)) {
+    } elseif (preg_match('/\d\d\d\d-\d\d-\d\d/', $template)) {
         return substr($datestamp, 0, 10);
     }
 }
