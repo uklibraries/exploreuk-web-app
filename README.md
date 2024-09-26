@@ -59,7 +59,7 @@ To use the maintenance scripts in the exe directory, the following
 programs are required:
 
 * bash
-* lightningcss-cli (package-lock.json provided)
+* npm
 * rsync
 * wget
 
