@@ -15,7 +15,7 @@ if (!isset($ui) || !$ui) {
     $ui = "1";
 }
 if (($ui === "2") && $m['item_image']) : ?>
-<?php $r = $m['item_image']; ?>
+    <?php $r = $m['item_image']; ?>
 <div class="image-controls">
     <a href="<?= $r['reference_image_url_s'] ?>" target="_blank" rel="noopener">Open fullsize image</a> |
     <a href="<?= $this->path('/catalog/' . $r['id'] . '/zoom' . $m['query']->link()) ?>" target="_blank" rel="noopener">Zooom!</a>

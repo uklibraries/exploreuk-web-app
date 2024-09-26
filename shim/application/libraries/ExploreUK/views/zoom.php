@@ -33,8 +33,8 @@ if (isset($m['item_book'])) {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.1/lity.min.js" integrity="sha256-3VzI8FuSG20IfvIDKRptBR+1d4T6G57eDIf6ZEO13iY=" crossorigin="anonymous"></script>
 <script src="<?= $this->themePath('assets/js/resize.js') ?>"></script>
 <?php if (isset($m['script_image'])) : ?>
-<?php $s = $m['script_image']; ?>
-<?php $r = $m['item_image']; ?>
+    <?php $s = $m['script_image']; ?>
+    <?php $r = $m['item_image']; ?>
 <script type="text/javascript" src="<?= $this->themePath('openseadragon/openseadragon.min.js') ?>"></script>
 <script type="text/javascript">
 var id = '<?= $s['osd_id'] ?>';

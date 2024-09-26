@@ -29,15 +29,15 @@
 <?php if ($m['front_page']) : ?>
     <section id="top">
         <div>
-<?php require('stickyheader.php'); ?>
-<?php require('search.php'); ?>
+    <?php require('stickyheader.php'); ?>
+    <?php require('search.php'); ?>
 <div class="row"></div>
 <?php else : ?>
     <section class="bg-uklblack" id="top2">
         <div>
-<?php require('stickyheader.php'); ?>
+    <?php require('stickyheader.php'); ?>
 <div id="top2_bottom">
-<?php require('search-brief.php'); ?>
+    <?php require('search-brief.php'); ?>
         </div>
 <?php endif; ?>
         </div>

@@ -20,7 +20,7 @@ foreach (EUK_DETAIL_FIELD_ORDER as $field) {
 </div>
 
 <?php if (isset($m['item_book']) && isset($m['item_book']['text'])) : ?>
-<?php $r = $m['item_book']['text']; ?>
+    <?php $r = $m['item_book']['text']; ?>
 <div id="item-text" class="tab-content hide">
     <p>The text may or may not be an accurate representation of the original.</p>
     <iframe id="text_frame" src="<?= $r['href'] ?>" width="100%" height="300" name="text"></iframe>

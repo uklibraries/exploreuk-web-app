@@ -1,4 +1,5 @@
 <?php
+
 namespace ExploreUK;
 
 class ExploreUK
@@ -320,8 +321,7 @@ class ExploreUK
         $file_headers = @get_headers($url);
         if ($file_headers[0] === 'HTTP/1.1 404 Not Found') {
             error_log("hwz WARNING: expected $url to be available, but it is not");
-        }
-        else {
+        } else {
             readfile($url);
         }
     }
@@ -377,7 +377,7 @@ class ExploreUK
 
         $raw_stats = $metadata['query']->getFacetsByObjectType();
         $facet_counts = $raw_stats['facet_counts']['facet_fields']['object_type_s'];
-        if (count($facet_counts)> 2) {
+        if (count($facet_counts) > 2) {
             $navs = navsHashFromFlatList($facet_counts);
         }
 
@@ -400,7 +400,7 @@ class ExploreUK
             $stats['section']['count'] += $navs[$leaf_type];
             $stats['section']['count_by_type'][$leaf_type] = $navs[$leaf_type];
         }
-            
+
         $metadata['stats'] = $stats;
 
         $view = new View($metadata, 'stats');
@@ -450,8 +450,10 @@ class ExploreUK
         if (is_array($object_type)) {
             $object_type = $object_type[0];
         }
-        if ((($split === false) && ($object_type !== 'section')) ||
-            (($split === true) && ($object_type === 'page'))) {
+        if (
+            (($split === false) && ($object_type !== 'section')) ||
+            (($split === true) && ($object_type === 'page'))
+        ) {
             $dest_id = $doc['parent_id_s'][0];
             $page_number = $doc['sequence_number_display'][0];
             header('Location: ' . $this->path('/catalog/' . $dest_id . '#page/' . $page_number . '/mode/1up'));
@@ -1034,7 +1036,8 @@ class ExploreUK
         $view->render();
     }
 
-    public function showPopularResources() {
+    public function showPopularResources()
+    {
         $popular_resources = $this->popularResources();
         if (isset($popular_resources['errors']) && count($popular_resources['errors']) > 0) {
             $this->index();
@@ -1043,7 +1046,8 @@ class ExploreUK
         }
     }
 
-    public function popularResources() {
+    public function popularResources()
+    {
         $metadata = array('data' => array());
         $popular_resources = array();
         $colln = $this->omeka->getCollectionByTitle('Popular Resources');
@@ -1059,7 +1063,8 @@ class ExploreUK
         return $metadata;
     }
 
-    public function showAdditionalResources() {
+    public function showAdditionalResources()
+    {
         $additional_resources = $this->additionalResources();
         if (isset($additional_resources['errors']) && count($additional_resources['errors']) > 0) {
             $this->index();
@@ -1068,7 +1073,8 @@ class ExploreUK
         }
     }
 
-    public function additionalResources() {
+    public function additionalResources()
+    {
         $metadata = array('data' => array());
         $additional_resources = array();
         $colln = $this->omeka->getCollectionByTitle('Additional Resources');

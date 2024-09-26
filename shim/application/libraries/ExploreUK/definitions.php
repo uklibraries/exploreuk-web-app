@@ -1,4 +1,5 @@
 <?php
+
 namespace ExploreUK;
 
 define('EUK_BASE_DIR', dirname(dirname(dirname(dirname(__FILE__)))));
