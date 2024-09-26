@@ -57,6 +57,10 @@ class ExploreUK
         if (preg_match("#^/{$base}catalog/oai?#", $request_uri, $matches)) {
             $oai = new Oai($this->config);
             $oai->run();
+        } elseif (preg_match("#^/{$base}popular_resources.json$#", $request_uri, $matches)) {
+            $this->showPopularResources();
+        } elseif (preg_match("#^/{$base}additional_resources.json$#", $request_uri, $matches)) {
+            $this->showAdditionalResources();
         } elseif (preg_match("#^/{$base}catalog/stats#", $request_uri, $matches)) {
             $this->statsViewer();
         } elseif (preg_match("#^/{$base}catalog/(?<id>[^/]+)/find/?#", $request_uri, $matches)) {
@@ -899,30 +903,17 @@ class ExploreUK
             }
 
             $metadata['popular_resources'] = array();
-            $popular_resources = array();
-            $colln = $this->omeka->getCollectionByTitle('Popular Resources');
-            $items = $this->omeka->getItems($colln->id);
-            foreach ($items as $item) {
-                $im = $this->omeka->getItemMetadata($item->id);
-                $popular_resources[$im['position']] = $im;
-            }
-            ksort($popular_resources);
-            foreach ($popular_resources as $key => $im) {
-                $metadata['popular_resources'][] = $im;
+            $popular_resources = $this->popularResources();
+            if (!isset($popular_resources['errors'])) {
+                $metadata['popular_resources'] = $popular_resources['data'];
             }
 
             $metadata['additional_resources'] = array();
-            $additional_resources = array();
-            $colln = $this->omeka->getCollectionByTitle('Additional Resources');
-            $items = $this->omeka->getItems($colln->id);
-            foreach ($items as $item) {
-                $im = $this->omeka->getItemMetadata($item->id);
-                $additional_resources[$im['position']] = $im;
+            $additional_resources = $this->additionalResources();
+            if (!isset($additional_resources['errors'])) {
+                $metadata['additional_resources'] = $additional_resources['data'];
             }
-            ksort($additional_resources);
-            foreach ($additional_resources as $key => $im) {
-                $metadata['additional_resources'][] = $im;
-            }
+
             $view = new View($metadata, 'front-page');
         } else {
             # Pagination and results
@@ -1041,5 +1032,55 @@ class ExploreUK
 
         $view = new View($metadata, 'simple-page');
         $view->render();
+    }
+
+    public function showPopularResources() {
+        $popular_resources = $this->popularResources();
+        if (isset($popular_resources['errors']) && count($popular_resources['errors']) > 0) {
+            $this->index();
+        } else {
+            print json_encode($popular_resources);
+        }
+    }
+
+    public function popularResources() {
+        $metadata = array('data' => array());
+        $popular_resources = array();
+        $colln = $this->omeka->getCollectionByTitle('Popular Resources');
+        $items = $this->omeka->getItems($colln->id);
+        foreach ($items as $item) {
+            $im = $this->omeka->getItemMetadata($item->id);
+            $popular_resources[$im['position']] = $im;
+        }
+        ksort($popular_resources);
+        foreach ($popular_resources as $key => $im) {
+            $metadata['data'][] = $im;
+        }
+        return $metadata;
+    }
+
+    public function showAdditionalResources() {
+        $additional_resources = $this->additionalResources();
+        if (isset($additional_resources['errors']) && count($additional_resources['errors']) > 0) {
+            $this->index();
+        } else {
+            print json_encode($additional_resources);
+        }
+    }
+
+    public function additionalResources() {
+        $metadata = array('data' => array());
+        $additional_resources = array();
+        $colln = $this->omeka->getCollectionByTitle('Additional Resources');
+        $items = $this->omeka->getItems($colln->id);
+        foreach ($items as $item) {
+            $im = $this->omeka->getItemMetadata($item->id);
+            $additional_resources[$im['position']] = $im;
+        }
+        ksort($additional_resources);
+        foreach ($additional_resources as $key => $im) {
+            $metadata['data'][] = $im;
+        }
+        return $metadata;
     }
 }
