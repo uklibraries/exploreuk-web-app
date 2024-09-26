@@ -11,18 +11,18 @@
 <li id="more-facets-option-<?= $list['field_raw'] ?>-by-count" class="tab-option"><a href="#more-facets-list-<?= $list['field_raw'] ?>-by-count">Sort by Best Match</a></li>
 </ul>
 </div>
-<?php
-$manners = array('by-index', 'by-count');
-foreach ($manners as $manner) :
-?>
+    <?php
+    $manners = array('by-index', 'by-count');
+    foreach ($manners as $manner) :
+        ?>
 <div id="more-facets-list-<?= $list['field_raw'] ?>-<?= $manner ?>" class="tab-content <?= ($manner == 'by-index') ? 'active' : 'hide' ?>">
 <ul class="more-facets-list" id="more-facets-<?= $list['field_raw'] ?>-<?= $manner ?>">
-<?php foreach ($list[$manner] as $value) : ?>
+        <?php foreach ($list[$manner] as $value) : ?>
     <li><a href="<?= $value['add_link'] ?>"><?= $this->brevity($value['value_label'], 40); ?> <span class="facet-count">(<?= $value['count'] ?>)</span></a></li>
-<?php endforeach; ?>
+        <?php endforeach; ?>
 </ul>
 </div>
-<?php endforeach; ?>
+    <?php endforeach; ?>
 </div>
 </div>
 <?php endforeach; ?>

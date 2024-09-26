@@ -4,7 +4,6 @@
 <h2 class="popular-resources-title">Popular Resources</h2>
 <ul class="popular-resources">
 <?php foreach ($m['popular_resources'] as $index => $resource) : ?>
-
 <li><a id="popular-resource-<?= $index ?>" href="<?= $resource['url'] ?>">
     <h3><span><?= $resource['label'] ?></span></h3>
 </a></li>
@@ -15,7 +14,6 @@
 <h2 class="additional-resources-title">Additional Resources</h2>
 <ul class="additional-resources">
 <?php foreach ($m['additional_resources'] as $index => $resource) : ?>
-
 <li><a aria-label="<?= $resource['label'] ?>" id="additional-resource-<?= $index ?>" href="<?= $resource['url'] ?>" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $resource['image'] ?>" title="<?= $resource['label'] ?>"></a></li>
 
 <?php endforeach; ?>

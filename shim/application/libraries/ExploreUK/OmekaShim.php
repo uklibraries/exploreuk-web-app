@@ -1,4 +1,5 @@
 <?php
+
 namespace ExploreUK;
 
 use PDO;

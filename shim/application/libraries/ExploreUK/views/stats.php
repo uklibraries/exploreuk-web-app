@@ -16,10 +16,10 @@
 <ul>
 <li><b>Total:</b> <?= $m['stats']['leaf']['count'] ?></li>
 <?php
-foreach ($m['stats']['leaf']['count_by_type'] as $type => $count):
-?>
+foreach ($m['stats']['leaf']['count_by_type'] as $type => $count) :
+    ?>
 <li><?= $type ?>: <?= $count ?></li>
-<?php
+    <?php
 endforeach;
 ?>
 </ul>
@@ -28,10 +28,10 @@ endforeach;
 <ul>
 <li><b>Total:</b> <?= $m['stats']['section']['count'] ?></li>
 <?php
-foreach ($m['stats']['section']['count_by_type'] as $type => $count):
-?>
+foreach ($m['stats']['section']['count_by_type'] as $type => $count) :
+    ?>
 <li><?= $type ?>: <?= $count ?></li>
-<?php
+    <?php
 endforeach;
 ?>
 </ul>

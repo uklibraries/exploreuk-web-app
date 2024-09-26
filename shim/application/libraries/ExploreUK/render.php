@@ -1,4 +1,5 @@
 <?php
+
 function fa_render_string($s)
 {
     $fragment = simplexml_load_string($s);
