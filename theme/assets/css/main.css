@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'Muli';
+    font-family: 'Muli', sans-serif;
     font-display: fallback;
     font-style: normal;
     font-weight: 400;
@@ -762,6 +762,7 @@
 
 body {
     font-family: Muli, sans-serif;
+    font-display: fallback;
     -webkit-font-smoothing: antialiased;
 }
 
@@ -1029,6 +1030,7 @@ nav a:visited {
     left: -40px;
     top: 45%;
     font-family: "Roboto", helvetica, arial, sans-serif;
+    font-display: fallback;
     z-index: 999;
 }
 

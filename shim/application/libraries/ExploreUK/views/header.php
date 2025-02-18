@@ -11,6 +11,7 @@
     <link rel="manifest" href="/site.webmanifest?v=m2LeKYRNPO">
     <link rel="mask-icon" href="/safari-pinned-tab.svg?v=m2LeKYRNPO" color="#005dab">
     <link rel="shortcut icon" href="/favicon.ico?v=m2LeKYRNPO">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#005dab">
     <!-- Google tag (gtag.js) -->
