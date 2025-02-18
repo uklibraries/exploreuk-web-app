@@ -130,7 +130,7 @@ class View
             $lines[] = "</ul>";
         } else {
             $lines[] = "<ul>";
-            $lines[] = $this->renderHelper($field, $content);
+            $lines[] = "<li>" . $this->renderHelper($field, $content) . "</li>";
             $lines[] = "</ul>";
         }
         return implode("\n", $lines) . "\n";
