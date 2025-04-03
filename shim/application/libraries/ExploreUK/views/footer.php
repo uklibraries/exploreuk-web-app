@@ -15,7 +15,7 @@
     <div id="copyright-bar" class="row bg-uklblack">
         <span id="copyright">Copyright © UK Libraries</span>
         <ul>
-            <li><a aria-label="Special Collections Research Center on Facebook" href="https://www.facebook.com/ukscrc/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a></li>
+            <li><a aria-label="Special Collections Research Center on Facebook" href="https://www.facebook.com/uklibraries/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a></li>
             <li><a aria-label="University of Kentucky Libraries on Instagram" href="https://www.instagram.com/uklibraries/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a></li>
             <li><a aria-label="University of Kentucky Archives on YouTube" href="https://www.youtube.com/channel/UCxgb2cJ2hpO-0QOTnmxgfKw" target="_blank" rel="noopener"><i class="fab fa-youtube"></i></a></li>
             <li><a aria-label="Curiosities and Wonders" href="https://ukyarchives.blogspot.com/" target="_blank" rel="noopener"><i class="fab fa-blogger"></i></a></li>
