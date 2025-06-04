@@ -10,10 +10,10 @@ class ExploreUK
     public function __construct()
     {
         $this->omeka = new OmekaShim();
-        $this->config = array(
+        $this->config = [
             'base' => '',
             'theme' => $this->omeka->getOption('public_theme'),
-        );
+        ];
         if (realpath(EUK_BASE_DIR) !== realpath($_SERVER['DOCUMENT_ROOT'])) {
             $this->config['base'] = basename(EUK_BASE_DIR) . '/';
         }
@@ -27,7 +27,7 @@ class ExploreUK
     private function configure()
     {
         $this->config['solr'] = $this->omeka->getThemeOption('euk_solr');
-        $this->config['query'] = new Query(array(), $this->config['solr']);
+        $this->config['query'] = new Query([], $this->config['solr']);
         $this->config['fa_base'] = $this->omeka->getThemeOption('euk_findingaid_base_url');
         $this->config['logo'] = $this->omeka->getThemeOption('logo');
         $this->config['simple_pages'] = $this->omeka->getSimplePages();
@@ -91,24 +91,24 @@ class ExploreUK
             if (is_array($value) and count($value) > 0) {
                 $value = $value[0];
             }
-            if (strpos($value, '/dips/') !== false) {
-                $value = preg_replace('/\/dips\//', '/dipstest/', $value);
+            if (str_contains((string) $value, '/dips/')) {
+                $value = preg_replace('/\/dips\//', '/dipstest/', (string) $value);
             }
         }
-        $value = preg_replace('#https://nyx#', 'https://exploreuk', $value);
+        $value = preg_replace('#https://nyx#', 'https://exploreuk', (string) $value);
         return $value;
     }
 
     public function cleanupDoc($doc)
     {
         if ($this->config['prod']) {
-            $result = array();
+            $result = [];
             foreach ($doc as $key => $value) {
                 if (is_string($value)) {
                     $value = $this->cleanupHost($value);
                     $result[$key] = $value;
                 } elseif (is_array($value)) {
-                    $result[$key] = array();
+                    $result[$key] = [];
                     foreach ($value as $item) {
                         $item = $this->cleanupHost($item);
                         $result[$key][] = $item;
@@ -119,21 +119,21 @@ class ExploreUK
             }
             return $result;
         }
-        $result = array();
+        $result = [];
         foreach ($doc as $key => $value) {
             if (is_string($value)) {
-                if (strpos($value, '/dips/') !== false) {
+                if (str_contains($value, '/dips/')) {
                     $value = preg_replace('/\/dips\//', '/dipstest/', $value);
                 }
-                $value = preg_replace('#https://nyx#', 'https://exploreuk', $value);
+                $value = preg_replace('#https://nyx#', 'https://exploreuk', (string) $value);
                 $result[$key] = $value;
             } elseif (is_array($value)) {
-                $result[$key] = array();
+                $result[$key] = [];
                 foreach ($value as $item) {
-                    if (strpos($item, '/dips/') !== false) {
-                        $item = preg_replace('/\/dips\//', '/dipstest/', $item);
+                    if (str_contains((string) $item, '/dips/')) {
+                        $item = preg_replace('/\/dips\//', '/dipstest/', (string) $item);
                     }
-                    $item = preg_replace('#https://nyx#', 'https://exploreuk', $item);
+                    $item = preg_replace('#https://nyx#', 'https://exploreuk', (string) $item);
                     $result[$key][] = $item;
                 }
             } else {
@@ -148,7 +148,7 @@ class ExploreUK
         #if ($this->config['prod']) {
         #    return $docs;
         #}
-        $result = array();
+        $result = [];
         foreach ($docs as $doc) {
             $result[] = $this->cleanupDoc($doc);
         }
@@ -157,7 +157,7 @@ class ExploreUK
 
     public function document($id)
     {
-        $pieces = array();
+        $pieces = [];
         $pieces[] = 'fq=' . urlencode("id:$id");
         $pieces[] = 'fl=' . urlencode("*");
         $pieces[] = 'wt=json';
@@ -176,15 +176,15 @@ class ExploreUK
         $doc = $this->document($id);
         if (!array_key_exists('object_type_s', $doc)) {
             error_log("hwz NOTICE: object_type_s not found for $id");
-            $parent = preg_replace('/_[^_]+$/', '', $id);
+            $parent = preg_replace('/_[^_]+$/', '', (string) $id);
         } else {
             if ($doc['object_type_s'][0] === 'section') {
                 $parent = $id;
             } else {
-                $parent = preg_replace('/_[^_]+$/', '', $id);
+                $parent = preg_replace('/_[^_]+$/', '', (string) $id);
             }
         }
-        $pieces = array();
+        $pieces = [];
         $pieces[] = 'fq=' . urlencode("parent_id_s:$parent");
         $pieces[] = 'fq=' . urlencode("object_type_s:page");
         $pieces[] = 'wt=json';
@@ -207,9 +207,9 @@ class ExploreUK
         if ($doc['object_type_s'][0] === 'section') {
             $parent = $id;
         } else {
-            $parent = preg_replace('/_[^_]+$/', '', $id);
+            $parent = preg_replace('/_[^_]+$/', '', (string) $id);
         }
-        $pieces = array();
+        $pieces = [];
         $pieces[] = 'fq=' . urlencode("parent_id_s:$parent");
         $pieces[] = 'fq=' . urlencode("object_type_s:video");
         $pieces[] = 'wt=json';
@@ -230,7 +230,7 @@ class ExploreUK
     {
         $euk_solr = $this->config['solr'];
 
-        parse_str($_SERVER['QUERY_STRING'], $params);
+        parse_str((string) $_SERVER['QUERY_STRING'], $params);
         $q = null;
         foreach ($params as $key => $value) {
             if ($key === 'q') {
@@ -239,7 +239,7 @@ class ExploreUK
             }
         }
 
-        $pieces = array();
+        $pieces = [];
         $pieces[] = 'q=' . urlencode($q);
         $pieces[] = 'mm=1';
         $pieces[] = 'fq=' . urlencode("parent_id_s:$id");
@@ -251,26 +251,26 @@ class ExploreUK
         $url = "$euk_solr?" . implode('&', $pieces);
         $result = json_decode(file_get_contents($url), true);
 
-        $response = array(
+        $response = [
             'q' => $q,
-            'matches' => array(),
-        );
+            'matches' => [],
+        ];
 
         if (isset($result['response']) && (count($result['response']['docs']) > 0)) {
             foreach ($result['response']['docs'] as $doc) {
                 if (isset($doc['text_s'])) {
                     $snippet = highlight_snippet($doc['text_s'][0], $q, 5);
-                    if (strlen($snippet) > 5) {
-                        $response['matches'][] = array(
+                    if (strlen((string) $snippet) > 5) {
+                        $response['matches'][] = [
                             'text' => $snippet,
-                            'par' => array(array(
-                                'boxes' => array(),
+                            'par' => [[
+                                'boxes' => [],
                                 'page' => intval($doc['sequence_number_display'][0]),
                                 'page_width' => intval($doc['reference_image_width_s'][0]),
                                 'page_height' => intval($doc['reference_image_height_s'][0]),
                                 'page_image' => $this->cleanupHost($doc['reference_image_url_s'][0]),
-                            )),
-                        );
+                            ]],
+                        ];
                     }
                 }
             }
@@ -312,7 +312,7 @@ class ExploreUK
         $url = $this->cleanupHost($url);
 
         /* TODO: maybe have a metadata-determined filename? */
-        $name = basename($url);
+        $name = basename((string) $url);
 
         header("Content-type: $mime");
         header("Content-Disposition: attachment; filename=\"$name\"");
@@ -340,15 +340,15 @@ class ExploreUK
 
     public function getVisiblePages($pages)
     {
-        $visiblePages = array();
+        $visiblePages = [];
         foreach ($pages as $page) {
             if ($page['visible']) {
-                $newPage = array();
+                $newPage = [];
                 $newPage['label'] = $page['label'];
                 $newPage['uri'] = $page['uri'];
                 if ($page['uri'] === '/') {
                     $newPage['suppress'] = true;
-                } elseif (substr($page['uri'], 0, 1) !== '/') {
+                } elseif (!str_starts_with((string) $page['uri'], '/')) {
                     $newPage['external'] = true;
                 }
                 $subPages = $this->getVisiblePages($page['pages']);
@@ -357,7 +357,7 @@ class ExploreUK
                     $newPage['active'] = true;
                 }
                 $visiblePages[] = $newPage;
-                $subPages = array();
+                $subPages = [];
             }
         }
         return $visiblePages;
@@ -365,14 +365,14 @@ class ExploreUK
 
     public function statsViewer()
     {
-        $metadata = array(
+        $metadata = [
             'base' => $this->config['base'],
             'logo' => $this->config['logo'],
             'front_page' => false,
             'page_title' => 'ExploreUK - rare and unique research materials from UK Libraries.',
             'theme' => $this->config['theme'],
             'query' => $this->config['query'],
-        );
+        ];
         $metadata['page_description'] = $metadata['page_title'];
 
         $raw_stats = $metadata['query']->getFacetsByObjectType();
@@ -381,16 +381,16 @@ class ExploreUK
             $navs = navsHashFromFlatList($facet_counts);
         }
 
-        $stats = array(
-            'leaf' => array(
+        $stats = [
+            'leaf' => [
                 'count' => 0,
-                'count_by_type' => array(),
-            ),
-            'section' => array(
+                'count_by_type' => [],
+            ],
+            'section' => [
                 'count' => 0,
-                'count_by_type' => array(),
-            ),
-        );
+                'count_by_type' => [],
+            ],
+        ];
 
         foreach (EUK_OBJECT_TYPES_LEAF as $leaf_type) {
             $stats['leaf']['count'] += $navs[$leaf_type];
@@ -409,28 +409,28 @@ class ExploreUK
 
     public function embedPagedViewer($id)
     {
-        $metadata = array(
+        $metadata = [
             'base' => $this->config['base'],
             'logo' => $this->config['logo'],
             'front_page' => false,
             'page_title' => 'ExploreUK - rare and unique research materials from UK Libraries.',
             'theme' => $this->config['theme'],
             'query' => $this->config['query'],
-        );
+        ];
         $metadata['page_description'] = $metadata['page_title'];
 
         $pages = $this->pages($id);
         if ($pages) {
-            $sequence = intval(preg_replace('/.*[^_]+_/', '', $id)) - 1;
+            $sequence = intval(preg_replace('/.*[^_]+_/', '', (string) $id)) - 1;
             $search_host = 'https://' . $_SERVER['HTTP_HOST'] . '/catalog/' . $id . '/find';
             $images_base_url = 'https://' . $_SERVER['HTTP_HOST'] . '/themes/' . $metadata['theme'] . '/BookReader/images/';
 
-            $metadata['script'] = array(
+            $metadata['script'] = [
                 'json' => json_encode($pages),
                 'search_host' => json_encode($search_host),
                 'imagesBaseURL' => json_encode($images_base_url),
                 'query' => json_encode($metadata['query']->q('q')),
-            );
+            ];
         }
 
         $view = new View($metadata, 'paged');
@@ -466,7 +466,7 @@ class ExploreUK
             return;
         }
 
-        $metadata = array(
+        $metadata = [
             'id' => $id,
             'logo' => $this->config['logo'],
             'action' => 'page',
@@ -474,25 +474,25 @@ class ExploreUK
             'front_page' => false,
             'theme' => $this->config['theme'],
             'query' => $this->config['query'],
-        );
+        ];
 
         $metadata['search_link'] = $this->config['solr'] . '?' . $metadata['query']->searchParams();
         $metadata['back_to_search'] = $this->path('/catalog/' . $metadata['query']->link());
         $metadata['back_to_search_text'] = EUK_BACK_TO_SEARCH_TEXT;
 
-        $flat = array();
+        $flat = [];
         foreach ($doc as $key => $value) {
             # XXX: Consider adding $euk_repeatable_fields to config.
             if ($key === 'subject_topic_facet') {
                 $flat[$key] = $value;
             } elseif (is_array($value) and count($value) > 0) {
-                if (preg_match('/_url/', $key)) {
+                if (preg_match('/_url/', (string) $key)) {
                     $flat[$key] = $this->cleanupHost($value[0]);
                 } else {
                     $flat[$key] = $value[0];
                 }
             } elseif (isset($value)) {
-                if (preg_match('/_url/', $key)) {
+                if (preg_match('/_url/', (string) $key)) {
                     $flat[$key] = $this->cleanupHost($value);
                 } else {
                     $flat[$key] = $value;
@@ -501,28 +501,28 @@ class ExploreUK
                 $flat[$key] = '';
             }
         }
-        $details = array();
-        $pageMetadata = array();
-        $desired = array(
-            array('Title', 'title_display'),
-            array('', 'scopecontent_s'),
-            array('Creator', 'author_display'),
-            array('Format', 'format'),
-            array('Publication date', 'dc_date_display'),
-            array('Date uploaded', 'date_digitized_display'),
-            array('Language', 'language_display'),
-            array('Publisher', 'publisher_display'),
-            array('Type', 'type_display'),
-            array('Accession number', 'accession_number_display'),
-            array('Identifier', 'dc_identifier_display'),
-            array('Source', 'source_s'),
-            array('Coverage', 'coverage_s'),
-            array('Finding aid', 'finding_aid_url_s'),
-            array('Metadata record', 'mets_url_display'),
-            array('Rights', 'usage_display'),
-            array('Description', 'description_display'),
-            array('Subject', 'subject_topic_facet'),
-        );
+        $details = [];
+        $pageMetadata = [];
+        $desired = [
+            ['Title', 'title_display'],
+            ['', 'scopecontent_s'],
+            ['Creator', 'author_display'],
+            ['Format', 'format'],
+            ['Publication date', 'dc_date_display'],
+            ['Date uploaded', 'date_digitized_display'],
+            ['Language', 'language_display'],
+            ['Publisher', 'publisher_display'],
+            ['Type', 'type_display'],
+            ['Accession number', 'accession_number_display'],
+            ['Identifier', 'dc_identifier_display'],
+            ['Source', 'source_s'],
+            ['Coverage', 'coverage_s'],
+            ['Finding aid', 'finding_aid_url_s'],
+            ['Metadata record', 'mets_url_display'],
+            ['Rights', 'usage_display'],
+            ['Description', 'description_display'],
+            ['Subject', 'subject_topic_facet'],
+        ];
         foreach ($desired as $row) {
             $label = $row[0];
             $key = $row[1];
@@ -541,37 +541,37 @@ class ExploreUK
                 $link = true;
             }
             if ($value) {
-                $details[$key] = array(
+                $details[$key] = [
                     'label' => $label,
                     'key' => $key,
                     'value' => $value,
                     'link' => $link,
-                );
+                ];
             }
         }
-        $details['id'] = array(
+        $details['id'] = [
             'label' => 'Permalink',
             'key' => 'id',
             'value' => $id,
-        );
+        ];
 
-        $metadata['page_title'] = brevity(htmlspecialchars($doc['title_display']));
+        $metadata['page_title'] = brevity(htmlspecialchars((string) $doc['title_display']));
         if (array_key_exists('finding_aid_url_s', $doc)) {
-            $entry = array(
+            $entry = [
                 'label' => 'Collection guide',
                 'anchor' => true,
                 'key' => 'collection_guide',
-                'value' => $this->path('/catalog/' . preg_replace('/_.*/', '', $doc['object_id_s'][0]) . $metadata['query']->link()),
+                'value' => $this->path('/catalog/' . preg_replace('/_.*/', '', (string) $doc['object_id_s'][0]) . $metadata['query']->link()),
                 'link' => true,
-            );
-            $details['collection_url'] = array(
+            ];
+            $details['collection_url'] = [
                 'label' => EUK_LOCALE['en']['collection_url'],
                 'key' => 'collection_url',
-                'value' => array(
-                    'base_id' => preg_replace('/_.*/', '', $doc['object_id_s'][0]),
+                'value' => [
+                    'base_id' => preg_replace('/_.*/', '', (string) $doc['object_id_s'][0]),
                     'source_s' => $doc['source_s'][0],
-                ),
-            );
+                ],
+            ];
             $details['collection_guide'] = $entry;
             $metadata['page_description'] = htmlspecialchars(
                 $doc['title_display'] . ', ' .
@@ -599,15 +599,15 @@ class ExploreUK
             # XXX new style - embed video?
             $pages = $this->videos($id);
             if ($pages) {
-                $metadata['videos'] = array();
+                $metadata['videos'] = [];
                 $metadata['script_media'] = true;
                 foreach ($pages as $page) {
-                    $metadata['videos'][] = array(
-                        'video' => array(
+                    $metadata['videos'][] = [
+                        'video' => [
                             'href_id' => "video_" . $page['id'],
                             'href' => $this->cleanupHost($page['reference_video_url_s'][0]),
-                        ),
-                    );
+                        ],
+                    ];
                 }
             }
 
@@ -615,9 +615,9 @@ class ExploreUK
             # We may well have text, but often won't
             $text_field = 'text_s';
             if (array_key_exists($text_field, $doc)) {
-                $flat['text'] = array(
+                $flat['text'] = [
                     'href' => $this->path("/catalog/$id/text"),
-                );
+                ];
             }
             $metadata['item_videolike'] = $flat;
             $metadata['script_media'] = true;
@@ -625,9 +625,9 @@ class ExploreUK
             $flat['embed_url'] = $this->path("/catalog/$id/paged" . $metadata['query']->link());
             $text_field = 'text_s';
             if (array_key_exists($text_field, $doc)) {
-                $flat['text'] = array(
+                $flat['text'] = [
                     'href' => $this->path("/catalog/$id/text"),
-                );
+                ];
             }
             $metadata['item_book'] = $flat;
             $metadata['downloadable'] = true;
@@ -645,22 +645,22 @@ class ExploreUK
         } else {
             switch ($format) {
                 case 'audio':
-                    $metadata['audios'] = array(array(
-                        'audio' => array(
+                    $metadata['audios'] = [[
+                        'audio' => [
                             'href_id' => "audio_$id",
                             'href' => $this->cleanupHost($flat['reference_audio_url_s']),
-                        ),
-                    ));
+                        ],
+                    ]];
                     $metadata['item_videolike'] = $flat;
                     $metadata['script_media'] = true;
                     break;
                 case 'audiovisual':
-                    $metadata['videos'] = array(array(
-                        'video' => array(
+                    $metadata['videos'] = [[
+                        'video' => [
                             'href_id' => "video_$id",
                             'href' => $this->cleanupHost($flat['reference_video_url_s']),
-                        ),
-                    ));
+                        ],
+                    ]];
                     $metadata['item_videolike'] = $flat;
                     $metadata['script_media'] = true;
                     break;
@@ -668,11 +668,11 @@ class ExploreUK
                     /* fall through */
                 case 'images':
                     $metadata['item_image'] = $flat;
-                    $metadata['script_image'] = array(
+                    $metadata['script_image'] = [
                         'osd_id' => 'viewer',
                         'prefix_url' => $this->themePath('openseadragon/images/'),
                         'ref_id' => 'reference_image',
-                    );
+                    ];
                     $metadata['downloadable'] = true;
                     break;
                 case 'annual reports':
@@ -713,16 +713,16 @@ class ExploreUK
                     $flat['embed_url'] = $this->path("/catalog/$id/paged" . $metadata['query']->link());
                     $text_field = 'text_s';
                     if (array_key_exists($text_field, $doc)) {
-                        $flat['text'] = array(
+                        $flat['text'] = [
                             'href' => $this->path("/catalog/$id/text"),
-                        );
+                        ];
                     }
                     $metadata['item_book'] = $flat;
                     $metadata['downloadable'] = true;
                     $metadata['downloadable_extra'] = '<br>of this page';
                     break;
                 default:
-                    $pieces = array();
+                    $pieces = [];
                     foreach ($doc as $field => $value) {
                         if (is_array($value)) {
                             $value = implode('; ', $value);
@@ -737,7 +737,7 @@ class ExploreUK
         $metadata['flat'] = $flat;
         $metadata['details'] = $details;
 
-        $raw_pages = json_decode($this->omeka->getOption('public_navigation_main'), true);
+        $raw_pages = json_decode((string) $this->omeka->getOption('public_navigation_main'), true);
         $metadata['nav'] = $this->getVisiblePages($raw_pages);
         $metadata['z_simple_pages'] = $this->config['simple_pages'];
         $view = new View($metadata, $template);
@@ -746,26 +746,26 @@ class ExploreUK
 
     public function index()
     {
-        $raw_pages = json_decode($this->omeka->getOption('public_navigation_main'), true);
-        $metadata = array(
+        $raw_pages = json_decode((string) $this->omeka->getOption('public_navigation_main'), true);
+        $metadata = [
             'base' => $this->config['base'],
             'logo' => $this->config['logo'],
             'theme' => $this->config['theme'],
             'query' => $this->config['query'],
             'nav' => $this->getVisiblePages($raw_pages),
-        );
+        ];
 
         $metadata['q'] = $metadata['query']->q('q');
         $metadata['search_link'] = $this->config['solr'] . '?' . $metadata['query']->searchParams();
         $metadata['back_to_search'] = $this->path('/catalog/' . $metadata['query']->link());
         if ($this->config['query']->nontrivial()) {
             $result = $this->config['query']->search();
-            $metadata['page_title'] = htmlspecialchars($metadata['q'], ENT_QUOTES, 'UTF-8') . ' - ExploreUK';
+            $metadata['page_title'] = htmlspecialchars((string) $metadata['q'], ENT_QUOTES, 'UTF-8') . ' - ExploreUK';
 
             $euk_requires_capitalization = EUK_REQUIRES_CAPITALIZATION;
 
             # Facets
-            $metadata['active_facets'] = array();
+            $metadata['active_facets'] = [];
             foreach ($metadata['query']->q('f') as $f_term => $ary) {
                 foreach ($ary as $value => $truth) {
                     $remove_link = $metadata['query']->removeFilterLink($f_term, $value);
@@ -779,32 +779,32 @@ class ExploreUK
                         }
                         $value_label = $value;
                         if (in_array($f_term, $euk_requires_capitalization)) {
-                            $value_label = ucfirst($value_label);
+                            $value_label = ucfirst((string) $value_label);
                         }
                         $value_label = value_label_cleanup($value_label);
                         $hidden_value_label = $value_label;
                         if ($hidden_value_label === 'collection guides') {
                             $hidden_value_label = 'collections';
                         }
-                        $metadata['active_facets'][] = array(
+                        $metadata['active_facets'][] = [
                             'field_label' => $field_label,
                             'remove_link' => $this->path('/catalog/' . $remove_link),
                             'field_raw' => $f_term,
                             'value_label' => $value_label,
                             'hidden_value_label' => $hidden_value_label,
                             'count' => $count,
-                        );
+                        ];
                     }
                 }
             }
 
-            $metadata['facets'] = array();
+            $metadata['facets'] = [];
             $facets = EUK_FACETS;
             foreach ($facets as $facet) {
                 $facet_counts = $result['facet_counts']['facet_fields'][$facet];
                 if (count($facet_counts) > 2) {
                     $navs = navsHashFromFlatList($facet_counts);
-                    $values = array();
+                    $values = [];
                     $qf = $metadata['query']->q('f');
                     $nontrivial = false;
                     foreach ($navs as $label => $count) {
@@ -813,36 +813,36 @@ class ExploreUK
                             $add_link = $metadata['query']->addFilterLink($facet, $label);
                             $value_label = $label;
                             if (in_array($facet, $euk_requires_capitalization)) {
-                                $value_label = ucfirst($value_label);
+                                $value_label = ucfirst((string) $value_label);
                             }
                             $value_label = value_label_cleanup($value_label);
-                            $values[] = array(
+                            $values[] = [
                                 'add_link' => $this->path('/catalog/' . $add_link),
                                 'value_label' => $value_label,
                                 'count' => $count,
-                            );
+                            ];
                         }
                     }
                     if ($nontrivial) {
-                        $metadata['facets'][] = array(
+                        $metadata['facets'][] = [
                             'field_label' => facet_displayname($facet),
                             'values' => $values,
                             'field_raw' => $facet,
-                        );
+                        ];
                     }
                 }
             }
 
-            $metadata['facet_full_lists'] = array();
+            $metadata['facet_full_lists'] = [];
             $facets_by_count = $metadata['query']->getFacetsByCount();
             $facets_by_index = $metadata['query']->getFacetsByIndex();
             foreach ($facets as $facet) {
-                $metadata['facet_full_lists'][$facet] = array(
+                $metadata['facet_full_lists'][$facet] = [
                     'field_label' => facet_displayname($facet),
                     'field_raw' => $facet,
-                    'by-count' => array(),
-                    'by-index' => array(),
-                );
+                    'by-count' => [],
+                    'by-index' => [],
+                ];
 
                 $facet_counts = $facets_by_count['facet_counts']['facet_fields'][$facet];
                 if (count($facet_counts) > 2) {
@@ -851,14 +851,14 @@ class ExploreUK
                         $add_link = $metadata['query']->addFilterLink($facet, $label);
                         $value_label = $label;
                         if (in_array($facet, $euk_requires_capitalization)) {
-                            $value_label = ucfirst($value_label);
+                            $value_label = ucfirst((string) $value_label);
                         }
                         $value_label = value_label_cleanup($value_label);
-                        $metadata['facet_full_lists'][$facet]['by-count'][] = array(
+                        $metadata['facet_full_lists'][$facet]['by-count'][] = [
                             'add_link' => $this->path('/catalog/' . $add_link),
                             'value_label' => $value_label,
                             'count' => $count,
-                        );
+                        ];
                     }
                 }
 
@@ -869,14 +869,14 @@ class ExploreUK
                         $add_link = $metadata['query']->addFilterLink($facet, $label);
                         $value_label = $label;
                         if (in_array($facet, $euk_requires_capitalization)) {
-                            $value_label = ucfirst($value_label);
+                            $value_label = ucfirst((string) $value_label);
                         }
                         $value_label = value_label_cleanup($value_label);
-                        $metadata['facet_full_lists'][$facet]['by-index'][] = array(
+                        $metadata['facet_full_lists'][$facet]['by-index'][] = [
                             'add_link' => $this->path('/catalog/' . $add_link),
                             'value_label' => $value_label,
                             'count' => $count,
-                        );
+                        ];
                     }
                 }
             }
@@ -891,26 +891,26 @@ class ExploreUK
 
             $colln = $this->omeka->getCollectionByTitle('Background image rotation');
             $metadata['colln'] = $colln;
-            $items = $this->omeka->getItems($colln->id, array('featured' => true));
+            $items = $this->omeka->getItems($colln->id, ['featured' => true]);
             if (count($items) > 0) {
                 $index = array_rand($items);
                 $item = $items[$index];
                 $metadata['featured_image'] = $this->omeka->getItemMetadata($item->id);
             } else {
-                $metadata['featured_image'] = array(
+                $metadata['featured_image'] = [
                     'image' => '',
                     'label' => '',
                     'url' => '',
-                );
+                ];
             }
 
-            $metadata['popular_resources'] = array();
+            $metadata['popular_resources'] = [];
             $popular_resources = $this->popularResources();
             if (!isset($popular_resources['errors'])) {
                 $metadata['popular_resources'] = $popular_resources['data'];
             }
 
-            $metadata['additional_resources'] = array();
+            $metadata['additional_resources'] = [];
             $additional_resources = $this->additionalResources();
             if (!isset($additional_resources['errors'])) {
                 $metadata['additional_resources'] = $additional_resources['data'];
@@ -921,15 +921,15 @@ class ExploreUK
             # Pagination and results
             $metadata['facet_menu_title'] = EUK_LOCALE['en']['facet_menu_title'];
             $metadata['front_page'] = false;
-            $metadata['pagination'] = array();
-            $metadata['results'] = array();
+            $metadata['pagination'] = [];
+            $metadata['results'] = [];
             if (intval($result['response']['numFound']) > 0) {
                 #pagination
-                $pagination_data = array(
+                $pagination_data = [
                     'first' => $metadata['query']->q('offset') + 1,
                     'last' => $metadata['query']->q('offset') + $metadata['query']->q('rows'),
                     'count' => $result['response']['numFound'],
-                );
+                ];
                 if ($metadata['query']->q('offset') > 0) {
                     $pagination_data['previous'] = $this->path('/catalog/' . $metadata['query']->previousLink());
                 }
@@ -942,24 +942,24 @@ class ExploreUK
 
                 # results
                 $docs = $this->cleanupDocs($result['response']['docs']);
-                $results = array();
+                $results = [];
                 for ($i = 0; $i < count($docs); $i++) {
-                    $results_data = array();
+                    $results_data = [];
                     # raw to begin
                     foreach (EUK_HIT_FIELDS as $field => $solr_field) {
                         $raw_field = null;
                         if (isset($docs[$i][$solr_field])) {
                             $raw_field = $docs[$i][$solr_field];
                             if (is_array($raw_field)) {
-                                $results_data[$field] = array();
+                                $results_data[$field] = [];
                                 foreach ($raw_field as $raw_entry) {
-                                    $results_data[$field][] = htmlspecialchars($raw_entry, ENT_QUOTES, 'UTF-8');
+                                    $results_data[$field][] = htmlspecialchars((string) $raw_entry, ENT_QUOTES, 'UTF-8');
                                 }
                                 if ($field == 'thumb') {
                                     $results_data[$field] = $results_data[$field][0];
                                 }
                             } else {
-                                $results_data[$field] = htmlspecialchars($raw_field, ENT_QUOTES, 'UTF-8');
+                                $results_data[$field] = htmlspecialchars((string) $raw_field, ENT_QUOTES, 'UTF-8');
                             }
                             if ($results_data[$field] === 'collections') {
                                 $results_data[$field] = 'collection guides';
@@ -983,7 +983,7 @@ class ExploreUK
                 $metadata['results'] = $results;
                 $view = new View($metadata, 'search-results');
             } else {
-                $metadata['suggestions'] = array();
+                $metadata['suggestions'] = [];
                 if (isset($result['spellcheck'])) {
                     foreach ($result['spellcheck']['suggestions'] as $word) {
                         if (isset($word['suggestion'])) {
@@ -1005,7 +1005,7 @@ class ExploreUK
         $base = $this->config['base'];
         $url = str_replace('//', '/', "$base$path");
         $url = preg_replace('/\?$/', '', $url);
-        if (strpos($url, '/') !== 0) {
+        if (!str_starts_with((string) $url, '/')) {
             $url = "/$url";
         }
         return $url;
@@ -1018,8 +1018,8 @@ class ExploreUK
 
     public function simplePage($page)
     {
-        $raw_pages = json_decode($this->omeka->getOption('public_navigation_main'), true);
-        $metadata = array(
+        $raw_pages = json_decode((string) $this->omeka->getOption('public_navigation_main'), true);
+        $metadata = [
             'action' => 'simple-page',
             'logo' => $this->config['logo'],
             'front_page' => false,
@@ -1027,7 +1027,7 @@ class ExploreUK
             'theme' => $this->config['theme'],
             'query' => $this->config['query'],
             'nav' => $this->getVisiblePages($raw_pages),
-        );
+        ];
         $metadata['page'] = $this->omeka->getSimplePage($page->id);
         $metadata['page_title'] = $metadata['page']->title;
         $metadata['page_description'] = $metadata['page']->title;
@@ -1048,8 +1048,8 @@ class ExploreUK
 
     public function popularResources()
     {
-        $metadata = array('data' => array());
-        $popular_resources = array();
+        $metadata = ['data' => []];
+        $popular_resources = [];
         $colln = $this->omeka->getCollectionByTitle('Popular Resources');
         $items = $this->omeka->getItems($colln->id);
         foreach ($items as $item) {
@@ -1057,7 +1057,7 @@ class ExploreUK
             $popular_resources[$im['position']] = $im;
         }
         ksort($popular_resources);
-        foreach ($popular_resources as $key => $im) {
+        foreach ($popular_resources as $im) {
             $metadata['data'][] = $im;
         }
         return $metadata;
@@ -1075,8 +1075,8 @@ class ExploreUK
 
     public function additionalResources()
     {
-        $metadata = array('data' => array());
-        $additional_resources = array();
+        $metadata = ['data' => []];
+        $additional_resources = [];
         $colln = $this->omeka->getCollectionByTitle('Additional Resources');
         $items = $this->omeka->getItems($colln->id);
         foreach ($items as $item) {
@@ -1084,7 +1084,7 @@ class ExploreUK
             $additional_resources[$im['position']] = $im;
         }
         ksort($additional_resources);
-        foreach ($additional_resources as $key => $im) {
+        foreach ($additional_resources as $im) {
             $metadata['data'][] = $im;
         }
         return $metadata;

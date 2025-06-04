@@ -13,7 +13,7 @@
             <li class="result-item">
                 <p class="result-number"></p>
                 <div class="result-summary">
-                    <h3>No results found matching your search for '<?= htmlspecialchars($this->q('q'), ENT_QUOTES, 'UTF-8') ?>'.</h3>
+                    <h3>No results found matching your search for '<?= htmlspecialchars((string) $this->q('q'), ENT_QUOTES, 'UTF-8') ?>'.</h3>
                     <p>
                         Did you mean:
 <?php

@@ -2,9 +2,9 @@
 
 namespace ExploreUK;
 
-define('EUK_BASE_DIR', dirname(dirname(dirname(dirname(__FILE__)))));
+define('EUK_BASE_DIR', dirname(__FILE__, 4));
 define('EUK_BACK_TO_SEARCH_TEXT', 'Back to Search Results');
-define('EUK_DETAIL_FIELD_ORDER', array(
+define('EUK_DETAIL_FIELD_ORDER', [
     'usage_display',
     'accession_number_s',
     'container_list_s',
@@ -17,23 +17,23 @@ define('EUK_DETAIL_FIELD_ORDER', array(
     'id',
     'finding_aid_url_s',
     'mets_url_display',
-));
-define('EUK_FACETABLE', array(
+]);
+define('EUK_FACETABLE', [
     'coverage_s',
     'source_s',
     'subject_topic_facet',
     'format',
     'pub_date_sort',
     'dc_language_t',
-));
-define('EUK_FACETS', array('format', 'pub_date_sort', 'source_s', 'dc_language_t'));
-define('EUK_FORMAT_ICONS', array(
+]);
+define('EUK_FACETS', ['format', 'pub_date_sort', 'source_s', 'dc_language_t']);
+define('EUK_FORMAT_ICONS', [
     'collection guides' => 'archive',
     'audio' => 'volume-up',
     'audiovisual' => 'video',
     '16mm (photographic film size)' => 'video',
-));
-define('EUK_HIT_FIELDS', array(
+]);
+define('EUK_HIT_FIELDS', [
     'id' => 'id',
     'title' => 'title_display',
     'thumb' => 'thumbnail_url_s',
@@ -41,9 +41,9 @@ define('EUK_HIT_FIELDS', array(
     'pubdate' => 'pub_date_sort',
     'pubdate_display' => 'dc_date_display',
     'format' => 'format',
-));
-define('EUK_LOCALE', array(
-    'en' => array(
+]);
+define('EUK_LOCALE', [
+    'en' => [
         'accession_number_s' => 'Accession Number',
         'author_display' => 'Creator',
         'container_list_s' => 'Containers',
@@ -69,34 +69,34 @@ define('EUK_LOCALE', array(
         'usage_display' => 'Rights',
         'open_collection_guide' => 'collection guide',
         'more_items' => 'more from this collection',
-    ),
-));
+    ],
+]);
 define('EUK_MAX_LABEL', 160);
-define('EUK_OBJECT_TYPES_LEAF', array(
+define('EUK_OBJECT_TYPES_LEAF', [
     'audio',
     'image',
     'page',
     'video',
-));
-define('EUK_OBJECT_TYPES_SECTION', array(
+]);
+define('EUK_OBJECT_TYPES_SECTION', [
     'collection',
     'section',
-));
-define('EUK_PER_PAGE_OPTS', array(20, 50, 100));
-define('EUK_REQUIRES_CAPITALIZATION', array(
+]);
+define('EUK_PER_PAGE_OPTS', [20, 50, 100]);
+define('EUK_REQUIRES_CAPITALIZATION', [
     'dc_language_t',
     'language_display',
-));
-define('EUK_RESULT_DROP_FIELDS', array(
+]);
+define('EUK_RESULT_DROP_FIELDS', [
     'format',
-));
-define('EUK_RESULT_FACET_ORDER', array(
+]);
+define('EUK_RESULT_FACET_ORDER', [
     'source',
     'pubdate_display',
     'format',
-));
-define('EUK_TEMPLATE_DIR', dirname(__FILE__) . '/templates');
-define('EUK_TITLE_FIELD_ORDER', array(
+]);
+define('EUK_TEMPLATE_DIR', __DIR__ . '/templates');
+define('EUK_TITLE_FIELD_ORDER', [
     'scopecontent_s',
     'dc_date_display',
     'author_display',
@@ -104,27 +104,22 @@ define('EUK_TITLE_FIELD_ORDER', array(
     'collection_url', # NOTE: this implies source_s
     'source_s',
     'description_display',
-));
+]);
 
 /* helper functions */
 
 function value_label_cleanup($label)
 {
-    switch ($label) {
-        case "Japanes":
-            return "Japanese";
-            break;
-        case "collections":
-            return "collection guides";
-            break;
-        default:
-            return $label;
-    }
+    return match ($label) {
+        "Japanes" => "Japanese",
+        "collections" => "collection guides",
+        default => $label,
+    };
 }
 
 function type_for($format, $type)
 {
-    $type_for = array(
+    $type_for = [
         'archival material' => 'collection',
         'athletic publications' => 'text',
         'books' => 'text',
@@ -138,10 +133,10 @@ function type_for($format, $type)
         'minutes' => 'text',
         'newspapers' => 'text',
         'oral histories' => 'sound',
-        'scrapbooks' => array('text', 'image'),
+        'scrapbooks' => ['text', 'image'],
         'theses' => 'text',
-        'yearbooks' => array('text', 'image'),
-    );
+        'yearbooks' => ['text', 'image'],
+    ];
     if (array_key_exists($format, $type_for)) {
         return $type_for[$format];
     } else {
@@ -154,11 +149,11 @@ function brevity($message, $length = 0)
     if ($length == 0) {
         $length = EUK_MAX_LABEL;
     }
-    if (strlen($message) <= $length) {
+    if (strlen((string) $message) <= $length) {
         return $message;
     }
-    $source_words = preg_split('/\b/', $message);
-    $target_words = array();
+    $source_words = preg_split('/\b/', (string) $message);
+    $target_words = [];
     $current_length = 0;
     foreach ($source_words as $word) {
         if (($current_length == 0) || $current_length + strlen($word) <= $length) {
@@ -193,7 +188,7 @@ function facet_displayname($facet)
 
 function navsHashFromFlatList($navs)
 {
-    $hash = array();
+    $hash = [];
     for ($i = 0; $i < count($navs); $i += 2) {
         $hash[$navs[$i]] = $navs[$i + 1];
     }
@@ -202,12 +197,12 @@ function navsHashFromFlatList($navs)
 
 function highlight_snippet($text, $raw_terms, $radius)
 {
-    $raw_terms = str_replace(array(
+    $raw_terms = str_replace([
         '.', '\\', '+', '*', '?', '[', '^', ']', '$', '(', ')', '{', '}',
         '=', '!', '<', '>', '|', ':', '#', '"', '\'', '%', '/',
-    ), '', $raw_terms);
+    ], '', $raw_terms);
     $terms = preg_split('/\s+/', $raw_terms, null, PREG_SPLIT_NO_EMPTY);
-    $words = explode(' ', preg_replace('/\s+/', ' ', $text));
+    $words = explode(' ', (string) preg_replace('/\s+/', ' ', (string) $text));
     $wanted = array_fill(0, count($words), 0);
     for ($i = 0; $i < count($words); $i++) {
         foreach ($terms as $term) {
@@ -226,7 +221,7 @@ function highlight_snippet($text, $raw_terms, $radius)
             }
         }
     }
-    $result = array();
+    $result = [];
     $current = false;
     for ($i = 0; $i < count($wanted); $i++) {
         if ($wanted[$i]) {

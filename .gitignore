@@ -1,3 +1,4 @@
 dist/*
 theme/assets/css/main.min.css
 node_modules/
+/vendor/
