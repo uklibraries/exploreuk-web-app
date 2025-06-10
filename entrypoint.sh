@@ -34,10 +34,11 @@ chown www-data:www-data "$DB_INI_FILE"
 chmod 640 "$DB_INI_FILE" # Owner can read/write, group can read
 
 # If backup files directory provided, overwrite files directory
-if [ -d "$BACKUP_FILES_SOURCE" ] && [ -n "$(ls -A "$BACKUP_FILES_DESTINATION")" ]; then
-    rm -rf "$BACKUP_FILES_DESTINATION"
-    mkdir "$BACKUP_FILES_DESTINATION"
-    cp -a "$BACKUP_FILES_SOURCE"/. "$BACKUP_FILES_DESTINATION"/
+if [ -d "$BACKUP_FILES_SOURCE" ]; then
+    echo 'loading files from backup'
+    rsync -a "$BACKUP_FILES_SOURCE"/ "$BACKUP_FILES_DESTINATION"/
+else
+    echo 'skipping backup files load'
 fi
 
 exec "$@"
