@@ -1,0 +1,58 @@
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - omeka:/var/www/html
+    depends_on:
+      - omeka
+    networks:
+      - app-network
+
+  omeka:
+    build:
+      context: .
+    volumes:
+      - omeka:/var/www/html
+    environment:
+      APPLICATION_ENV: development
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME} 
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_PREFIX: ${DB_PREFIX}
+      DB_PORT: 3306
+      DB_CHARSET: ${DB_CHARSET}
+    networks:
+      - app-network
+    depends_on:
+      db:
+        condition: service_healthy
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} 
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./omeuka.sql:/docker-entrypoint-initdb.d/omeuka.sql
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data:
+  omeka:
+
+networks:
+  app-network:
+    driver: bridge
