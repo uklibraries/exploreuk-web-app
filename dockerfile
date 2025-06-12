@@ -1,3 +1,22 @@
+FROM node:18-slim AS exploreuk_builder
+
+RUN apt-get update && apt-get install -y rsync --no-install-recommends
+
+WORKDIR /app
+
+COPY ./app/package.json ./
+COPY ./app/package-lock.json ./
+
+RUN npm ci
+
+COPY ./app ./
+
+RUN chmod +x exe/*.sh
+
+ARG OMEKA_THEME
+ENV OMEKA_THEME ${OMEKA_THEME}
+RUN ./exe/build.sh
+
 FROM php:8.0-fpm AS base
 
 RUN apt-get update && apt-get install -y \
@@ -40,36 +59,6 @@ RUN rm -rf ./plugins/HideElements && \
 	git clone "https://github.com/zerocrates/HideElements.git" ./plugins/HideElements && \
 	git clone "https://github.com/omeka/plugin-SimplePages.git" ./plugins/SimplePages
 
-RUN mkdir -p files && \
-	chown -R www-data:www-data /var/www/html
-
-EXPOSE 9000
-
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["php-fpm"]
-
-# Leaving this open for extension
-FROM base as dev
-
-FROM node:18-slim AS exploreuk_builder
-
-RUN apt-get update && apt-get install -y rsync --no-install-recommends
-
-WORKDIR /app
-
-COPY ./app/package.json ./
-COPY ./app/package-lock.json ./
-
-RUN npm ci --only=production
-
-COPY ./app ./
-
-RUN chmod +x exe/*.sh
-
-RUN ./exe/build.sh
-
-FROM base AS prod
-
 # Copy the artifact from the 'exploreuk_builder' stage
 COPY --from=exploreuk_builder ./app/dist/omeuka.tar.gz /tmp/
 
@@ -81,3 +70,16 @@ RUN chown -R www-data:www-data /var/www/html && \
 	find /var/www/html -type d -exec chmod 755 {} \; && \
 	find /var/www/html -type f -exec chmod 644 {} \; && \
 	chmod -R u+w /var/www/html/files
+
+RUN mkdir -p files && \
+	chown -R www-data:www-data /var/www/html
+
+EXPOSE 9000
+
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+CMD ["php-fpm"]
+
+# Leaving this open for extension
+FROM base AS dev
+
+FROM base AS prod

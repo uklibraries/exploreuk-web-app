@@ -16,6 +16,8 @@ services:
     build:
       context: .
       target: ${APP_ENV}
+      args:
+        OMEKA_THEME: ${OMEKA_THEME}
     volumes:
       - ./backup:/tmp/backup:ro
       - ./app:/app:rw
