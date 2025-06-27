@@ -1,44 +1,42 @@
 server {
-    listen 80;
-    server_name localhost;
+	listen 80;
+	server_name localhost;
+	root /var/www/html;
+	index catalog.php index.php;
 
-    root /var/www/html;
-    index catalog.php index.php;
+	location ^~ /omeka/ {
+		rewrite ^/omeka/(.*)$ /$1 last;
+	}
 
-    location / {
-	try_files $uri $uri/ /catalog.php?$query_string;
-    }
+	location / {
+		try_files $uri $uri/ /catalog.php;
+	}
 
-    location /install/ {
-	index install.php;
-	try_files $uri $uri/ /install/install.php?$query_string;
-    }
+	location /install/ {
+		index install.php;
+		try_files $uri $uri/ /install/install.php?$query_string;
+	}
 
-    location /admin {
-	try_files $uri $uri/ /admin/index.php?$query_string;
-    }
+	location /admin {
+		try_files $uri $uri/ /admin/index.php?$query_string;
+	}
 
-    location /text {
-	rewrite ^/text /catalog.php last;
-    }
+	location /catalog {
+		rewrite ^/catalog /catalog.php last;
+	}
 
-    location /catalog {
-	rewrite ^/catalog /catalog.php last;
-    }
+	location ~ \.php$ {
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME /omeka$fastcgi_script_name;
+		fastcgi_param PATH_INFO $fastcgi_path_info;
+		fastcgi_pass omeka:9000;
+	}
 
-    location ~ \.php$ {
-	include fastcgi_params;
-	fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-	fastcgi_split_path_info ^(.+\.php)(/.+)$;
-	fastcgi_param PATH_INFO $fastcgi_path_info;
-	fastcgi_pass omeka:9000;
-    }
+	location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+		expires max;
+	}
 
-    location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
-	expires max;
-    }
-
-    location ~ /\.ht {
-	deny all;
-    }
-} 
+	location ~ /\.ht {
+		deny all;
+	}
+}
