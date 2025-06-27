@@ -5,7 +5,6 @@ services:
       # This docker-compose is for development purposes
       target: dev
     volumes:
-      - ./backup:/tmp/backup:ro
       - ./app:/app
       - omeka_static:/omeka
     env_file:
@@ -39,7 +38,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
-      # For loading from backup
+      # For loading from backup on first spin-up
       - ./backup/omeuka.sql:/docker-entrypoint-initdb.d/omeuka.sql
     networks:
       - app-network
