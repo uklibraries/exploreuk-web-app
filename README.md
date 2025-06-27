@@ -89,7 +89,7 @@ docker cp <name_of_container>
 docker exec <name_of_container> pg_dump -U <sql_database_username> -d <db_name> > </path/on/host/backup-$(date +%F).sql>
 
 # Copy files from the container to the host
-docker cp <container_name>:<source_files_directory> </path/on/host/file/destination3>
+docker cp <container_name>:<source_files_directory> </path/on/host/file/destination>
 ```
 
 Licenses
