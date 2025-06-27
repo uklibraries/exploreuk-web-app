@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# Set these or delete them
+USER="user"
+REMOTE_HOST="remote.host"
+PATH_TO_REMOTE_COMPOSE="path/to/app"
+
+TAG=$1
+
+if [ -z "$TAG" ]; then
+	echo "No tag provided. Exiting."
+	echo "Usage: $0 <tag>"
+	exit 1
+fi
+
+echo "Deploying exploreuk-web-app $REMOTE_HOST with tag $TAG"
+
+# Tag will be passed via env variable to the compose file in the following shell
+ssh "$USER@$REMOTE_HOST" "
+	set -e;
+	TAG='$TAG'
+	cd $PATH_TO_REMOTE_COMPOSE &&
+	docker compose pull &&
+	docker compose up -d
+"
+
+echo "Deployment dispatched to host"

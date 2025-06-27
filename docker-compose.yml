@@ -1,27 +1,13 @@
 services:
-  nginx:
-    image: nginx:latest
-    restart: always
-    ports:
-      - "8080:80"
-    volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - omeka:/var/www/html:ro
-    depends_on:
-      - omeka
-    networks:
-      - app-network
-
   omeka:
     build:
       context: .
-      target: ${APP_ENV}
-      args:
-        OMEKA_THEME: ${OMEKA_THEME}
+      # This docker-compose is for development purposes
+      target: dev
     volumes:
       - ./backup:/tmp/backup:ro
-      - ./app:/app:rw
-      - omeka:/var/www/html
+      - ./app:/app
+      - omeka_static:/omeka
     env_file:
       - ".env"
     networks:
@@ -29,6 +15,19 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+  web:
+    image: nginx:latest
+    restart: always
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - omeka_static:/var/www/html:ro
+    depends_on:
+      - omeka
+    networks:
+      - app-network
 
   db:
     image: mysql:8.0
@@ -40,6 +39,7 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
+      # For loading from backup
       - ./backup/omeuka.sql:/docker-entrypoint-initdb.d/omeuka.sql
     networks:
       - app-network
@@ -51,7 +51,7 @@ services:
 
 volumes:
   db_data:
-  omeka:
+  omeka_static:
 
 networks:
   app-network:

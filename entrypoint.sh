@@ -3,13 +3,12 @@ set -e # Exit immediately if a command exits with a non-zero status
 
 # Paths for dev/omeka sync
 APP_SRC="/app"
-OMEKA_ROOT="/var/www/html"
+OMEKA_ROOT="/omeka"
 
 # Paths for backup loading
 BACKUP_FILES_SOURCE="/tmp/backup/files"
-BACKUP_FILES_DESTINATION="/var/www/html/files"
-
-DB_INI_FILE="/var/www/html/db.ini"
+BACKUP_FILES_DESTINATION="$APP_SRC/files" 
+DB_INI_FILE="$OMEKA_ROOT/db.ini"
 
 # These are expected to be set by docker-compose from values originating in the .env file
 TARGET_APP_ENV="${APP_ENV}"
@@ -45,32 +44,29 @@ else
     echo 'skipping backup files load'
 fi
 
-# If we're in dev mode, start listening for changes in the loaded app directory
+# rsync -a $APP_SRC/db.ini $OMEKA_ROOT/db.ini
+# rsync -a $APP_SRC/files $OMEKA_ROOT
+
+chown -R www-data:www-data /var/www/html/
 
 if [ "$TARGET_APP_ENV" = "dev" ]; then
 	if [ ! -d "$APP_SRC" ]; then
 		echo "Error: APP_ENV is 'dev' but the source code directory '$APP_SRC' is not mounted." >&2
 		exit 1
 	fi
+	"$@" &
 
-	# Initial sync of folders and files from EUK
-	rsync -av "$APP_SRC/theme/" 	"$OMEKA_ROOT/themes/${OMEKA_THEME}/"
-	rsync -av "$APP_SRC/shim/" 		"$OMEKA_ROOT/"
-	rsync -av "$APP_SRC/favicon/" 	"$OMEKA_ROOT/"
-
-	exec "$@" &
+	echo "App Env is dev. Listening for changes to $APP_SRC"
 
 	while true; do
 		inotifywait -r -e create,modify,delete,move "$APP_SRC" 
-		echo "-> Change detected, re-syncing..."
-
-		rsync -av "$APP_SRC/theme/" 	"$OMEKA_ROOT/themes/${OMEKA_THEME}/"
-		rsync -av "$APP_SRC/shim/" 		"$OMEKA_ROOT/"
-		rsync -av "$APP_SRC/favicon/" 	"$OMEKA_ROOT/"
-
+		echo "-> Change detected, re-building..."
+		sh $APP_SRC/exe/build.sh
+		echo "omeuka built"
+		sh $APP_SRC/exe/stage.sh
+		echo "-> Extracted in $OMEKA_ROOT"
 	done
 else
 	echo "-> Production mode enabled"
 	exec "$@"
 fi
-
