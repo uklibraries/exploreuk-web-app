@@ -10,4 +10,4 @@ nginx/default.conf
 docker-entrypoint-initdb.d/
 app/files
 remote-deploy.sh
-/utils/*.yml
+/utils/profile/*
