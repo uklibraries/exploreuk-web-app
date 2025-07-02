@@ -89,7 +89,7 @@ RUN apk add --no-cache --virtual .build-deps\
 
 WORKDIR /omeka
 
-COPY --from=dev /omeka .
+COPY --from=dev /omeka /tmp/omeka
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh

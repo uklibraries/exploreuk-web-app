@@ -30,25 +30,13 @@ TARGET_DB_CHARSET="${DB_CHARSET:-utf8mb4}"
     echo "prefix = \"${TARGET_DB_PREFIX}\""
     echo "port = \"${TARGET_DB_PORT}\""
     echo "charset = \"${TARGET_DB_CHARSET}\""
-} > "$DB_INI_FILE"
+} > "/tmp/omeka/db.ini"
 
 # Set appropriate permissions for db.ini
-chown www-data:www-data "$DB_INI_FILE"
-chmod 640 "$DB_INI_FILE" # Owner can read/write, group can read
-
-# If backup files directory provided, overwrite files directory
-if [ -d "$BACKUP_FILES_SOURCE" ]; then
-    echo 'loading files from backup'
-    rsync -a "$BACKUP_FILES_SOURCE"/ "$BACKUP_FILES_DESTINATION"/
-else
-    echo 'skipping backup files load'
-fi
-
-# rsync -a $APP_SRC/db.ini $OMEKA_ROOT/db.ini
-# rsync -a $APP_SRC/files $OMEKA_ROOT
+chown www-data:www-data "/tmp/omeka/db.ini"
+chmod 640 "/tmp/omeka/db.ini" # Owner can read/write, group can read
 
 chown -R www-data:www-data /var/www/html/
-
 if [ "$TARGET_APP_ENV" = "dev" ]; then
 	if [ ! -d "$APP_SRC" ]; then
 		echo "Error: APP_ENV is 'dev' but the source code directory '$APP_SRC' is not mounted." >&2
@@ -68,5 +56,7 @@ if [ "$TARGET_APP_ENV" = "dev" ]; then
 	done
 else
 	echo "-> Production mode enabled"
+	rsync -a "/tmp/omeka" "/"
+	echo "files copied to $OMEKA_ROOT"
 	exec "$@"
 fi

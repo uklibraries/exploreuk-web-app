@@ -2,7 +2,7 @@ services:
   omeka:
     env_file:
       - ./.env
-    image: nealpowers104/exploreuk-web-app:${EUK_TAG}
+    image: nealpowers104/exploreuk-web-app:$EUK_TAG
     networks:
       - app_network
     volumes:
@@ -11,7 +11,7 @@ services:
       - db
 
   findingaid:
-    image: nealpowers104/exploreuk-findingaid:${FA_TAG}
+    image: nealpowers104/exploreuk-findingaid:$FA_TAG
     volumes:
       # Change to directory on host
       - ./xml:/app/xml
