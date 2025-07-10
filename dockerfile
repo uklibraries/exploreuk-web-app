@@ -1,4 +1,4 @@
-FROM php:8.0-fpm AS dev
+FROM php:8.0-fpm AS development
 
 RUN apt-get update && apt-get install -y curl gnupg && \
 	curl -sL https://deb.nodesource.com/setup_18.x | bash -
@@ -34,7 +34,7 @@ COPY ./app/package-lock.json .
 
 RUN npm install
 
-COPY /app .
+COPY app .
 
 # Or directory set in docker-compose for omeka installation step
 WORKDIR /omeka
@@ -63,7 +63,7 @@ EXPOSE 9000
 
 CMD ["php-fpm"]
 
-FROM php:8.0-fpm-alpine
+FROM php:8.0-fpm-alpine AS production
 
 RUN apk add --no-cache rsync \
 	imagemagick \
@@ -89,7 +89,7 @@ RUN apk add --no-cache --virtual .build-deps\
 
 WORKDIR /omeka
 
-COPY --from=dev /omeka /tmp/omeka
+COPY --from=development /omeka /tmp/omeka
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh

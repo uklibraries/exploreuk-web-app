@@ -3,7 +3,7 @@ services:
     build:
       context: .
       # This docker-compose is for development purposes
-      target: dev
+      target: development
     volumes:
       - ./app:/app
       - omeka_static:/omeka
@@ -16,13 +16,15 @@ services:
         condition: service_healthy
 
   web:
-    image: nginx:latest
+    image: nginx:1.29.0
     restart: always
+    env_file:
+      - ".env"
     ports:
       - "8080:80"
     volumes:
-      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
-      - omeka_static:/var/www/html:ro
+      - $NGINX_CONFIG_LOCATION:/etc/nginx/conf.d/default.conf
+      - omeka_static:/omeka
     depends_on:
       - omeka
     networks:
@@ -33,13 +35,11 @@ services:
     restart: always
     environment:
       MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD} 
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
-      # For loading from backup on first spin-up
-      - ./backup/omeuka.sql:/docker-entrypoint-initdb.d/omeuka.sql
     networks:
       - app-network
     healthcheck:

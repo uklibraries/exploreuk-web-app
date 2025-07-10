@@ -2,28 +2,9 @@
 set -e
 
 # Check to make sure all environment variables are set
-if [ -z "$LOCAL_SQL_FILE" ]; then
-	echo "environment variable LOCAL_SQL_FILE not set"
-	exit 1
-fi
-
-if [ -z "$LOCAL_FILES_DIR" ]; then
-	echo "environment variable LOCAL_FILES_DIR not set"
-	exit 1
-fi
-
-if [ -z "$DB_CONTAINER" ]; then
-	echo "environment variable DB_CONTAINER not set"
-	exit 1
-fi
-
-if [ -z "$OMEKA_CONTAINER" ]; then
-	echo "environment variable OMEKA_CONTAINER not set"
-	exit 1
-fi
-
-if [ -z "$DB_USER" ]; then
-	echo "environment variable DB_USER not set"
+if [ -z "$LOCAL_SQL_FILE" ] || [ -z $LOCAL_FILES_DIR ] || [ -z $DB_CONTAINER ] || [ -z $OMEKA_CONTAINER ] || [ -z $DB_USER ]; then
+	echo "One or more environment variables not set"
+	echo "Need LOCAL_SQL_FILE, LOCAL_FILES_DIR, DB_CONTAINER, OMEKA_CONTAINER, DB_USER"
 	exit 1
 fi
 

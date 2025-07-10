@@ -1,0 +1,51 @@
+server {
+        listen 80;
+        server_name localhost;
+        root /omeka;
+        index catalog.php index.php;
+
+        location / {
+            try_files $uri /catalog.php;
+        }
+
+        location /install/ {
+            index install.php;
+            try_files $uri $uri/ /install/install.php?$query_string;
+        }
+
+        location /admin {
+            try_files $uri $uri/ /admin/index.php?$query_string;
+        }
+
+        location /catalog {
+            rewrite ^/catalog /catalog.php last;
+        }
+
+		location ^~ /fa/findingaid {
+			alias /findingaid/public;
+			try_files $uri $uri/ /index.php?$query_string;
+
+			location ~ \.php$ {
+				include fastcgi_params;
+				fastcgi_param SCRIPT_FILENAME /app/public/index.php;
+				fastcgi_split_path_info ^(.+\.php)(/.+)$;
+				fastcgi_param PATH_INFO $fastcgi_path_info;
+				fastcgi_pass findingaid:9000;
+			}
+		}
+
+        location ~ \.php$ {
+            include fastcgi_params;
+            fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+            fastcgi_param PATH_INFO $fastcgi_path_info;
+            fastcgi_pass omeka:9000;
+        }
+
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+            expires max;
+        }
+
+        location ~ /\.ht {
+            deny all;
+        }
+}

@@ -11,3 +11,4 @@ docker-entrypoint-initdb.d/
 app/files
 remote-deploy.sh
 /utils/profile/*
+!utils/profile/exampleprofile.sh
