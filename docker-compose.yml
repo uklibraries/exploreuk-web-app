@@ -33,11 +33,8 @@ services:
   db:
     image: mysql:8.0
     restart: always
-    environment:
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    env_file:
+      - '.env'
     volumes:
       - db_data:/var/lib/mysql
     networks:
