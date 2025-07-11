@@ -11,9 +11,9 @@ mkdir -p "/tmp/omeka"
 
 { 	echo "[database]"
 	echo "host = \"${DB_HOST}\""
-	echo "username = \"${DB_USERNAME}\""
-	echo "password = \"${DB_PASSWORD}\""
-	echo "dbname = \"${DB_NAME}\""
+	echo "username = \"${MYSQL_USER}\""
+	echo "password = \"${MYSQL_PASSWORD}\""
+	echo "dbname = \"${MYSQL_DATABASE}\""
 	echo "prefix = \"${DB_PREFIX}\""
 	echo "port = \"${DB_PORT}\""
 	echo "charset = \"${DB_CHARSET}\""
@@ -22,8 +22,8 @@ mkdir -p "/tmp/omeka"
 # Set appropriate permissions for db.ini
 chown www-data:www-data "/tmp/omeka/db.ini"
 chmod 640 "/tmp/omeka/db.ini" # Owner can read/write, group can read
-
 chown -R www-data:www-data "/tmp/omeka"
+rsync -a "/tmp/omeka/" "$OMEKA_ROOT"
 
 if [ "$APP_ENV" = "dev" ]; then
 	if [ ! -d "$DEV_APP_SRC" ]; then
@@ -44,7 +44,5 @@ if [ "$APP_ENV" = "dev" ]; then
 	done
 else
 	echo "-> Production mode enabled"
-	rsync -a "/tmp/omeka/" "$OMEKA_ROOT"
-	echo "files copied to $OMEKA_ROOT"
 	exec "$@"
 fi
