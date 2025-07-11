@@ -2,7 +2,7 @@
 set -e
 
 # Check to make sure all environment variables are set
-if [ -z "$LOCAL_SQL_FILE" ] || [ -z $LOCAL_FILES_DIR ] || [ -z $DB_CONTAINER ] || [ -z $OMEKA_CONTAINER ] [ -z $TARGET_DB ]; then 
+if [ -z "$LOCAL_SQL_FILE" ] || [ -z $LOCAL_FILES_DIR ] || [ -z $DB_CONTAINER ] || [ -z $OMEKA_CONTAINER ] || [ -z $TARGET_DB ]; then 
 	echo "One or more environment variables not set"
 	echo "Need LOCAL_SQL_FILE, LOCAL_FILES_DIR, DB_CONTAINER, OMEKA_CONTAINER, TARGET_DB"
 	exit 1
