@@ -171,7 +171,7 @@ class ExploreUK
         }
     }
 
-    public function pages($id)
+    public function pages($id, $download = false)
     {
         $doc = $this->document($id);
         if (!array_key_exists('object_type_s', $doc)) {
@@ -188,7 +188,12 @@ class ExploreUK
         $pieces[] = 'fq=' . urlencode("parent_id_s:$parent");
         $pieces[] = 'fq=' . urlencode("object_type_s:page");
         $pieces[] = 'wt=json';
-        $pieces[] = 'fl=' . urlencode('id,reference_image_url_s,reference_image_width_s,reference_image_height_s');
+        if (!$download) {
+            $pieces[] = 'fl=' . urlencode('id,reference_image_url_s,reference_image_width_s,reference_image_height_s');
+        }
+        else if ($download) {
+            $pieces[] = 'fl=' . urlencode('id,sequence_number_display,title_display,reference_image_url_s,text_s');
+        }
         $pieces[] = 'rows=10000';
         $pieces[] = 'sort=browse_key_sort+asc';
         $query = implode('&', $pieces);
@@ -295,6 +300,9 @@ class ExploreUK
                 $field = 'pdf_url_display';
                 $mime = 'application/pdf';
                 break;
+            case 'imagetext':
+                $this->download_imagetext($id);
+                return;
             default:
                 return;
         }
@@ -324,6 +332,43 @@ class ExploreUK
         } else {
             readfile($url);
         }
+    }
+
+    # Assemble and serve a zip file containing images and text for a paged object.
+    public function download_imagetext($id)
+    {
+        $main_doc = $this->document($id);
+        $raw_package_title = sprintf("%s - %s", $main_doc["title_display"], $id);
+        $package_title = htmlspecialchars(preg_replace('/\s+/', "_", $raw_package_title));
+
+        $docs = $this->pages($id, true);
+        $page_count = count($docs);
+        $page_number_format = "%0" . strlen(strval($page_count)) . "d";
+
+        $tempzip = tempnam("/tmp", "zip");
+        $zip = new \ZipArchive();
+
+        if ($zip->open($tempzip, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== TRUE) {
+            print("<p>cannot create zip file</p>\n");
+            return;
+        }
+
+        foreach ($docs as $doc) {
+            $base = htmlspecialchars(preg_replace('/\s+/', '_', $doc["title_display"] . " " . sprintf($page_number_format, intval($doc["sequence_number_display"][0]))));
+            $jpeg = "$base.jpg";
+            $text = "$base.txt";
+            $zip->addFromString("$package_title/$jpeg", file_get_contents($doc["reference_image_url_s"][0]));
+            $zip->addFromString("$package_title/$text", $doc["text_s"][0]);
+        }
+
+        $zip->close();
+
+        header("Content-type: application/zip");
+        header("Content-Disposition: attachment; filename=\"$package_title.zip\"");
+
+        readfile($tempzip);
+
+        unlink($tempzip);
     }
 
     public function text($id)
