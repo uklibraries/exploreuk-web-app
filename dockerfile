@@ -8,6 +8,7 @@ RUN apt-get update && apt-get install -y \
 	git \
 	zip \
 	unzip \
+	libgomp1 \
 	libzip-dev \
 	libpng-dev \
 	libjpeg62-turbo-dev \
@@ -69,7 +70,8 @@ RUN apk add --no-cache rsync \
 	imagemagick \
 	jpeg \
 	libpng \
-	libzip
+	libzip \
+	libgomp
 
 # virtual will add these build dependencies and then delete them after build, keeping the image size small
 RUN apk add --no-cache --virtual .build-deps\

@@ -7,8 +7,10 @@ dist/*
 node_modules/
 .env
 nginx/default.conf
+nginx/default.prod.conf
 docker-entrypoint-initdb.d/
 app/files
 remote-deploy.sh
 /utils/profile/*
 !utils/profile/exampleprofile.sh
+/xml

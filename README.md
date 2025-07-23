@@ -80,16 +80,13 @@ docker compose down
 docker compose ps
 
 # Login to a particular container in an interactive shell
-docker exec -it <name_of_container> bash
-
-# Restore the files directory from a backup
-docker cp <name_of_container>
+docker exec -it $name_of_container sh
 
 # Generate a dump for the SQL database
-docker exec <name_of_container> pg_dump -U <sql_database_username> -d <db_name> > </path/on/host/backup-$(date +%F).sql>
+docker exec $name_of_container pg_dump -U $sql_database_username -d $db_name > /path/on/host/backup.sql
 
 # Copy files from the container to the host
-docker cp <container_name>:<source_files_directory> </path/on/host/file/destination>
+docker cp $container_name:$source_files_directory /path/on/host/file/destination
 ```
 
 Licenses

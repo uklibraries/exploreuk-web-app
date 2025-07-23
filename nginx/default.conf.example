@@ -1,11 +1,10 @@
 server {
 	listen 80;
-	root /var/www/html;
+	root /omeka;
 	index catalog.php index.php;
-
-	location ^~ /omeka/ {
-		rewrite ^/omeka/(.*)$ /$1 last;
-	}
+	
+	# 127.0.0.11 is the internal docker DNS server for every container
+	resolver 127.0.0.11 valid=5s;
 
 	location / {
 		try_files $uri $uri/ /catalog.php;
@@ -26,9 +25,12 @@ server {
 
 	location ~ \.php$ {
 		include fastcgi_params;
-		fastcgi_param SCRIPT_FILENAME /omeka$fastcgi_script_name;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 		fastcgi_param PATH_INFO $fastcgi_path_info;
-		fastcgi_pass omeka:9000;
+
+		# Setting the service as a variable forces nginx to use the resolver
+		set $upstream_omeka omeka:9000;
+		fastcgi_pass $upstream_omeka;
 	}
 
 	location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {

@@ -1,7 +1,7 @@
 services:
   omeka:
     env_file:
-      - ./.env
+      - .env
     image: nealpowers104/exploreuk-web-app:$EUK_TAG
     networks:
         - app_network
@@ -11,45 +11,103 @@ services:
       - db
     healthcheck:
       test: ["CMD-SHELL", "pgrep php-fpm || exit 1"]
-      interval: 1s
-      timeout: 3s
+      interval: 15s
+      timeout: 5s
       retries: 30
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first
+    secrets:
+      - db_host
+      - mysql_database
+      - mysql_user
+      - mysql_password
+      - db_prefix
+      - db_port
+      - db_charset
 
   findingaid:
     image: nealpowers104/findingaid:$FA_TAG
     volumes:
+      - findingaid:/app
       - ./xml:/app/xml
     networks:
       - app_network
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: stop-first
 
   web:
-    image: nginx:1.29
+    image: nginx:1.29.0
     networks:
       - app_network
     volumes:
-      - ${PWD}/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/default.prod.conf:/etc/nginx/conf.d/default.conf
       - omeka_static:/omeka
       - findingaid:/findingaid
     ports:
       - 8080:80
     depends_on:
-      omeka:
-        condition: service_healthy
+      - omeka
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 12s
+        order: start-first
 
   db:
-    env_file:
-      - ./.env
-    image: mysql:8.0
+    image: mysql:9.4.0
     volumes:
       - db_data:/var/lib/mysql
     networks:
       - app_network
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+      MYSQL_DATABASE_FILE: /run/secrets/mysql_database
+      MYSQL_USER_FILE: /run/secrets/mysql_user
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
+    secrets:
+      - mysql_root_password
+      - mysql_database
+      - mysql_user
+      - mysql_password
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - "node.role == manager"
 
 networks:
   app_network:
-    driver: bridge
+    driver: overlay
+    attachable: true
 
 volumes:
   db_data:
   omeka_static:
   findingaid:
+
+secrets:
+  mysql_root_password:
+    external: true
+  mysql_database:
+    external: true
+  mysql_user:
+    external: true
+  mysql_password:
+    external: true
+  db_host:
+    external: true
+  db_prefix:
+    external: true
+  db_port:
+    external: true
+  db_charset:
+    external: true

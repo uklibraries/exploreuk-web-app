@@ -5,10 +5,11 @@ services:
       # This docker-compose is for development purposes
       target: development
     volumes:
+      # App bind mount for live changes in development
       - ./app:/app
       - omeka_static:/omeka
     env_file:
-      - ".env"
+      - .env
     networks:
       - app-network
     depends_on:
@@ -19,7 +20,7 @@ services:
     image: nginx:1.29.0
     restart: always
     env_file:
-      - ".env"
+      - .env
     ports:
       - "8080:80"
     volumes:
@@ -31,10 +32,10 @@ services:
       - app-network
 
   db:
-    image: mysql:8.0
+    image: mysql:9.4.0
     restart: always
     env_file:
-      - '.env'
+      - .env
     volumes:
       - db_data:/var/lib/mysql
     networks:
