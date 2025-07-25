@@ -14,3 +14,4 @@ remote-deploy.sh
 /utils/profile/*
 !utils/profile/exampleprofile.sh
 /xml
+/secrets
