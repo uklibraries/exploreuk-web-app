@@ -1,32 +1,42 @@
-FROM php:8.0-fpm AS development
+FROM php:8.0-fpm-alpine AS development
 
-RUN apt-get update && apt-get install -y curl gnupg && \
-	curl -sL https://deb.nodesource.com/setup_18.x | bash -
+# GID and UID of the nginx container
+ARG GID=101
+ARG UID=101
 
-RUN apt-get update && apt-get install -y \
+RUN apk add --no-cache su-exec && \
+	addgroup -S -g ${GID} nginx && \
+	adduser -S -u ${UID} -G nginx nginx
+
+RUN apk add --no-cache \
 	procps \
 	git \
 	zip \
 	unzip \
-	libgomp1 \
-	libzip-dev \
-	libpng-dev \
-	libjpeg62-turbo-dev \
-	libfreetype6-dev \
+	libgomp \
 	imagemagick \
-	libmagickwand-dev \
+	imagemagick-dev \
 	rsync \
 	wget \
 	bash \
 	inotify-tools \
 	nodejs \
-	--no-install-recommends && \
-	rm -rf /var/lib/apt/lists/*
+	npm \
+	# adds packages to build extensions
+	$PHPIZE_DEPS \
+	libzip-dev \
+	libpng-dev \
+	jpeg-dev \
+	freetype-dev
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
 	docker-php-ext-install -j$(nproc) gd pdo pdo_mysql mysqli zip exif
 
 RUN pecl install imagick && docker-php-ext-enable imagick
+
+# Configure PHP-FPM to run as the nginx user
+RUN sed -i 's/user = www-data/user = nginx/g' /usr/local/etc/php-fpm.d/www.conf && \
+	sed -i 's/group = www-data/group = nginx/g' /usr/local/etc/php-fpm.d/www.conf
 
 WORKDIR /app
 
@@ -66,15 +76,25 @@ CMD ["php-fpm"]
 
 FROM php:8.0-fpm-alpine AS production
 
+ARG GID=101
+ARG UID=101
+
+RUN apk add --no-cache su-exec && \
+	addgroup -S -g ${GID} nginx && \
+	adduser -S -u ${UID} -G nginx nginx
+
 RUN apk add --no-cache rsync \
 	imagemagick \
 	jpeg \
 	libpng \
 	libzip \
-	libgomp
+	libgomp \
+	su-exec
 
 # virtual will add these build dependencies and then delete them after build, keeping the image size small
 RUN apk add --no-cache --virtual .build-deps\
+	# adds packages to build extensions
+	$PHPIZE_DEPS \
 	pkgconfig \
 	imagemagick-dev \
 	zlib-dev \
@@ -88,6 +108,10 @@ RUN apk add --no-cache --virtual .build-deps\
 	docker-php-ext-install -j$(nproc) gd pdo pdo_mysql mysqli zip exif && \
 	pecl install imagick && docker-php-ext-enable imagick && \
 	apk del .build-deps
+
+# Configure PHP-FPM to run as the nginx user
+RUN sed -i 's/user = www-data/user = nginx/g' /usr/local/etc/php-fpm.d/www.conf && \
+	sed -i 's/group = www-data/group = nginx/g' /usr/local/etc/php-fpm.d/www.conf
 
 WORKDIR /omeka
 

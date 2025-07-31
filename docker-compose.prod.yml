@@ -5,8 +5,6 @@ services:
         - app_network
     volumes:
       - omeka_static:/omeka
-    depends_on:
-      - db
     healthcheck:
       test: ["CMD-SHELL", "pgrep php-fpm || exit 1"]
       interval: 15s
@@ -17,6 +15,7 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
+        failure_action: rollback
         order: start-first
     secrets:
       - db_host
@@ -39,7 +38,7 @@ services:
       update_config:
         parallelism: 1
         delay: 10s
-        order: stop-first
+        order: start-first
 
   web:
     image: nginx:1.29.0
@@ -51,12 +50,11 @@ services:
     ports:
       - 8080:80
     configs:
-      - source: nginx_config.2e7f45c31a18
+      # Change source name on configuration change for zero downtime
+      # Must also change in configs block
+      - source: nginx_config
         target: /etc/nginx/conf.d/default.conf
-    depends_on:
-      - omeka
     deploy:
-      replicas: 2
       update_config:
         parallelism: 1
         delay: 12s
@@ -85,7 +83,9 @@ services:
           - "node.role == manager"
 
 configs:
-  nginx_config.2e7f45c31a18:
+  # Change nginx_config to new name (e.g., nginx_config_v2) for
+  # zero downtime. Must also change in web/configs block
+  nginx_config:
     file: ./nginx/default.prod.conf
 
 networks:
