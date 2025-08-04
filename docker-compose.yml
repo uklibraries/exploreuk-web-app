@@ -11,7 +11,7 @@ services:
     env_file:
       - .env
     networks:
-      - app-network
+      - app_network
     depends_on:
       db:
         condition: service_healthy
@@ -29,7 +29,7 @@ services:
     depends_on:
       - omeka
     networks:
-      - app-network
+      - app_network
 
   db:
     image: mysql:9.4.0
@@ -39,7 +39,7 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     networks:
-      - app-network
+      - app_network
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
       interval: 10s
@@ -51,5 +51,5 @@ volumes:
   omeka_static:
 
 networks:
-  app-network:
+  app_network:
     driver: bridge

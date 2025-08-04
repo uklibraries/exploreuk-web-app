@@ -5,15 +5,6 @@ set -e # Exit immediately if a command exits with a non-zero status or if there 
 DEV_APP_SRC="/app"
 OMEKA_ROOT="/omeka"
 
-# Load these variables from the Docker Secrets store
-MYSQL_USER=$(cat /run/secrets/mysql_user)
-MYSQL_PASSWORD=$(cat /run/secrets/mysql_password)
-MYSQL_DATABASE=$(cat /run/secrets/mysql_database)
-DB_HOST=$(cat /run/secrets/db_host)
-DB_PREFIX=$(cat /run/secrets/db_prefix)
-DB_PORT=$(cat /run/secrets/db_port)
-DB_CHARSET=$(cat /run/secrets/db_charset)
-
 # Create db.ini programmatically
 # Using a compound command to group echos and redirect output
 mkdir -p "/tmp/omeka"
