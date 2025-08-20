@@ -1,3 +1,3 @@
-dist/*
-theme/assets/css/main.min.css
+app/dist/*
+app/theme/assets/css/main.min.css
 node_modules/
