@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 OMEKA_THEME=omeukaprologue
 
 bash exe/minify.sh
