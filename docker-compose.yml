@@ -1,0 +1,55 @@
+services:
+  omeka:
+    build:
+      context: .
+      # This docker-compose is for development purposes
+      target: development
+    volumes:
+      # App bind mount for live changes in development
+      - ./app:/app
+      - omeka_static:/omeka
+    env_file:
+      - .env
+    networks:
+      - app_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    image: nginx:1.29.0
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "8080:80"
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - omeka_static:/omeka
+    depends_on:
+      - omeka
+    networks:
+      - app_network
+
+  db:
+    image: mysql:9.4.0
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  db_data:
+  omeka_static:
+
+networks:
+  app_network:
+    driver: bridge

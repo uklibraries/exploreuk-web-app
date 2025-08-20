@@ -1,0 +1,60 @@
+services:
+  omeka:
+    image: nealpowers104/exploreuk-web-app:${EUK_TAG}
+    env_file:
+      - .env
+    networks:
+        - app_network
+    volumes:
+      - omeka_static:/omeka
+    depends_on:
+      - db
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep php-fpm || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  findingaid:
+    image: nealpowers104/findingaid:${FA_TAG}
+    volumes:
+      - findingaid:/app
+      - ./xml:/app/xml:ro
+    networks:
+      - app_network
+    restart: unless-stopped
+
+  web:
+    image: nginx:1.29.0
+    networks:
+      - app_network
+    volumes:
+      - omeka_static:/omeka
+      - findingaid:/findingaid
+      - ./nginx/default.prod.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      # 8080 as a default
+      - "${NGINX_PORT}:80"
+    depends_on:
+      - omeka
+    restart: unless-stopped
+
+  db:
+    image: mysql:9.4.0
+    env_file:
+      - .env
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - app_network
+    restart: unless-stopped
+
+volumes:
+  db_data:
+  omeka_static:
+  findingaid:
+
+networks:
+  app_network:
+    driver: bridge

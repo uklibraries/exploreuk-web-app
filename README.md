@@ -63,6 +63,35 @@ programs are required:
 * rsync
 * wget
 
+Docker
+------
+
+Docker has been added as an option to quickly produce a development environment. `.env.example` and `nginx/default.conf.example` are provided as default configurations and should be changed for any production environment. A process for loading from a backup is detailed in the [backup readme](/backup/README.md).
+
+Please see the [docker documentation](https://docs.docker.com/) for details on commands, but the following shell command should provide a working environment:
+```bash
+# Start containers detailed in docker-compose.yml in a detached state
+docker compose up -d
+
+# Stop containers
+docker compose down
+
+# List names and images of running containers on the host system
+docker compose ps
+
+# Login to a particular container in an interactive shell
+docker exec -it $name_of_container sh
+
+# Generate a dump for the SQL database
+docker exec $name_of_container pg_dump -U $sql_database_username -d $db_name > /path/on/host/backup.sql
+
+# Copy files from the container to the host
+docker cp $container_name:$source_files_directory /path/on/host/file/destination
+
+# Copy a file from the host to a container
+docker cp /path/on/host $container_name:/path/in/container
+```
+
 Licenses
 --------
 

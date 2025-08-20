@@ -1,0 +1,4 @@
+#!/bin/sh
+echo "EUK TAG=[$EUK_TAG]"
+echo "FA TAG=[$FA_TAG]"
+echo "PATH TO REMOTE COMPOSE=[$PATH_TO_REMOTE_COMPOSE]"
