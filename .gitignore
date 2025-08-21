@@ -10,8 +10,7 @@ nginx/default.conf
 nginx/default.prod.conf
 docker-entrypoint-initdb.d/
 app/files
-remote-deploy.sh
-/utils/profile/*
-!utils/profile/exampleprofile.sh
+/utils/profiles/*
+!utils/profiles/exampleprofile.sh
 /xml
 /secrets
