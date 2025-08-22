@@ -34,10 +34,6 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
 
 RUN pecl install imagick && docker-php-ext-enable imagick
 
-# Configure PHP-FPM to run as the nginx user
-RUN sed -i 's/user = www-data/user = nginx/g' /usr/local/etc/php-fpm.d/www.conf && \
-	sed -i 's/group = www-data/group = nginx/g' /usr/local/etc/php-fpm.d/www.conf
-
 WORKDIR /app
 
 COPY ./app/package.json .
@@ -116,6 +112,8 @@ RUN sed -i 's/user = www-data/user = nginx/g' /usr/local/etc/php-fpm.d/www.conf 
 WORKDIR /omeka
 
 COPY --from=development /omeka /tmp/omeka
+
+COPY ./php-fpm/php.ini-production /usr/local/etc/php/php.ini-production
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh

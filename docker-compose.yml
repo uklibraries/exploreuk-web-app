@@ -7,6 +7,8 @@ services:
     volumes:
       # App bind mount for live changes in development
       - ./app:/app
+      # Bind mount for dev, baked in image for production
+      - ./php-fpm/php.ini-development:/usr/local/etc/php/conf.d/php.ini
       - omeka_static:/omeka
     env_file:
       - .env
