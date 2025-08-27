@@ -5,7 +5,7 @@ backup/*
 dist/*
 /app/theme/assets/css/main.min.css
 node_modules/
-.env
+.env*
 nginx/default.conf
 nginx/default.prod.conf
 docker-entrypoint-initdb.d/

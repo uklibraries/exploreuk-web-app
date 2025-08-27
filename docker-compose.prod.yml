@@ -2,7 +2,7 @@ services:
   omeka:
     image: nealpowers104/exploreuk-web-app:${EUK_TAG}
     env_file:
-      - .env
+      - .env.prod
     networks:
         - app_network
     volumes:
@@ -17,6 +17,8 @@ services:
     restart: unless-stopped
 
   findingaid:
+    env_file:
+      - .env.prod
     image: nealpowers104/findingaid:${FA_TAG}
     volumes:
       - findingaid:/app
@@ -43,7 +45,7 @@ services:
   db:
     image: mysql:9.4.0
     env_file:
-      - .env
+      - .env.prod
     volumes:
       - db_data:/var/lib/mysql
     networks:

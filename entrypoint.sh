@@ -9,7 +9,8 @@ OMEKA_ROOT="/omeka"
 # Using a compound command to group echos and redirect output
 mkdir -p "/tmp/omeka"
 
-{ 	echo "[database]"
+{
+	echo "[database]"
 	echo "host = '${DB_HOST}'"
 	echo "username = '${MYSQL_USER}'"
 	echo "password = '${MYSQL_PASSWORD}'"
@@ -31,20 +32,20 @@ if [ "$APP_ENV" = "development" ]; then
 		exit 1
 	fi
 
-	# Run the main command in the background as user 'nginx'
-	su-exec nginx "$@" &
-
 	echo "App Env is dev. Listening for changes to $DEV_APP_SRC"
 
-	while true; do
-		inotifywait -r -e create,modify,delete,move "$DEV_APP_SRC"
-		echo "-> Change detected, re-building..."
-		su-exec nginx sh $DEV_APP_SRC/exe/build.sh
-		echo "omeuka built"
-		su-exec nginx sh $DEV_APP_SRC/exe/stage.sh
-		echo "-> Extracted in $OMEKA_ROOT"
-	done
+	(
+		while true; do
+			inotifywait -r -e create,modify,delete,move "$DEV_APP_SRC"
+			echo "-> Change detected, re-building..."
+			su-exec nginx sh $DEV_APP_SRC/exe/build.sh
+			echo "omeuka built"
+			su-exec nginx sh $DEV_APP_SRC/exe/stage.sh
+			echo "-> Extracted in $OMEKA_ROOT"
+		done
+	) &
+	exec php-fpm -F
 else
 	echo "-> Production mode enabled"
-	exec "$@"
+	exec php-fpm -F
 fi

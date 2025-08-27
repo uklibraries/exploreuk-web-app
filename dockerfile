@@ -65,10 +65,14 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 RUN /app/exe/build.sh
 RUN /app/exe/stage.sh
 
+COPY ./php-fpm/php.ini-development /usr/local/etc/php/php.ini
+COPY ./php-fpm/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY ./php-fpm/php-fpm.conf /usr/local/etc/php-fpm/php-fpm.conf
+
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
 EXPOSE 9000
 
-CMD ["php-fpm"]
+CMD ["php-fpm", "-F"]
 
 FROM php:8.0-fpm-alpine AS production
 
@@ -105,18 +109,16 @@ RUN apk add --no-cache --virtual .build-deps\
 	pecl install imagick && docker-php-ext-enable imagick && \
 	apk del .build-deps
 
-# Configure PHP-FPM to run as the nginx user
-RUN sed -i 's/user = www-data/user = nginx/g' /usr/local/etc/php-fpm.d/www.conf && \
-	sed -i 's/group = www-data/group = nginx/g' /usr/local/etc/php-fpm.d/www.conf
-
 WORKDIR /omeka
 
 COPY --from=development /omeka /tmp/omeka
 
-COPY ./php-fpm/php.ini-production /usr/local/etc/php/php.ini-production
+COPY ./php-fpm/php.ini-production /usr/local/etc/php/php.ini
+COPY ./php-fpm/www.conf /usr/local/etc/php-fpm.d/www.conf
+COPY ./php-fpm/www.conf /usr/local/etc/php-fpm.d/php-fpm.conf
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-CMD ["php-fpm"]
+CMD ["php-fpm", "-F"]

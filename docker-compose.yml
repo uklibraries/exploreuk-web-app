@@ -11,7 +11,7 @@ services:
       - ./php-fpm/php.ini-development:/usr/local/etc/php/conf.d/php.ini
       - omeka_static:/omeka
     env_file:
-      - .env
+      - .env.dev
     networks:
       - app_network
     depends_on:
@@ -22,7 +22,7 @@ services:
     image: nginx:1.29.0
     restart: always
     env_file:
-      - .env
+      - .env.dev
     ports:
       - "8080:80"
     volumes:
@@ -37,7 +37,7 @@ services:
     image: mysql:9.4.0
     restart: always
     env_file:
-      - .env
+      - .env.dev
     volumes:
       - db_data:/var/lib/mysql
     networks:
