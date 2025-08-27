@@ -1,4 +1,4 @@
-FROM php:8.0-fpm-alpine AS development
+FROM php:8.2-fpm-alpine AS development
 
 # GID and UID of the nginx container
 ARG GID=101
@@ -74,7 +74,7 @@ EXPOSE 9000
 
 CMD ["php-fpm", "-F"]
 
-FROM php:8.0-fpm-alpine AS production
+FROM php:8.2-fpm-alpine AS production
 
 ARG GID=101
 ARG UID=101
