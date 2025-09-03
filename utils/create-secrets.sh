@@ -1,32 +1,50 @@
-#!/bin/sh
-# Location of this script, no matter where on the system you run it
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+#!/bin/bash 
+set -euo pipefail
+
+# New files will be created with rw-------
+umask 077
+
+# The directory where this file exists
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Default to the directory above this script (possibly the root of the project)
+: "${SECRETS_DIR:=$SCRIPT_DIR/../secrets}"
 
 # List of all secrets needed
-SECRETS_TO_CREATE=("mysql_root_password" "mysql_database" "mysql_user" "mysql_password" "db_host" "db_prefix" "db_port" "db_charset")
-SECRETS_DIR=$SCRIPT_DIR/../secrets
+SECRETS_TO_CREATE=("mysql_root_password" "mysql_database" "mysql_user" "mysql_password")
 
 if [ ! -d "$SECRETS_DIR" ]; then
-	echo "Secrets directory '$SECRETS_DIR' not found."
-	echo "Create a directory in the root of the project with the following secret files:"
-	for SECRET in ${SECRETS_TO_CREATE[@]}; do
-		echo $SECRET;
-	done
-	exit 1
+	echo "Secrets directory '$SECRETS_DIR' not found. Creating directory."
+	mkdir -p "$SECRETS_DIR"
 fi
 
-for SECRET in ${SECRETS_TO_CREATE[@]}; do
-	if [ ! -r "$SECRETS_DIR/$SECRET.txt" ]; then
-		echo "Secret file $SECRET.txt not found at $SECRETS_DIR/$SECRET.txt. Skipping to next secret."
-		continue
-	fi
-	
-	SECRET_ID=$(docker secret create $SECRET "$SECRETS_DIR/$SECRET.txt")
+for SECRET in "${SECRETS_TO_CREATE[@]}"; do
+	TARGET="$SECRETS_DIR/$SECRET.txt"
 
-	if [ $? -eq 0 ]; then
-		echo "Secret for '$SECRET' with ID $SECRET_ID added successfully."
-	else
-		echo "Failed to create secret '$SECRET'."
+	if [ -e "$TARGET" ]; then
+		read -rp "$TARGET exists. Overwrite? [y/N] " OVERWRITE
+		case "$OVERWRITE" in
+			# y, Y, yes, Yes, YES, etc.
+			[yY]|[yY][eE][sS])
+				echo "Overwriting"
+				;;
+			*)
+				echo "Not overwriting and skipping to next secret"
+				continue
+				;;
+		esac
 	fi
+
+	echo "Creating $TARGET"
+	touch "$TARGET"
+	read -rsp "Secret contents: " CONTENTS
+
+	# newline
 	echo ""
+
+	echo -n "$CONTENTS" > "$SECRETS_DIR/$SECRET.txt"
+	echo "Secret $SECRET added."
 done
+
+echo "All secrets added. Exiting"
+exit 0

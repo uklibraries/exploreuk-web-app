@@ -45,11 +45,31 @@ services:
     image: mysql:9.4.0
     env_file:
       - .env.prod
+    environment:
+      MYSQL_USER_FILE: /run/secrets/mysql_user
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
+      MYSQL_DATABASE_FILE: /run/secrets/mysql_database
+    secrets:
+      - mysql_user
+      - mysql_password
+      - mysql_root_password
+      - mysql_database
     volumes:
       - db_data:/var/lib/mysql
     networks:
       - app_network
     restart: unless-stopped
+
+secrets:
+  mysql_user:
+    file: ${SECRETS_DIR}/mysql_user.txt
+  mysql_password:
+    file: ${SECRETS_DIR}/mysql_password.txt
+  mysql_root_password:
+    file: ${SECRETS_DIR}/mysql_root_password.txt
+  mysql_database:
+    file: ${SECRETS_DIR}/mysql_database.txt
 
 volumes:
   db_data:
