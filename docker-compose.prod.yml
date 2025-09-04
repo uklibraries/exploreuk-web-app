@@ -15,6 +15,12 @@ services:
       timeout: 5s
       retries: 30
     restart: unless-stopped
+    secrets:
+      - mysql_user
+      - mysql_password
+      - mysql_root_password
+      - mysql_database
+
 
   findingaid:
     env_file:
