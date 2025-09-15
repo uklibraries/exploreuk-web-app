@@ -56,13 +56,19 @@ services:
       MYSQL_PASSWORD_FILE: /run/secrets/mysql_password
       MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_root_password
       MYSQL_DATABASE_FILE: /run/secrets/mysql_database
+      MYSQL_BACKUP_PASSWORD_FILE: /run/secrets/mysql_backup_password
+      MYSQL_BACKUP_CNF_FILE: /run/secrets/mysql_backup_cnf
     secrets:
       - mysql_user
       - mysql_password
       - mysql_root_password
       - mysql_database
+      - mysql_backup_password
+      - mysql_backup_cnf
     volumes:
       - db_data:/var/lib/mysql
+      # Only executes .sql, .sh, etc. on initalization with empty data
+      - ./mysql:/script
     networks:
       - app_network
     restart: unless-stopped
@@ -76,6 +82,10 @@ secrets:
     file: ${SECRETS_DIR}/mysql_root_password.txt
   mysql_database:
     file: ${SECRETS_DIR}/mysql_database.txt
+  mysql_backup_password:
+    file: ${SECRETS_DIR}/mysql_backup_password.txt
+  mysql_backup_cnf:
+    file: ${SECRETS_DIR}/backup.cnf
 
 volumes:
   db_data:
