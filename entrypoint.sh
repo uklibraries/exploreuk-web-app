@@ -1,10 +1,12 @@
 #!/bin/sh
 set -e # Exit immediately if a command exits with a non-zero status or if there are env variables unset
-MYSQL_USER=$(cat /run/secrets/mysql_user)
-MYSQL_PASSWORD=$(cat /run/secrets/mysql_password)
-MYSQL_DATABASE=$(cat /run/secrets/mysql_database)
+if [ "$APP_ENV" == "production" ]; then
+	MYSQL_USER=$(cat /run/secrets/mysql_user)
+	MYSQL_PASSWORD=$(cat /run/secrets/mysql_password)
+	MYSQL_DATABASE=$(cat /run/secrets/mysql_database)
+fi
 
-# TODO: umask to eliminate window when creating file
+umask 077
 
 # Paths for dev source code sync
 DEV_APP_SRC="/app"

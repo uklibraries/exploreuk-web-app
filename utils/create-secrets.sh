@@ -11,7 +11,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 : "${SECRETS_DIR:=$SCRIPT_DIR/../secrets}"
 
 # List of all secrets needed
-SECRETS_TO_CREATE=("mysql_root_password" "mysql_database" "mysql_user" "mysql_password")
+SECRETS_TO_CREATE=("mysql_root_password" "mysql_database" "mysql_user" "mysql_password" "mysql_backup_password")
 
 if [ ! -d "$SECRETS_DIR" ]; then
 	echo "Secrets directory '$SECRETS_DIR' not found. Creating directory."
