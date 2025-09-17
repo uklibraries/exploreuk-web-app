@@ -19,10 +19,10 @@ class OmekaShim
             "mysql:host={$this->config['host']};dbname={$this->config['dbname']};charset=utf8mb4",
             $this->config['username'],
             $this->config['password'],
-            array(
+            [
                 \PDO::ATTR_ERRMODE => PDO::ERRMODE_SILENT,
                 \PDO::ATTR_PERSISTENT => true,
-            )
+            ]
         );
     }
 
@@ -76,7 +76,7 @@ class OmekaShim
         }
     }
 
-    public function getItems($collnId, $options = array())
+    public function getItems($collnId, $options = [])
     {
         $itemsTable = $this->getTableName('items');
         $query = "SELECT id FROM `$itemsTable`
@@ -121,12 +121,12 @@ class OmekaShim
             }
         }
         $image = $this->getFile($itemId);
-        return array(
+        return [
             'image' => $image,
             'label' => $label,
             'url' => $url,
             'position' => $position,
-        );
+        ];
     }
 
     public function getFile($itemId)
@@ -142,7 +142,7 @@ class OmekaShim
         $result = $handle->fetchAll(\PDO::FETCH_OBJ);
         $url = '';
         if (count($result) > 0) {
-            $file = preg_replace('/\.[^\.]+$/', '.jpg', $result[0]->filename);
+            $file = preg_replace('/\.[^\.]+$/', '.jpg', (string) $result[0]->filename);
             $url = "/files/fullsize/$file";
         }
         return $url;
@@ -181,8 +181,8 @@ class OmekaShim
         # expected format: a:\d+:{s:\d+:"...";...s:\d+:"...";}
         # i.e., a single array of strings
 
-        $options = array();
-        preg_match('/^a:\d+:{(.*)}$/s', $string, $matches);
+        $options = [];
+        preg_match('/^a:\d+:{(.*)}$/s', (string) $string, $matches);
         $rest = $matches[1];
         while (strlen($rest) > 0) {
             # read a key

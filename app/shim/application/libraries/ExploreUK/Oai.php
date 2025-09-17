@@ -7,22 +7,19 @@ use ExploreUK;
 
 class Oai
 {
-    private $config;
-
-    public function __construct($config)
+    public function __construct(private $config)
     {
-        $this->config = $config;
     }
 
     public function run()
     {
         global $euk_oai_options;
         #require_once('application/libraries/ExploreUK/Oai.php');
-        $response = euk_oai_response(array(
+        $response = euk_oai_response([
             'base' => $this->config['base'],
             'solr' => $this->config['solr'],
             'host' => $this->config['host'],
-        ));
+        ]);
         $doc = new DOMDocument('1.0', 'utf-8');
         $root = $doc->createElementNS('http://www.openarchives.org/OAI/2.0/', 'OAI-PMH');
         $root = $doc->appendChild($root);
@@ -72,7 +69,7 @@ class Oai
                         continue;
                     }
                     if (!is_array($content)) {
-                        $content = array($content);
+                        $content = [$content];
                     }
                     foreach ($content as $item) {
                         $child = $doc->createElement($field, $item);
@@ -189,41 +186,41 @@ function euk_oai_response($host_options)
     global $oai_host_options;
 
     $oai_host_options = $host_options;
-    $euk_oai_options = array(
+    $euk_oai_options = [
         'identifier',
         'metadataPrefix',
         'from',
         'until',
         'set',
         'resumptionToken',
-    );
-    $euk_oai_sets = array(
-        array(
+    ];
+    $euk_oai_sets = [
+        [
             'spec' => 'default',
             'name' => 'RECOMMENDED: ExploreUK records for general OAI harvesting',
-        ),
-        array(
+        ],
+        [
             'spec' => 'primo',
             'name' => 'ExploreUK records ready for Primo import',
-        ),
-        array(
+        ],
+        [
             'spec' => 'umbra',
             'name' => 'ExploreUK records ready for Umbra import',
-        ),
-        array(
+        ],
+        [
             'spec' => 'unrestricted',
             'name' => 'All ExploreUK records regardless of type',
-        ),
-    );
+        ],
+    ];
     $oai_per_page = 15;
 
     switch ($_SERVER['REQUEST_METHOD']) {
         case 'GET':
-            parse_str($_SERVER['QUERY_STRING'], $params);
+            parse_str((string) $_SERVER['QUERY_STRING'], $params);
             break;
 
         case 'POST':
-            $params = array();
+            $params = [];
             if (isset($_REQUEST['verb'])) {
                 $params['verb'] = $_REQUEST['verb'];
             }
@@ -238,13 +235,13 @@ function euk_oai_response($host_options)
             return euk_oai_error('badArgument');
             break;
     }
-    $response = array(
+    $response = [
         'verb' => null,
         'responseDate' => gmdate('Y-m-d\TH:i:s\Z'),
         'request' => oai_base(),
-    );
+    ];
     $error = null;
-    $options = array();
+    $options = [];
     foreach ($params as $key => $value) {
         if ($key === 'verb') {
             if (!isset($response['verb'])) {
@@ -317,21 +314,21 @@ function euk_oai_identify($options)
         return euk_oai_error('badArgument');
     }
 
-    $metadata = array(
-        array('repositoryName', 'ExploreUK'),
-        array('baseURL', oai_base()),
-        array('protocolVersion', '2.0'),
-        array('adminEmail', array('m.slone@uky.edu')),
-        array('earliestDatestamp', euk_oai_earliest_datestamp()),
-        array('deletedRecord', 'transient'),
-        array('granularity', 'YYYY-MM-DDThh:mm:ssZ'),
-        array('description', array(
-            array('scheme', 'oai'),
-            array('repositoryIdentifier', $host),
-            array('delimiter', ':'),
-            array('sampleIdentifier', "$host:xt7tx921dp6w_7"),
-        )),
-    );
+    $metadata = [
+        ['repositoryName', 'ExploreUK'],
+        ['baseURL', oai_base()],
+        ['protocolVersion', '2.0'],
+        ['adminEmail', ['m.slone@uky.edu']],
+        ['earliestDatestamp', euk_oai_earliest_datestamp()],
+        ['deletedRecord', 'transient'],
+        ['granularity', 'YYYY-MM-DDThh:mm:ssZ'],
+        ['description', [
+            ['scheme', 'oai'],
+            ['repositoryIdentifier', $host],
+            ['delimiter', ':'],
+            ['sampleIdentifier', "$host:xt7tx921dp6w_7"],
+        ]],
+    ];
     return $metadata;
 }
 
@@ -340,9 +337,9 @@ function euk_oai_list_metadata_formats($options)
     global $oai_host_options;
     $host = $oai_host_options['host'];
     $solr = $oai_host_options['solr'];
-    $permitted_options = array(
+    $permitted_options = [
         'identifier',
-    );
+    ];
     if (count($options) > 1) {
         return euk_oai_error('badArgument');
     }
@@ -352,12 +349,12 @@ function euk_oai_list_metadata_formats($options)
         }
     }
     # We only offer Dublin Core metadata
-    $metadata = array('results' => array());
-    $metadata['results'][] = array(
-        array('metadataPrefix', 'oai_dc'),
-        array('schema', 'http://www.openarchives.org/OAI/2.0/oai_dc.xsd'),
-        array('metadataNamespace', 'http://www.openarchives.org/OAI/2.0/oai_dc/'),
-    );
+    $metadata = ['results' => []];
+    $metadata['results'][] = [
+        ['metadataPrefix', 'oai_dc'],
+        ['schema', 'http://www.openarchives.org/OAI/2.0/oai_dc.xsd'],
+        ['metadataNamespace', 'http://www.openarchives.org/OAI/2.0/oai_dc/'],
+    ];
     if (isset($options['identifier'])) {
         $metadata['identifier'] = $options['identifier'];
         $id = $options['identifier'];
@@ -375,9 +372,9 @@ function euk_oai_list_metadata_formats($options)
 function euk_oai_list_sets($options)
 {
     global $euk_oai_sets;
-    $permitted_options = array(
+    $permitted_options = [
         'resumptionToken',
-    );
+    ];
     foreach ($options as $option => $value) {
         if (!in_array($option, $permitted_options)) {
             return euk_oai_error('badArgument');
@@ -390,13 +387,13 @@ function euk_oai_list_sets($options)
     if (isset($options['resumptionToken'])) {
         return euk_oai_error('badResumptionToken');
     }
-    $metadata = array('results' => array());
+    $metadata = ['results' => []];
     foreach ($euk_oai_sets as $set) {
-        $metadata['results'][] = array(
-            array('setSpec', $set['spec']),
-            array('setName', $set['name']),
-            array('setDescription', ''),
-        );
+        $metadata['results'][] = [
+            ['setSpec', $set['spec']],
+            ['setName', $set['name']],
+            ['setDescription', ''],
+        ];
     }
     return $metadata;
 }
@@ -406,10 +403,10 @@ function euk_oai_get_record($options)
     global $oai_host_options;
     $host = $oai_host_options['host'];
     $solr = $oai_host_options['solr'];
-    $required_options = array(
+    $required_options = [
         'identifier',
         'metadataPrefix',
-    );
+    ];
     foreach ($required_options as $option) {
         if (!isset($options[$option])) {
             return euk_oai_error('badArgument');
@@ -420,7 +417,7 @@ function euk_oai_get_record($options)
         return euk_oai_error('cannotDisseminateFormat');
     }
     $data_dictionary = euk_oai_data_dictionary();
-    $desired_fields = array();
+    $desired_fields = [];
     foreach ($data_dictionary as $row) {
         $desired_fields[] = $row[1];
     }
@@ -429,8 +426,8 @@ function euk_oai_get_record($options)
     $desired_fields[] = 'sequence_number_display';
     $fl = urlencode(implode(',', $desired_fields));
     $id = $options['identifier'];
-    $id = preg_replace("#$host/#", '', $id);
-    $url = "$solr?qt=document&wt=json&id=" . urlencode($id) . "&fl=$fl";
+    $id = preg_replace("#$host/#", '', (string) $id);
+    $url = "$solr?qt=document&wt=json&id=" . urlencode((string) $id) . "&fl=$fl";
     $result = json_decode(file_get_contents($url), true);
     # This error should only happen if Solr is not working.  In this case, it is
     # literally true that we cannot disseminate the format for the given identifier.
@@ -441,29 +438,29 @@ function euk_oai_get_record($options)
         return euk_oai_error('idDoesNotExist');
     }
     $doc = $result['response']['docs'][0];
-    $record = array(
-        'header' => array(
-            array('identifier', "$host/{$options['identifier']}"),
-            array('datestamp', $doc['timestamp']),
-        ),
-    );
+    $record = [
+        'header' => [
+            ['identifier', "$host/{$options['identifier']}"],
+            ['datestamp', $doc['timestamp']],
+        ],
+    ];
     foreach (euk_oai_set_memberships($doc, $options) as $set) {
-        $record['header'][] = array('setSpec', $set);
+        $record['header'][] = ['setSpec', $set];
     }
-    $record['metadata'] = array();
+    $record['metadata'] = [];
     foreach ($data_dictionary as $row) {
         $field = $row[0];
         $values = $doc[$row[1]];
         if ($values) {
             if (!is_array($values)) {
-                $values = array($values);
+                $values = [$values];
             }
             foreach ($values as $value) {
-                $record['metadata'][] = array($field, $value);
+                $record['metadata'][] = [$field, $value];
             }
         }
     }
-    $metadata['results'] = array($record);
+    $metadata['results'] = [$record];
     return $metadata;
 }
 
@@ -507,11 +504,11 @@ function euk_oai_list_identifiers($options)
     }
 
     $raw_params = euk_oai_raw_params($options);
-    $raw_params[] = array('fl', 'id,timestamp');
+    $raw_params[] = ['fl', 'id,timestamp'];
 
-    $params = array();
+    $params = [];
     foreach ($raw_params as $row) {
-        $params[] = $row[0] . '=' . urlencode($row[1]);
+        $params[] = $row[0] . '=' . urlencode((string) $row[1]);
     }
     $url = $solr . '?' . implode('&', $params);
 
@@ -523,16 +520,16 @@ function euk_oai_list_identifiers($options)
         return euk_oai_error('noRecordsMatch');
     }
 
-    $metadata['results'] = array();
+    $metadata['results'] = [];
     foreach ($result['response']['docs'] as $doc) {
-        $record = array(
-            'header' => array(
-                array('identifier', "$host/{$doc['id']}"),
-                array('datestamp', $doc['timestamp']),
-            ),
-        );
+        $record = [
+            'header' => [
+                ['identifier', "$host/{$doc['id']}"],
+                ['datestamp', $doc['timestamp']],
+            ],
+        ];
         foreach (euk_oai_set_memberships($doc, $options) as $set) {
-            $record['header'][] = array('setSpec', $set);
+            $record['header'][] = ['setSpec', $set];
         }
         $metadata['results'][] = $record;
     }
@@ -586,17 +583,17 @@ function euk_oai_list_records($options)
     $raw_params = euk_oai_raw_params($options);
 
     $data_dictionary = euk_oai_data_dictionary();
-    $desired_fields = array();
+    $desired_fields = [];
     foreach ($data_dictionary as $row) {
         $desired_fields[] = $row[1];
     }
     $desired_fields[] = 'timestamp';
     $fl = implode(',', $desired_fields);
-    $raw_params[] = array('fl', $fl);
+    $raw_params[] = ['fl', $fl];
 
-    $params = array();
+    $params = [];
     foreach ($raw_params as $row) {
-        $params[] = $row[0] . '=' . urlencode($row[1]);
+        $params[] = $row[0] . '=' . urlencode((string) $row[1]);
     }
     $url = $solr . '?' . implode('&', $params);
 
@@ -608,19 +605,19 @@ function euk_oai_list_records($options)
         return euk_oai_error('noRecordsMatch');
     }
 
-    $metadata['results'] = array();
+    $metadata['results'] = [];
     foreach ($result['response']['docs'] as $doc) {
-        $record = array(
-            'header' => array(
-                array('identifier', "$host/{$doc['id']}"),
-                array('datestamp', $doc['timestamp']),
-            ),
-        );
+        $record = [
+            'header' => [
+                ['identifier', "$host/{$doc['id']}"],
+                ['datestamp', $doc['timestamp']],
+            ],
+        ];
         foreach (euk_oai_set_memberships($doc, $options) as $set) {
-            $record['header'][] = array('setSpec', $set);
+            $record['header'][] = ['setSpec', $set];
         }
 
-        $record['metadata'] = array();
+        $record['metadata'] = [];
         foreach ($data_dictionary as $row) {
             $field = $row[0];
             $values = null;
@@ -629,10 +626,10 @@ function euk_oai_list_records($options)
             }
             if ($values) {
                 if (!is_array($values)) {
-                    $values = array($values);
+                    $values = [$values];
                 }
                 foreach ($values as $value) {
-                    $record['metadata'][] = array($field, $value);
+                    $record['metadata'][] = [$field, $value];
                 }
             }
         }
@@ -656,7 +653,7 @@ function oai_base()
     $base = $oai_host_options['base'];
     $oai_base = "https://$host/$base/catalog/oai";
     $oai_base = preg_replace('#/+#', '/', $oai_base);
-    $oai_base = preg_replace('#https:/#', 'https://', $oai_base);
+    $oai_base = preg_replace('#https:/#', 'https://', (string) $oai_base);
     return $oai_base;
 }
 
@@ -664,13 +661,13 @@ function euk_oai_raw_params($options)
 {
     global $oai_per_page;
 
-    $raw_params = array(
-        array('wt', 'json'),
-        array('sort', 'timestamp asc'),
-        array('rows', $oai_per_page),
-        array('start', $oai_per_page * ($options['page'] - 1)),
-    );
-    $raw_params[] = array('fq', "timestamp:[{$options['from']} TO {$options['until']}]");
+    $raw_params = [
+        ['wt', 'json'],
+        ['sort', 'timestamp asc'],
+        ['rows', $oai_per_page],
+        ['start', $oai_per_page * ($options['page'] - 1)],
+    ];
+    $raw_params[] = ['fq', "timestamp:[{$options['from']} TO {$options['until']}]"];
 
     if (isset($options['set'])) {
         switch ($options['set']) {
@@ -678,15 +675,15 @@ function euk_oai_raw_params($options)
                 /* do nothing */
                 break;
             case 'default':
-                $raw_params[] = array('fq', 'compound_object_split_b:true');
+                $raw_params[] = ['fq', 'compound_object_split_b:true'];
                 break;
             case 'primo':
-                $raw_params[] = array('fq', '(sequence_sort:00001) OR (format:collections)');
+                $raw_params[] = ['fq', '(sequence_sort:00001) OR (format:collections)'];
                 break;
             case 'umbra':
                 /* fall through */
             default:
-                $raw_params[] = array('fq', '((sequence_sort:00001) AND (format:archival* OR format:athletic* OR format:yearbooks)) OR (format:collections)');
+                $raw_params[] = ['fq', '((sequence_sort:00001) AND (format:archival* OR format:athletic* OR format:yearbooks)) OR (format:collections)'];
                 break;
         }
     } else {
@@ -701,39 +698,39 @@ function euk_oai_raw_params($options)
 
 function euk_oai_data_dictionary()
 {
-    return array(
-        array('title', 'title_display'),
-        array('date', 'pub_date'),
-        array('creator', 'author_display'),
-        array('language', 'language_display'),
-        array('source', 'source_s'),
-        array('description', 'description_display'),
-        array('rights', 'usage_display'),
-        array('contributor', 'contributor_s'),
-        array('coverage', 'coverage_s'),
-        array('subject', 'subject_topic_facet'),
-        array('publisher', 'publisher_display'),
-        array('format', 'format'),
-        array('identifier', 'id'),
-        array('type', 'type_display'),
-    );
+    return [
+        ['title', 'title_display'],
+        ['date', 'pub_date'],
+        ['creator', 'author_display'],
+        ['language', 'language_display'],
+        ['source', 'source_s'],
+        ['description', 'description_display'],
+        ['rights', 'usage_display'],
+        ['contributor', 'contributor_s'],
+        ['coverage', 'coverage_s'],
+        ['subject', 'subject_topic_facet'],
+        ['publisher', 'publisher_display'],
+        ['format', 'format'],
+        ['identifier', 'id'],
+        ['type', 'type_display'],
+    ];
 }
 
 /* error reporting */
 
 function euk_oai_error($code)
 {
-    return array(
-        'error' => array(
+    return [
+        'error' => [
             'code' => $code,
             'message' => euk_oai_error_message($code),
-        ),
-    );
+        ],
+    ];
 }
 
 function euk_oai_error_message($code)
 {
-    $message = array(
+    $message = [
         'badArgument' => 'The request includes illegal arguments, is missing required arguments, includes a repeated argument, or values for arguments have an illegal syntax.',
         'badResumptionToken' => 'The value of the resumptionToken argument is invalid or expired.',
         'badVerb' => 'Value of the verb argument is not a legal OAI-PMH verb, the verb argument is missing, or the verb argument is repeated.',
@@ -742,7 +739,7 @@ function euk_oai_error_message($code)
         'noRecordsMatch' => 'The combination of the values of the from, until, set, and metadataPrefix arguments results in an empty list.',
         'noMetadataFormats' => 'There are no metadata formats available for the specified item.',
         'noSetHierarchy' => 'The repository does not support sets.',
-    );
+    ];
     if (isset($message[$code])) {
         return $message[$code];
     } else {
@@ -754,11 +751,11 @@ function euk_oai_error_message($code)
 
 function euk_oai_set_memberships($doc, $options)
 {
-    $sets = array();
+    $sets = [];
     if (($doc['sequence_number_display'][0] === '1') || ($doc['format'] === 'collections')) {
         $sets[] = 'primo';
     }
-    if ((($doc['sequence_number_display'][0] === '1') && (in_array($doc['format'], array('archival material', 'athletic publications', 'yearbooks')))) || ($doc['format'] === 'collections')) {
+    if ((($doc['sequence_number_display'][0] === '1') && (in_array($doc['format'], ['archival material', 'athletic publications', 'yearbooks']))) || ($doc['format'] === 'collections')) {
         $sets[] = 'umbra';
     }
     if ($doc['compound_object_split_b'] == true) {
@@ -775,8 +772,8 @@ function euk_oai_parse_token($string)
     # Sample tokens we want to parse
     # oai_dc.f(2017-06-21T20:03:21Z).u(2018-02-01T13:37:31Z):2
     # oai_dc.s(primo).f(2017-06-21T20:03:21Z).u(2018-02-01T13:37:31Z):2
-    if (preg_match('/^(.*):(\d+)$/', $string, $matches)) {
-        $options = array('page' => intval($matches[2]));
+    if (preg_match('/^(.*):(\d+)$/', (string) $string, $matches)) {
+        $options = ['page' => intval($matches[2])];
         $pieces = explode('.', $matches[1]);
         $options['metadataPrefix'] = array_shift($pieces);
         foreach ($pieces as $piece) {
@@ -810,13 +807,13 @@ function euk_oai_parse_token($string)
 
 function euk_oai_mint_token($options)
 {
-    $prefix = array();
+    $prefix = [];
     $prefix[] = $options['metadataPrefix'];
     if (isset($options['set'])) {
         $prefix[] = 's(' . $options['set'] . ')';
     }
-    $options['from'] = preg_replace('/\.\d+Z/', 'Z', $options['from']);
-    $options['until'] = preg_replace('/\.\d+Z/', 'Z', $options['until']);
+    $options['from'] = preg_replace('/\.\d+Z/', 'Z', (string) $options['from']);
+    $options['until'] = preg_replace('/\.\d+Z/', 'Z', (string) $options['until']);
 
     $prefix[] = 'f(' . $options['from'] . ')';
     $prefix[] = 'u(' . $options['until'] . ')';
@@ -840,7 +837,7 @@ function euk_ensure_from_and_until($options)
     if ((isset($options['from']) && (!isset($options['until'])))) {
         $options['until'] = euk_coerce_granularity($options['from'], euk_oai_latest_datestamp());
     }
-    if (strlen($options['from']) == 10) {
+    if (strlen((string) $options['from']) == 10) {
         $options['from'] .= 'T00:00:00Z';
         $options['until'] .= 'T23:59:59Z';
     }
@@ -876,24 +873,24 @@ function euk_oai_latest_datestamp()
 # Note: $datestamp is assumed to be expressed in millisecond granularity
 function euk_coerce_granularity($template, $datestamp)
 {
-    if (preg_match('/\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\.\d\d\dZ/', $template)) {
+    if (preg_match('/\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\.\d\d\dZ/', (string) $template)) {
         return $datestamp;
-    } elseif (preg_match('/\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ/', $template)) {
-        return substr($datestamp, 0, 19) . 'Z';
-    } elseif (preg_match('/\d\d\d\d-\d\d-\d\d/', $template)) {
-        return substr($datestamp, 0, 10);
+    } elseif (preg_match('/\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\dZ/', (string) $template)) {
+        return substr((string) $datestamp, 0, 19) . 'Z';
+    } elseif (preg_match('/\d\d\d\d-\d\d-\d\d/', (string) $template)) {
+        return substr((string) $datestamp, 0, 10);
     }
 }
 
 function euk_oai_valid_timestamps($options)
 {
-    if (!preg_match('/\d\d\d\d-\d\d-\d\d(T\d\d:\d\d:\d\d(\.\d\d\d)?Z)?/', $options['from'])) {
+    if (!preg_match('/\d\d\d\d-\d\d-\d\d(T\d\d:\d\d:\d\d(\.\d\d\d)?Z)?/', (string) $options['from'])) {
         return false;
     }
-    if (!preg_match('/\d\d\d\d-\d\d-\d\d(T\d\d:\d\d:\d\d(\.\d\d\d)?Z)?/', $options['until'])) {
+    if (!preg_match('/\d\d\d\d-\d\d-\d\d(T\d\d:\d\d:\d\d(\.\d\d\d)?Z)?/', (string) $options['until'])) {
         return false;
     }
-    if (strlen($options['from']) != strlen($options['until'])) {
+    if (strlen((string) $options['from']) != strlen((string) $options['until'])) {
         return false;
     }
     return true;

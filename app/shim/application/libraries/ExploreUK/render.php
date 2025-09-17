@@ -2,14 +2,14 @@
 
 function fa_render_string($s)
 {
-    $fragment = simplexml_load_string($s);
+    $fragment = simplexml_load_string((string) $s);
     return fa_render($fragment);
 }
 
 function fa_render($fragment)
 {
     $node = dom_import_simplexml($fragment);
-    $segments = array();
+    $segments = [];
     foreach ($node->childNodes as $child) {
         switch ($child->nodeName) {
             case 'head':
@@ -38,17 +38,11 @@ function fa_render_title($node)
 {
     $render = '';
     if ($node->hasAttribute('render')) {
-        switch ($node->getAttribute('render')) {
-            case 'italic':
-                $render = '<i>' . $node->textContent . '</i>';
-                break;
-            case 'doublequote':
-                $render = '"' . $node->textContent . '"';
-                break;
-            default:
-                $render = '"' . $node->textContent . '"';
-                break;
-        }
+        $render = match ($node->getAttribute('render')) {
+            'italic' => '<i>' . $node->textContent . '</i>',
+            'doublequote' => '"' . $node->textContent . '"',
+            default => '"' . $node->textContent . '"',
+        };
     } else {
         $render = $node->textContent;
     }

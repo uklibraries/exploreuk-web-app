@@ -14,3 +14,4 @@ app/files
 !utils/profiles/exampleprofile.sh
 /xml
 /secrets
+/vendor

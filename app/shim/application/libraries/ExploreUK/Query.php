@@ -5,20 +5,18 @@ namespace ExploreUK;
 class Query
 {
     private $query;
-    private $solr;
 
-    public function __construct($query = array(), $solr = false)
+    public function __construct($query = [], private $solr = false)
     {
-        $this->query = array(
+        $this->query = [
             'q' => null,
-            'fq' => array(),
-            'f' => array(),
+            'fq' => [],
+            'f' => [],
             'offset' => 0,
             'rows' => 20,
             'ui' => null,
-        );
-        $this->solr = $solr;
-        $raw_params = array();
+        ];
+        $raw_params = [];
         if (isset($_SERVER['QUERY_STRING'])) {
             $raw_params = explode('&', str_replace('?', '', $_SERVER['QUERY_STRING']));
         }
@@ -31,10 +29,10 @@ class Query
                     $this->query['q'] = $value;
                 } elseif ($key == 'fq[]') {
                     $this->query['fq'][] = $value;
-                } elseif (substr($key, 0, 2) == 'f[') {
+                } elseif (str_starts_with($key, 'f[')) {
                     $subkey = substr($key, 2, -3);
                     if (!isset($this->query['f'][$subkey])) {
-                        $this->query['f'][$subkey] = array();
+                        $this->query['f'][$subkey] = [];
                     }
                     $this->query['f'][$subkey][$value] = true;
                 } elseif ($key == 'offset') {
@@ -64,7 +62,7 @@ class Query
 
     public function nontrivial()
     {
-        return ((strlen($this->query['q']) > 0) ||
+        return ((strlen((string) $this->query['q']) > 0) ||
                 (count($this->query['fq']) > 0) ||
                 (count($this->query['f']) > 0));
     }
@@ -81,26 +79,26 @@ class Query
     public function link()
     {
         $query = $this->query;
-        $pieces = array();
-        if (strlen($query['q']) > 0) {
-            $pieces[] = 'q=' . urlencode($query['q']);
+        $pieces = [];
+        if (strlen((string) $query['q']) > 0) {
+            $pieces[] = 'q=' . urlencode((string) $query['q']);
         }
         foreach ($query['fq'] as $fq_term) {
-            $pieces[] = 'fq[]=' . urlencode($fq_term);
+            $pieces[] = 'fq[]=' . urlencode((string) $fq_term);
         }
         foreach ($query['f'] as $f_term => $ary) {#$value) {
             foreach ($ary as $key => $truth) {
-                $pieces[] = urlencode("f[$f_term][]") . '=' . urlencode($key);
+                $pieces[] = urlencode("f[$f_term][]") . '=' . urlencode((string) $key);
             }
         }
         if (!isset($query['offset'])) {
             $query['offset'] = 0;
         }
         if ($query['offset'] > 0) {
-            $pieces[] = 'offset=' . urlencode($query['offset']);
+            $pieces[] = 'offset=' . urlencode((string) $query['offset']);
         }
         if ($query['rows'] > 0) {
-            $pieces[] = 'per_page=' . urlencode($query['rows']);
+            $pieces[] = 'per_page=' . urlencode((string) $query['rows']);
         }
         if (isset($query['ui'])) {
             $pieces[] = 'ui=' . urlencode($query['ui']);
@@ -175,10 +173,10 @@ class Query
         $fq = $this->query['fq'];
         $f = $this->query['f'];
         $offset = $this->query['offset'];
-        $pieces = array();
+        $pieces = [];
         $pieces[] = 'rows=' . $this->query['rows'];
         $pieces[] = 'wt=json';
-        $pieces[] = 'q=' . urlencode($q);
+        $pieces[] = 'q=' . urlencode((string) $q);
         $pieces[] = 'mm=1';
         if ($offset > 0) {
             $pieces[] = "start=$offset";
@@ -193,7 +191,7 @@ class Query
         }
         if (count($fq) > 0) {
             foreach ($fq as $spec) {
-                $pieces[] = 'fq=' . urlencode($spec);
+                $pieces[] = 'fq=' . urlencode((string) $spec);
             }
         }
         if (count($f) > 0) {
@@ -207,7 +205,7 @@ class Query
                 }
             }
         }
-        $pieces[] = 'fl=' . urlencode($this->getHitFields());
+        $pieces[] = 'fl=' . urlencode((string) $this->getHitFields());
         # compound object
         $pieces[] = 'fq=' . urlencode("compound_object_split_b:true");
         return implode('&', $pieces);
@@ -220,10 +218,10 @@ class Query
         $fq = $this->query['fq'];
         $f = $this->query['f'];
         $offset = $this->query['offset'];
-        $pieces = array();
+        $pieces = [];
         $pieces[] = 'rows=' . $this->query['rows'];
         $pieces[] = 'wt=json';
-        $pieces[] = 'q=' . urlencode($q);
+        $pieces[] = 'q=' . urlencode((string) $q);
         $pieces[] = 'mm=1';
         if ($offset > 0) {
             $pieces[] = "start=$offset";
@@ -239,7 +237,7 @@ class Query
         }
         if (count($fq) > 0) {
             foreach ($fq as $spec) {
-                $pieces[] = 'fq=' . urlencode($spec);
+                $pieces[] = 'fq=' . urlencode((string) $spec);
             }
         }
         if (count($f) > 0) {
@@ -265,10 +263,10 @@ class Query
         $fq = $this->query['fq'];
         $f = $this->query['f'];
         $offset = $this->query['offset'];
-        $pieces = array();
+        $pieces = [];
         $pieces[] = 'rows=' . $this->query['rows'];
         $pieces[] = 'wt=json';
-        $pieces[] = 'q=' . urlencode($q);
+        $pieces[] = 'q=' . urlencode((string) $q);
         $pieces[] = 'mm=1';
         if ($offset > 0) {
             $pieces[] = "start=$offset";
@@ -284,7 +282,7 @@ class Query
         }
         if (count($fq) > 0) {
             foreach ($fq as $spec) {
-                $pieces[] = 'fq=' . urlencode($spec);
+                $pieces[] = 'fq=' . urlencode((string) $spec);
             }
         }
         if (count($f) > 0) {
@@ -305,8 +303,8 @@ class Query
 
     public function facetsByObjectType()
     {
-        $facets = array('object_type_s');
-        $pieces = array();
+        $facets = ['object_type_s'];
+        $pieces = [];
         $pieces[] = 'wt=json';
         $pieces[] = 'mm=1';
         if (count($facets) > 0) {
@@ -324,14 +322,14 @@ class Query
     public function removeFilterLink($facet, $label)
     {
         $query = $this->query;
-        $query['f'] = array();
+        $query['f'] = [];
         $query['offset'] = 0;
         foreach ($this->query['f'] as $potential_term => $ary) {
             if ($potential_term != $facet) {
                 $query['f'][$potential_term] = $ary;
             } else {
                 if (!isset($query['f'][$potential_term])) {
-                    $query['f'][$potential_term] = array();
+                    $query['f'][$potential_term] = [];
                 }
                 foreach ($ary as $key => $truth) {
                     if ($key != $label) {
@@ -351,7 +349,7 @@ class Query
     {
         $query = $this->query;
         if (!isset($query['f'][$facet])) {
-            $query['f'][$facet] = array();
+            $query['f'][$facet] = [];
         }
         $query['f'][$facet][$label] = true;
         $query['offset'] = 0;
