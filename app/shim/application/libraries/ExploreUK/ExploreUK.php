@@ -8,7 +8,7 @@ class ExploreUK
     private $omeka;
 
     public function __construct()
-    {
+	{
         $this->omeka = new OmekaShim();
         $this->config = array(
             'base' => '',
