@@ -20,10 +20,10 @@ foreach (EUK_PER_PAGE_OPTS as $opt) {
 }
 ?>
 </select> per page</label>
-<input name="q" type="hidden" value="<?= htmlspecialchars($this->q('q')) ?>" />
-<input name="offset" type="hidden" value="<?= htmlspecialchars($this->q('offset')) ?>" />
+<input name="q" type="hidden" value="<?= htmlspecialchars((string) $this->q('q')) ?>" />
+<input name="offset" type="hidden" value="<?= htmlspecialchars((string) $this->q('offset')) ?>" />
 <?php foreach ($this->hiddenSearchFields() as $field) : ?>
-    <input type="hidden" name="<?= $field['name'] ?>" value="<?= htmlspecialchars($field['value']) ?>"/>
+    <input type="hidden" name="<?= $field['name'] ?>" value="<?= htmlspecialchars((string) $field['value']) ?>"/>
 <?php endforeach; ?>
     <noscript><input name="commit" type="submit" value="update" /></noscript>
 </form>
