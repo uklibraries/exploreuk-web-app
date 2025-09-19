@@ -12,7 +12,7 @@
 </ul>
 </div>
     <?php
-    $manners = array('by-index', 'by-count');
+    $manners = ['by-index', 'by-count'];
     foreach ($manners as $manner) :
         ?>
 <div id="more-facets-list-<?= $list['field_raw'] ?>-<?= $manner ?>" class="tab-content <?= ($manner == 'by-index') ? 'active' : 'hide' ?>">
