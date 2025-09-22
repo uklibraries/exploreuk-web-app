@@ -10,6 +10,8 @@ services:
       # Bind mount for dev, baked in image for production
       - ./php-fpm/php.ini-development:/usr/local/etc/php/conf.d/php.ini
       - omeka_static:/omeka
+      - ./tests:/tests
+      - ./phpunit.xml:/phpunit.xml
     env_file:
       - .env.dev
     networks:
