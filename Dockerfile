@@ -1,4 +1,4 @@
-FROM php:8.2-fpm-alpine AS development
+FROM php:8.3-fpm-alpine AS development
 
 # GID and UID of the nginx container
 ARG GID=101
@@ -33,6 +33,15 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
 	docker-php-ext-install -j$(nproc) gd pdo pdo_mysql mysqli zip exif
 
 RUN pecl install imagick && docker-php-ext-enable imagick
+
+WORKDIR /
+
+COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
+
+COPY ./composer.json .
+COPY ./composer.lock .
+
+RUN composer install
 
 WORKDIR /app
 
@@ -74,7 +83,7 @@ EXPOSE 9000
 
 CMD ["php-fpm", "-F"]
 
-FROM php:8.2-fpm-alpine AS production
+FROM php:8.3-fpm-alpine AS production
 
 ARG GID=101
 ARG UID=101
