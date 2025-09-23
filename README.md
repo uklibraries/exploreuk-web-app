@@ -111,6 +111,22 @@ docker exec -it exploreuk-web-app-omeka-1 /vendor/bin/phpunit /tests/integration
 /vendor/bin/phpunit /tests/integration
 ```
 
+Coding standard
+---------------
+
+This program attempts to adhere to the [PSR-12](https://www.php-fig.org/psr/psr-12/) coding standard
+for all PHP code. For convenience, the dev environment
+provides [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer/), which detects
+and can repair many PSR-12 violations.
+
+```bash
+# Detect PSR-12 violations.
+docker exec -it exploreuk-web-app-omeka-1 /vendor/bin/phpcs -w --exclude=Generic.Files.LineLength --standard=PSR12 /app/shim
+
+# Fix PSR-12 violations which can be fixed automatically.
+docker exec -it exploreuk-web-app-omeka-1 /vendor/bin/phpcbf -w --exclude=Generic.Files.LineLength --standard=PSR12 /app/shim
+```
+
 Licenses
 --------
 
