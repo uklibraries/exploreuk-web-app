@@ -114,7 +114,7 @@ docker exec -it exploreuk-web-app-omeka-1 /vendor/bin/phpunit /tests/integration
 Licenses
 --------
 
-Copyright (C) 2018-2024 MLE Slone and Eric Weig.
+Copyright (C) 2018-2025 Neal Powers, MLE Slone, and Eric Weig.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
