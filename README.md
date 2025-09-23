@@ -92,6 +92,25 @@ docker cp $container_name:$source_files_directory /path/on/host/file/destination
 docker cp /path/on/host $container_name:/path/in/container
 ```
 
+Tests
+-----
+
+There are PHPUnit tests in the /tests directory organized by suite.
+Usage:
+```bash
+# From the host, /tests location is required, optionally pass a subfolder for a particular test suite
+docker exec -it <name_of_container> /vendor/bin/phpunit /tests[/subfolder]
+
+# Example of above
+docker exec -it exploreuk-web-app-omeka-1 /vendor/bin/phpunit /tests/integration
+
+# From inside the container
+/vendor/bin/phpunit
+
+# Run a particular test suite by specifying a folder
+/vendor/bin/phpunit /tests/integration
+```
+
 Licenses
 --------
 
