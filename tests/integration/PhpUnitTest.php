@@ -1,4 +1,5 @@
 <?php
+
 use PHPUnit\Framework\TestCase;
 
 class PhpUnitTest extends TestCase
@@ -8,4 +9,3 @@ class PhpUnitTest extends TestCase
         $this->assertTrue(true);
     }
 }
-
