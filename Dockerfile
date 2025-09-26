@@ -1,12 +1,52 @@
+FROM php:8.3-fpm-alpine as builder
+
+RUN apk add --no-cache \
+	git \
+	zip \
+	unzip \
+	rsync \
+	bash \
+	nodejs \
+	npm
+
+WORKDIR /app
+
+COPY ./app/package.json .
+COPY ./app/package-lock.json .
+
+RUN npm install
+
+COPY ./app .
+
+WORKDIR /omeka
+
+ADD "https://github.com/omeka/Omeka/releases/download/v3.1.2/omeka-3.1.2.zip" /tmp/omeka.zip
+
+RUN unzip /tmp/omeka.zip -d /tmp/omeka-unzipped && \
+	mv /tmp/omeka-unzipped/omeka-3.1.2/* . && \
+	mv /tmp/omeka-unzipped/omeka-3.1.2/.htaccess . && \
+	rm -rf /tmp/omeka-unzipped
+
+# Wipe out existing plugins if they exist and use the pinned versions from github
+RUN rm -rf ./plugins/HideElements && \
+	rm -rf ./plugins/SimplePages
+
+ADD "https://github.com/zerocrates/HideElements/releases/download/v1.4/HideElements-1.4.zip" /tmp/HideElements.zip
+ADD "https://github.com/omeka/plugin-SimplePages/releases/download/v3.2.1/SimplePages-3.2.1.zip" /tmp/SimplePages.zip
+
+RUN unzip /tmp/HideElements.zip -d ./plugins \
+	&& rm /tmp/HideElements.zip
+RUN unzip /tmp/SimplePages.zip -d ./plugins \
+	&& rm /tmp/SimplePages.zip
+
+RUN /app/exe/build.sh
+RUN /app/exe/stage.sh
+
 FROM php:8.3-fpm-alpine AS development
 
 # GID and UID of the nginx container
 ARG GID=101
 ARG UID=101
-
-RUN apk add --no-cache su-exec && \
-	addgroup -S -g ${GID} nginx && \
-	adduser -S -u ${UID} -G nginx nginx
 
 RUN apk add --no-cache \
 	procps \
@@ -34,63 +74,25 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
 
 RUN pecl install imagick && docker-php-ext-enable imagick
 
+COPY --from=builder /app /app
+COPY --from=builder /omeka /omeka
+
 WORKDIR /
 
 COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
-
 COPY ./composer.json .
 COPY ./composer.lock .
-
 RUN composer install
 
 WORKDIR /app
 
-COPY ./app/package.json .
-COPY ./app/package-lock.json .
-
-RUN npm install
-
-COPY app .
-
-# Or directory set in docker-compose for omeka installation step
-WORKDIR /omeka
-
-ADD "https://github.com/omeka/Omeka/releases/download/v3.1.2/omeka-3.1.2.zip" /tmp/omeka.zip
-
-RUN unzip /tmp/omeka.zip -d /tmp/omeka-unzipped && \
-	mv /tmp/omeka-unzipped/omeka-3.1.2/* . && \
-	mv /tmp/omeka-unzipped/omeka-3.1.2/.htaccess . && \
-	rm -rf /tmp/omeka-unzipped
-
-# Wipe out existing plugins and use the latest version from github
-RUN rm -rf ./plugins/HideElements && \
-	rm -rf ./plugins/SimplePages && \
-	git clone "https://github.com/zerocrates/HideElements.git" ./plugins/HideElements && \
-	git clone "https://github.com/omeka/plugin-SimplePages.git" ./plugins/SimplePages
-
-COPY entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
-RUN /app/exe/build.sh
-RUN /app/exe/stage.sh
-
-COPY ./php-fpm/php.ini-development /usr/local/etc/php/php.ini
-COPY ./php-fpm/www.conf /usr/local/etc/php-fpm.d/www.conf
-COPY ./php-fpm/php-fpm.conf /usr/local/etc/php-fpm/php-fpm.conf
-
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
-EXPOSE 9000
-
 CMD ["php-fpm", "-F"]
 
 FROM php:8.3-fpm-alpine AS production
-
-ARG GID=101
-ARG UID=101
-
-RUN apk add --no-cache su-exec && \
-	addgroup -S -g ${GID} nginx && \
-	adduser -S -u ${UID} -G nginx nginx
 
 RUN apk add --no-cache rsync \
 	imagemagick \
@@ -120,7 +122,7 @@ RUN apk add --no-cache --virtual .build-deps\
 
 WORKDIR /omeka
 
-COPY --from=development /omeka /tmp/omeka
+COPY --from=builder /omeka .
 
 COPY ./php-fpm/php.ini-production /usr/local/etc/php/php.ini
 COPY ./php-fpm/www.conf /usr/local/etc/php-fpm.d/www.conf

@@ -27,11 +27,15 @@ mkdir -p "/tmp/omeka"
 	echo "charset = '${DB_CHARSET}'"
 } > "/tmp/omeka/db.ini"
 
-# Set appropriate permissions for db.ini
-chown nginx:nginx "/tmp/omeka/db.ini"
-chmod 640 "/tmp/omeka/db.ini" # Owner can read/write, group can read
-chown -R nginx:nginx "/tmp/omeka"
-rsync -a "/tmp/omeka/" "$OMEKA_ROOT"
+# Set appropriate permissions
+rsync -a "/tmp/omeka/db.ini" "$OMEKA_ROOT/"
+chown root:www-data "$OMEKA_ROOT/db.ini"
+chmod 640 "$OMEKA_ROOT/db.ini"
+
+chmod 755 "$OMEKA_ROOT"
+chown -R root:www-data "$OMEKA_ROOT/files"
+chmod -R 775 "$OMEKA_ROOT/files"
+chmod g+s "$OMEKA_ROOT/files"
 
 if [ "$APP_ENV" = "development" ]; then
 	if [ ! -d "$DEV_APP_SRC" ]; then
