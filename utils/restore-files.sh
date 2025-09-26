@@ -2,7 +2,7 @@
 set -e
 
 # Check to make sure all environment variables are set
-if [ -z $LOCAL_FILES_DIR ] || [ -z $OMEKA_CONTAINER ]; then
+if [ -z "$LOCAL_FILES_DIR" ] || [ -z "$OMEKA_CONTAINER" ]; then
 	echo "One or more environment variables not set"
 	echo "Need LOCAL_FILES_DIR, OMEKA_CONTAINER"
 	exit 1
@@ -15,5 +15,8 @@ if [ ! -d "$LOCAL_FILES_DIR" ]; then
 fi
 
 docker cp "$LOCAL_FILES_DIR/." "$OMEKA_CONTAINER:/omeka/files/"
+
+echo "Setting permissions for /omeka/files to www-data"
+docker exec -it "$OMEKA_CONTAINER" chown -R root:www-data "/omeka/files"
 
 echo "Load from backup complete"
