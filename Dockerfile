@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine as builder
+FROM php:8.3-fpm-alpine AS builder
 
 RUN apk add --no-cache \
 	git \
