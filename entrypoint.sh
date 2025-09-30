@@ -6,11 +6,11 @@ if [ "$APP_ENV" == "production" ]; then
 	MYSQL_DATABASE=$(cat /run/secrets/mysql_database)
 fi
 
-umask 077
-
 # Paths for dev source code sync
 DEV_APP_SRC="/app"
 OMEKA_ROOT="/omeka"
+
+umask 077
 
 # Create db.ini programmatically
 # Using a compound command to group echos and redirect output
@@ -32,10 +32,12 @@ rsync -a "/tmp/omeka/db.ini" "$OMEKA_ROOT/"
 chown root:www-data "$OMEKA_ROOT/db.ini"
 chmod 640 "$OMEKA_ROOT/db.ini"
 
+umask 002
+
 chmod 755 "$OMEKA_ROOT"
 chown -R root:www-data "$OMEKA_ROOT/files"
-chmod -R 775 "$OMEKA_ROOT/files"
-chmod g+s "$OMEKA_ROOT/files"
+find "$OMEKA_ROOT/files" -type d -exec chmod 0775 "{}" \;
+find "$OMEKA_ROOT/files" -type f -exec chmod 0664 "{}" \;
 
 if [ "$APP_ENV" = "development" ]; then
 	if [ ! -d "$DEV_APP_SRC" ]; then
@@ -49,9 +51,11 @@ if [ "$APP_ENV" = "development" ]; then
 		while true; do
 			inotifywait -r -e create,modify,delete,move "$DEV_APP_SRC"
 			echo "-> Change detected, re-building..."
-			su-exec nginx sh $DEV_APP_SRC/exe/build.sh
+
+			sh $DEV_APP_SRC/exe/build.sh
 			echo "omeuka built"
-			su-exec nginx sh $DEV_APP_SRC/exe/stage.sh
+
+			sh $DEV_APP_SRC/exe/stage.sh
 			echo "-> Extracted in $OMEKA_ROOT"
 		done
 	) &

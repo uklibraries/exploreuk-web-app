@@ -17,6 +17,8 @@ fi
 docker cp "$LOCAL_FILES_DIR/." "$OMEKA_CONTAINER:/omeka/files/"
 
 echo "Setting permissions for /omeka/files to www-data"
-docker exec -it "$OMEKA_CONTAINER" chown -R root:www-data "/omeka/files"
+docker exec "$OMEKA_CONTAINER" chown -R root:www-data "/omeka/files"
+docker exec "$OMEKA_CONTAINER" find "/omeka/files" -type d -exec chmod 0775 "{}" \;
+docker exec "$OMEKA_CONTAINER" find "/omeka/files" -type f -exec chmod 0664 "{}" \;
 
 echo "Load from backup complete"
