@@ -1,0 +1,3 @@
+[submodule "assets/frontpage-assets"]
+	path = assets/frontpage-assets
+	url = git@github.com:uklibraries/exploreuk-frontpage-assets.git
