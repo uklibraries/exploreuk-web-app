@@ -6,7 +6,7 @@ services:
     networks:
         - app_network
     volumes:
-      - omeka_static:/omeka
+      - omeka_static:/app
     depends_on:
       - db
     healthcheck:
@@ -38,7 +38,7 @@ services:
     networks:
       - app_network
     volumes:
-      - omeka_static:/omeka
+      - omeka_static:/app
       - findingaid:/findingaid
       - ./nginx/default.prod.conf:/etc/nginx/conf.d/default.conf
     ports:

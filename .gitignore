@@ -4,7 +4,7 @@ backup/*
 !backup/README.md
 /app/dist/*
 dist/*
-/app/theme/assets/css/main.min.css
+/app/themes/omeukaprologue/assets/css/main.min.css
 node_modules/
 .env*
 !.env.dev

@@ -1,6 +1,6 @@
 server {
 	listen 80;
-	root /omeka;
+	root /app;
 	index catalog.php index.php;
 	
 	# 127.0.0.11 is the internal docker DNS server for every container
