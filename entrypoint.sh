@@ -7,8 +7,9 @@ if [ "$APP_ENV" == "production" ]; then
 fi
 
 # Paths for dev source code sync
+# XXX: Merge these
 DEV_APP_SRC="/app"
-OMEKA_ROOT="/omeka"
+OMEKA_ROOT="/app"
 
 umask 077
 
@@ -39,28 +40,12 @@ chown -R root:www-data "$OMEKA_ROOT/files"
 find "$OMEKA_ROOT/files" -type d -exec chmod 0775 "{}" \;
 find "$OMEKA_ROOT/files" -type f -exec chmod 0664 "{}" \;
 
+# XXX: Remove this
 if [ "$APP_ENV" = "development" ]; then
 	if [ ! -d "$DEV_APP_SRC" ]; then
 		echo "Error: APP_ENV is $APP_ENV but the source code directory '$DEV_APP_SRC' is not mounted." >&2
 		exit 1
 	fi
-
-	echo "App Env is dev. Listening for changes to $DEV_APP_SRC"
-
-	(
-		while true; do
-			inotifywait -r -e create,modify,delete,move "$DEV_APP_SRC"
-			echo "-> Change detected, re-building..."
-
-			sh $DEV_APP_SRC/exe/build.sh
-			echo "omeuka built"
-
-			sh $DEV_APP_SRC/exe/stage.sh
-			echo "-> Extracted in $OMEKA_ROOT"
-		done
-	) &
-	exec php-fpm -F
-else
-	echo "-> Production mode enabled"
-	exec php-fpm -F
 fi
+
+exec php-fpm -F

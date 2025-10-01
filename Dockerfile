@@ -11,15 +11,7 @@ RUN apk add --no-cache \
 
 WORKDIR /app
 
-COPY ./app/package.json .
-COPY ./app/package-lock.json .
-
-RUN npm install
-
-COPY ./app .
-
-WORKDIR /omeka
-
+# Install Omeka
 ADD "https://github.com/omeka/Omeka/releases/download/v3.1.2/omeka-3.1.2.zip" /tmp/omeka.zip
 
 RUN unzip /tmp/omeka.zip -d /tmp/omeka-unzipped && \
@@ -39,8 +31,17 @@ RUN unzip /tmp/HideElements.zip -d ./plugins \
 RUN unzip /tmp/SimplePages.zip -d ./plugins \
 	&& rm /tmp/SimplePages.zip
 
-RUN /app/exe/build.sh
-RUN /app/exe/stage.sh
+# Install application and any necesary packages.
+
+COPY ./app/package.json .
+COPY ./app/package-lock.json .
+
+RUN npm install
+
+COPY ./app .
+
+# This will need to be reworked.
+RUN /app/exe/minify.sh
 
 FROM php:8.3-fpm-alpine AS development
 
@@ -75,7 +76,6 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg && \
 RUN pecl install imagick && docker-php-ext-enable imagick
 
 COPY --from=builder /app /app
-COPY --from=builder /omeka /omeka
 
 WORKDIR /
 
@@ -120,9 +120,10 @@ RUN apk add --no-cache --virtual .build-deps\
 	pecl install imagick && docker-php-ext-enable imagick && \
 	apk del .build-deps
 
-WORKDIR /omeka
+WORKDIR /app
 
-COPY --from=builder /omeka .
+COPY --from=builder /app .
+RUN rm -rf /app/exe
 
 COPY ./php-fpm/php.ini-production /usr/local/etc/php/php.ini
 COPY ./php-fpm/www.conf /usr/local/etc/php-fpm.d/www.conf
