@@ -6,9 +6,6 @@ if [ "$APP_ENV" == "production" ]; then
 	MYSQL_DATABASE=$(cat /run/secrets/mysql_database)
 fi
 
-# Paths for dev source code sync
-# XXX: Merge these
-DEV_APP_SRC="/app"
 OMEKA_ROOT="/app"
 
 umask 077
@@ -40,12 +37,8 @@ chown -R root:www-data "$OMEKA_ROOT/files"
 find "$OMEKA_ROOT/files" -type d -exec chmod 0775 "{}" \;
 find "$OMEKA_ROOT/files" -type f -exec chmod 0664 "{}" \;
 
-# XXX: Remove this
-if [ "$APP_ENV" = "development" ]; then
-	if [ ! -d "$DEV_APP_SRC" ]; then
-		echo "Error: APP_ENV is $APP_ENV but the source code directory '$DEV_APP_SRC' is not mounted." >&2
-		exit 1
-	fi
+if [ "$APP_ENV" == "development" ]; then
+	bash /app/exe/minify.sh
 fi
 
 exec php-fpm -F
