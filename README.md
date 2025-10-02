@@ -121,10 +121,10 @@ and can repair many PSR-12 violations.
 
 ```bash
 # Detect PSR-12 violations.
-docker exec -it exploreuk-web-app-omeka-1 /vendor/bin/phpcs -w --exclude=Generic.Files.LineLength --standard=PSR12 /app/shim /tests
+docker exec -it exploreuk-web-app-omeka-1 /vendor/bin/phpcs -w --exclude=Generic.Files.LineLength --standard=PSR12 /tests /app/catalog.php /app/application/libraries/ExploreUK
 
 # Fix PSR-12 violations which can be fixed automatically.
-docker exec -it exploreuk-web-app-omeka-1 /vendor/bin/phpcbf -w --exclude=Generic.Files.LineLength --standard=PSR12 /app/shim /tests
+docker exec -it exploreuk-web-app-omeka-1 /vendor/bin/phpcbf -w --exclude=Generic.Files.LineLength --standard=PSR12 /tests /app/catalog.php /app/application/libraries/ExploreUK
 ```
 
 Licenses
