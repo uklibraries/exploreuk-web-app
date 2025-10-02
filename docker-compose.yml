@@ -10,7 +10,6 @@ services:
       # Bind mount for dev, baked in image for production
       - ./php-fpm/php.ini-development:/usr/local/etc/php/conf.d/php.ini
       - omeka_static:/app
-      - ./tests:/tests
       - ./phpunit.xml:/phpunit.xml
     develop:
       watch:
@@ -19,6 +18,9 @@ services:
           target: /app
           ignore:
             - node_modules/
+        - action: sync+restart
+          path: ./tests
+          target: /tests
     env_file:
       - .env.dev
     networks:
