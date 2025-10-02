@@ -7,6 +7,22 @@ admin mode.
 
 This is based in part on euk: https://github.com/uklibraries/euk/ .
 
+Developer installation
+----------------------
+
+We use Docker for development. Quickstart:
+
+```
+git clone git@github.com:uklibraries/exploreuk-web-app.git
+cd exploreuk-web-app
+git checkout dev
+docker compose watch
+```
+
+The application should be available at http://localhost:8080 .
+The code is synced, linted, and tested on save. Linter and test
+results appear in `docker compose logs -f`.
+
 Installation
 ------------
 
