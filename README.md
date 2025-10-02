@@ -16,6 +16,7 @@ We use Docker for development. Quickstart:
 git clone git@github.com:uklibraries/exploreuk-web-app.git
 cd exploreuk-web-app
 git checkout dev
+git submodule init; git submodule update
 docker compose watch
 ```
 
