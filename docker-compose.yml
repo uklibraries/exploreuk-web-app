@@ -1,5 +1,6 @@
 services:
   omeka:
+    command: /usr/local/bin/entrypoint.sh
     build:
       context: .
       # This docker-compose is for development purposes
@@ -11,6 +12,13 @@ services:
       - omeka_static:/app
       - ./tests:/tests
       - ./phpunit.xml:/phpunit.xml
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./app
+          target: /app
+          ignore:
+            - node_modules/
     env_file:
       - .env.dev
     networks:
