@@ -1,5 +1,7 @@
 <?php
 
+namespace ExploreUK;
+
 use PHPUnit\Framework\TestCase;
 
 use function ExploreUK\brevity;

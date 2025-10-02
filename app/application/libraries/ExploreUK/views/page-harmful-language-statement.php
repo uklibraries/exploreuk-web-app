@@ -8,3 +8,4 @@ You may come across language in UK Libraries Special Collections Research Center
 If you find description with problematic language that you think SCRC should review, please contact us at <a href="mailto:SCRC@uky.edu">SCRC@uky.edu</a>.
 </p>
 </div>
+<?php

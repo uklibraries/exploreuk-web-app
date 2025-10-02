@@ -40,6 +40,7 @@ find "$OMEKA_ROOT/files" -type f -exec chmod 0664 "{}" \;
 if [ "$APP_ENV" == "development" ]; then
 	bash "$OMEKA_ROOT/exe/minify.sh"
 	set +e
+	/vendor/bin/phpcs -w --exclude=Generic.Files.LineLength --standard=PSR12 /tests /app/catalog.php /app/application/libraries/ExploreUK
 	/vendor/bin/phpunit --bootstrap /tests/bootstrap.php /tests
 	set -e
 fi
