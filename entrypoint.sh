@@ -45,4 +45,9 @@ if [ "$APP_ENV" == "development" ]; then
 	set -e
 fi
 
+# If a command was provided, run that instead of php-fpm in the foreground
+if [ "$#" -gt 0 ]; then
+    exec "$@"
+fi
+
 exec php-fpm -F

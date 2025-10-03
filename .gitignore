@@ -7,13 +7,16 @@ dist/*
 /app/themes/omeukaprologue/assets/css/main.min.css
 node_modules/
 .env*
+!.env.ci
 !.env.dev
 nginx/default.conf
 nginx/default.prod.conf
 docker-entrypoint-initdb.d/
 app/files
+app/theme
 /utils/profiles/*
 !utils/profiles/exampleprofile.sh
 /xml
 /secrets
 /vendor
+

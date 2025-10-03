@@ -1,0 +1,17 @@
+services:
+  omeka:
+    build:
+      context: .
+      target: development
+    volumes: []
+    env_file:
+      - .env.ci
+    develop: null
+
+  web:
+    env_file:
+      - .env.ci
+
+  db:
+    env_file:
+      - .env.ci
