@@ -2,7 +2,7 @@ services:
   omeka:
     build:
       context: .
-      target: development
+      target: ci
     volumes: []
     env_file:
       - .env.ci
