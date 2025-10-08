@@ -105,6 +105,10 @@ RUN composer install
 
 WORKDIR /app
 
+COPY ./php-fpm/php.ini-production /usr/local/etc/php/php.ini
+COPY ./php-fpm/php-fpm.conf /usr/local/etc/php-fpm.conf
+COPY ./php-fpm/www.conf /usr/local/etc/php-fpm.d/www.conf
+
 COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
@@ -148,7 +152,7 @@ RUN rm -rf /app/exe
 
 COPY ./php-fpm/php.ini-production /usr/local/etc/php/php.ini
 COPY ./php-fpm/www.conf /usr/local/etc/php-fpm.d/www.conf
-COPY ./php-fpm/php-fpm.conf /usr/local/etc/php-fpm.d/php-fpm.conf
+COPY ./php-fpm/php-fpm.conf /usr/local/etc/php-fpm.conf
 
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
