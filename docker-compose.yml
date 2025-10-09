@@ -65,7 +65,7 @@ services:
   findingaid:
     env_file:
       - .env.dev
-    image: nealpowers104/findingaid:${FA_TAG}
+    image: nealpowers104/findingaid:latest
     volumes:
       - findingaid:/app
       - ./xml:/app/xml:ro
