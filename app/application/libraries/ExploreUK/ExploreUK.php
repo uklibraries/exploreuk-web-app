@@ -17,7 +17,8 @@ class ExploreUK
         if (realpath(EUK_BASE_DIR) !== realpath($_SERVER['DOCUMENT_ROOT'])) {
             $this->config['base'] = basename(EUK_BASE_DIR) . '/';
         }
-        if ($this->omeka->getThemeOption('euk_dip_store_base_url') === 'https://exploreuk.uky.edu/dips') {
+        $dipsUrl = $this->omeka->getThemeOption('euk_dip_store_base_url');
+        if (strpos($dipsUrl, '/dips') !== false) {
             $this->config['prod'] = true;
         } else {
             $this->config['prod'] = false;
