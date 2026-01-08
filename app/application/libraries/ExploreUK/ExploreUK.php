@@ -18,11 +18,7 @@ class ExploreUK
             $this->config['base'] = basename(EUK_BASE_DIR) . '/';
         }
         $dipsUrl = $this->omeka->getThemeOption('euk_dip_store_base_url');
-        if (strpos($dipsUrl, '/dips') !== false) {
-            $this->config['prod'] = true;
-        } else {
-            $this->config['prod'] = false;
-        }
+        $this->config['prod'] = !str_contains($dipsUrl, 'test');
     }
 
     private function configure()
