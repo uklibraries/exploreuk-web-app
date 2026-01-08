@@ -63,9 +63,12 @@ services:
       retries: 5
 
   findingaid:
+    profiles:
+      - with_fa
     env_file:
       - .env.dev
-    image: nealpowers104/findingaid:latest
+    # Pass in which findinagid image as an environment variable
+    image: ${FA_IMAGE}
     volumes:
       - findingaid:/app
       - ./xml:/app/xml:ro
