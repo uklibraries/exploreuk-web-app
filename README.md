@@ -141,7 +141,7 @@ docker exec -it exploreuk-web-app-omeka-1 /vendor/bin/phpcbf -w --exclude=Generi
 Licenses
 --------
 
-Copyright (C) 2018-2025 Neal Powers, MLE Slone, and Eric Weig.
+Copyright (C) 2018-2026 Neal Powers, MLE Slone, and Eric Weig.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
