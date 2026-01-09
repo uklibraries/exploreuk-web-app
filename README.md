@@ -83,36 +83,30 @@ programs are required:
 Docker
 ------
 
-Docker has been added as an option to quickly produce a development environment. `.env.example` and `nginx/default.conf.example` are provided as default configurations and should be changed for any production environment. A process for loading from a backup is detailed in the [backup readme](/backup/README.md).
+[Docker](https://www.docker.com/) has been added as an option to scaffold reproducible environments for this application. There are various configurations and init files to produce a working [Omeka Classic](https://omeka.org/classic/) database which can be used as a base for development or production.
 
-Please see the [docker documentation](https://docs.docker.com/) for details on commands, but the following shell command should provide a working environment:
+### Configuration
+`.env.example` and `nginx/default.conf` are provided as configurations. Developers are expected to create their own .env files for their particular purpose at each stage (e.g., .env.dev, .env.ci, .env.prod). .env.example provides a starting point for creating these files.
+
+The docker-compose.yml file is specifically for development. Other compose files are designed to be [merged](https://docs.docker.com/compose/how-tos/multiple-compose-files/merge/) with the dev compose file. A production file can be found in the [ukl-ansible-playbooks](https://github.com/uklibraries/ukl-ansible-playbooks) repository.
+
+### Using development compose file
+For development, it is expected that developers will use [watch](https://docs.docker.com/compose/how-tos/file-watch/) to sync file changes. Starting up a dev environment can be accomplished with this command:
 ```bash
-# Start containers detailed in docker-compose.yml in a detached state
-docker compose up -d
-
-# Stop containers
-docker compose down
-
-# List names and images of running containers on the host system
-docker compose ps
-
-# Login to a particular container in an interactive shell
-docker exec -it $name_of_container sh
-
-# Generate a dump for the SQL database
-docker exec $name_of_container pg_dump -U $sql_database_username -d $db_name > /path/on/host/backup.sql
-
-# Copy files from the container to the host
-docker cp $container_name:$source_files_directory /path/on/host/file/destination
-
-# Copy a file from the host to a container
-docker cp /path/on/host $container_name:/path/in/container
+docker compose up --watch
 ```
+
+### Optional: Findingaid
+There is a service, findingaid, which is an integration with [findingaid](https://github.com/uklibraries/findingaid). Its inclusion in the development environment is optional. Developers wishing to include this should follow the docker installation instructions in the findingaid repo, set an environment variable FA_IMAGE to the location of the image (locally or in a container registry), and can then include the service with a command like this:
+```bash
+docker compose --profile with_fa up --watch
+```
+Please see the [docker documentation](https://docs.docker.com/) for details on docker usage.
 
 Tests
 -----
 
-There are PHPUnit tests in the /tests directory organized by suite.
+There are PHPUnit tests in the /tests directory organized by suite. Additionally, when using watch, tests are ran on file changes.
 Usage:
 ```bash
 # From the host, /tests location is required, optionally pass a subfolder for a particular test suite
