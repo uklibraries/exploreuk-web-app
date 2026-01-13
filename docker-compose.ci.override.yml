@@ -13,11 +13,6 @@ services:
       - .env.ci
     ports: [] # disable publish ports for jobs
 
-  findingaid:
-    env_file:
-      - .env.ci
-    image: nealpowers104/findingaid:latest
-
   db:
     env_file:
       - .env.ci

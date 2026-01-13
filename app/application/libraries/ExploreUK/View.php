@@ -140,7 +140,7 @@ class View
         $euk_requires_capitalization = EUK_REQUIRES_CAPITALIZATION;
 
         if ($field === 'id') {
-            $item = "https://exploreuk.uky.edu/catalog/$item";
+            $item = "/catalog/$item";
         }
         if (in_array($field, $euk_requires_capitalization)) {
             $item = ucfirst((string) $item);
