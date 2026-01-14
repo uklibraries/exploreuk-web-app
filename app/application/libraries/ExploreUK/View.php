@@ -143,7 +143,7 @@ class View
         $euk_requires_capitalization = EUK_REQUIRES_CAPITALIZATION;
 
         if ($field === 'id') {
-            $item = "/catalog/$item";
+            $item = 'https://' . $_SERVER['HTTP_HOST'] . $this->path("/catalog/$item");
         }
         if (in_array($field, $euk_requires_capitalization)) {
             $item = ucfirst((string) $item);
