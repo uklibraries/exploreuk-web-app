@@ -112,6 +112,9 @@ class View
         * Please remove when the index is clean.
         */
         if ($field === 'usage_display') {
+            if (is_array($content)) {
+                $content = $content[0];
+            }
             $content = preg_replace('/Please go to http:\/\/kdl.kyvl.org for more information\./', 'For information about permissions to reproduce or publish, <a href="https://libraries.uky.edu/ContactSCRC" target="_blank" rel="noopener">contact the Special Collections Research Center</a>.', (string) $content);
         }
         if (isset($euk_locale['en'][$field])) {
