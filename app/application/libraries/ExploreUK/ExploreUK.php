@@ -443,8 +443,8 @@ class ExploreUK
             return;
         }
 
-        $split = $doc['compound_object_split_b'];
-        $object_type = $doc['object_type_s'];
+        $split = $doc['compound_object_split_b'] ?? false;
+        $object_type = $doc['object_type_s'] ?? null;
         if (is_array($object_type)) {
             $object_type = $object_type[0];
         }
