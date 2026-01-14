@@ -1,4 +1,4 @@
-<?php require('header.php'); ?>
+<?php include('header.php'); ?>
 
 <div class="search-and-item-control-row bg-uklgray">
 <div class="search-and-item-control-container">

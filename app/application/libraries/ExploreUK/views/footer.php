@@ -117,5 +117,8 @@ $(function () {
 <script src="<?= $this->themePath('javascripts/main.js') ?>"></script>
 <script src="<?= $this->themePath('javascripts/jsbin-tabs.js') ?>"></script>
 <script src="<?= $this->themePath('assets/js/lazyload.js') ?>"></script>
+
+<?php include('universal-footer.php'); ?>
+
     </body>
 </html>
