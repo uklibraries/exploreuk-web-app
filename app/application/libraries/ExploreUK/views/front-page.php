@@ -1,4 +1,4 @@
-<?php require('header.php'); ?>
+<?php include('header.php'); ?>
 <div class="resources-section bg-uklblack">
 
 <h2 class="popular-resources-title">Popular Resources</h2>
