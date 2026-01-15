@@ -2453,3 +2453,12 @@ form input[type=email], form input[type=password], form input[type=text], form s
      background: #f7f7f7;
 }
 /* end facet browse */
+
+/*UKL universal footer fixes */
+.ukl-ext-clamp .universal-footer{
+    line-height: 1rem;
+}
+
+.ukl-ext-clamp a{
+    white-space: nowrap;
+}
