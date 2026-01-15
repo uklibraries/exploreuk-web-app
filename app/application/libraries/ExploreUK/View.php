@@ -112,6 +112,9 @@ class View
         * Please remove when the index is clean.
         */
         if ($field === 'usage_display') {
+            if (is_array($content)) {
+                $content = $content[0];
+            }
             $content = preg_replace('/Please go to http:\/\/kdl.kyvl.org for more information\./', 'For information about permissions to reproduce or publish, <a href="https://libraries.uky.edu/ContactSCRC" target="_blank" rel="noopener">contact the Special Collections Research Center</a>.', (string) $content);
         }
         if (isset($euk_locale['en'][$field])) {
@@ -140,7 +143,7 @@ class View
         $euk_requires_capitalization = EUK_REQUIRES_CAPITALIZATION;
 
         if ($field === 'id') {
-            $item = "/catalog/$item";
+            $item = 'https://' . $_SERVER['HTTP_HOST'] . $this->path("/catalog/$item");
         }
         if (in_array($field, $euk_requires_capitalization)) {
             $item = ucfirst((string) $item);

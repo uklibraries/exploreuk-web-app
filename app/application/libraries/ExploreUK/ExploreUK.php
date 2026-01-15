@@ -84,10 +84,11 @@ class ExploreUK
 
     public function cleanupHost($value)
     {
+        while (is_array($value) and count($value) > 0) {
+            $value = $value[0];
+        }
+
         if (!$this->config['prod']) {
-            if (is_array($value) and count($value) > 0) {
-                $value = $value[0];
-            }
             if (str_contains((string) $value, '/dips/')) {
                 $value = preg_replace('/\/dips\//', '/dipstest/', (string) $value);
             }
@@ -442,8 +443,8 @@ class ExploreUK
             return;
         }
 
-        $split = $doc['compound_object_split_b'];
-        $object_type = $doc['object_type_s'];
+        $split = $doc['compound_object_split_b'] ?? false;
+        $object_type = $doc['object_type_s'] ?? null;
         if (is_array($object_type)) {
             $object_type = $object_type[0];
         }
