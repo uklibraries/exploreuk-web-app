@@ -7,6 +7,23 @@ admin mode.
 
 This is based in part on euk: https://github.com/uklibraries/euk/ .
 
+Developer installation
+----------------------
+
+We use Docker for development. Quickstart:
+
+```
+git clone git@github.com:uklibraries/exploreuk-web-app.git
+cd exploreuk-web-app
+git checkout dev
+git submodule init; git submodule update
+docker compose watch
+```
+
+The application should be available at http://localhost:8080 .
+The code is synced, linted, and tested on save. Linter and test
+results appear in `docker compose logs -f`.
+
 Installation
 ------------
 
@@ -63,10 +80,68 @@ programs are required:
 * rsync
 * wget
 
+Docker
+------
+
+[Docker](https://www.docker.com/) has been added as an option to scaffold reproducible environments for this application. There are various configurations and init files to produce a working [Omeka Classic](https://omeka.org/classic/) database which can be used as a base for development or production.
+
+### Configuration
+`.env.example` and `nginx/default.conf` are provided as configurations. Developers are expected to create their own .env files for their particular purpose at each stage (e.g., .env.dev, .env.ci, .env.prod). .env.example provides a starting point for creating these files.
+
+The docker-compose.yml file is specifically for development. Other compose files are designed to be [merged](https://docs.docker.com/compose/how-tos/multiple-compose-files/merge/) with the dev compose file. A production file can be found in the [ukl-ansible-playbooks](https://github.com/uklibraries/ukl-ansible-playbooks) repository.
+
+### Using development compose file
+For development, it is expected that developers will use [watch](https://docs.docker.com/compose/how-tos/file-watch/) to sync file changes. Starting up a dev environment can be accomplished with this command:
+```bash
+docker compose up --watch
+```
+
+### Optional: Findingaid
+There is a service, findingaid, which is an integration with [findingaid](https://github.com/uklibraries/findingaid). Its inclusion in the development environment is optional. Developers wishing to include this should follow the docker installation instructions in the findingaid repo, set an environment variable FA_IMAGE to the location of the image (locally or in a container registry), and can then include the service with a command like this:
+```bash
+docker compose --profile with_fa up --watch
+```
+Please see the [docker documentation](https://docs.docker.com/) for details on docker usage.
+
+Tests
+-----
+
+There are PHPUnit tests in the /tests directory organized by suite. Additionally, when using watch, tests are ran on file changes.
+Usage:
+```bash
+# From the host, /tests location is required, optionally pass a subfolder for a particular test suite
+docker exec -it <name_of_container> /vendor/bin/phpunit /tests[/subfolder]
+
+# Example of above
+docker exec -it exploreuk-web-app-omeka-1 /vendor/bin/phpunit /tests/integration
+
+# From inside the container
+/vendor/bin/phpunit
+
+# Run a particular test suite by specifying a folder
+/vendor/bin/phpunit /tests/integration
+```
+
+Coding standard
+---------------
+
+This program attempts to adhere to the [PSR-12](https://www.php-fig.org/psr/psr-12/) coding standard
+for all PHP code. For convenience, the dev environment
+provides [PHP_CodeSniffer](https://github.com/PHPCSStandards/PHP_CodeSniffer/), which detects
+and can repair many PSR-12 violations.
+
+```bash
+# Detect PSR-12 violations.
+docker exec -it exploreuk-web-app-omeka-1 /vendor/bin/phpcs -w --exclude=Generic.Files.LineLength --standard=PSR12 /tests /app/catalog.php /app/application/libraries/ExploreUK
+
+# Fix PSR-12 violations which can be fixed automatically.
+docker exec -it exploreuk-web-app-omeka-1 /vendor/bin/phpcbf -w --exclude=Generic.Files.LineLength --standard=PSR12 /tests /app/catalog.php /app/application/libraries/ExploreUK
+```
+
 Licenses
 --------
 
-Copyright (C) 2018-2024 MLE Slone and Eric Weig.
+Copyright (C) 2018-2026 Neal Powers, MLE Slone, and Eric Weig.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

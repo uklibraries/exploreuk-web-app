@@ -1,0 +1,7 @@
+{
+    "require-dev": {
+        "rector/rector": "^2.1",
+        "phpunit/phpunit": "^12.3",
+        "squizlabs/php_codesniffer": "^4.0"
+    }
+}

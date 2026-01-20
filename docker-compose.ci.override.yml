@@ -1,0 +1,18 @@
+services:
+  omeka:
+    build:
+      context: .
+      target: ci
+    volumes: []
+    env_file:
+      - .env.ci
+    develop: null
+
+  web:
+    env_file:
+      - .env.ci
+    ports: [] # disable publish ports for jobs
+
+  db:
+    env_file:
+      - .env.ci

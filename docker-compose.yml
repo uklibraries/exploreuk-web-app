@@ -1,0 +1,87 @@
+services:
+  omeka:
+    command: /usr/local/bin/entrypoint.sh
+    build:
+      context: .
+      # This docker-compose is for development purposes
+      target: development
+    volumes:
+      - ./assets/frontpage-assets/files:/app/files
+      # Bind mount for dev, baked in image for production
+      - ./php-fpm/php.ini-development:/usr/local/etc/php/conf.d/php.ini
+      - omeka_static:/app
+      - ./phpunit.xml:/phpunit.xml
+    develop:
+      watch:
+        - action: sync+restart
+          path: ./app
+          target: /app
+          ignore:
+            - node_modules/
+        - action: sync+restart
+          path: ./tests
+          target: /tests
+    env_file:
+      - .env.dev
+    networks:
+      - app_network
+    depends_on:
+      db:
+        condition: service_healthy
+
+  web:
+    image: nginx:1.29.0
+    restart: always
+    env_file:
+      - .env.dev
+    ports:
+      - "8080:80"
+    volumes:
+      - ./assets/frontpage-assets/files:/app/files
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - omeka_static:/app
+      - findingaid:/opt/findingaid
+    depends_on:
+      - omeka
+    networks:
+      - app_network
+
+  db:
+    image: mysql:9.4.0
+    restart: always
+    env_file:
+      - .env.dev
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./assets/dev/mysql-init-files:/docker-entrypoint-initdb.d
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  findingaid:
+    profiles:
+      - with_fa
+    env_file:
+      - .env.dev
+    # Pass in which findinagid image as an environment variable
+    image: ${FA_IMAGE}
+    volumes:
+      - findingaid:/opt/findingaid
+      - ./xml:/opt/findingaid/xml:ro
+    networks:
+      - app_network
+    restart: unless-stopped
+
+
+volumes:
+  db_data:
+  omeka_static:
+  findingaid:
+
+networks:
+  app_network:
+    driver: bridge

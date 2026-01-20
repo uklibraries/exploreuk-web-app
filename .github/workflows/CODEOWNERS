@@ -1,0 +1,3 @@
+# Code owners
+/.github/CODEOWNERS @uklibraries/euk
+*       @uklibraries/euk
