@@ -1422,7 +1422,6 @@ summary {
 .form-group-brief {
     padding-top: 19px;
     width: 100%;
-    margin-top: 20px;
     height: 100px;
 }
 
@@ -2454,7 +2453,13 @@ form input[type=email], form input[type=password], form input[type=text], form s
 }
 /* end facet browse */
 
-/*UKL universal footer fixes */
+/* UKL universal header fixes */
+.ukl-ext-clamp a:hover {
+    color: #ffffff !important;
+    text-decoration: underline !important;
+}
+
+/* UKL universal footer fixes */
 .ukl-ext-clamp .universal-footer{
     line-height: 1rem;
 }
