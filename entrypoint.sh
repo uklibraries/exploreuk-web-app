@@ -38,6 +38,7 @@ find "$OMEKA_ROOT/files" -type d -exec chmod 0775 "{}" \;
 find "$OMEKA_ROOT/files" -type f -exec chmod 0664 "{}" \;
 
 if [ "$APP_ENV" == "development" ]; then
+    npm install
 	bash "$OMEKA_ROOT/exe/minify.sh"
 	set +e
 	/vendor/bin/phpcs -w --exclude=Generic.Files.LineLength --standard=PSR12 /tests /app/catalog.php /app/application/libraries/ExploreUK
