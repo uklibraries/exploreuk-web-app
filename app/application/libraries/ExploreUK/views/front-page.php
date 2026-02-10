@@ -1,26 +1,101 @@
 <?php require('header.php'); ?>
 <div class="resources-section bg-uklblack">
 
-<h2 class="popular-resources-title">Popular Resources</h2>
-<ul class="popular-resources">
-<?php foreach ($m['popular_resources'] as $index => $resource) : ?>
-<li><a id="popular-resource-<?= $index ?>" href="<?= $resource['url'] ?>">
-    <h3><span><?= $resource['label'] ?></span></h3>
-</a></li>
-
-<?php endforeach; ?>
-</ul>
-
-<h2 class="additional-resources-title">Additional Resources</h2>
-<ul class="additional-resources">
-<?php foreach ($m['additional_resources'] as $index => $resource) : ?>
-<li><a aria-label="<?= $resource['label'] ?>" id="additional-resource-<?= $index ?>" href="<?= $resource['url'] ?>" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $resource['image'] ?>" title="<?= $resource['label'] ?>"></a></li>
-
-<?php endforeach; ?>
-</ul>
+<!-- TWIG INCLUDE : @limestone/grid.twig" -->
+<div class="slab "  >
+    <div class="slab__wrapper">
+        <div class="editorial">
+            <!-- TWIG INCLUDE : molecules-headline-group" -->
+            <!-- TWIG INCLUDE : @limestone/headline-group.twig" -->
+            <h2 id="headline-group660c465a3fe75" class="headline-group ">
+                <span class="headline-group__super">Special Collections Resources Center</span>
+                <span class="headline-group__head ">
+                    <!-- TWIG INCLUDE : @limestone/link.twig" -->
+                    <span class="underline-link">Popular Resources</span>
+                    <!-- END TWIG INCLUDE : @limestone/link.twig" -->
+                </span>
+                <span class="headline-group__sub">view by format</span>
+            </h2>
+            <!-- END TWIG INCLUDE : @limestone/headline-group.twig" -->
+            <!-- END TWIG INCLUDE : molecules-headline-group" -->
+        </div>
+        <ul class="grid grid--4-up ">
+            <?php foreach ($m['popular_resources'] as $index => $resource) : ?>
+                <li class="grid__column">
+                    <a
+                        aria-label="<?= $resource['label'] ?>"
+                        id="popular-resource-<?= $index ?>"
+                        href="<?= $resource['url'] ?>"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        <img
+                            class="lazy"
+                            src="<?= $this->themePath('images/middlegray.png') ?>"
+                            data-src="<?= $resource['image'] ?>"
+                            title="<?= $resource['label'] ?>"
+                            alt="<?= htmlspecialchars((string)$resource['label']) ?>"
+                        >
+                            <span class="popular-card__label"><?= htmlspecialchars((string)$resource['label']) ?></span>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
 </div>
 
+<!-- END TWIG INCLUDE : @limestone/grid.twig" -->
+<div class="slab "  >
+    <div class="slab__wrapper">
+        <div class="editorial">
+            <!-- TWIG INCLUDE : molecules-headline-group" -->
+            <!-- TWIG INCLUDE : @limestone/headline-group.twig" -->
+            <h2 id="headline-group660c465a3fe75" class="headline-group ">
+                <span class="headline-group__super">Special Collections Resources Center</span>
+                <span class="headline-group__head ">
+                    <!-- TWIG INCLUDE : @limestone/link.twig" -->
+                    <span class="underline-link">Additional Resources</span>
+                    <!-- END TWIG INCLUDE : @limestone/link.twig" -->
+                </span>
+                <span class="headline-group__sub">view other sites by the Libraries</span>
+            </h2>
+            <!-- END TWIG INCLUDE : @limestone/headline-group.twig" -->
+            <!-- END TWIG INCLUDE : molecules-headline-group" -->
+        </div>
+        <ul class="grid grid--3-up ">
+            <?php foreach ($m['additional_resources'] as $index => $resource) : ?>
+                <li class="grid__column">
+                    <a
+                        aria-label="<?= $resource['label'] ?>"
+                        id="additional-resource-<?= $index ?>"
+                        href="<?= $resource['url'] ?>"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        <img
+                            class="lazy"
+                            src="<?= $this->themePath('images/middlegray.png') ?>"
+                            data-src="<?= $resource['image'] ?>"
+                            title="<?= $resource['label'] ?>"
+                            alt="<?= htmlspecialchars((string)$resource['label']) ?>"
+                        >
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+</div>
+<!-- END TWIG INCLUDE : @limestone/grid.twig" -->
+
+
 <style type="text/css">
+:root {
+/* colors */
+    --wildcat-blue: #0033a0;
+    --wildcat-white: #fff;
+    --warm-neutral-60: #efebe2;
+}
+
 #top > div {
     background-image:url(<?= $m['featured_image']['image'] ?>);
     height: 100%;
@@ -29,19 +104,10 @@
     background-size: cover;
 }
 
-<?php foreach ($m['popular_resources'] as $index => $resource) : ?>
-#popular-resource-<?= $index ?> {
-    background-image:url(<?= $resource['image'] ?>);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}
-<?php endforeach; ?>
-
-.popular-resources-title,
-.additional-resources-title {
-    font-size: 1.3em;
-    padding: 0.5em;
+.section {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .popular-resources {
@@ -54,6 +120,7 @@
     width: 80%;
     margin-left: auto;
     margin-right: auto;
+    background: var(--warm-neutral-60);
 }
 
 .popular-resources > li {
@@ -62,39 +129,28 @@
     margin: 1rem;
     background: #ffffff;
 }
+
 .popular-resources > li > a {
     width: 100%;
     height: 100%;
     position: relative;
 }
 
-.popular-resources > li > a > h3 {
+.popular-card__label {
     color: #ffffff;
-    background-color: rgb(0, 93, 171);
-    background-color: rgba(0, 93, 171, 0.7);
+    background-color: color-mix(in srgb, var(--wildcat-blue), transparent 30%);
     position: absolute;
     width: 100%;
     height: 33%;
+    margin: 0;
     bottom: 0;
-    font-size: 100%;
-}
-
-.popular-resources > li > a > h3 > span {
+    font-size: 1.6rem;
+    line-height: 2.5rem;
+    font-weight: 300;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     text-align: center;
-}
-
-@supports (display: grid) {
-    .popular-resources > li > a > h3 {
-        display: grid;
-        justify-items: center;
-        align-items: center;
-    }
-}
-
-
-.additional-resources > li {
-    margin: 1rem;
-    background: #ffffff;
 }
 
 @media all and (min-width: 440px) {
@@ -104,63 +160,41 @@
     }
 }
 
-@media all and (max-width: 440px) {
-    .additional-resources > li {
-        width: 210px;
-        height: 60px;
-    }
-}
 .additional-resources > li > a,
 .additional-resources > li > a > img {
     width: 100%;
     height: 100%;
 }
-.additional-resources > li > a > h3 {
-    display: none;
+
+.grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
-@supports (display: grid) {
-    .popular-resources {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        grid-gap: 1rem;
-        max-width: 880px;
-    }
-
-    @media all and (min-width: 440px) {
-        .additional-resources {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-            grid-gap: 1rem;
-        }
-    }
-
-    @media all and (max-width: 440px) {
-        .additional-resources {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-            grid-gap: 1rem;
-            max-width: 880px;
-        }
-    }
-
+.grid.grid--4-up .grid__column {
+    min-width: 160px;
+    min-height: 240px;
+    background: #fff;
 }
 
-@supports (display: flex) {
-    .popular-resources > li > a {
-        display: flex;
-        flex-flow: column;
-        flex-shrink: 1;
-        align-items: center;
-    }
+.grid.grid--4-up .grid__column > a {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 
-    .additional-resources > li > a {
-        display: flex;
-        flex-flow: column;
-        flex-shrink: 1;
-        align-items: center;
-    }
+.grid.grid--4-up .grid__column img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
 }
 
 </style>
+
+<?php require('sponsors.php'); ?>
 <?php require('footer.php'); ?>
+

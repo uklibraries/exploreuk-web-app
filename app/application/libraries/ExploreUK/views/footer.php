@@ -1,37 +1,51 @@
     </section>
 </div>
 
-<div id="footer">
-    <div id="outer_footer_funders" class="row bg-uklwhite">
-        <span>Content made available with the support of:</span>
-        <ul id="inner_footer_funders">
-            <li><a href="https://www.imls.gov/" target="_blank" rel="noopener"><img id="footer_funder_image" class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/imls-n.png') ?>" alt="Institute of Museum and Library Services" width="231" height="83"/></a></li>
-            <li><a href="https://www.clir.org/" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/clir-n.png') ?>" alt="Council on Library and Information Resources" width="167" height="76"/></a></li>
-            <li><a href="https://www.neh.gov/" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/neh-n.jpg') ?>" alt="National Endowment for the Humanities" width="214" height="99"/></a></li>
-            <li><a href="https://www.archives.gov/nhprc" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/nhprc-n.jpg') ?>" alt="National Archives - National Historical Publications and Records Commission" width="117" height="147"/></a></li>
-            <li><a href="https://heyburncollections.org/" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/heyburn-n.png') ?>" alt="The John G. Heyburn II Initiative for Excellence in the Federal Judiciary" width="118" height="89"/></a></li>
-        </ul>
-    </div>
-    <div id="copyright-bar" class="row bg-uklblack">
-        <span id="copyright">Copyright © UK Libraries</span>
-        <ul>
-            <li><a aria-label="Special Collections Research Center on Facebook" href="https://www.facebook.com/uklibraries/" target="_blank" rel="noopener"><i class="fab fa-facebook-f"></i></a></li>
-            <li><a aria-label="University of Kentucky Libraries on Instagram" href="https://www.instagram.com/uklibraries/" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a></li>
-            <li><a aria-label="University of Kentucky Archives on YouTube" href="https://www.youtube.com/channel/UCxgb2cJ2hpO-0QOTnmxgfKw" target="_blank" rel="noopener"><i class="fab fa-youtube"></i></a></li>
-            <li><a aria-label="Curiosities and Wonders" href="https://ukyarchives.blogspot.com/" target="_blank" rel="noopener"><i class="fab fa-blogger"></i></a></li>
-        </ul>
-        <ul>
-            <li><a href="https://libraries.uky.edu/SC" target="_blank" rel="noopener"><img class="euk-logo-small lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/scrc_logo.png') ?>" alt="UK Special Collections Research Center" width="134" height="34"/></a></li>
-            <li><a href="https://www.gpo.gov/" target="_blank" rel="noopener"><img class="euk-logo-small lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/gpo_fst.jpg') ?>" alt="US Government Publishing Office" width="74" height="34"/></a></li>
-            <li><a href="https://www.fdlp.gov/" target="_blank" rel="noopener"><img class="euk-logo-small lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/fdlp.png') ?>" alt="Federal Depository Library Program" width="46" height="34"/></a></li>
-        </ul>
+<!-- TWIG INCLUDE : @limestone/universal-footer.twig" -->
+<div class="slab slab--wildcat-blue universal-footer"  >
+    <div class="slab__wrapper">
+        <div class="universal-footer__ribbon">
+            <div>
+                <a class="underline-link" href="https://www.uky.edu/equal-opportunity-university/">An Equal Opportunity University</a>
+            </div>
+            <div>
+                <a class="underline-link" href="https://www.uky.edu/accreditation/">Accreditation</a>
+            </div>
+            <div>
+                <a class="underline-link" href="https://directory.uky.edu/">Directory</a>
+            </div>
+            <div>
+                <a class="underline-link" href="mailto:ukpr@uky.edu">Email</a>
+            </div>
+            <div>
+                <a class="underline-link" href="https://www.uky.edu/privacy">Privacy Policy</a>
+            </div>
+            <div>
+                <a class="underline-link" href="https://www.uky.edu/web-accessibility">Accessibility</a>
+            </div>
+        </div>
+        <div class="universal-footer__ribbon">
+            <div>© University of Kentucky</div>
+            <div>
+                <a href="#">
+                    <!-- TWIG INCLUDE : @limestone/icon-label.twig" -->
+                    <span class="icon-label ">
+                        <span class="ic ic--pin" aria-hidden="true"></span>
+                        <span class="label ">Lexington, Kentucky 40506</span>
+                    </span>
+                    <!-- END TWIG INCLUDE : @limestone/icon-label.twig" -->
+                </a>
+            </div>
+        </div>
     </div>
 </div>
+<!-- END TWIG INCLUDE : @limestone/universal-footer.twig" -->
+
+
 
 <!-- CSS -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.0/css/all.css" integrity="sha384-X5iGjkVST5r3jLDsMntiITKVTkgf0v7xH26P7RqdeTvlbV9P11Azs27mXs7Kht/E" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.1/lity.min.css" integrity="sha256-0SZxASYAglrmIuTx+ZYHE3hzTnCZWB7XLu+iA8AG0Z0=" crossorigin="anonymous" />
-<link rel="stylesheet" href="<?= $this->themePath('assets/css/main.min.css') ?>?<?= $this->subresourceIntegrity('assets/css/main.min.css') ?>" />
 
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
