@@ -51,6 +51,7 @@ define('EUK_LOCALE', [
         'coverage_s' => 'Geographic Subject',
         'dc_identifier_display' => 'Identifier',
         'dc_language_t' => 'Language',
+        'dc_relation_rich_display' => 'Relation',
         'description_display' => 'Description',
         'facet_menu_title' => 'Filter Your Results',
         'finding_aid_url_s' => 'XML Collection Guide',
@@ -104,6 +105,7 @@ define('EUK_TITLE_FIELD_ORDER', [
     'collection_url', # NOTE: this implies source_s
     'source_s',
     'description_display',
+    'dc_relation_rich_display',
 ]);
 
 /* helper functions */

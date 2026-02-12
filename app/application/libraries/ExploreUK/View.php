@@ -80,6 +80,25 @@ class View
         $euk_locale = EUK_LOCALE;
         $field = $hash['key'];
         $content = $hash['value'];
+        if ($field === 'dc_relation_rich_display') {
+            $field_label = $euk_locale['en']['dc_relation_rich_display'];
+            $lines = [
+                "<h3>$field_label</h3>\n",
+                "<ul>\n",
+            ];
+            if (is_array($content)) {
+                foreach ($content as $entry) {
+                    $relation = json_decode($entry);
+                    if (isset($relation->content) && isset($relation->type) && isset($relation->identifier)) {
+                        $lines[] = "<li>";
+                        $lines[] = $this->renderLink($relation->identifier, $relation->content, true);
+                        $lines[] = "</li>\n";
+                    }
+                }
+            }
+            $lines[] = "</ul>\n";
+            return implode('', $lines);
+        }
         if ($field === 'collection_url') {
             if (strlen((string) $content['source_s']) > 0) {
                 $field_label = $euk_locale['en']['source_s'];
