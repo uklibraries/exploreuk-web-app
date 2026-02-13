@@ -11,8 +11,8 @@ class View
     public function __construct($metadata, $template)
     {
         $this->metadata = $metadata;
-        $this->query = $metadata['query'];
-        $this->templateFile = dirname(__FILE__) . "/views/{$template}.php";
+        $this->query = $this->metadata['query'];
+        $this->templateFile = __DIR__ . "/views/{$template}.php";
     }
 
     public function render()
@@ -28,13 +28,13 @@ class View
 
     public function hiddenSearchFields()
     {
-        $fields = array();
+        $fields = [];
         if (isset($this->metadata['active_facets'])) {
             foreach ($this->metadata['active_facets'] as $spec) {
-                $fields[] = array(
+                $fields[] = [
                     'name' => 'f[' . $spec['field_raw'] . '][]',
                     'value' => $spec['hidden_value_label'],
-                );
+                ];
             }
         }
         return $fields;
@@ -50,11 +50,11 @@ class View
         if ($length == 0) {
             $length = EUK_MAX_LABEL;
         }
-        if (strlen($message) <= $length) {
+        if (strlen((string) $message) <= $length) {
             return $message;
         }
-        $source_words = preg_split('/\b/', $message);
-        $target_words = array();
+        $source_words = preg_split('/\b/', (string) $message);
+        $target_words = [];
         $current_length = 0;
         foreach ($source_words as $word) {
             if (($current_length == 0) || $current_length + strlen($word) <= $length) {
@@ -82,22 +82,54 @@ class View
         $euk_locale = EUK_LOCALE;
         $field = $hash['key'];
         $content = $hash['value'];
+        if ($field === 'dc_relation_rich_display') {
+            $field_label = $euk_locale['en']['dc_relation_rich_display'];
+            $lines = [
+                "<h3 id=\"page-details-$field\">$field_label</h3>\n",
+                "<ul>\n",
+            ];
+            if (is_array($content)) {
+                foreach ($content as $entry) {
+                    $relation = json_decode($entry);
+                    if (isset($relation->content) && isset($relation->type) && isset($relation->identifier)) {
+                        $lines[] = "<li>";
+                        $lines[] = $this->renderLink([
+                            "href" => $relation->identifier,
+                            "content" => $relation->content,
+                            "external" => true,
+                            "open_new_tab" => true,
+                        ]);
+                        $lines[] = "</li>\n";
+                    }
+                }
+            }
+            $lines[] = "</ul>\n";
+            return implode('', $lines);
+        }
         if ($field === 'collection_url') {
-            if (strlen($content['source_s']) > 0) {
+            if (strlen((string) $content['source_s']) > 0) {
                 $field_label = $euk_locale['en']['source_s'];
                 $collection_label = $euk_locale['en']['open_collection_guide'];
                 $link = "/?f%5Bsource_s%5D%5B%5D=";
                 $link_label = $euk_locale['en']['more_items'];
-                $lines = array(
-                    "<h3>$field_label</h3>\n",
+                $lines = [
+                    "<h3 id=\"page-details-$field\">$field_label</h3>\n",
                     '<ul><li>',
                     $content['source_s'],
                     ' | ',
-                    $this->renderLink($this->path("/catalog/{$content['base_id']}"), $collection_label, true),
+                    $this->renderLink([
+                        "href" => $this->path("/catalog/{$content['base_id']}"),
+                        "content" => $collection_label,
+                        "external" => true,
+                        "open_new_tab" => true,
+                    ]),
                     ' | ',
-                    $this->renderLink($this->path($link . urlencode($content['source_s'])), $link_label, true),
+                    $this->renderLink([
+                        "href" => $this->path($link . urlencode((string) $content['source_s'])),
+                        "content" => $link_label,
+                    ]),
                     '</li></ul>',
-                );
+                ];
                 return implode('', $lines);
             } else {
                 return '';
@@ -114,14 +146,17 @@ class View
         * Please remove when the index is clean.
         */
         if ($field === 'usage_display') {
-            $content = preg_replace('/Please go to http:\/\/kdl.kyvl.org for more information\./', 'For information about permissions to reproduce or publish, <a href="https://libraries.uky.edu/ContactSCRC" target="_blank" rel="noopener">contact the Special Collections Research Center</a>.', $content);
+            if (is_array($content)) {
+                $content = $content[0];
+            }
+            $content = preg_replace('/Please go to http:\/\/kdl.kyvl.org for more information\./', 'For information about permissions to reproduce or publish, <a href="https://libraries.uky.edu/ContactSCRC" target="_blank" rel="noopener">contact the Special Collections Research Center</a>.', (string) $content);
         }
         if (isset($euk_locale['en'][$field])) {
             $label = $euk_locale['en'][$field];
         } else {
             $label = 'Unknown';
         }
-        $lines = array("<h3 id=\"page-details-$field\">$label</h3>");
+        $lines = ["<h3 id=\"page-details-$field\">$label</h3>"];
         if (is_array($content)) {
             $lines[] = "<ul>";
             foreach ($content as $item) {
@@ -142,33 +177,52 @@ class View
         $euk_requires_capitalization = EUK_REQUIRES_CAPITALIZATION;
 
         if ($field === 'id') {
-            $item = "https://exploreuk.uky.edu/catalog/$item";
+            $item = 'https://' . $_SERVER['HTTP_HOST'] . $this->path("/catalog/$item");
         }
         if (in_array($field, $euk_requires_capitalization)) {
-            $item = ucfirst($item);
+            $item = ucfirst((string) $item);
         }
 
         if (strpos($item, 'http') === 0) {
-            return $this->renderLink($item, $item, true);
+            return $this->renderLink([
+                "href" => $item,
+                "content" => $item,
+                "external" => true,
+                "open_new_tab" => true,
+            ]);
         } elseif (in_array($field, $euk_facetable)) {
             $link = "/?f%5B$field%5D%5B%5D=";
-            return $this->renderLink($this->path($link . urlencode($item)), $item, true);
+            return $this->renderLink([
+                "href" => $this->path($link . urlencode((string) $item)),
+                "content" => $item,
+            ]);
         } else {
             if ($field === 'description_display') {
-                return strip_tags($item, '<b>');
+                return strip_tags((string) $item, '<b>');
             } elseif ($field === 'usage_display') {
-                return strip_tags($item, '<a>');
+                return strip_tags((string) $item, '<a>');
             } else {
-                return htmlspecialchars($item);
+                return htmlspecialchars((string) $item);
             }
         }
     }
 
-    public function renderLink($href, $text, $external = false)
+    public function renderLink($options)
     {
-        return "<a href=\"$href\" " .
-            ($external ? "target=\"_blank\" rel=\"noopener\"" : '') .
-            ">$text</a>";
+        $content = $options["content"];
+        $attributes = [];
+        $attributes[] = "href=\"" . $options["href"] . "\"";
+        if (!empty($options["external"])) {
+            $content .= " <i class=\"fas fa-external-link-alt\"></i>";
+        }
+        if (!empty($options["open_new_tab"])) {
+            # rel="noreferrer" implies target="_blank" and rel="noopener",
+            # but I deliberately choose to include them explicitly.
+            $attributes[] = "target=\"_blank\"";
+            $attributes[] = "rel=\"noopener noreferrer\"";
+        }
+        $attribute_string = implode(" ", $attributes);
+        return "<a $attribute_string>$content</a>";
     }
 
     public function path($path)
