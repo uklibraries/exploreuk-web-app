@@ -1,5 +1,5 @@
 #!/bin/bash
-APP_DIR="/app"
-dir="$APP_DIR/theme/assets/css"
-cd "$dir"
-npx lightningcss -o main.min.css -m main.css
+dir="theme/assets/css"
+pushd "$dir"
+npx lightningcss-cli -o main.min.css -m main.css
+popd
