@@ -83,7 +83,7 @@ class View
         if ($field === 'dc_relation_rich_display') {
             $field_label = $euk_locale['en']['dc_relation_rich_display'];
             $lines = [
-                "<h3>$field_label</h3>\n",
+                "<h3 id=\"page-details-$field\">$field_label</h3>\n",
                 "<ul>\n",
             ];
             if (is_array($content)) {
@@ -111,7 +111,7 @@ class View
                 $link = "/?f%5Bsource_s%5D%5B%5D=";
                 $link_label = $euk_locale['en']['more_items'];
                 $lines = [
-                    "<h3>$field_label</h3>\n",
+                    "<h3 id=\"page-details-$field\">$field_label</h3>\n",
                     '<ul><li>',
                     $content['source_s'],
                     ' | ',
