@@ -186,9 +186,18 @@ class View
 
     public function renderLink($href, $text, $external = false)
     {
-        return "<a href=\"$href\" " .
-            ($external ? "target=\"_blank\" rel=\"noopener\"" : '') .
-            ">$text</a>";
+        $content = $text;
+        $attributes = [];
+        $attributes[] = "href=\"$href\"";
+        if ($external) {
+            # rel="noreferrer" implies target="_blank" and rel="noopener",
+            # but I deliberately choose to include them explicitly.
+            $attributes[] = "target=\"_blank\"";
+            $attributes[] = "rel=\"noopener noreferrer\"";
+            $content .= " <i class=\"fas fa-external-link-alt\"></i>";
+        }
+        $attribute_string = implode(" ", $attributes);
+        return "<a $attribute_string>$content</a>";
     }
 
     public function path($path)
