@@ -91,7 +91,12 @@ class View
                     $relation = json_decode($entry);
                     if (isset($relation->content) && isset($relation->type) && isset($relation->identifier)) {
                         $lines[] = "<li>";
-                        $lines[] = $this->renderLink($relation->identifier, $relation->content, true);
+                        $lines[] = $this->renderLink([
+                            "href" => $relation->identifier,
+                            "content" => $relation->content,
+                            "external" => true,
+                            "open_new_tab" => true,
+                        ]);
                         $lines[] = "</li>\n";
                     }
                 }
@@ -110,9 +115,17 @@ class View
                     '<ul><li>',
                     $content['source_s'],
                     ' | ',
-                    $this->renderLink($this->path("/catalog/{$content['base_id']}"), $collection_label, true),
+                    $this->renderLink([
+                        "href" => $this->path("/catalog/{$content['base_id']}"),
+                        "content" => $collection_label,
+                        "external" => true,
+                        "open_new_tab" => true,
+                    ]),
                     ' | ',
-                    $this->renderLink($this->path($link . urlencode((string) $content['source_s'])), $link_label, true),
+                    $this->renderLink([
+                        "href" => $this->path($link . urlencode((string) $content['source_s'])),
+                        "content" => $link_label,
+                    ]),
                     '</li></ul>',
                 ];
                 return implode('', $lines);
@@ -169,10 +182,18 @@ class View
         }
 
         if (str_starts_with((string) $item, 'http')) {
-            return $this->renderLink($item, $item, true);
+            return $this->renderLink([
+                "href" => $item,
+                "content" => $item,
+                "external" => true,
+                "open_new_tab" => true,
+            ]);
         } elseif (in_array($field, $euk_facetable)) {
             $link = "/?f%5B$field%5D%5B%5D=";
-            return $this->renderLink($this->path($link . urlencode((string) $item)), $item, true);
+            return $this->renderLink([
+                "href" => $this->path($link . urlencode((string) $item)),
+                "content" => $item,
+            ]);
         } else {
             if ($field === 'description_display') {
                 return strip_tags((string) $item, '<b>');
@@ -184,17 +205,19 @@ class View
         }
     }
 
-    public function renderLink($href, $text, $external = false)
+    public function renderLink($options)
     {
-        $content = $text;
+        $content = $options["content"];
         $attributes = [];
-        $attributes[] = "href=\"$href\"";
-        if ($external) {
+        $attributes[] = "href=\"" . $options["href"] . "\"";
+        if (!empty($options["external"])) {
+            $content .= " <i class=\"fas fa-external-link-alt\"></i>";
+        }
+        if (!empty($options["open_new_tab"])) {
             # rel="noreferrer" implies target="_blank" and rel="noopener",
             # but I deliberately choose to include them explicitly.
             $attributes[] = "target=\"_blank\"";
             $attributes[] = "rel=\"noopener noreferrer\"";
-            $content .= " <i class=\"fas fa-external-link-alt\"></i>";
         }
         $attribute_string = implode(" ", $attributes);
         return "<a $attribute_string>$content</a>";
