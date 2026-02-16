@@ -213,20 +213,21 @@
             <hr>
         </div>
     </div>
-                <div id="tab_2" class="js-tabcontent ">
-                    <!-- TWIG INCLUDE : @limestone/section-nav.twig" -->
-                    <div class="section-nav section-nav--blue-gray">
-                        <nav aria-labelledby="sectionNavigationLabel660c465a9ecbe">
-                            <h2 id="sectionNavigationLabel660c465a9ecbe">
-                                <span class="show-for-sr">Section Navigation: </span>
-                                <!-- TWIG INCLUDE : @limestone/link.twig" -->
-                                <a href="" class="link--fancy-reverse">Parent Page/Section</a>
-                                <!-- END TWIG INCLUDE : @limestone/link.twig" -->
+    <div id="tab_2" class="js-tabcontent ">
+    <!-- TWIG INCLUDE : @limestone/section-nav.twig" -->
+        <div class="section-nav section-nav--blue-gray">
+            <nav aria-labelledby="sectionNavigationLabel660c465a9ecbe">
+                <h2 id="sectionNavigationLabel660c465a9ecbe">
+                    <span class="show-for-sr">Section Navigation: </span>
+                        <!-- TWIG INCLUDE : @limestone/link.twig" -->
+                        <a href="" class="link--fancy-reverse">Parent Page/Section</a>
+                        <!-- END TWIG INCLUDE : @limestone/link.twig" -->
                             </h2>
                             <ol>
                                 <li>
                                     <a href="example.com" >Aut Eum Quas In Laudantium Deleniti Temporibus Pariatur</a>
-                                </li>                                                                                           <li>
+                                </li>
+                                <li>
                                     <a href="example.com">Commodi At Optio</a>
                                 </li>
                                 <li class="current-item">
