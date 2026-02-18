@@ -13,7 +13,18 @@
     <link rel="shortcut icon" href="/favicon.ico?v=m2LeKYRNPO">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <!-- <link rel="stylesheet" href="<?= $this->themePath('assets/css/main.min.css') ?>?<?= $this->subresourceIntegrity('assets/css/main.min.css') ?>" /> -->
+    <link rel="stylesheet" href="<?= $this->themePath('assets/css/styles.css') ?>" />
     <link rel="stylesheet" href="https://webcdn.uky.edu/limestone/1.0.0/css/style.css" >
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.2.0/jquery.magnific-popup.min.js"></script>
+    <script defer src="https://webcdn.uky.edu/limestone/1.0.0/lib/jquery-accessible-tabs-aria.js"></script>
+    <script defer src="https://webcdn.uky.edu/limestone/1.0.0/js/toggle-button.js"></script>
+    <script defer src="https://webcdn.uky.edu/limestone/1.0.0/js/modals.js"></script>
+    <script defer>
+      $(document).ready(function() {
+          togglebutton();
+          modals();
+      });
+    </script>
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#005dab">
     <!-- Google tag (gtag.js) -->
@@ -45,4 +56,3 @@
 <?php endif; ?>
         </div>
     </section>
-    <section>

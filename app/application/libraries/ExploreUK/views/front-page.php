@@ -45,7 +45,7 @@
 </div>
 
 <!-- END TWIG INCLUDE : @limestone/grid.twig" -->
-<div class="slab "  >
+<div class="slab slab--blue-gray"  >
     <div class="slab__wrapper">
         <div class="editorial">
             <!-- TWIG INCLUDE : molecules-headline-group" -->

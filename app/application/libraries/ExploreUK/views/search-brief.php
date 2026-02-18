@@ -1,9 +1,26 @@
-<form action="<?= $this->path('/catalog/') ?>" method="get" id="search-brief">
-    <div class="bg-uklblack form-group-brief">
-        <input aria-label="Search" class="q form-control" type="text" name="q" value="<?= htmlspecialchars((string) $this->q('q')) ?>">
-        <span class="input-group-btn"></span><button type="submit" class="btn btn-default" value="search">Search</button>
-    </div>
-<?php foreach ($this->hiddenSearchFields() as $field) : ?>
-    <input type="hidden" name="<?= $field['name'] ?>" value="<?= htmlspecialchars((string) $field['value']) ?>"/>
-<?php endforeach; ?>
-</form>
+<!-- TWIG INCLUDE : @limestone/cta-group.twig" -->
+<div class="cta-group">
+    <!-- TWIG INCLUDE : @limestone/search-form.twig" -->
+    <form method="get" action="<?= $this->path('/catalog/') ?>" id="search" class="search-form">
+        <label for="search-keywords660c465ba79a9">Search ExploreUK</label>
+        <div class="control-group">
+            <input type="text"
+                id="search-keywords660c465ba79a9"
+                name="q"
+                class="input-text"
+                value="<?= htmlspecialchars((string) $this->q('q')) ?>"
+            />
+            <button class="icon-only">
+                <!-- TWIG INCLUDE : @limestone/icon-label.twig" -->
+                <span class="icon-label">
+                    <span class="ic ic--magnify" aria-hidden="true"></span>
+                    <span class="label">search</span>
+                </span>
+                <!-- END TWIG INCLUDE : @limestone/icon-label.twig" -->
+            </button>
+        </div>
+    </form>
+    <!-- END TWIG INCLUDE : @limestone/search-form.twig" -->
+</div>
+<!-- END TWIG INCLUDE : @limestone/cta-group.twig" -->
+
