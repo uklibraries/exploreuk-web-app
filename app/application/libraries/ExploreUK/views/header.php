@@ -41,6 +41,7 @@
 <body>
 <a href="#0" class="cd-top js-cd-top">Top</a>
 <div id="main">
+<?php require('universal-header.php'); ?>
 <?php if ($m['front_page']) : ?>
     <section id="top">
         <div>
