@@ -39,9 +39,9 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23584444-4"></script>
 </head>
 <body>
+<?php require('universal-header.php'); ?>
 <a href="#0" class="cd-top js-cd-top">Top</a>
 <div id="main">
-<?php require('universal-header.php'); ?>
 <?php if ($m['front_page']) : ?>
     <section id="top">
         <div>

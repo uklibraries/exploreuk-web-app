@@ -1,3 +1,4 @@
+/* Universal breadcrumb Limestone overrides */
 .universal-breadcrumb ul{
      font-family: "usual", sans-serif !important;
      font-weight: 300 !important;
@@ -5,6 +6,38 @@
 .universal-breadcrumb .link--fancy-reverse {
     font-weight: 300 !important;
 }
+
+/* Limestone v3 mobile tab nav additions */
+#MobileNav .mobile-tab-nav .mobile-tab-nav__menus {
+    background-image: linear-gradient(#0033a0,#1b365d);
+    position: relative;
+    padding: 1rem 2rem;
+}
+
+/* Limestone mobile tab nav overrides */
+.js-tabcontent {
+    padding-bottom: 0 !important;
+}
+
+.mobile-tab-nav-header {
+    display: block;
+    margin: 0 auto;
+    padding: 1rem 0;
+    outline: 0;
+    text-align: center;
+    text-transform: uppercase;
+    position: relative;
+}
+.mobile-tab-nav-header::after {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 0;
+    left: 1.5rem;
+    height: 4px;
+    background-color: #1897d4;
+    content: "";
+}
+
 
 :root {
 /* colors */
