@@ -4,7 +4,7 @@
         <div class="slab__wrapper">
             <div class="global-header__banner">
                 <!-- @limestone/site-identity.twig" -->
-                <a href="example.com" class="site-identity">
+                <a href="/" class="site-identity">
                     <div class="site-identity__main">
                         <div class="site-identity__logo">
                             <!-- atoms-uk-logo" -->
@@ -75,13 +75,10 @@
     </div>
 </div>
 
-<!--<div class="slab mobile-nav" hidden id="MobileNav">-->
-<div class="slab mobile-nav" id="MobileNav">
+<div class="slab mobile-nav" hidden id="MobileNav">
     <div class="slab__wrapper">
         <div class="mobile-tab-nav js-tabs">
-            <span class="mobile-tab-nav-header">
-                Main Menu
-</span>
+            <span class="mobile-tab-nav-header">Main Menu</span>
             <div class="js-tabcontent tabs__content">
                 <div class="mobile-tab-nav__menus">
                     <!-- @limestone/global-nav.twig" -->
