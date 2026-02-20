@@ -2,19 +2,13 @@
 <div class="resources-section bg-uklblack">
 
 <!-- TWIG INCLUDE : @limestone/grid.twig" -->
-<div class="slab "  >
+<div class="slab">
     <div class="slab__wrapper">
         <div class="editorial">
             <!-- TWIG INCLUDE : molecules-headline-group" -->
             <!-- TWIG INCLUDE : @limestone/headline-group.twig" -->
             <h2 id="headline-group660c465a3fe75" class="headline-group ">
-                <span class="headline-group__super">Special Collections Resources Center</span>
-                <span class="headline-group__head ">
-                    <!-- TWIG INCLUDE : @limestone/link.twig" -->
-                    <span class="underline-link">Popular Resources</span>
-                    <!-- END TWIG INCLUDE : @limestone/link.twig" -->
-                </span>
-                <span class="headline-group__sub">view by format</span>
+                <span class="headline-group__head ">Popular Resources</span>
             </h2>
             <!-- END TWIG INCLUDE : @limestone/headline-group.twig" -->
             <!-- END TWIG INCLUDE : molecules-headline-group" -->
@@ -51,13 +45,7 @@
             <!-- TWIG INCLUDE : molecules-headline-group" -->
             <!-- TWIG INCLUDE : @limestone/headline-group.twig" -->
             <h2 id="headline-group660c465a3fe75" class="headline-group ">
-                <span class="headline-group__super">Special Collections Resources Center</span>
-                <span class="headline-group__head ">
-                    <!-- TWIG INCLUDE : @limestone/link.twig" -->
-                    <span class="underline-link">Additional Resources</span>
-                    <!-- END TWIG INCLUDE : @limestone/link.twig" -->
-                </span>
-                <span class="headline-group__sub">view other sites by the Libraries</span>
+                <span class="headline-group__head ">Additional Resources</span>
             </h2>
             <!-- END TWIG INCLUDE : @limestone/headline-group.twig" -->
             <!-- END TWIG INCLUDE : molecules-headline-group" -->
