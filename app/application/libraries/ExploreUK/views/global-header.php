@@ -66,7 +66,7 @@
             <div class="show-for-sr" id="MainNavLabel660c465a9ec23">Main Navigation</div>
             <a href="/" class="ic ic--home"><span class="show-for-sr">Return to Home Page</span></a>
                 <a href="/about">About</a>
-                <a href="https://exploreuk.uky.edu/takedown-policy">Copyright and Use</a>
+                <a href="/takedown-policy">Copyright and Use</a>
                 <a href="https://libguides.uky.edu/SCRCaccount">Researcher Account Guide</a>
                 <a href="https://libguides.uky.edu/SCRCaccount/archivesrequests">Request Materials Guide</a>
                 <a href="https://requests-libraries.uky.edu/logon">Researcher Account Login</a> 
@@ -88,7 +88,7 @@
                             <span class="show-for-sr">Return to Home Page</span>
                         </a>
                         <a href="/about">About</a>
-                        <a href="https://exploreuk.uky.edu/takedown-policy">Copyright and Use</a>
+                        <a href="/takedown-policy">Copyright and Use</a>
                         <a href="https://libguides.uky.edu/SCRCaccount">Researcher Account Guide</a>
                         <a href="https://libguides.uky.edu/SCRCaccount/archivesrequests">Request Materials Guide</a>
                         <a href="https://requests-libraries.uky.edu/logon">Researcher Account Login</a>  
