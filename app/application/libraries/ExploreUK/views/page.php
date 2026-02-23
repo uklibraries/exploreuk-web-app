@@ -49,4 +49,5 @@ if (isset($m['item_videolike'])) {
 <?php require('page-details.php'); ?>
 </div>
 
+<?php require('global-footer.php'); ?>
 <?php require('universal-footer.php'); ?>
