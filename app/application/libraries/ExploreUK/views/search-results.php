@@ -79,4 +79,4 @@ $p = $m['pagination'];
     <?php require 'pagination.php' ?>
 </div>
 <?php require 'more-facets.php' ?>
-<?php require 'footer.php' ?>
+<?php require 'universal-footer.php' ?>

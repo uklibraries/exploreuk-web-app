@@ -49,4 +49,4 @@ if (isset($m['item_videolike'])) {
 <?php require('page-details.php'); ?>
 </div>
 
-<?php require('footer.php'); ?>
+<?php require('universal-footer.php'); ?>

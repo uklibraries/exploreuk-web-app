@@ -4,4 +4,4 @@
     <h1><?= $m['page_title'] ?></h1>
     <?= $m['page']->text ?>
 </div>
-<?php require('footer.php'); ?>
+<?php require('universal-footer.php'); ?>

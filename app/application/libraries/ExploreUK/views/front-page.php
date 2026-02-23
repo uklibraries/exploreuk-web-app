@@ -77,5 +77,5 @@
 
 
 <?php require('sponsors.php'); ?>
-<?php require('footer.php'); ?>
+<?php require('universal-footer.php'); ?>
 

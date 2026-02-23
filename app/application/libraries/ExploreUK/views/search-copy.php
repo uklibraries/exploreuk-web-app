@@ -74,7 +74,7 @@ $p = $m['pagination'];
 </div>
 </div>
 <?php require 'more-facets.php'; ?>
-<?php require 'footer.php'; ?>
+<?php require 'universal-footer.php'; ?>
 
 
 

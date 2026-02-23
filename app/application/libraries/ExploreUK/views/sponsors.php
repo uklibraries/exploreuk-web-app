@@ -3,7 +3,7 @@
         <div class="editorial">
             <!-- TWIG INCLUDE : molecules-headline-group" -->
             <!-- TWIG INCLUDE : @limestone/headline-group.twig" -->
-            <h2 id="headline-group660c465a3fe75" class="headline-group ">
+            <h2 class="headline-group ">
                 <span class="headline-group__head">Supporting Organizations</span>
                 <span class="headline-group__sub">Content made available with the support of these organizations</span>
             </h2>

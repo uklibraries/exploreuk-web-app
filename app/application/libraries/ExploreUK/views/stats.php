@@ -40,4 +40,4 @@ endforeach;
 
 </div>
 
-<?php require('footer.php'); ?>
+<?php require('universal-footer.php'); ?>
