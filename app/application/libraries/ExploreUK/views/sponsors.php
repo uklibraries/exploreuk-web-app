@@ -12,19 +12,19 @@
         </div>
         <div class="grid grid--5-up">
             <div class="grid__column">
-                <a href="https://www.imls.gov/" target="_blank" rel="noopener"><img id="footer_funder_image" class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/imls.png') ?>" alt="Institute of Museum and Library Services" /></a>
+                <a href="https://www.imls.gov/"><img id="footer_funder_image" class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/imls.png') ?>" alt="Institute of Museum and Library Services" /></a>
             </div>
             <div class="grid__column">
-                <a href="https://www.clir.org/" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/clir.svg') ?>" alt="Council on Library and Information Resources"/></a>
+                <a href="https://www.clir.org/"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/clir.svg') ?>" alt="Council on Library and Information Resources"/></a>
             </div>
             <div class="grid__column">    
-                <a href="https://www.neh.gov/" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/neh.png') ?>" alt="National Endowment for the Humanities" /></a>
+                <a href="https://www.neh.gov/"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/neh.png') ?>" alt="National Endowment for the Humanities" /></a>
             </div>
             <div class="grid__column">    
-                <a href="https://www.archives.gov/nhprc" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/nhprc-logo.png') ?>" alt="National Archives - National Historical Publications and Records Commission"/></a>
+                <a href="https://www.archives.gov/nhprc"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/nhprc-logo.png') ?>" alt="National Archives - National Historical Publications and Records Commission"/></a>
             </div>
             <div class="grid__column">    
-                <a href="https://heyburncollections.org/" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/heyburn.avif') ?>" alt="The John G. Heyburn II Initiative for Excellence in the Federal Judiciary"/></a>
+                <a href="https://heyburncollections.org/"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $this->themePath('images/heyburn.avif') ?>" alt="The John G. Heyburn II Initiative for Excellence in the Federal Judiciary"/></a>
             </div>
         </div>
     </div>
