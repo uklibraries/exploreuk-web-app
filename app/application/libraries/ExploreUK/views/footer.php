@@ -2,7 +2,7 @@
 </div>
 
 <!-- TWIG INCLUDE : @limestone/universal-footer.twig" -->
-<div class="slab slab--wildcat-blue universal-footer"  >
+<div class="slab slab--wildcat-blue universal-footer">
     <div class="slab__wrapper">
         <div class="universal-footer__ribbon">
             <div>
@@ -15,7 +15,7 @@
                 <a class="underline-link" href="https://directory.uky.edu/">Directory</a>
             </div>
             <div>
-                <a class="underline-link" href="mailto:ukpr@uky.edu">Email</a>
+                <a class="underline-link" href="mailto:refdesk@uky.edu">Email</a>
             </div>
             <div>
                 <a class="underline-link" href="https://www.uky.edu/privacy">Privacy Policy</a>
@@ -23,11 +23,14 @@
             <div>
                 <a class="underline-link" href="https://www.uky.edu/web-accessibility">Accessibility</a>
             </div>
+            <div>
+                <a class="underline-link" href="https://www.uky.edu/disclosures">Disclosures</a>
+            </div>
         </div>
         <div class="universal-footer__ribbon">
             <div>© University of Kentucky</div>
             <div>
-                <a href="#">
+                <a href="https://www.uky.edu/directions">
                     <!-- TWIG INCLUDE : @limestone/icon-label.twig" -->
                     <span class="icon-label ">
                         <span class="ic ic--pin" aria-hidden="true"></span>
