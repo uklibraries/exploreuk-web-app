@@ -25,17 +25,14 @@
 
     <div class="global-footer__column">
       <div class="link-group">
-        <!-- TWIG INCLUDE : @limestone/heading.twig" -->
-        <h1 class="link-group__heading"><span class="heading__text">voluptatem omnis</span></h1>
-        <!-- END TWIG INCLUDE : @limestone/heading.twig" -->
-        <div class="grid grid--2-up">           
-          <div class="grid__column">
-            <a href="https://www.gpo.gov/" class=""><img src="/themes/omeukaprologue/images/fdlp-gpo-partner.png" data-src="/themes/omeukaprologue/images/fdlp-gpo-partner.png" alt="US Government Publishing Office" ></a>
-          </div>
-          <div class="grid__column">
-            <a href="https://www.fdlp.gov/" class=""><img src="/themes/omeukaprologue/images/fdlp.png" data-src="/themes/omeukaprologue/images/fdlp.png" alt="Federal Depository Library Program" ></a>
-          </div>
-        </div>
+        <!-- @limestone/heading.twig" -->
+        <h2 class="link-group__heading"><span class="heading__text">Researcher Resources</span></h2>
+        <ul class="no-decoration">
+          <li><a href="https://requests-libraries.uky.edu/">Request materials</a></li>          
+          <li><a href="https://libguides.uky.edu/SCRCaccount/appointment">Schedule SCRC appointment</a></li>
+          <li><a href="https://libguides.uky.edu/SCRCaccount">Researcher account help</a></li>
+          <li><a href="https://libraries.uky.edu/ContactSCRC">Ask an archivist</a></li>         
+        </ul>
       </div>
     </div>
 
@@ -64,7 +61,7 @@
             </span>
           </a>
           <a href="https://www.instagram.com/uklibraries/">
-            <span class="icon-label ">
+            <span class="icon-label">
               <span class="ic ic--instagram" aria-hidden="true"></span>
               <span class="label show-for-sr">instagram</span>
             </span>
@@ -81,6 +78,17 @@
           </a>
         </div>
       </div>
+
+      <div class="grid grid--2-up">          
+        <div class="grid__column">
+          <a href="https://www.gpo.gov/" class=""><img src="/themes/omeukaprologue/images/fdlp-gpo-partner.png" data-src="/themes/omeukaprologue/images/fdlp-gpo-partner.png" alt="US Government Publishing Office"></a>
+        </div>
+        <div class="grid__column">
+          <a href="https://www.fdlp.gov/" class=""><img src="/themes/omeukaprologue/images/fdlp.png" data-src="/themes/omeukaprologue/images/fdlp.png" alt="Federal Depository Library Program" class="footer-img"></a>
+        </div>
+      </div>
+
+      
     </div>
   </div>
 </div>

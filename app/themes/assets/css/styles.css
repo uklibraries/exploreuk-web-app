@@ -38,6 +38,12 @@
     content: "";
 }
 
+/* Libraries Footer image */
+.footer-img {
+    width: 75%;
+    height: auto;
+}
+
 
 :root {
 /* colors */
