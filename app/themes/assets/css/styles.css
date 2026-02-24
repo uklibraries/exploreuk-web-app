@@ -1,4 +1,4 @@
-/* Universal breadcrumb Limestone overrides */
+/* Limestone universal breadcrumb overrides */
 .universal-breadcrumb ul{
      font-family: "usual", sans-serif !important;
      font-weight: 300 !important;
@@ -38,10 +38,22 @@
     content: "";
 }
 
-/* Libraries Footer image */
-.footer-img {
-    width: 75%;
+/* Libraries sponsor logo slab */
+.grid.grid--5-up.sponsor-logo {
+    align-items: center;
+}
+.sponsor-logo-short {
+    max-height: 150px;
+    max-width: 100%;
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+/* Libraries FDLP footer image */
+.uklib-footer-fdlp {
+    width: 144px;
     height: auto;
+    margin: 0 auto;
 }
 
 

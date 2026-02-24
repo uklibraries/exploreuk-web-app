@@ -10,7 +10,7 @@
           Margaret I. King Library<br />
           Lexington, KY 40506-0039<br />
           <a href=mailto:scrc@uky.edu>scrc@uky.edu</a><br />
-          Phone: 859-257-8611<br />
+          Phone: <a href="tel:859-257-8611">859-257-8611</a><br />
         </p>
         <p>
           <b>Breckinridge Research Room</b><br />
@@ -18,7 +18,7 @@
           Appointments required.<br />
         </p>
         <p>
-          <a class="link--fancy" href="https://form.jotform.com/251873807588170">Contact Form</a>
+          <a class="link--fancy" href="https://form.jotform.com/251873807588170">Contact form</a>
         </p>
       </div>
     </div>
@@ -79,15 +79,11 @@
         </div>
       </div>
 
-      <div class="grid grid--2-up">          
-        <div class="grid__column">
-          <a href="https://www.gpo.gov/" class=""><img src="/themes/omeukaprologue/images/fdlp-gpo-partner.png" data-src="/themes/omeukaprologue/images/fdlp-gpo-partner.png" alt="US Government Publishing Office"></a>
-        </div>
-        <div class="grid__column">
-          <a href="https://www.fdlp.gov/" class=""><img src="/themes/omeukaprologue/images/fdlp.png" data-src="/themes/omeukaprologue/images/fdlp.png" alt="Federal Depository Library Program" class="footer-img"></a>
-        </div>
+      <div class="editorial">
+        <a href="https://libguides.uky.edu/fedgov" title="This library is a Congressionally designated Regional Depository for U.S. Government Publications. Public access to the federal government publications collection is guaranteed by public law.">
+          <img class="uklib-footer-fdlp" src="/themes/assets/images/fdlp-logo.png" alt="Federal Depository Library">
+        </a>
       </div>
-
       
     </div>
   </div>
