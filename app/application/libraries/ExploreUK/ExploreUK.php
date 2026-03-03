@@ -411,7 +411,7 @@ class ExploreUK
             'base' => $this->config['base'],
             'logo' => $this->config['logo'],
             'front_page' => false,
-            'page_title' => 'ExploreUK - rare and unique research materials from UK Libraries.',
+            'page_title' => 'ExploreUK | Rare & unique research materials from UK Libraries',
             'theme' => $this->config['theme'],
             'query' => $this->config['query'],
         ];
