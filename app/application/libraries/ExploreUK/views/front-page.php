@@ -1,5 +1,5 @@
 <?php require('header.php'); ?>
-<div class="resources-section bg-uklblack">
+<!--<div class="resources-section bg-uklblack">-->
 
 <!-- TWIG INCLUDE : @limestone/grid.twig" -->
 <div class="slab">
@@ -42,7 +42,7 @@
             </h2>
         </div>
         <div class="grid grid--3-up">
-            <?php foreach ($m['additional_resources'] as $index => $resource) : ?>
+            <?php foreach ($m['additional_resources'] as $resource) : ?>
                 <div class="grid__column">
                     <div class="teaser--midnight">
                         <div class="teaser__media">
@@ -59,7 +59,7 @@
                                 </span>
                             </h3>
                             <div class="editorial">
-					            <p>SPOKEdb currently provides access to 19892 interview records, and 765 projects.</p>
+					            <p><?= $resource['description'] ?></p>
                             </div>
                         </div>
                     </div>

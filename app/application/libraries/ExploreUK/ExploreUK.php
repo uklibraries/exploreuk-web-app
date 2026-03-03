@@ -1,6 +1,8 @@
 <?php
 
 namespace ExploreUK;
+use Exception;
+use JsonException;
 
 class ExploreUK
 {
@@ -57,8 +59,8 @@ class ExploreUK
             $oai->run();
         } elseif (preg_match("#^/{$base}popular_resources.json$#", $request_uri, $matches)) {
             $this->showPopularResources();
-        } elseif (preg_match("#^/{$base}additional_resources.json$#", $request_uri, $matches)) {
-            $this->showAdditionalResources();
+        //} elseif (preg_match("#^/{$base}additional_resources.json$#", $request_uri, $matches)) {
+            //$this->showAdditionalResources();
         } elseif (preg_match("#^/{$base}catalog/stats#", $request_uri, $matches)) {
             $this->statsViewer();
         } elseif (preg_match("#^/{$base}catalog/(?<id>[^/]+)/find/?#", $request_uri, $matches)) {
@@ -367,7 +369,7 @@ class ExploreUK
             'base' => $this->config['base'],
             'logo' => $this->config['logo'],
             'front_page' => false,
-            'page_title' => 'ExploreUK - rare and unique research materials from UK Libraries.',
+            'page_title' => 'ExploreUK | Rare & unique research materials from UK Libraries',
             'theme' => $this->config['theme'],
             'query' => $this->config['query'],
         ];
@@ -879,7 +881,7 @@ class ExploreUK
                 }
             }
         } else {
-            $metadata['page_title'] = 'ExploreUK - rare and unique research materials from UK Libraries.';
+            $metadata['page_title'] = 'ExploreUK | Rare & unique research materials from UK Libraries';
         }
         $metadata['page_description'] = $metadata['page_title'];
 
@@ -907,12 +909,8 @@ class ExploreUK
             if (!isset($popular_resources['errors'])) {
                 $metadata['popular_resources'] = $popular_resources['data'];
             }
-
-            $metadata['additional_resources'] = [];
-            $additional_resources = $this->additionalResources();
-            if (!isset($additional_resources['errors'])) {
-                $metadata['additional_resources'] = $additional_resources['data'];
-            }
+             
+            $metadata ['additional_resources'] = $this->AdditionalResources();
 
             $view = new View($metadata, 'front-page');
         } else {
@@ -1059,32 +1057,42 @@ class ExploreUK
             $metadata['data'][] = $im;
         }
         return $metadata;
-    }
+    } 
 
-    public function showAdditionalResources()
+    private function AdditionalResources(): array
     {
-        $additional_resources = $this->additionalResources();
-        if (isset($additional_resources['errors']) && count($additional_resources['errors']) > 0) {
-            $this->index();
-        } else {
-            print json_encode($additional_resources);
-        }
-    }
+        //location of file
+        $path = '/app/themes/assets/additional_resources.json';
 
-    public function additionalResources()
-    {
-        $metadata = ['data' => []];
-        $additional_resources = [];
-        $colln = $this->omeka->getCollectionByTitle('Additional Resources');
-        $items = $this->omeka->getItems($colln->id);
-        foreach ($items as $item) {
-            $im = $this->omeka->getItemMetadata($item->id);
-            $additional_resources[$im['position']] = $im;
+        //check if file exists, if not log error and return empty array
+        if (!file_exists($path)) {
+        error_log("Error: Additional Resources JSON file missing at $path");
+        return []; 
+    }
+        
+        try {
+            //decode and trigger catch if file is missing or invalid
+            $data = json_decode(file_get_contents($path), true, 512, JSON_THROW_ON_ERROR);
+            $items = $data['data'] ?? [];
+            
+            //define variables
+            return array_map(function(array $item): array {
+                return [
+                    'image' => $item['image'] ?? '',
+                    'label' => $item['label'] ?? '',
+                    'url'  => $item['url'] ?? '#',
+                    'description' => $item['description'] ?? '',
+                    'position' => $item['position']
+                ];
+            }, $items);
+
+        } catch (\JsonException $e){
+            error_log("Error: Invalid JSON in" . $path . " " . $e->getMessage());
+            return [];
+
+        } catch (\Throwable $e){
+            error_log("Error: Unexpected failure reading additional resources" . $e->getMessage());
+            return [];
         }
-        ksort($additional_resources);
-        foreach ($additional_resources as $im) {
-            $metadata['data'][] = $im;
-        }
-        return $metadata;
     }
 }
