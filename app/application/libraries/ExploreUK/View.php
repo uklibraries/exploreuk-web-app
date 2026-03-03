@@ -80,6 +80,30 @@ class View
         $euk_locale = EUK_LOCALE;
         $field = $hash['key'];
         $content = $hash['value'];
+        if ($field === 'dc_relation_rich_display') {
+            $field_label = $euk_locale['en']['dc_relation_rich_display'];
+            $lines = [
+                "<h3 id=\"page-details-$field\">$field_label</h3>\n",
+                "<ul>\n",
+            ];
+            if (is_array($content)) {
+                foreach ($content as $entry) {
+                    $relation = json_decode($entry);
+                    if (isset($relation->content) && isset($relation->type) && isset($relation->identifier)) {
+                        $lines[] = "<li>";
+                        $lines[] = $this->renderLink([
+                            "href" => $relation->identifier,
+                            "content" => $relation->content,
+                            "external" => true,
+                            "open_new_tab" => true,
+                        ]);
+                        $lines[] = "</li>\n";
+                    }
+                }
+            }
+            $lines[] = "</ul>\n";
+            return implode('', $lines);
+        }
         if ($field === 'collection_url') {
             if (strlen((string) $content['source_s']) > 0) {
                 $field_label = $euk_locale['en']['source_s'];
@@ -87,13 +111,21 @@ class View
                 $link = "/?f%5Bsource_s%5D%5B%5D=";
                 $link_label = $euk_locale['en']['more_items'];
                 $lines = [
-                    "<h3>$field_label</h3>\n",
+                    "<h3 id=\"page-details-$field\">$field_label</h3>\n",
                     '<ul><li>',
                     $content['source_s'],
                     ' | ',
-                    $this->renderLink($this->path("/catalog/{$content['base_id']}"), $collection_label, true),
+                    $this->renderLink([
+                        "href" => $this->path("/catalog/{$content['base_id']}"),
+                        "content" => $collection_label,
+                        "external" => true,
+                        "open_new_tab" => true,
+                    ]),
                     ' | ',
-                    $this->renderLink($this->path($link . urlencode((string) $content['source_s'])), $link_label, true),
+                    $this->renderLink([
+                        "href" => $this->path($link . urlencode((string) $content['source_s'])),
+                        "content" => $link_label,
+                    ]),
                     '</li></ul>',
                 ];
                 return implode('', $lines);
@@ -150,10 +182,18 @@ class View
         }
 
         if (str_starts_with((string) $item, 'http')) {
-            return $this->renderLink($item, $item, true);
+            return $this->renderLink([
+                "href" => $item,
+                "content" => $item,
+                "external" => true,
+                "open_new_tab" => true,
+            ]);
         } elseif (in_array($field, $euk_facetable)) {
             $link = "/?f%5B$field%5D%5B%5D=";
-            return $this->renderLink($this->path($link . urlencode((string) $item)), $item, true);
+            return $this->renderLink([
+                "href" => $this->path($link . urlencode((string) $item)),
+                "content" => $item,
+            ]);
         } else {
             if ($field === 'description_display') {
                 return strip_tags((string) $item, '<b>');
@@ -165,11 +205,22 @@ class View
         }
     }
 
-    public function renderLink($href, $text, $external = false)
+    public function renderLink($options)
     {
-        return "<a href=\"$href\" " .
-            ($external ? "target=\"_blank\" rel=\"noopener\"" : '') .
-            ">$text</a>";
+        $content = $options["content"];
+        $attributes = [];
+        $attributes[] = "href=\"" . $options["href"] . "\"";
+        if (!empty($options["external"])) {
+            $content .= " <i class=\"fas fa-external-link-alt\"></i>";
+        }
+        if (!empty($options["open_new_tab"])) {
+            # rel="noreferrer" implies target="_blank" and rel="noopener",
+            # but I deliberately choose to include them explicitly.
+            $attributes[] = "target=\"_blank\"";
+            $attributes[] = "rel=\"noopener noreferrer\"";
+        }
+        $attribute_string = implode(" ", $attributes);
+        return "<a $attribute_string>$content</a>";
     }
 
     public function path($path)
