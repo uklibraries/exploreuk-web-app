@@ -1,5 +1,5 @@
 <!-- @limestone/global-header.twig" -->
-<header id="MainHeader" class="global-header ">
+<header id="MainHeader" class="global-header">
     <div class="slab global-header__masthead"  >
         <div class="slab__wrapper">
             <div class="global-header__banner">
