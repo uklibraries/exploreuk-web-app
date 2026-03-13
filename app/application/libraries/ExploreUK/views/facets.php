@@ -20,7 +20,7 @@ $fc++;
 <?php endif; ?>
 <div id="facets_<?= $fc ?>" class="facets row">
 <?php foreach ($m['facets'] as $facet) : ?>
-<article><details open><summary>
+<article><details><summary class="link-group__heading">
     <?= $facet['field_label'] ?></summary><br/>
 <ul>
     <?php foreach ($facet['values'] as $value) : ?>
@@ -28,7 +28,7 @@ $fc++;
     <?php endforeach; ?>
 </ul>
 <p class="more-facets-button">
-    <a class="btn" href="#inlinefacets-<?= $facet['field_raw'] ?>" data-lity>More <i class="fas fa-plus-circle"></i></a>
+<a class="btn modal-control mfp-inline" data-mfp-src="#inlinefacets-<?= $facet['field_raw'] ?>">More <i class="fas fa-plus-circle"></i></a>
 </p>
 </details>
 </article>

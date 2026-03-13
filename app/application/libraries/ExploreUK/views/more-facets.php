@@ -1,5 +1,5 @@
 <?php foreach ($m['facet_full_lists'] as $list) : ?>
-<div id="inlinefacets-<?= $list['field_raw'] ?>" class="more-facets lity-hide">
+<div id="inlinefacets-<?= $list['field_raw'] ?>" class="more-facets mfp-hide modal-display">
 
 <h1><?= $list['field_label'] ?></h1>
 

@@ -66,6 +66,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.1/lity.min.js" integrity="sha256-3VzI8FuSG20IfvIDKRptBR+1d4T6G57eDIf6ZEO13iY=" crossorigin="anonymous"></script>
 <script src="<?= $this->themePath('assets/js/resize.js') ?>"></script>
+<script>
+  $(document).ready(function() {
+      togglebutton();
+      modals();
+  });
+</script>
+
 <?php if (isset($m['script_image'])) : ?>
         <?php $s = $m['script_image']; ?>
         <?php $r = $m['item_image']; ?>
