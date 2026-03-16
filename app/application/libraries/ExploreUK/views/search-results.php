@@ -4,7 +4,7 @@ $p = $m['pagination'];
 ?>
 
 <div class="grid grid--major-right">
-    <div class="section-nav section-nav--blue-gray">
+    <div class="section-nav slab">
         <div id="facet_group_mobile grid__column grid__column--minor">
             <div id="facet_group_mobile_top">
                 <h2><?= $m['facet_menu_title'] ?></h2>
