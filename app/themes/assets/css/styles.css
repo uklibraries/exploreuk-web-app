@@ -126,6 +126,10 @@
         width: 420px;
         height: 120px;
     }
+
+    .more-facets.modal-display {
+        width: 60%;
+    }
 }
 
 .additional-resources > li > a,
@@ -159,4 +163,23 @@
     height: 100%;
     object-fit: cover;
     display: block;
+}
+
+.more-facets.modal-display {
+    width: 100%;
+}
+
+/* White tab content variant */
+.js-tabs--white .js-tabcontent {
+    background-color: #fff;
+    color: inherit;
+    border-bottom: none;
+}
+.js-tabs--white .js-tablist__item a {
+    background-color: #fff;
+}
+
+a.button.button--wildcat-blue:hover .icon-label--stacked .label,
+a.button.button--wildcat-blue:focus .icon-label--stacked .label {
+  color: #0033a0;
 }
