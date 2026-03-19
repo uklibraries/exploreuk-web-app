@@ -1,4 +1,4 @@
-<div class="download slab slab--blue-gray">
+<div class="section-nav section-nav--blue-gray slab">
     <h3>Download Options</h3>
     <ul class="no-decoration cta-group">
         <li>

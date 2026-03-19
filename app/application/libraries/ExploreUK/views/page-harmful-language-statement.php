@@ -1,6 +1,6 @@
-<div class="page-harmful-language-statement bg-uklsky">
+<div class="section-nav section-nav--blue-gray item-details">
 
-<p>
+<p class="editorial__content">
 You may come across language in UK Libraries Special Collections Research Center collections and online resources that you find harmful or offensive. SCRC collects materials from different cultures and time periods to preserve and make available the historical record. These materials document the time period when they were created and the view of their creator. As a result, some may demonstrate racist and offensive views that do not reflect the values of UK Libraries.
 </p>
 

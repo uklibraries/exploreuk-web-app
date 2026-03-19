@@ -1,9 +1,6 @@
-<div class="page-title bg-uklgray">
-<?php
-if (isset($m['downloadable'])) {
-    require('download-menu.php');
-}
-?>
+<div class="item-details">
+<div class="grid--major-left">
+<div class="grid__column grid__column--major">
 <h2 class="heading__text"><?= $m['flat']['title_display'] ?></h2>
 <?php
 $rows = '';
@@ -17,7 +14,7 @@ foreach (EUK_TITLE_FIELD_ORDER as $field) {
         $content = $m['details'][$field];
         if (in_array($field, ['scopecontent_s', 'description_display'])) {
             if ($rows) {
-                echo '<table class="contact-table">' . $rows . '</table>';
+                echo '<dl>' . $rows . '</dl>';
                 $rows = '';
             }
             print $this->renderField($content);
@@ -26,29 +23,35 @@ foreach (EUK_TITLE_FIELD_ORDER as $field) {
                 $collection_label = EUK_LOCALE['en']['open_collection_guide'];
                 $link = "/?f%5Bsource_s%5D%5B%5D=";
                 $link_label = EUK_LOCALE['en']['more_items'];
-                $td = implode('', [
+                $dd = implode('', [
                     $content['value']['source_s'],
                     ' | ',
                     $this->renderLink($this->path("/catalog/{$content['value']['base_id']}"), $collection_label, true),
                     ' | ',
                     $this->renderLink($this->path($link . urlencode((string) $content['value']['source_s'])), $link_label, true),
                 ]);
-                $rows .= '<tr><th scope="row">' . EUK_LOCALE['en']['source_s'] . '</th><td>' . $td . "</td></tr>\n";
+                $rows .= '<dt>' . EUK_LOCALE['en']['source_s'] . '</dt><dd>' . $dd . "</dd>\n";
             }
         } else {
             $label = EUK_LOCALE['en'][$field] ?? 'Unknown';
             if (is_array($content['value'])) {
-                $items = array_map(fn($item) => '<li>' . $this->renderHelper($field, $item) . '</li>', $content['value']);
-                $td = '<ul class="no-decoration">' . implode('', $items) . '</ul>';
+                $dds = array_map(fn($item) => '<dd>' . $this->renderHelper($field, $item) . '</dd>', $content['value']);
+                $rows .= '<dt>' . $label . '</dt>' . implode('', $dds) . "\n";
             } else {
-                $td = $this->renderHelper($field, $content['value']);
+                $rows .= '<dt>' . $label . '</dt><dd>' . $this->renderHelper($field, $content['value']) . "</dd>\n";
             }
-            $rows .= '<tr><th scope="row">' . $label . '</th><td>' . $td . "</td></tr>\n";
         }
     }
 }
 if ($rows) {
-    echo '<table class="contact-table">' . $rows . '</table>';
+    echo '<dl>' . $rows . '</dl>';
 }
 ?>
+</div>
+<?php if (isset($m['downloadable'])) : ?>
+<div class="grid__column grid__column--minor">
+    <?php require('download-menu.php'); ?>
+</div>
+<?php endif; ?>
+</div>
 </div>

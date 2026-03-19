@@ -169,14 +169,47 @@
     width: 100%;
 }
 
-/* White tab content variant */
 .js-tabs--white .js-tabcontent {
+    border: 1px solid #ccc;
     background-color: #fff;
-    color: inherit;
-    border-bottom: none;
+    color: #000;
 }
-.js-tabs--white .js-tablist__item a {
-    background-color: #fff;
+
+.js-tabs--white .js-tabcontent a {
+    color: #0033a0;
+}
+
+.tabs__list {
+    width: 50%;
+}
+
+.item-details {
+    width: 80%;
+    margin: 2rem auto 0;
+}
+
+.table-content {
+    padding: 1rem 2rem;
+}
+
+.cta-group a.button {
+    display: inline-flex;
+    width: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-nav .cta-group {
+    padding-left: 0;
+    justify-content: center;
+}
+
+.grid__column--minor .section-nav h3 {
+    text-align: center;
+}
+
+.section-nav .cta-group li {
+    padding-bottom: 0;
 }
 
 a.button.button--wildcat-blue:hover .icon-label--stacked .label,

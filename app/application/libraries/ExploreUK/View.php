@@ -124,13 +124,13 @@ class View
         }
         $lines = ["<h3 id=\"page-details-$field\">$label</h3>"];
         if (is_array($content)) {
-            $lines[] = "<ul>";
+            $lines[] = "<ul class=\"no-decoration\">";
             foreach ($content as $item) {
                 $lines[] = "<li>" . $this->renderHelper($field, $item) . "</li>";
             }
             $lines[] = "</ul>";
         } else {
-            $lines[] = "<ul>";
+            $lines[] = "<ul class=\"no-decoration\">";
             $lines[] = "<li>" . $this->renderHelper($field, $content) . "</li>";
             $lines[] = "</ul>";
         }
@@ -167,7 +167,7 @@ class View
 
     public function renderLink($href, $text, $external = false)
     {
-        return "<a href=\"$href\" " .
+        return "<a class \"link--fancy-reverse\" href=\"$href\" " .
             ($external ? "target=\"_blank\" rel=\"noopener\"" : '') .
             ">$text</a>";
     }

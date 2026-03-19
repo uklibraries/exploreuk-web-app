@@ -150,7 +150,6 @@ $(function () {
 <?php endif; ?>
 <script src="<?= $this->themePath('javascripts/back_to_top.js') ?>"></script>
 <script src="<?= $this->themePath('javascripts/main.js') ?>"></script>
-<script src="<?= $this->themePath('javascripts/jsbin-tabs.js') ?>"></script>
 <script src="<?= $this->themePath('assets/js/lazyload.js') ?>"></script>
     </body>
 </html>
