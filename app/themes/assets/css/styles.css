@@ -194,14 +194,44 @@
 
 .cta-group a.button {
     display: inline-flex;
-    width: auto;
+    width: 100%;
     align-items: center;
     justify-content: center;
 }
 
 .section-nav .cta-group {
     padding-left: 0;
-    justify-content: center;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+}
+
+.section-nav .cta-group a {
+    margin: 0;
+}
+
+@media screen and (min-width: 35rem) {
+    .section-nav .cta-group {
+        flex-direction: column;
+    }
+}
+
+@media screen and (min-width: 58rem) {
+    .section-nav .cta-group {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 76rem) {
+    .grid__column--minor .section-nav .cta-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.grid__column--minor .section-nav {
+    display: block;
 }
 
 .grid__column--minor .section-nav h3 {
@@ -210,6 +240,10 @@
 
 .section-nav .cta-group li {
     padding-bottom: 0;
+}
+
+.icon-label--stacked .label {
+  font-size: 1rem;
 }
 
 a.button.button--wildcat-blue:hover .icon-label--stacked .label,

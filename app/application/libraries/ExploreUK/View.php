@@ -122,7 +122,7 @@ class View
         } else {
             $label = 'Unknown';
         }
-        $lines = ["<h3 id=\"page-details-$field\">$label</h3>"];
+        $lines = ["<h2 id=\"page-details-$field\">$label</h2>"];
         if (is_array($content)) {
             $lines[] = "<ul class=\"no-decoration\">";
             foreach ($content as $item) {

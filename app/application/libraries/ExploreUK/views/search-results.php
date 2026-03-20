@@ -3,9 +3,21 @@
 $p = $m['pagination'];
 ?>
 
-<div class="grid grid--major-right">
+<div class="slab slab--wildcat-blue">
+    <div class="slab__wrapper">
+        <nav class="breadcrumbs">
+            <ul class="no-decoration">
+                <li><a href="<?= $this->path('') ?>">Home</a></li>
+            </ul>
+        </nav>
+        <h1><?php if (!empty($m['q'])) : ?>Search results for &ldquo;<?= htmlspecialchars((string) $m['q']) ?>&rdquo;<?php else : ?>All Items<?php endif; ?></h1>
+        <?php require 'pagination.php'; ?>
+    </div>
+</div>
+<div class="slab__wrapper">
+<div class="slab grid grid--major-right">
     <div class="section-nav slab">
-        <div id="facet_group_mobile grid__column grid__column--minor">
+        <div id="facet_group_mobile" class="grid__column grid__column--minor">
             <div id="facet_group_mobile_top">
                 <h2><?= $m['facet_menu_title'] ?></h2>
                 <?php require 'facets.php'; ?>
@@ -82,6 +94,7 @@ $p = $m['pagination'];
     <?php require 'pagination.php' ?>
     <?php require 'more-facets.php' ?>
 
+</div>
 </div>
 <?php require('global-footer.php'); ?>
 <?php require 'universal-footer.php' ?>

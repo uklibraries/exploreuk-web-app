@@ -78,8 +78,8 @@
 <div class="slab mobile-nav" hidden id="MobileNav">
     <div class="slab__wrapper">
         <div class="mobile-tab-nav js-tabs">
-            <span class="mobile-tab-nav-header">Main Menu</span>
-            <div class="js-tabcontent tabs__content">
+            <span id="label_mobile-nav-content" class="mobile-tab-nav-header">Main Menu</span>
+            <div id="mobile-nav-content" class="js-tabcontent tabs__content">
                 <div class="mobile-tab-nav__menus">
                     <!-- @limestone/global-nav.twig" -->
                     <nav id="MainMobileNav" class="global-nav" aria-labelledby="MainNavLabel660c465a9ec23">

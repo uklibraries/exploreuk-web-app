@@ -1,5 +1,5 @@
-<div class="section-nav section-nav--blue-gray slab">
-    <h3>Download Options</h3>
+<div class="section-nav section-nav--blue-gray">
+    <h2>Download Options</h2>
     <ul class="no-decoration cta-group">
         <li>
             <a class="button button--wildcat-blue" id="jpeg_href" href="<?= $this->path('/catalog/' . $m['id'] . '/download?type=jpeg') ?>">

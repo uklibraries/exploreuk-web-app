@@ -1,7 +1,7 @@
 <div class="item-details">
 <div class="grid--major-left">
 <div class="grid__column grid__column--major">
-<h2 class="heading__text"><?= $m['flat']['title_display'] ?></h2>
+<h1 class="heading__text"><?= $m['flat']['title_display'] ?></h1>
 <?php
 $rows = '';
 foreach (EUK_TITLE_FIELD_ORDER as $field) {
