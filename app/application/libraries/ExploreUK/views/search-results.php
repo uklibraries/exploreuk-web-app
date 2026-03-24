@@ -3,10 +3,10 @@
 $p = $m['pagination'];
 ?>
 
-<div class="slab slab--wildcat-blue">
+<div class="slab">
     <div class="slab__wrapper">
-        <?php require 'breadcrumbs.php' ?>
         <h1><?php if (!empty($m['q'])) : ?>Search results for &ldquo;<?= htmlspecialchars((string) $m['q']) ?>&rdquo;<?php else : ?>All Items<?php endif; ?></h1>
+        <?php require 'breadcrumbs.php' ?>
         <?php require 'pagination.php'; ?>
     </div>
 </div>

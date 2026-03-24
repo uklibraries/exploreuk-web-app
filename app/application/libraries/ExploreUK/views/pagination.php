@@ -5,7 +5,7 @@ if (!isset($pc)) {
 }
 $pc++;
 ?>
-<div class="row pagination">
+<div class="pagination">
 
     <div class="rows-select">
         <form action="/catalog" class="per_page" method="get">
@@ -48,3 +48,21 @@ $pc++;
         </p>
     </div>
 </div>
+
+<?php if (!empty($p['pages'])): ?>
+<div class="pagination">
+    <ul>
+        <?php if ($p['current_page'] > 1): ?>
+            <li class="first"><a href="<?= $p['first_page'] ?>">First</a></li>
+            <li class="previous"><a href="<?= $p['previous'] ?>">Previous</a></li>
+        <?php endif; ?>
+        <?php foreach ($p['pages'] as $page): ?>
+            <li<?php if ($page['current']): ?> class="current"<?php endif; ?>><a href="<?= $page['link'] ?>"><?= $page['number'] ?></a></li>
+        <?php endforeach; ?>
+        <?php if ($p['current_page'] < $p['total_pages']): ?>
+            <li class="next"><a href="<?= $p['next'] ?>">Next</a></li>
+            <li class="last"><a href="<?= $p['last_page'] ?>">Last</a></li>
+        <?php endif; ?>
+    </ul>
+</div>
+<?php endif; ?>

@@ -7,8 +7,7 @@
         </div>
     </div>
     <div id="resultsmain">
-        <div class="row pagination">&nbsp;</div>
-        <div class="row">
+        <div>
             <ul class="result-list">
             <li class="result-item">
                 <p class="result-number"></p>

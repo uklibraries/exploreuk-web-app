@@ -250,3 +250,7 @@ a.button.button--wildcat-blue:hover .icon-label--stacked .label,
 a.button.button--wildcat-blue:focus .icon-label--stacked .label {
   color: #0033a0;
 }
+
+.search-header {
+    display: flex;
+}

@@ -939,6 +939,27 @@ class ExploreUK
                 } else {
                     $pagination_data['last'] = $pagination_data['count'];
                 }
+                # Page numbers
+                $rows = $metadata['query']->q('rows');
+                $current_page = intval($metadata['query']->q('offset') / $rows) + 1;
+                $total_pages = intval(ceil($pagination_data['count'] / $rows));
+                $pagination_data['current_page'] = $current_page;
+                $pagination_data['total_pages'] = $total_pages;
+                $pagination_data['first_page'] = $this->path('/catalog/' . $metadata['query']->offsetLink(0));
+                $pagination_data['last_page'] = $this->path('/catalog/' . $metadata['query']->offsetLink(($total_pages - 1) * $rows));
+
+                $pages = [];
+                $window_start = max(1, $current_page - 2);
+                $window_end = min($total_pages, $current_page + 2);
+                for ($pg = $window_start; $pg <= $window_end; $pg++) {
+                    $pages[] = [
+                        'number' => $pg,
+                        'link' => $this->path('/catalog/' . $metadata['query']->offsetLink(($pg - 1) * $rows)),
+                        'current' => ($pg === $current_page),
+                    ];
+                }
+                $pagination_data['pages'] = $pages;
+
                 $metadata['pagination'] = $pagination_data;
 
                 # results
