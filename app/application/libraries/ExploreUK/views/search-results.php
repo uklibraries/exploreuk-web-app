@@ -5,11 +5,7 @@ $p = $m['pagination'];
 
 <div class="slab slab--wildcat-blue">
     <div class="slab__wrapper">
-        <nav class="breadcrumbs">
-            <ul class="no-decoration">
-                <li><a href="<?= $this->path('') ?>">Home</a></li>
-            </ul>
-        </nav>
+        <?php require 'breadcrumbs.php' ?>
         <h1><?php if (!empty($m['q'])) : ?>Search results for &ldquo;<?= htmlspecialchars((string) $m['q']) ?>&rdquo;<?php else : ?>All Items<?php endif; ?></h1>
         <?php require 'pagination.php'; ?>
     </div>

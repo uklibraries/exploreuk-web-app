@@ -7,7 +7,9 @@
         </li>
         <li>
             <!-- TWIG INCLUDE : @limestone/link.twig" -->
-            <a href="<?= $m['back_to_search'] ?>" class=""><?= $m['back_to_search_text']?></a>
+            <?php if (isset($m['back_to_search']) && isset($m['back_to_search_text'])): ?>
+                <a href="<?= $m['back_to_search'] ?>" class=""><?= $m['back_to_search_text'] ?></a>
+            <?php endif; ?>
             <!-- END TWIG INCLUDE : @limestone/link.twig" -->
         </li>
     </ul>
