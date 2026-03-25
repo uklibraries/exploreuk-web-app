@@ -4,8 +4,8 @@
     <div class="tab-wrap js-tabs">
         <div class="">
             <ul class="tabs js-tablist" id="more-facets-tabs-<?= $list['field_raw'] ?>">
-                <li id="more-facets-option-<?= $list['field_raw'] ?>-by-index" class="tab-option js-tablist__item"><a href="#more-facets-list-<?= $list['field_raw'] ?>-by-index" class="js-tablist__link">Sort by <?= $list['field_label'] ?></a></li>
-                <li id="more-facets-option-<?= $list['field_raw'] ?>-by-count" class="tab-option js-tablist__item"><a href="#more-facets-list-<?= $list['field_raw'] ?>-by-count" class="js-tablist__link">Sort by Best Match</a></li>
+                <li id="more-facets-option-<?= $list['field_raw'] ?>-by-index" class="tab-option js-tablist__item"><a id="label_more-facets-list-<?= $list['field_raw'] ?>-by-index" href="#more-facets-list-<?= $list['field_raw'] ?>-by-index" class="js-tablist__link">Sort by <?= $list['field_label'] ?></a></li>
+                <li id="more-facets-option-<?= $list['field_raw'] ?>-by-count" class="tab-option js-tablist__item"><a id="label_more-facets-list-<?= $list['field_raw'] ?>-by-count" href="#more-facets-list-<?= $list['field_raw'] ?>-by-count" class="js-tablist__link">Sort by Best Match</a></li>
             </ul>
         </div>
         <?php
