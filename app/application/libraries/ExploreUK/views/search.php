@@ -17,7 +17,7 @@
                         ExploreUK
                     </span>
                 </h1>
-                <p>Search 530,000+ digitized collections, prints, photographs, maps, manuscripts, streaming video, and more.</p>
+                <p><?= $m['search_items_count_text'] ?></p>
                 <!-- END TWIG INCLUDE : @limestone/headline-group.twig" -->
                 <?php require('search-form.php'); ?>
             </div>

@@ -1,5 +1,5 @@
 <?php require 'header.php'; ?>
-<div class="slab slab--wildcat-blue">
+<div class="slab slab--thin slab--wildcat-blue">
     <div class="slab__wrapper">
         <?php require 'breadcrumbs.php'; ?>
         <?php require 'pagination.php'; ?>

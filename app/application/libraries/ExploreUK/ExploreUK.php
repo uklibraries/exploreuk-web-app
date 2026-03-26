@@ -760,10 +760,6 @@ class ExploreUK
         $metadata['q'] = $metadata['query']->q('q');
         $metadata['search_link'] = $this->config['solr'] . '?' . $metadata['query']->searchParams();
         if ($this->config['query']->nontrivial()) {
-            $metadata['back_to_search'] = $this->path('/catalog/' . $metadata['query']->link());
-            $metadata['back_to_search_text'] = EUK_BACK_TO_SEARCH_TEXT;
-        }
-        if ($this->config['query']->nontrivial()) {
             $result = $this->config['query']->search();
             $metadata['page_title'] = htmlspecialchars((string) $metadata['q'], ENT_QUOTES, 'UTF-8') . ' - ExploreUK';
 

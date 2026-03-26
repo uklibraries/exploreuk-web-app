@@ -1,4 +1,4 @@
-<div class="slab slab--thin slab--dark-blue">
+<div class="slab slab--thin slab--dark-blue search-brief">
     <div class="slab__wrapper">
         <!-- TWIG INCLUDE : @limestone/search-form.twig" -->
         <form method="get" action="<?= $this->path('/catalog/') ?>" id="search" class="search-form section-nav">

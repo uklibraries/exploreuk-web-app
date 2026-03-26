@@ -5,7 +5,7 @@ if (!isset($pc)) {
 }
 $pc++;
 ?>
-<div class="grid grid--major-right">
+<div class="grid grid--major-right search-nav">
     <?php if (!empty($p['pages'])): ?>
     <div class="pagination grid__column--major">
         <nav aria-label="Pagination">
@@ -25,7 +25,7 @@ $pc++;
         </nav>
     </div>
     <?php endif; ?>
-    <div class="pagination grid__column--minor">
+    <div class="result-amount grid__column--minor">
         <div class="rows-select">
             <form action="/catalog" class="per_page" method="get">
                 <label for="per_page_<?= $pc ?>">Show

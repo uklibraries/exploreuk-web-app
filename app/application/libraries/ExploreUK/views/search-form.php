@@ -5,11 +5,11 @@
         <button type="submit" class="icon-only" value="search">
             <!-- TWIG INCLUDE : @atoms/icon-label.html.twig" -->
             <!-- COMPONENT: @atoms/icon-label.html.twig -->
-            <span class="icon-label ">
+            <span class="icon-label">
                 <span class="ic ic--magnify" aria-hidden="true"></span>
                 <span class="label ">search</span>
             </span>
-            <!-- END TWIG INCLUDE : @atoms/icon-label.html.twig" -->                    
+            <!-- END TWIG INCLUDE : @atoms/icon-label.html.twig" -->
         </button>
     </div>
 </form>

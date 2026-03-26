@@ -183,7 +183,8 @@
     width: 50%;
 }
 
-.item-details {
+.item-details,
+.item-details-tabs {
     width: 80%;
     margin: 2rem auto 0;
 }
@@ -251,6 +252,52 @@ a.button.button--wildcat-blue:focus .icon-label--stacked .label {
   color: #0033a0;
 }
 
-.search-header {
-    display: flex;
+@scope (.search-nav) {
+    .pagination {
+        margin: 0;
+    }
+
+    .pagination nav ul {
+        padding: 0;
+    }
+
+    .result-amount {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    @media screen and (max-width: 35rem) {
+        :scope {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+    }
+}
+
+@scope (.search-brief) {
+    button {
+        margin: 0;
+    }
+}
+
+@scope (.item-details-tabs) {
+    .js-tablist__item {
+        display: flex;
+    }
+
+    .js-tablist__item:nth-child(2) {
+        padding: 0;
+        margin-left: 20px;
+    }
+
+    .js-tablist__item a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
 }
