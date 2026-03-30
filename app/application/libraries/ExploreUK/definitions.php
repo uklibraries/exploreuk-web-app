@@ -201,7 +201,7 @@ function highlight_snippet($text, $raw_terms, $radius)
         '.', '\\', '+', '*', '?', '[', '^', ']', '$', '(', ')', '{', '}',
         '=', '!', '<', '>', '|', ':', '#', '"', '\'', '%', '/',
     ], '', $raw_terms);
-    $terms = preg_split('/\s+/', $raw_terms, null, PREG_SPLIT_NO_EMPTY);
+    $terms = preg_split('/\s+/', $raw_terms, -1, PREG_SPLIT_NO_EMPTY);
     $words = explode(' ', preg_replace('/\s+/', ' ', (string) $text));
     $wanted = array_fill(0, count($words), 0);
     for ($i = 0; $i < count($words); $i++) {

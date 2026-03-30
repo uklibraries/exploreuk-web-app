@@ -422,8 +422,9 @@ class ExploreUK
         $pages = $this->pages($id);
         if ($pages) {
             $sequence = intval(preg_replace('/.*[^_]+_/', '', (string) $id)) - 1;
-            $search_host = 'https://' . $_SERVER['HTTP_HOST'] . '/catalog/' . $id . '/find';
-            $images_base_url = 'https://' . $_SERVER['HTTP_HOST'] . '/themes/' . $metadata['theme'] . '/BookReader/images/';
+            $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+            $search_host = $scheme . '://' . $_SERVER['HTTP_HOST'] . '/catalog/' . $id . '/find';
+            $images_base_url = $scheme . '://' . $_SERVER['HTTP_HOST'] . '/themes/' . $metadata['theme'] . '/BookReader/images/';
 
             $metadata['script'] = [
                 'json' => json_encode($pages),
