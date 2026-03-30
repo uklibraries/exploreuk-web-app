@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title><?= $m['page_title'] ?></title>
     <meta charset="utf-8" />
@@ -14,7 +15,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <!-- <link rel="stylesheet" href="<?= $this->themePath('assets/css/main.min.css') ?>?<?= $this->subresourceIntegrity('assets/css/main.min.css') ?>" /> -->
     <link rel="stylesheet" href="<?= $this->themePath('assets/css/styles.css') ?>" />
-    <link rel="stylesheet" href="https://webcdn.uky.edu/limestone/1.0.0/css/style.css" >
+    <link rel="stylesheet" href="https://webcdn.uky.edu/limestone/1.0.0/css/style.css">
     <link rel="stylesheet" href="/themes/assets/css/styles.css">
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.2.0/jquery.magnific-popup.min.js"></script>
     <script defer src="https://webcdn.uky.edu/limestone/1.0.0/js/lib/jquery-accessible-tabs-aria.js"></script>

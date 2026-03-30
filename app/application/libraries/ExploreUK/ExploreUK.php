@@ -1,6 +1,7 @@
 <?php
 
 namespace ExploreUK;
+
 use Exception;
 use JsonException;
 
@@ -60,7 +61,7 @@ class ExploreUK
         } elseif (preg_match("#^/{$base}popular_resources.json$#", $request_uri, $matches)) {
             $this->showPopularResources();
         //} elseif (preg_match("#^/{$base}additional_resources.json$#", $request_uri, $matches)) {
-            //$this->showAdditionalResources();
+            //$this->showadditionalResources();
         } elseif (preg_match("#^/{$base}catalog/stats#", $request_uri, $matches)) {
             $this->statsViewer();
         } elseif (preg_match("#^/{$base}catalog/(?<id>[^/]+)/find/?#", $request_uri, $matches)) {
@@ -911,8 +912,8 @@ class ExploreUK
             if (!isset($popular_resources['errors'])) {
                 $metadata['popular_resources'] = $popular_resources['data'];
             }
-             
-            $metadata ['additional_resources'] = $this->AdditionalResources();
+
+            $metadata ['additional_resources'] = $this->additionalResources();
 
             $view = new View($metadata, 'front-page');
         } else {
@@ -1080,26 +1081,26 @@ class ExploreUK
             $metadata['data'][] = $im;
         }
         return $metadata;
-    } 
+    }
 
-    private function AdditionalResources(): array
+    private function additionalResources(): array
     {
         //location of file
         $path = '/app/themes/assets/additional_resources.json';
 
         //check if file exists, if not log error and return empty array
         if (!file_exists($path)) {
-        error_log("Error: Additional Resources JSON file missing at $path");
-        return []; 
-    }
-        
+            error_log("Error: Additional Resources JSON file missing at $path");
+            return [];
+        }
+
         try {
             //decode and trigger catch if file is missing or invalid
             $data = json_decode(file_get_contents($path), true, 512, JSON_THROW_ON_ERROR);
             $items = $data['data'] ?? [];
-            
+
             //define variables
-            return array_map(function(array $item): array {
+            return array_map(function (array $item): array {
                 return [
                     'image' => $item['image'] ?? '',
                     'label' => $item['label'] ?? '',
@@ -1108,12 +1109,10 @@ class ExploreUK
                     'position' => $item['position']
                 ];
             }, $items);
-
-        } catch (\JsonException $e){
+        } catch (\JsonException $e) {
             error_log("Error: Invalid JSON in" . $path . " " . $e->getMessage());
             return [];
-
-        } catch (\Throwable $e){
+        } catch (\Throwable $e) {
             error_log("Error: Unexpected failure reading additional resources" . $e->getMessage());
             return [];
         }

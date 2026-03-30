@@ -22,7 +22,7 @@
             <div class="item-list grid__column grid__column--major">
                 <!-- TWIG INCLUDE : components-teaser" -->
                 <!-- TWIG INCLUDE : @limestone/teaser.twig" -->
-                <?php foreach($m['results'] as $r): ?>
+                <?php foreach ($m['results'] as $r) : ?>
                     <div class="teaser teaser--event teaser--blue-gray">
                         <?php if (isset($r['thumb'])) : ?>
                             <div class="teaser__media">
@@ -46,7 +46,7 @@
                                 <span class="headline-group__sub">
                                     <?php if (isset($r['source'])) : ?>
                                         <?php if (is_array($r['source'])) : ?>
-                                            <?php foreach($r['source'] as $source) : ?>
+                                            <?php foreach ($r['source'] as $source) : ?>
                                                 <a href="<?= $this->path('/?f%5Bsource_s%5D%5B%5D=' . urlencode($source)) ?>"><?= $source ?></a>
                                             <?php endforeach; ?>
                                         <?php else : ?>
@@ -59,8 +59,8 @@
                             <div class="content-meta">
                                 <div class="content-meta__who-when">
                                     <?php if (isset($r['pubdate_display'])) : ?>
-                                        <?php if(is_array($r['pubdate_display'])) : ?>
-                                            <?php foreach($r['pubdate_display'] as $date) : ?>
+                                        <?php if (is_array($r['pubdate_display'])) : ?>
+                                            <?php foreach ($r['pubdate_display'] as $date) : ?>
                                                 <span class="date"><?= $date ?></span>
                                             <?php endforeach; ?>
                                         <?php else : ?>
@@ -71,7 +71,7 @@
                                     <?php endif; ?>
                                     <?php if (isset($r['format'])) : ?>
                                         <?php if (is_array($r['format'])) : ?>
-                                            <?php foreach($r['format'] as $format) : ?>
+                                            <?php foreach ($r['format'] as $format) : ?>
                                                 <span class="byline"><?= $format ?></span>
                                             <?php endforeach; ?>
                                         <?php else : ?>

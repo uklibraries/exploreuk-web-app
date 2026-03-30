@@ -59,7 +59,7 @@
                                 </span>
                             </h3>
                             <div class="editorial">
-					            <p><?= $resource['description'] ?></p>
+                                <p><?= $resource['description'] ?></p>
                             </div>
                         </div>
                     </div>
