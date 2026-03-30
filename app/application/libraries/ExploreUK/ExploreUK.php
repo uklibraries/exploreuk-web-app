@@ -525,6 +525,7 @@ class ExploreUK
             ['Metadata record', 'mets_url_display'],
             ['Rights', 'usage_display'],
             ['Description', 'description_display'],
+            ['Relation', 'dc_relation_rich_display'],
             ['Subject', 'subject_topic_facet'],
         ];
         foreach ($desired as $row) {

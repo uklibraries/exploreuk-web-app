@@ -26,9 +26,9 @@ foreach (EUK_TITLE_FIELD_ORDER as $field) {
                 $dd = implode('', [
                     $content['value']['source_s'],
                     ' | ',
-                    $this->renderLink($this->path("/catalog/{$content['value']['base_id']}"), $collection_label, true),
+                    $this->renderLink(['href' => $this->path("/catalog/{$content['value']['base_id']}"), 'content' => $collection_label, 'open_new_tab' => true]),
                     ' | ',
-                    $this->renderLink($this->path($link . urlencode((string) $content['value']['source_s'])), $link_label, true),
+                    $this->renderLink(['href' => $this->path($link . urlencode((string) $content['value']['source_s'])), 'content' => $link_label, 'open_new_tab' => true]),
                 ]);
                 $rows .= '<dt>' . EUK_LOCALE['en']['source_s'] . '</dt><dd>' . $dd . "</dd>\n";
             }
