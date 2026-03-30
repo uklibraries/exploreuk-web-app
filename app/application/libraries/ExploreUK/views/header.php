@@ -26,30 +26,35 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FPRYLHP028"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-FPRYLHP028', { 'anonymize_ip': true });
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-FPRYLHP028', {
+            'anonymize_ip': true
+        });
     </script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23584444-4"></script>
 </head>
+
 <body>
-<?php require('universal-header.php'); ?>
-<a href="#0" class="cd-top js-cd-top">Top</a>
-<div id="main">
-<?php if ($m['front_page']) : ?>
-    <section id="top">
-        <div>
-    <?php require('global-header.php'); ?>
-    <?php require('search.php'); ?>
-<div class="row"></div>
-<?php else : ?>
-    <section class="bg-uklblack" id="top2">
-        <div>
-    <?php require('global-header.php'); ?>
-<div id="top2_bottom">
-    <?php require('search-brief.php'); ?>
-        </div>
-<?php endif; ?>
-        </div>
-    </section>
+    <?php require('universal-header.php'); ?>
+    <div id="main">
+        <?php if ($m['front_page']) : ?>
+            <section id="top">
+                <div>
+                    <?php require('global-header.php'); ?>
+                    <?php require('search.php'); ?>
+                    <div class="row"></div>
+        <?php else : ?>
+                    <section class="bg-uklblack" id="top2">
+                        <div>
+                            <?php require('global-header.php'); ?>
+                            <div id="top2_bottom">
+                                <?php require('search-brief.php'); ?>
+                            </div>
+        <?php endif; ?>
+                        </div>
+                    </section>

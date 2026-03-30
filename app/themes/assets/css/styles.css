@@ -1,3 +1,12 @@
+/* vars */
+:root {
+/* colors */
+    --wildcat-blue: #0033a0;
+    --wildcat-white: #fff;
+    --midnight: #041e42;
+    --dark-blue: #1f2c5e;
+}
+
 /* Limestone universal breadcrumb overrides */
 .universal-breadcrumb ul{
      font-family: "usual", sans-serif !important;
@@ -54,14 +63,6 @@
     width: 144px;
     height: auto;
     margin: 0 auto;
-}
-
-
-:root {
-/* colors */
-    --wildcat-blue: #0033a0;
-    --wildcat-white: #fff;
-    --warm-neutral-60: #efebe2;
 }
 
 #top > div {
@@ -253,6 +254,10 @@ a.button.button--wildcat-blue:focus .icon-label--stacked .label {
 }
 
 @scope (.search-nav) {
+    :scope {
+        padding-top: 1rem;
+    }
+
     .pagination {
         margin: 0;
     }
@@ -277,6 +282,12 @@ a.button.button--wildcat-blue:focus .icon-label--stacked .label {
     }
 }
 
+@scope(.search-form){
+    button {
+        margin: 0;
+    }
+}
+
 @scope (.search-brief) {
     button {
         margin: 0;
@@ -284,13 +295,12 @@ a.button.button--wildcat-blue:focus .icon-label--stacked .label {
 }
 
 @scope (.item-details-tabs) {
-    .js-tablist__item {
-        display: flex;
+    :scope {
+        padding-bottom: 2rem;
     }
 
-    .js-tablist__item:nth-child(2) {
-        padding: 0;
-        margin-left: 20px;
+    .js-tablist__item {
+        display: flex;
     }
 
     .js-tablist__item a {
@@ -299,5 +309,39 @@ a.button.button--wildcat-blue:focus .icon-label--stacked .label {
         justify-content: center;
         width: 100%;
         height: 100%;
+    }
+}
+
+@scope (.hero) {
+    :scope {
+        position: relative;
+        display: inline-block;
+        padding: 0;
+    }
+
+    figure.slab {
+        padding: 0;
+    }
+
+    .featured-text {
+        position: absolute;
+        bottom: 2rem;
+        right: 2rem;
+        left: 55%;
+        padding: 1rem 1rem;
+        background-color: var(--dark-blue);
+    }
+
+    .featured-image {
+        display: block;
+        max-height: 55vh;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    @media screen and (max-width: 58rem) {
+        .featured-text {
+            left: 0;
+        }
     }
 }
