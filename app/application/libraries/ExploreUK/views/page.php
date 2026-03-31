@@ -47,5 +47,5 @@ if (($ui === "2") && $m['item_image']) : ?>
     <?php require('page-details.php'); ?>
 </div>
 
-<?php require('global-footer.php'); ?>
+<?php require('global-footer.html'); ?>
 <?php require('universal-footer.php'); ?>

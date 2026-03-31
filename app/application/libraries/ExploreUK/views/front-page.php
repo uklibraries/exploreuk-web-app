@@ -71,6 +71,6 @@
 
 <?php //require('additional-resources.php'); ?>
 <?php require('sponsors.php'); ?>
-<?php require('global-footer.php'); ?>
+<?php require('global-footer.html'); ?>
 <?php require('universal-footer.php'); ?>
 

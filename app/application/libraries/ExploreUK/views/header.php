@@ -40,18 +40,18 @@
 </head>
 
 <body>
-    <?php require('universal-header.php'); ?>
+    <?php require('universal-header.html'); ?>
     <div id="main">
         <?php if ($m['front_page']) : ?>
             <section id="top">
                 <div>
-                    <?php require('global-header.php'); ?>
+                    <?php require('global-header.html'); ?>
                     <?php require('search.php'); ?>
                     <div class="row"></div>
         <?php else : ?>
                     <section class="bg-uklblack" id="top2">
                         <div>
-                            <?php require('global-header.php'); ?>
+                            <?php require('global-header.html'); ?>
                             <div id="top2_bottom">
                                 <?php require('search-brief.php'); ?>
                             </div>

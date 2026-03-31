@@ -34,5 +34,5 @@ foreach ($suggestions as $index => $suggestion) {
     </div>
 </div>
 
-<?php require('global-footer.php'); ?>
+<?php require('global-footer.html'); ?>
 <?php require('universal-footer.php'); ?>
