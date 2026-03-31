@@ -1,3 +1,4 @@
+<?php // template file ?>
 <div class="slab global-footer">
   <div class="slab__wrapper">
     <div class="global-footer__column">

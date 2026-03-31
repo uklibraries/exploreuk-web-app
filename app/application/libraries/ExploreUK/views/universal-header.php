@@ -1,3 +1,5 @@
+<?php // template file ?>
+
 <!-- TWIG INCLUDE : @limestone/universal-header.twig" -->
 <div class="slab universal-header"  >
     <div class="slab__wrapper">

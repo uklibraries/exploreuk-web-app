@@ -1,3 +1,4 @@
+<?php // template file ?>
 <!-- @limestone/global-header.twig" -->
 <header id="MainHeader" class="global-header">
     <div class="slab global-header__masthead"  >
