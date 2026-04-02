@@ -6,8 +6,8 @@ help: ## Show this help
 dev: ## Start development environment
 	docker compose up -d
 
-dev-fa: ## Start development environment with findingaid application
-	docker compose --profile with_fa up --watch
+dev-fa: ## Start development environment with findingaid application (requires FA_IMAGE=IMAGE_LOCATION environment variable)
+	docker compose --profile with_fa up -d
 
 build: ## Build containers
 	docker compose build

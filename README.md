@@ -70,8 +70,15 @@ repository.
 There is a service, findingaid, which is an integration with ExploreUK's
 associated application, [findingaid](https://github.com/uklibraries/findingaid).
 Its inclusion in the development environment is optional. Developers wishing to
-include this should follow the docker installation instructions in the
-findingaid repo, and then use the `make dev-fa` command.
+include this application in dev should follow the docker installation
+instructions in the findingaid repo, set the environment variable `FA_IMAGE` to
+the name of a locally built findingaid image or a URL to the desired image, and
+then use the `make dev-fa` command. The xml directory will be gitignored.
+
+```
+# Run ExploreUK with a findingaid image
+FA_IMAGE="findingaid:local" make dev-fa
+```
 
 ## Coding standard
 
