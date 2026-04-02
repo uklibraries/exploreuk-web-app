@@ -1,10 +1,9 @@
-# exploreuk-web-app
+# ExploreUK
 This is the main portion of the ExploreUK web application. Document
-data is pulled from Solr, and other settings are managed in Omeka
-admin mode. Deploying to production is managed in the [ukl-ansible-playbooks](https://github.com/uklibraries/ukl-ansible-playbooks) repository.
+data is pulled from [Solr](https://solr.apache.org/), and other settings are managed in the [Omeka Classic](https://omeka.org/classic/) admin panel. Deploying to production is managed in the [ukl-ansible-playbooks](https://github.com/uklibraries/ukl-ansible-playbooks) repository.
 
 ## Developer installation
-Developer installations have been tested on Linux (through Windows with [WSL](https://learn.microsoft.com/en-us/windows/wsl/)) and macOS
+Developer installations have been tested on Linux (through Windows with [WSL](https://learn.microsoft.com/en-us/windows/wsl/)) and macOS.
 
 ### Quickstart
 ```
@@ -15,6 +14,7 @@ make dev
 ```
 The application should then be available at http://localhost:8080.
 Developers should run `make help` to see helper commands through [make](https://www.gnu.org/software/make/).
+There are [git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) and a mysql database that is loaded on initialization in the `assets` directory, so new developers do not need to source assets for installation.
 
 ### Dependencies
 We use [Docker](https://www.docker.com/) for reproducible environments. Developers will want to consult the [docker documentation for installation](https://docs.docker.com/engine/install/). We make use of [make](https://www.gnu.org/software/make/) to manage commands, which is a standard Linux utility and an old (but functional) version is included with macOS. Developers can also use [watchexec](https://github.com/watchexec/watchexec) to run tests on every file change, which will require separate installation. [Homebrew](https://brew.sh/) is a recommended package manager that works for both Linux and macOS. Windows users should strongly consider working in WSL.
@@ -26,8 +26,6 @@ brew install docker
 # macOS optional
 brew install make watchexec
 ```
-## Docker
-[Docker](https://www.docker.com/) has been added as an option to scaffold reproducible environments for this application. There are various configurations and init files to produce a working [Omeka Classic](https://omeka.org/classic/) database which can be used as a base for development or production.
 
 ### Configuration
 `.env.example` and `nginx/default.conf` are provided as configurations for development. Developers are expected to create their own .env files for new environments, but a .env.example is provided as a template, and the repo includes .env.dev and .env.ci for those environments.
