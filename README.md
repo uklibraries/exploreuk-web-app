@@ -71,7 +71,7 @@ There is a service, findingaid, which is an integration with ExploreUK's
 associated application, [findingaid](https://github.com/uklibraries/findingaid).
 Its inclusion in the development environment is optional. Developers wishing to
 include this should follow the docker installation instructions in the
-findingaid repo, and then use the `make dev-fa` command
+findingaid repo, and then use the `make dev-fa` command.
 
 ## Coding standard
 
@@ -89,8 +89,7 @@ length as a fix.
 This is based in part on euk: https://github.com/uklibraries/euk/
 
 The following directories are derived in part from the
-[HTML5 Up Prologue](https://html5up.net/prologue) theme
-[Creative Commons Attribution 3.0 License](https://creativecommons.org/licenses/by/3.0/):
+[HTML5 Up Prologue](https://html5up.net/prologue) theme:
 
 - theme/assets/css
 - theme/assets/js/ie
