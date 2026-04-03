@@ -1,0 +1,347 @@
+/* vars */
+:root {
+/* colors */
+    --wildcat-blue: #0033a0;
+    --wildcat-white: #fff;
+    --midnight: #041e42;
+    --dark-blue: #1f2c5e;
+}
+
+/* Limestone universal breadcrumb overrides */
+.universal-breadcrumb ul{
+     font-family: "usual", sans-serif !important;
+     font-weight: 300 !important;
+}
+.universal-breadcrumb .link--fancy-reverse {
+    font-weight: 300 !important;
+}
+
+/* Limestone v3 mobile tab nav additions */
+#MobileNav .mobile-tab-nav .mobile-tab-nav__menus {
+    background-image: linear-gradient(#0033a0,#1b365d);
+    position: relative;
+    padding: 1rem 2rem;
+}
+
+/* Limestone mobile tab nav overrides */
+.js-tabcontent {
+    padding-bottom: 0 !important;
+}
+
+.mobile-tab-nav-header {
+    display: block;
+    margin: 0 auto;
+    padding: 1rem 0;
+    outline: 0;
+    text-align: center;
+    text-transform: uppercase;
+    position: relative;
+}
+.mobile-tab-nav-header::after {
+    position: absolute;
+    right: 1.5rem;
+    bottom: 0;
+    left: 1.5rem;
+    height: 4px;
+    background-color: #1897d4;
+    content: "";
+}
+
+/* Libraries sponsor logo slab */
+.grid.grid--5-up.sponsor-logo {
+    align-items: center;
+}
+.sponsor-logo-short {
+    max-height: 150px;
+    max-width: 100%;
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+/* Libraries FDLP footer image */
+.uklib-footer-fdlp {
+    width: 144px;
+    height: auto;
+    margin: 0 auto;
+}
+
+#top > div {
+    /*background-image:url(<?= $m['featured_image']['image'] ?>);*/
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.section {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.popular-resources {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.additional-resources {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background: var(--warm-neutral-60);
+}
+
+.popular-resources > li {
+    width: 160px;
+    height: 240px;
+    margin: 1rem;
+    background: #ffffff;
+}
+
+.popular-resources > li > a {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.popular-card__label {
+    color: #ffffff;
+    background-color: color-mix(in srgb, var(--wildcat-blue), transparent 30%);
+    position: absolute;
+    width: 100%;
+    height: 33%;
+    margin: 0;
+    bottom: 0;
+    font-size: 1.6rem;
+    line-height: 2.5rem;
+    font-weight: 300;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+@media all and (min-width: 440px) {
+    .additional-resources > li {
+        width: 420px;
+        height: 120px;
+    }
+
+    .more-facets.modal-display {
+        width: 60%;
+    }
+}
+
+.additional-resources > li > a,
+.additional-resources > li > a > img {
+    width: 100%;
+    height: 100%;
+}
+
+.grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.grid.grid--4-up .grid__column {
+    min-width: 160px;
+    min-height: 240px;
+    background: #fff;
+}
+
+.grid.grid--4-up .grid__column > a {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.grid.grid--4-up .grid__column img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.more-facets.modal-display {
+    width: 100%;
+}
+
+.js-tabs--white .js-tabcontent {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #000;
+}
+
+.js-tabs--white .js-tabcontent a {
+    color: #0033a0;
+}
+
+.tabs__list {
+    width: 50%;
+}
+
+.item-details,
+.item-details-tabs {
+    width: 80%;
+    margin: 2rem auto 0;
+}
+
+.table-content {
+    padding: 1rem 2rem;
+}
+
+.cta-group a.button {
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-nav .cta-group {
+    padding-left: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+}
+
+.section-nav .cta-group a {
+    margin: 0;
+}
+
+@media screen and (min-width: 35rem) {
+    .section-nav .cta-group {
+        flex-direction: column;
+    }
+}
+
+@media screen and (min-width: 58rem) {
+    .section-nav .cta-group {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 76rem) {
+    .grid__column--minor .section-nav .cta-group {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+.grid__column--minor .section-nav {
+    display: block;
+}
+
+.grid__column--minor .section-nav h3 {
+    text-align: center;
+}
+
+.section-nav .cta-group li {
+    padding-bottom: 0;
+}
+
+.icon-label--stacked .label {
+  font-size: 1rem;
+}
+
+a.button.button--wildcat-blue:hover .icon-label--stacked .label,
+a.button.button--wildcat-blue:focus .icon-label--stacked .label {
+  color: #0033a0;
+}
+
+@scope (.search-nav) {
+    :scope {
+        padding-top: 1rem;
+    }
+
+    .pagination {
+        margin: 0;
+    }
+
+    .pagination nav ul {
+        padding: 0;
+    }
+
+    .result-amount {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    @media screen and (max-width: 35rem) {
+        :scope {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+    }
+}
+
+@scope(.search-form){
+    button {
+        margin: 0;
+    }
+}
+
+@scope (.search-brief) {
+    button {
+        margin: 0;
+    }
+}
+
+@scope (.item-details-tabs) {
+    :scope {
+        padding-bottom: 2rem;
+    }
+
+    .js-tablist__item {
+        display: flex;
+    }
+
+    .js-tablist__item a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+    }
+}
+
+@scope (.hero) {
+    :scope {
+        position: relative;
+        display: inline-block;
+        padding: 0;
+    }
+
+    figure.slab {
+        padding: 0;
+    }
+
+    .featured-text {
+        position: absolute;
+        bottom: 2rem;
+        right: 2rem;
+        left: 55%;
+        padding: 1rem 1rem;
+        background-color: var(--dark-blue);
+    }
+
+    .featured-image {
+        display: block;
+        max-height: 55vh;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    @media screen and (max-width: 58rem) {
+        .featured-text {
+            left: 0;
+        }
+    }
+}

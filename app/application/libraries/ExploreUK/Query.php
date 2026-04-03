@@ -140,6 +140,14 @@ class Query
         return $next->link();
     }
 
+    public function offsetLink($offset)
+    {
+        $query = $this->query;
+        $query['offset'] = max(0, $offset);
+        $linked = new Query($query, $this->solr);
+        return $linked->link();
+    }
+
     public function search()
     {
         return $this->searchByParams($this->searchParams());

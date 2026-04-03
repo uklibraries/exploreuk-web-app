@@ -1,166 +1,76 @@
 <?php require('header.php'); ?>
-<div class="resources-section bg-uklblack">
+<!--<div class="resources-section bg-uklblack">-->
 
-<h2 class="popular-resources-title">Popular Resources</h2>
-<ul class="popular-resources">
-<?php foreach ($m['popular_resources'] as $index => $resource) : ?>
-<li><a id="popular-resource-<?= $index ?>" href="<?= $resource['url'] ?>">
-    <h3><span><?= $resource['label'] ?></span></h3>
-</a></li>
-
-<?php endforeach; ?>
-</ul>
-
-<h2 class="additional-resources-title">Additional Resources</h2>
-<ul class="additional-resources">
-<?php foreach ($m['additional_resources'] as $index => $resource) : ?>
-<li><a aria-label="<?= $resource['label'] ?>" id="additional-resource-<?= $index ?>" href="<?= $resource['url'] ?>" target="_blank" rel="noopener"><img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $resource['image'] ?>" title="<?= $resource['label'] ?>"></a></li>
-
-<?php endforeach; ?>
-</ul>
+<!-- TWIG INCLUDE : @limestone/grid.twig" -->
+<div class="slab">
+    <div class="slab__wrapper">
+        <div class="editorial">
+            <h2 class="headline-group">
+                <span class="headline-group__head ">Popular Resources</span>
+            </h2>
+        </div>
+        <ul class="grid grid--4-up ">
+            <?php foreach ($m['popular_resources'] as $index => $resource) : ?>
+                <li class="grid__column">
+                    <a
+                        aria-label="<?= $resource['label'] ?>"
+                        id="popular-resource-<?= $index ?>"
+                        href="<?= $resource['url'] ?>"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        <img
+                            class="lazy"
+                            src="<?= $this->themePath('images/middlegray.png') ?>"
+                            data-src="<?= $resource['image'] ?>"
+                            title="<?= $resource['label'] ?>"
+                            alt="<?= htmlspecialchars((string)$resource['label']) ?>"
+                        >
+                            <span class="popular-card__label"><?= htmlspecialchars((string)$resource['label']) ?></span>
+                    </a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
 </div>
 
-<style type="text/css">
-#top > div {
-    background-image:url(<?= $m['featured_image']['image'] ?>);
-    height: 100%;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}
+<div class="slab slab--midnight">
+    <div class="slab__wrapper">
+        <div class="editorial">
+            <h2 class="headline-group">
+                <span class="headline-group__head ">Additional Resources</span>
+            </h2>
+        </div>
+        <div class="grid grid--3-up">
+            <?php foreach ($m['additional_resources'] as $resource) : ?>
+                <div class="grid__column">
+                    <div class="teaser--midnight">
+                        <div class="teaser__media">
+                            <a href="<?= $resource['url'] ?>">
+                                <img src="<?= $resource['image'] ?>" alt="<?= htmlspecialchars((string)$resource['label']) ?>"/>
+                            </a>
+                        </div>
+                        <div class="teaser__content">
+                            <h3 class="headline-group ">
+                                <span class="headline-group__head">
+                                    <a href="<?= $resource['url'] ?>" class="underline-link" id="additional-resource-<?= $index ?>">
+                                        <?= $resource['label'] ?>
+                                    </a>
+                                </span>
+                            </h3>
+                            <div class="editorial">
+                                <p><?= $resource['description'] ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
 
-<?php foreach ($m['popular_resources'] as $index => $resource) : ?>
-#popular-resource-<?= $index ?> {
-    background-image:url(<?= $resource['image'] ?>);
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-}
-<?php endforeach; ?>
+<?php //require('additional-resources.php'); ?>
+<?php require('sponsors.php'); ?>
+<?php require('global-footer.html'); ?>
+<?php require('universal-footer.php'); ?>
 
-.popular-resources-title,
-.additional-resources-title {
-    font-size: 1.3em;
-    padding: 0.5em;
-}
-
-.popular-resources {
-    width: 60%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.additional-resources {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.popular-resources > li {
-    width: 160px;
-    height: 240px;
-    margin: 1rem;
-    background: #ffffff;
-}
-.popular-resources > li > a {
-    width: 100%;
-    height: 100%;
-    position: relative;
-}
-
-.popular-resources > li > a > h3 {
-    color: #ffffff;
-    background-color: rgb(0, 93, 171);
-    background-color: rgba(0, 93, 171, 0.7);
-    position: absolute;
-    width: 100%;
-    height: 33%;
-    bottom: 0;
-    font-size: 100%;
-}
-
-.popular-resources > li > a > h3 > span {
-    text-align: center;
-}
-
-@supports (display: grid) {
-    .popular-resources > li > a > h3 {
-        display: grid;
-        justify-items: center;
-        align-items: center;
-    }
-}
-
-
-.additional-resources > li {
-    margin: 1rem;
-    background: #ffffff;
-}
-
-@media all and (min-width: 440px) {
-    .additional-resources > li {
-        width: 420px;
-        height: 120px;
-    }
-}
-
-@media all and (max-width: 440px) {
-    .additional-resources > li {
-        width: 210px;
-        height: 60px;
-    }
-}
-.additional-resources > li > a,
-.additional-resources > li > a > img {
-    width: 100%;
-    height: 100%;
-}
-.additional-resources > li > a > h3 {
-    display: none;
-}
-
-@supports (display: grid) {
-    .popular-resources {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        grid-gap: 1rem;
-        max-width: 880px;
-    }
-
-    @media all and (min-width: 440px) {
-        .additional-resources {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
-            grid-gap: 1rem;
-        }
-    }
-
-    @media all and (max-width: 440px) {
-        .additional-resources {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-            grid-gap: 1rem;
-            max-width: 880px;
-        }
-    }
-
-}
-
-@supports (display: flex) {
-    .popular-resources > li > a {
-        display: flex;
-        flex-flow: column;
-        flex-shrink: 1;
-        align-items: center;
-    }
-
-    .additional-resources > li > a {
-        display: flex;
-        flex-flow: column;
-        flex-shrink: 1;
-        align-items: center;
-    }
-}
-
-</style>
-<?php require('footer.php'); ?>

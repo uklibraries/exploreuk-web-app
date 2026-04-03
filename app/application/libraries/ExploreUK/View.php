@@ -154,15 +154,15 @@ class View
         } else {
             $label = 'Unknown';
         }
-        $lines = ["<h3 id=\"page-details-$field\">$label</h3>"];
+        $lines = ["<h2 id=\"page-details-$field\">$label</h2>"];
         if (is_array($content)) {
-            $lines[] = "<ul>";
+            $lines[] = "<ul class=\"no-decoration\">";
             foreach ($content as $item) {
                 $lines[] = "<li>" . $this->renderHelper($field, $item) . "</li>";
             }
             $lines[] = "</ul>";
         } else {
-            $lines[] = "<ul>";
+            $lines[] = "<ul class=\"no-decoration\">";
             $lines[] = "<li>" . $this->renderHelper($field, $content) . "</li>";
             $lines[] = "</ul>";
         }
