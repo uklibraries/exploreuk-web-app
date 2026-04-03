@@ -36,7 +36,6 @@
             'anonymize_ip': true
         });
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23584444-4"></script>
 </head>
 
 <body>

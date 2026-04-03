@@ -38,11 +38,9 @@ find "$OMEKA_ROOT/files" -type d -exec chmod 0775 "{}" \;
 find "$OMEKA_ROOT/files" -type f -exec chmod 0664 "{}" \;
 
 if [ "$APP_ENV" == "development" ]; then
-	bash "$OMEKA_ROOT/exe/minify.sh"
-	set +e
-	/vendor/bin/phpcs -w --exclude=Generic.Files.LineLength --standard=PSR12 /tests /app/catalog.php /app/application/libraries/ExploreUK
-	/vendor/bin/phpunit --bootstrap /tests/bootstrap.php /tests
-	set -e
+    # overwrites the bind mounted install to make sure dev is always up-to-date
+	npm install --prefix "$OMEKA_ROOT"
+	npm run --prefix "$OMEKA_ROOT" minify-css
 fi
 
 # If a command was provided, run that instead of php-fpm in the foreground

@@ -1,5 +1,8 @@
 {
   "devDependencies": {
     "lightningcss-cli": "^1.27.0"
+  },
+  "scripts": {
+    "minify-css": "cd themes/omeukaprologue/assets/css && lightningcss -o main.min.css -m main.css"
   }
 }
