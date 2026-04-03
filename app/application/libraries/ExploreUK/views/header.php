@@ -22,7 +22,6 @@
     gtag('js', new Date());
     gtag('config', 'G-FPRYLHP028', { 'anonymize_ip': true });
     </script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23584444-4"></script>
 </head>
 <body>
 <a href="#0" class="cd-top js-cd-top">Top</a>
