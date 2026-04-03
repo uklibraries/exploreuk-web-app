@@ -40,8 +40,7 @@ RUN npm install
 
 COPY ./app .
 
-# This will need to be reworked.
-RUN /app/exe/minify.sh
+RUN npm run minify-css
 
 FROM php:8.3-fpm-alpine AS development
 

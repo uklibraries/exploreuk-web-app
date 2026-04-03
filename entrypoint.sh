@@ -38,8 +38,9 @@ find "$OMEKA_ROOT/files" -type d -exec chmod 0775 "{}" \;
 find "$OMEKA_ROOT/files" -type f -exec chmod 0664 "{}" \;
 
 if [ "$APP_ENV" == "development" ]; then
+    # overwrites the bind mounted install to make sure dev is always up-to-date
 	npm install --prefix "$OMEKA_ROOT"
-	bash "$OMEKA_ROOT/exe/minify.sh"
+	npm run --prefix "$OMEKA_ROOT" minify-css
 fi
 
 # If a command was provided, run that instead of php-fpm in the foreground
