@@ -10,8 +10,10 @@
     <link href="<?= $this->themePath('BookReaderDemo/BookReaderDemo.css') ?>" rel="stylesheet"/>
 </head>
 <body>
+<main id="main-content">
 <div id="BookReader">
 </div>
+</main>
 <script type="text/javascript" src="<?= $this->themePath('javascripts/jquery.min.js') ?>"></script>
 <script type="text/javascript" src="<?= $this->themePath('BookReader/jquery-ui-1.8.5.custom.min.js') ?>"></script>
 <script type="text/javascript" src="<?= $this->themePath('BookReader/dragscrollable.js') ?>"></script>

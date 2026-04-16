@@ -1,4 +1,5 @@
 <?php require('header.php'); ?>
+<main id="main-content">
 <!--<div class="resources-section bg-uklblack">-->
 
 <!-- TWIG INCLUDE : @limestone/grid.twig" -->
@@ -71,6 +72,7 @@
 
 <?php //require('additional-resources.php'); ?>
 <?php require('sponsors.php'); ?>
+</main>
 <?php require('global-footer.html'); ?>
 <?php require('universal-footer.php'); ?>
 
