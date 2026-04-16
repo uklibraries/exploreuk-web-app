@@ -1,5 +1,5 @@
 <div class="tab-wrap js-tabs js-tabs--white item-details-tabs">
-    <ul id="item-view-tabs no-decoration" class="tabs js-tablist">
+    <ul id="item-view-tabs" class="tabs js-tablist">
         <li id="item-view-details" class="js-tablist__item"><a href="#item-details" id="label_item-details" class="js-tablist__link">Item Details</a></li>
         <?php if (isset($m['item_book'])) : ?>
         <li id="item-view-text" class="js-tablist__item"><a href="#item-text" id="label_item-text" class="js-tablist__link">Text</a></li>

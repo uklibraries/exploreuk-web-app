@@ -1,6 +1,6 @@
 <?php foreach ($m['facet_full_lists'] as $list) : ?>
 <div id="inlinefacets-<?= $list['field_raw'] ?>" class="more-facets mfp-hide modal-display">
-    <h1><?= $list['field_label'] ?></h1>
+    <h3><?= $list['field_label'] ?></h3>
     <div class="tab-wrap js-tabs">
         <div class="">
             <ul class="tabs js-tablist" id="more-facets-tabs-<?= $list['field_raw'] ?>">
