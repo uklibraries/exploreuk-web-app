@@ -16,7 +16,8 @@ $m['current_page_title'] = !empty($m['q'])
             <span class="headline-group__head">
                 <?php if (!empty($m['q'])) :?>
                 Search results for &ldquo;<?= htmlspecialchars((string) $m['q']) ?>&rdquo;
-                <?php else :?>All Items
+                <?php else :
+                    ?>All Items
                 <?php endif; ?>
             </span>
         </h1>
