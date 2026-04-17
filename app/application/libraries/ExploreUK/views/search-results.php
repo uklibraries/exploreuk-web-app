@@ -8,10 +8,9 @@ $m['current_page_title'] = !empty($m['q'])
 <div class="slab search-nav">
     <div class="slab__wrapper">
         <?php require 'breadcrumbs.php'; ?>
-        <?php require 'pagination.php'; ?>
     </div>
 </div>
-<div class="slab">
+<div class="slab slab--thin">
     <div class="slab__wrapper">
         <h1 class="headline-group">
             <span class="headline-group__head">
@@ -25,6 +24,7 @@ $m['current_page_title'] = !empty($m['q'])
 </div>
 <div class="slab">
     <div class="slab__wrapper">
+        <?php require 'pagination.php'; ?>
         <div class="grid grid--major-right">
             <div id="facet_group_mobile" class="section-nav grid__column grid__column--minor">
                 <div id="facet_group_mobile_top">
@@ -37,72 +37,70 @@ $m['current_page_title'] = !empty($m['q'])
                 <!-- TWIG INCLUDE : @limestone/teaser.twig" -->
                 <?php foreach ($m['results'] as $r) : ?>
                     <div class="teaser teaser--event teaser--blue-gray">
-                        <?php if (isset($r['thumb'])) : ?>
-                            <div class="teaser__media">
-                                <a href="<?= $r['link'] ?>">
-                                    <!-- TWIG INCLUDE : @limestone/image.twig" -->
-                                    <img src="<?= $r['thumb'] ?>" alt="<?= $r['title'] ?>" class="" />
-                                    <!-- END TWIG INCLUDE : @limestone/image.twig" -->
-                                </a>
-                            </div>
-                        <?php else : ?>
-                            <span class="teaser__media">No image available</span>
-                        <?php endif; ?>
-                        <div class="teaser__content">
-                            <!-- TWIG INCLUDE : @limestone/headline-group.twig" -->
+                        <a href="<?= $r['link'] ?>" class="teaser__link">
+                            <?php if (isset($r['thumb'])) : ?>
+                                <div class="teaser__media">
+                                    <img src="<?= $r['thumb'] ?>" alt="" class="" />
+                                </div>
+                            <?php else : ?>
+                                <span class="teaser__media">No image available</span>
+                            <?php endif; ?>
                             <h3 class="headline-group">
-                                <span class="headline-group__head">
-                                    <!-- TWIG INCLUDE : @limestone/link.twig" -->
-                                    <a href="<?= $r['link'] ?>" class="underline-link"><?= $this->brevity($r['title']) ?></a>
-                                    <!-- END TWIG INCLUDE : @limestone/link.twig" -->
-                                </span>
-                                <span class="headline-group__sub">
-                                    <?php if (isset($r['source'])) : ?>
-                                        <?php if (is_array($r['source'])) : ?>
-                                            <?php foreach ($r['source'] as $source) : ?>
-                                                <a href="<?= $this->path('/?f%5Bsource_s%5D%5B%5D=' . urlencode($source)) ?>"><?= $source ?></a>
-                                            <?php endforeach; ?>
-                                        <?php else : ?>
-                                            <a href="<?= $this->path('/?f%5Bsource_s%5D%5B%5D=' . urlencode($r['source'])) ?>"><?= $r['source'] ?></a>
-                                        <?php endif; ?>
-                                    <?php endif; ?>
-                                </span>
+                                <span class="headline-group__head"><?= $this->brevity($r['title']) ?></span>
                             </h3>
-                            <!-- END TWIG INCLUDE : @limestone/headline-group.twig" -->
-                            <div class="content-meta">
+                        </a>
+                        <div class="content-meta">
                                 <div class="content-meta__who-when">
-                                    <?php if (isset($r['pubdate_display'])) : ?>
-                                        <?php if (is_array($r['pubdate_display'])) : ?>
-                                            <?php foreach ($r['pubdate_display'] as $date) : ?>
-                                                <span class="date"><?= $date ?></span>
-                                            <?php endforeach; ?>
-                                        <?php else : ?>
-                                            <span class="date"><?= $r['pubdate_display'] ?></span>
-                                        <?php endif; ?>
-                                    <?php else : ?>
-                                        <span class="date">date unknown</span>
+                                    <?php if (isset($r['source'])) : ?>
+                                        <div class="meta-row">
+                                            <span class="field-label">Collection:</span>
+                                            <?php if (is_array($r['source'])) : ?>
+                                                <?php foreach ($r['source'] as $source) : ?>
+                                                    <a href="<?= $this->path('/?f%5Bsource_s%5D%5B%5D=' . urlencode($source)) ?>"><?= $source ?></a>
+                                                <?php endforeach; ?>
+                                            <?php else : ?>
+                                                <a href="<?= $this->path('/?f%5Bsource_s%5D%5B%5D=' . urlencode($r['source'])) ?>"><?= $r['source'] ?></a>
+                                            <?php endif; ?>
+                                        </div>
                                     <?php endif; ?>
-                                    <?php if (isset($r['format'])) : ?>
-                                        <?php if (is_array($r['format'])) : ?>
-                                            <?php foreach ($r['format'] as $format) : ?>
-                                                <span class="byline"><?= $format ?></span>
-                                            <?php endforeach; ?>
+                                    <div class="meta-row">
+                                        <span class="field-label">Date:</span>
+                                        <?php if (isset($r['pubdate_display'])) : ?>
+                                            <?php if (is_array($r['pubdate_display'])) : ?>
+                                                <?php foreach ($r['pubdate_display'] as $date) : ?>
+                                                    <span class="date"><?= $date ?></span>
+                                                <?php endforeach; ?>
+                                            <?php else : ?>
+                                                <span class="date"><?= $r['pubdate_display'] ?></span>
+                                            <?php endif; ?>
                                         <?php else : ?>
-                                            <span class="byline"><?= $r['format'] ?></span>
+                                            <span class="date">date unknown</span>
                                         <?php endif; ?>
+                                    </div>
+                                    <?php if (isset($r['format'])) : ?>
+                                        <div class="meta-row">
+                                            <span class="field-label">Format:</span>
+                                            <?php if (is_array($r['format'])) : ?>
+                                                <?php foreach ($r['format'] as $format) : ?>
+                                                    <span class="byline"><?= $format ?></span>
+                                                <?php endforeach; ?>
+                                            <?php else : ?>
+                                                <span class="byline"><?= $r['format'] ?></span>
+                                            <?php endif; ?>
+                                        </div>
                                     <?php endif; ?>
                                 </div>
                             </div>
-                        </div>
                     </div>
                     <!-- END TWIG INCLUDE : @limestone/teaser.twig" -->
                     <!-- END TWIG INCLUDE : components-teaser" --> <!-- TWIG INCLUDE : components-teaser" -->
                 <?php endforeach; ?>
             </div>
         </div>
-        <?php require 'pagination.php' ?>
+        <?php require 'pagination.php'; ?>
     </div>
 </div>
 <?php require 'more-facets.php'; ?>
+</main>
 <?php require 'global-footer.html'; ?>
 <?php require 'universal-footer.php'; ?>

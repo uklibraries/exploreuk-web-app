@@ -34,28 +34,36 @@ if (($ui === "2") && $m['item_image']) : ?>
     </div>
 <?php endif; ?>
 
-<div class="item-container">
-    <main class="item-presentation">
-        <?php
-        if (isset($m['item_image'])) {
-            require('image-viewer.php');
-        }
+<div class="slab">
+    <div class="slab__wrapper">
+        <h1 class="headline-group">
+            <span class="headline-group__head"><?= $m['flat']['title_display'] ?></span>
+        </h1>
 
-        if (isset($m['item_book'])) {
-            require('book-reader.php');
-        }
+        <main id="main-content" class="item-container">
+            <div class="item-presentation">
+                <?php
+                if (isset($m['item_image'])) {
+                    require('image-viewer.php');
+                }
 
-        if (isset($m['item_videolike'])) {
-            require('videolike-player.php');
-        }
-        ?>
-    </main>
+                if (isset($m['item_book'])) {
+                    require('book-reader.php');
+                }
 
-    <?php require('page-title.php'); ?>
+                if (isset($m['item_videolike'])) {
+                    require('videolike-player.php');
+                }
+                ?>
+            </div>
 
-    <?php require('page-harmful-language-statement.php'); ?>
+            <?php require('page-title.php'); ?>
 
-    <?php require('page-details.php'); ?>
+            <?php require('page-harmful-language-statement.php'); ?>
+
+            <?php require('page-details.php'); ?>
+        </main>
+    </div>
 </div>
 
 <?php require('global-footer.html'); ?>

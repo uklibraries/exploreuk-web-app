@@ -1,7 +1,11 @@
 <div class="item-details">
 <div class="grid--major-left">
+<?php if (isset($m['downloadable'])) : ?>
+<div class="grid__column grid__column--minor">
+    <?php require('download-menu.php'); ?>
+</div>
+<?php endif; ?>
 <div class="grid__column grid__column--major">
-<h1 class="heading__text"><?= $m['flat']['title_display'] ?></h1>
 <?php
 $rows = '';
 foreach (EUK_TITLE_FIELD_ORDER as $field) {
@@ -48,10 +52,5 @@ if ($rows) {
 }
 ?>
 </div>
-<?php if (isset($m['downloadable'])) : ?>
-<div class="grid__column grid__column--minor">
-    <?php require('download-menu.php'); ?>
-</div>
-<?php endif; ?>
 </div>
 </div>

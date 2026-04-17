@@ -5,7 +5,7 @@
         <!-- TWIG INCLUDE : @limestone/image.twig" -->
             <figure class="slab">
                 <img class="featured-image" src="<?= $m['featured_image']['image'] ?>" alt="<?= htmlspecialchars((string)$m['featured_image']['label']) ?>" />
-                <figcaption class="featured-text">
+                <figcaption class="featured-text slab--dark-blue">
                     <a href="<?= $m['featured_image']['url'] ?>" class="link--fancy"><?= $m['featured_image']['label'] ?></a>
                 </figcaption>
             </figure>
