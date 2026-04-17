@@ -43,25 +43,19 @@
             </h2>
         </div>
         <div class="grid grid--3-up">
-            <?php foreach ($m['additional_resources'] as $resource) : ?>
+            <?php foreach ($m['additional_resources'] as $index => $resource) : ?>
                 <div class="grid__column">
                     <div class="teaser--midnight">
-                        <div class="teaser__media">
-                            <a href="<?= $resource['url'] ?>">
-                                <img src="<?= $resource['image'] ?>" alt="<?= htmlspecialchars((string)$resource['label']) ?>"/>
-                            </a>
-                        </div>
-                        <div class="teaser__content">
-                            <h3 class="headline-group ">
-                                <span class="headline-group__head">
-                                    <a href="<?= $resource['url'] ?>" class="underline-link" id="additional-resource-<?= $index ?>">
-                                        <?= $resource['label'] ?>
-                                    </a>
-                                </span>
-                            </h3>
-                            <div class="editorial">
-                                <p><?= $resource['description'] ?></p>
+                    <a href="<?= $resource['url'] ?>" class="teaser__link" aria-labelledby="additional-resource-<?= $index ?>">
+                            <div class="teaser__media">
+                                <img src="<?= $resource['image'] ?>" alt="" role="presentation"/>
                             </div>
+                            <h3 class="headline-group">
+                                <span class="headline-group__head" id="additional-resource-<?= $index ?>"><?= $resource['label'] ?> <span class="ic ic--popup" aria-hidden="true"></span></span>
+                            </h3>
+                        </a>
+                        <div class="editorial">
+                            <p><?= $resource['description'] ?></p>
                         </div>
                     </div>
                 </div>
