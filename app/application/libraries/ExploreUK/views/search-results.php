@@ -1,5 +1,11 @@
 <?php require 'header.php'; ?>
-<div class="slab slab--wildcat-blue search-nav">
+<?php
+$m['current_page_title'] = !empty($m['q'])
+    ? 'Search results for &ldquo;' . htmlspecialchars((string) $m['q']) . '&rdquo;'
+    : 'All Items';
+?>
+<main id="main-content">
+<div class="slab search-nav">
     <div class="slab__wrapper">
         <?php require 'breadcrumbs.php'; ?>
         <?php require 'pagination.php'; ?>
@@ -7,11 +13,14 @@
 </div>
 <div class="slab">
     <div class="slab__wrapper">
-        <h1 class="headline-group"><span class="headline-group__head"><?php if (!empty($m['q'])) :
-            ?>Search results for &ldquo;<?= htmlspecialchars((string) $m['q']) ?>&rdquo;<?php
-                                                                      else :
-                                                                            ?>All Items<?php
-                                                                      endif; ?></span></h1>
+        <h1 class="headline-group">
+            <span class="headline-group__head">
+                <?php if (!empty($m['q'])) :?>
+                Search results for &ldquo;<?= htmlspecialchars((string) $m['q']) ?>&rdquo;
+                <?php else :?>All Items
+                <?php endif; ?>
+            </span>
+        </h1>
     </div>
 </div>
 <div class="slab">

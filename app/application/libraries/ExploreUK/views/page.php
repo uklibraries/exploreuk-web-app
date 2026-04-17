@@ -1,6 +1,17 @@
 <?php require('header.php'); ?>
 
-<div class="slab slab--thin slab--wildcat-blue">
+<?php
+$q = $m['query']->q('q');
+$m['back_to_search'] = $this->path('/catalog/' . $m['query']->link());
+$m['back_to_search_text'] = !empty($q)
+    ? 'Search results for &ldquo;' . htmlspecialchars((string) $q) . '&rdquo;'
+    : 'All Items';
+if (isset($m['flat']['title_display'])) {
+    $m['current_page_title'] = $m['flat']['title_display'];
+}
+?>
+
+<div class="slab slab--thin">
     <div class="slab__wrapper">
         <?php require('breadcrumbs.php') ?>
     </div>
