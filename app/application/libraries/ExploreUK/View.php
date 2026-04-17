@@ -176,6 +176,10 @@ class View
 
         if ($field === 'id') {
             $item = 'https://' . $_SERVER['HTTP_HOST'] . $this->path("/catalog/$item");
+            return $this->renderLink([
+                "href" => $item,
+                "content" => $item,
+            ]);
         }
         if (in_array($field, $euk_requires_capitalization)) {
             $item = ucfirst((string) $item);
@@ -220,7 +224,7 @@ class View
             $attributes[] = "rel=\"noopener noreferrer\"";
         }
         $attribute_string = implode(" ", $attributes);
-        return "<a $attribute_string>$content</a>";
+        return "<a class='underline-link' $attribute_string>$content</a>";
     }
 
     public function path($path)
