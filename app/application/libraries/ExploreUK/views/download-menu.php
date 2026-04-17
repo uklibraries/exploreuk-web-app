@@ -1,30 +1,21 @@
 <div class="section-nav section-nav--blue-gray">
     <h2>Download Options</h2>
-    <ul class="no-decoration cta-group">
-        <li>
+    <ul class="no-decoration download-options">
+        <li class="option">
             <a class="button button--wildcat-blue" id="jpeg_href" href="<?= $this->path('/catalog/' . $m['id'] . '/download?type=jpeg') ?>">
-                <span class="icon-label icon-label--stacked">
-                    <i class="fa fa-file-image" aria-hidden="true"></i>
-                    <span class="label">JPEG<?= $m['downloadable_extra'] ?? '' ?></span>
-                </span>
+                Download JPEG<?= $m['downloadable_extra'] ?? '' ?>
             </a>
         </li>
         <?php if (isset($m['downloadable_single']) && $m['downloadable_single']) : ?>
-            <li>
+            <li class="option">
                 <a class="button button--wildcat-blue" id="pdf_href" href="<?= $this->path('/catalog/' . $m['id'] . '/download?type=pdf') ?>">
-                    <span class="icon-label icon-label--stacked">
-                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
-                        <span class="label">PDF<?= $m['downloadable_single_extra'] ?? '' ?></span>
-                    </span>
+                    Download PDF<?= $m['downloadable_single_extra'] ?? '' ?>
                 </a>
             </li>
         <?php else : ?>
-            <li>
+            <li class="option">
                 <a class="button button--wildcat-blue" id="pdf_href" href="<?= $this->path('/catalog/' . $m['id'] . '/download?type=pdf') ?>">
-                    <span class="icon-label icon-label--stacked">
-                        <i class="fas fa-file-pdf" aria-hidden="true"></i>
-                        <span class="label">PDF<?= $m['downloadable_single_extra'] ?? '' ?></span>
-                    </span>
+                    Download PDF<?= $m['downloadable_single_extra'] ?? '' ?>
                 </a>
             </li>
         <?php endif; ?>
