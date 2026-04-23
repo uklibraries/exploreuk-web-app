@@ -16,7 +16,7 @@ down: ## Stop all containers
 	docker compose down
 
 test: ## Run PHPUnit tests
-	docker compose exec omeka /vendor/bin/phpunit --bootstrap /tests/bootstrap.php /tests
+	docker compose exec omeka /vendor/bin/phpunit -c /phpunit.xml /tests
 
 lint: ## Run PHP_CodeSniffer (PSR-12)
 	docker compose exec omeka /vendor/bin/phpcs -w --exclude=Generic.Files.LineLength --standard=PSR12 /tests /app/catalog.php /app/application/libraries/ExploreUK

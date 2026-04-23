@@ -100,6 +100,7 @@ WORKDIR /
 COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
 COPY ./composer.json .
 COPY ./composer.lock .
+COPY ./phpunit.xml .
 RUN composer install
 
 WORKDIR /app
@@ -148,6 +149,14 @@ WORKDIR /app
 
 COPY --from=builder /app .
 RUN rm -rf /app/exe
+
+WORKDIR /
+COPY --from=composer:2.8 /usr/bin/composer /usr/bin/composer
+COPY ./composer.json .
+COPY ./composer.lock .
+RUN composer install --no-dev --optimize-autoloader
+
+WORKDIR /app
 
 COPY ./php-fpm/php.ini-production /usr/local/etc/php/php.ini
 COPY ./php-fpm/www.conf /usr/local/etc/php-fpm.d/www.conf

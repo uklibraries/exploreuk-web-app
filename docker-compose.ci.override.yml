@@ -3,7 +3,7 @@ services:
     build:
       context: .
       target: ci
-    volumes: []
+    volumes: !reset []
     env_file:
       - .env.ci
     develop: null
@@ -11,7 +11,7 @@ services:
   web:
     env_file:
       - .env.ci
-    ports: [] # disable publish ports for jobs
+    ports: !reset [] # disable publish ports for jobs
 
   db:
     env_file:
