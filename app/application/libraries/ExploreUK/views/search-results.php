@@ -23,9 +23,13 @@ $m['current_page_title'] = !empty($m['q'])
         </h1>
     </div>
 </div>
-<div class="slab">
+<div class="slab slab--thin">
     <div class="slab__wrapper">
         <?php require 'pagination.php'; ?>
+    </div>
+</div>
+<div class="slab slab--wildcat-white">
+    <div class="slab__wrapper">
         <div class="grid grid--major-right">
             <div id="facet_group_mobile" class="section-nav grid__column grid__column--minor">
                 <div id="facet_group_mobile_top">
