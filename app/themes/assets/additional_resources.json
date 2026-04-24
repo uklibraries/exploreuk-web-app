@@ -1,0 +1,60 @@
+{
+    "data": [
+        {
+            "image": "\/files\/fullsize\/64be58c95a884b047573bc4e94099ad3.jpg",
+            "label": "TEST Louie B. Nunn Center for Oral History",
+            "url": "https:\/\/kentuckyoralhistory.org\/",
+            "description": "SPOKEdb Oral History Collection Management System currently provides access to 19892 interview records, and 765 projects.",
+            "position": "01000"
+        },
+        {
+            "image": "\/files\/fullsize\/89077d4ac42c9dd68a454deebc80b3ab.jpg",
+            "label": "Notable Kentucky African Americans Database",
+            "url": "https:\/\/nkaa.uky.edu\/nkaa\/",
+            "description": "NKAA has been developed as a finding aid to bring together a brief description of pertinent names, places, and events of notable African Americans with Kentucky roots and ties, and to list the sources where additional information may be found.",
+            "position": "02000"
+        },
+        {
+            "image": "\/files\/fullsize\/0411abc5f5f49d5ccdf88ac07c8e9ee5.jpg",
+            "label": "Lexington Herald-Leader photographs",
+            "url": "https:\/\/lhlphotoarchive.org\/\r\n",
+            "description": "LHL consist of an estimated 2 million unique photographic negatives spanning the years 1939-2001. The LHL photographs are an unparalleled source of photographic evidence of the many historical, cultural, and industrial changes that have shaped Lexington and its surrounding region.",
+            "position": "03000"
+        },
+        {
+            "image": "\/files\/fullsize\/f3b8bc9800713719331ae0c30537a80e.jpg",
+            "label": "University of Kentucky Libraries Microfilm Holdings database",
+            "url": "https:\/\/ukmfilms.omeka.net\/",
+            "description": "A database of the University of Kentucky Libraries microfilm master negatives, including microfilmed newspapers, manuscript collections, and other primary sources.",
+            "position": "04000"
+        },
+        {
+            "image": "\/files\/fullsize\/8db32876d35c7f8596fd2570838b072a.jpg",
+            "label": "Kentucky Digital Newspaper Program",
+            "url": "https:\/\/kentuckynewspapers.org\/",
+            "description": "For over sixty years UK Libraries preserved Kentucky newspapers on microfilm and made them freely available. KDNP brings those digitized-from-microfilm newspaper collections and born-digital newspapers to a global audience.",
+            "position": "05000"
+        },
+        {
+            "image": "\/files\/fullsize\/76f7aba032653360c218560e2e21b8dd.jpg",
+            "label": "The Lomax Kentucky Recordings",
+            "url": "https:\/\/lomaxky.omeka.net\/",
+            "description": "These are archived documentary sound recordings of rural Kentucky music and lore collected under the auspices of the Archive of American Folk Song at the Library of Congress between 1933 and 1942. A collaborative project from The Association for Cultural Equity, Berea College, The Library of Congress, and the University of Kentucky.",
+            "position": "06000"
+        },
+        {
+            "image": "\/files\/fullsize\/8d5cec60d362a916df66feb938446fa2.jpg",
+            "label": "The John G. Heyburn II Initiative for Excellence in the Federal Judiciary",
+            "url": "https:\/\/heyburncollections.org\/",
+            "description": "The Heyburn Initiative is a non-partisan endeavor devoted to the preservation and study of federal judicial history.",
+            "position": "07000"
+        },
+        {
+            "image": "\/files\/fullsize\/1950104e492857116ef87edf9c8b04e9.jpg",
+            "label": "The University of Kentucky Libraries Web Archives",
+            "url": "https:\/\/archive-it.org\/organizations\/915",
+            "description": "UK Libraries selects, preserves, and facilitates access to archived copies of selected websites and social media that are official and permanent records of the University of Kentucky.",
+            "position": "09000"
+        }
+    ]
+}

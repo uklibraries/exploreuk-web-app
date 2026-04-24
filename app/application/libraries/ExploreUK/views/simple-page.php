@@ -1,7 +1,17 @@
 <?php require('header.php'); ?>
-<div id="primary">
-    <p id="simple-pages-breadcrumb"><a href="/">Home</a> &gt; <?= $m['page_title'] ?></p>
-    <h1><?= $m['page_title'] ?></h1>
-    <?= $m['page']->text ?>
+<?php $m['current_page_title'] = $m['page_title']; ?>
+<main id="main-content">
+<div class="slab slab--thin">
+    <div class="slab__wrapper">
+        <?php require('breadcrumbs.php'); ?>
+    </div>
 </div>
-<?php require('footer.php'); ?>
+<div id="primary" class="slab">
+    <div class="slab__wrapper">
+        <h1><?= $m['page_title'] ?></h1>
+        <?= $m['page']->text ?>
+    </div>
+</div>
+</main>
+<?php require('global-footer.html'); ?>
+<?php require('universal-footer.php'); ?>

@@ -7,7 +7,7 @@
 </div>
 
 <div class="item-container">
-<main class="item-presentation">
+<main id="main-content" class="item-presentation">
 
 <div class="page-title bg-uklgray">
 <h2>ExploreUK statistics</h2>
@@ -40,4 +40,5 @@ endforeach;
 
 </div>
 
-<?php require('footer.php'); ?>
+<?php require('global-footer.html'); ?>
+<?php require('universal-footer.php'); ?>

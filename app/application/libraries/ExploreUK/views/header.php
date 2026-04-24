@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title><?= $m['page_title'] ?></title>
     <meta charset="utf-8" />
@@ -12,34 +13,47 @@
     <link rel="mask-icon" href="/safari-pinned-tab.svg?v=m2LeKYRNPO" color="#005dab">
     <link rel="shortcut icon" href="/favicon.ico?v=m2LeKYRNPO">
     <link rel="preconnect" href="https://fonts.gstatic.com">
+    <!-- <link rel="stylesheet" href="<?= $this->themePath('assets/css/main.min.css') ?>?<?= $this->subresourceIntegrity('assets/css/main.min.css') ?>" /> -->
+    <link rel="stylesheet" href="<?= $this->themePath('assets/css/styles.css') ?>" />
+    <link rel="stylesheet" href="https://webcdn.uky.edu/limestone/1.0.0/css/style.css">
+    <link rel="stylesheet" href="/themes/assets/css/styles.css">
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.2.0/jquery.magnific-popup.min.js"></script>
+    <script defer src="https://webcdn.uky.edu/limestone/1.0.0/js/lib/jquery-accessible-tabs-aria.js"></script>
+    <script defer src="https://webcdn.uky.edu/limestone/1.0.0/js/toggle-button.js"></script>
+    <script defer src="https://webcdn.uky.edu/limestone/1.0.0/js/modals.js"></script>
     <meta name="msapplication-TileColor" content="#2d89ef">
     <meta name="theme-color" content="#005dab">
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FPRYLHP028"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-FPRYLHP028', { 'anonymize_ip': true });
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-FPRYLHP028', {
+            'anonymize_ip': true
+        });
     </script>
 </head>
+
 <body>
-<a href="#0" class="cd-top js-cd-top">Top</a>
-<div id="main">
-<?php if ($m['front_page']) : ?>
-    <section id="top">
-        <div>
-    <?php require('stickyheader.php'); ?>
-    <?php require('search.php'); ?>
-<div class="row"></div>
-<?php else : ?>
-    <section class="bg-uklblack" id="top2">
-        <div>
-    <?php require('stickyheader.php'); ?>
-<div id="top2_bottom">
-    <?php require('search-brief.php'); ?>
-        </div>
-<?php endif; ?>
-        </div>
-    </section>
-    <section>
+    <?php require('universal-header.html'); ?>
+    <div id="main">
+        <?php if ($m['front_page']) : ?>
+            <section id="top">
+                <div>
+                    <?php require('global-header.html'); ?>
+                    <?php require('search.php'); ?>
+                    <div class="row"></div>
+        <?php else : ?>
+                    <section class="bg-uklblack" id="top2">
+                        <div>
+                            <?php require('global-header.html'); ?>
+                            <div id="top2_bottom">
+                                <?php require('search-brief.php'); ?>
+                            </div>
+        <?php endif; ?>
+                        </div>
+                    </section>

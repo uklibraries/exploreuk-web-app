@@ -1,4 +1,5 @@
 <?php require('header.php'); ?>
+<main id="main-content">
 <div class="results">
     <div id="resultsfacets" class="resultsfacets no-results">
         <div id="facet_group">
@@ -7,8 +8,7 @@
         </div>
     </div>
     <div id="resultsmain">
-        <div class="row pagination">&nbsp;</div>
-        <div class="row">
+        <div>
             <ul class="result-list">
             <li class="result-item">
                 <p class="result-number"></p>
@@ -34,4 +34,7 @@ foreach ($suggestions as $index => $suggestion) {
         </div>
     </div>
 </div>
-<?php require('footer.php'); ?>
+</main>
+
+<?php require('global-footer.html'); ?>
+<?php require('universal-footer.php'); ?>

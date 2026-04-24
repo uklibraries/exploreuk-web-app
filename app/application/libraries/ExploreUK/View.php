@@ -154,15 +154,15 @@ class View
         } else {
             $label = 'Unknown';
         }
-        $lines = ["<h3 id=\"page-details-$field\">$label</h3>"];
+        $lines = ["<h2 id=\"page-details-$field\">$label</h2>"];
         if (is_array($content)) {
-            $lines[] = "<ul>";
+            $lines[] = "<ul class=\"no-decoration\">";
             foreach ($content as $item) {
                 $lines[] = "<li>" . $this->renderHelper($field, $item) . "</li>";
             }
             $lines[] = "</ul>";
         } else {
-            $lines[] = "<ul>";
+            $lines[] = "<ul class=\"no-decoration\">";
             $lines[] = "<li>" . $this->renderHelper($field, $content) . "</li>";
             $lines[] = "</ul>";
         }
@@ -176,6 +176,10 @@ class View
 
         if ($field === 'id') {
             $item = 'https://' . $_SERVER['HTTP_HOST'] . $this->path("/catalog/$item");
+            return $this->renderLink([
+                "href" => $item,
+                "content" => $item,
+            ]);
         }
         if (in_array($field, $euk_requires_capitalization)) {
             $item = ucfirst((string) $item);
@@ -220,7 +224,7 @@ class View
             $attributes[] = "rel=\"noopener noreferrer\"";
         }
         $attribute_string = implode(" ", $attributes);
-        return "<a $attribute_string>$content</a>";
+        return "<a class='underline-link' $attribute_string>$content</a>";
     }
 
     public function path($path)
