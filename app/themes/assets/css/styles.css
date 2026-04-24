@@ -373,9 +373,9 @@ a.button.button--wildcat-blue:focus .icon-label--stacked .label {
     color: var(--wildcat-white);
 }
 
-.item-list .teaser {
+/*.item-list .teaser {
     display: block;
-}
+}*/
 
 @scope (.item-list .teaser) {
     .teaser__link {
