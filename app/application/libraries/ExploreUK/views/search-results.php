@@ -60,47 +60,45 @@ $m['current_page_title'] = !empty($m['q'])
                                         </a>
                                     </span>
                                 </h3>
-                                <div class="content-meta__who-when">
-                                    <?php if (isset($r['source'])) : ?>
-                                        <div class="meta-row">
-                                            <span class="field-label">Collection:</span>
-                                            <?php if (is_array($r['source'])) : ?>
-                                                <?php foreach ($r['source'] as $source) : ?>
-                                                    <a href="<?= $this->path('/?f%5Bsource_s%5D%5B%5D=' . urlencode($source)) ?>"><?= $source ?></a>
-                                                <?php endforeach; ?>
-                                            <?php else : ?>
-                                                <a href="<?= $this->path('/?f%5Bsource_s%5D%5B%5D=' . urlencode($r['source'])) ?>"><?= $r['source'] ?></a>
-                                            <?php endif; ?>
-                                        </div>
-                                    <?php endif; ?>
-                                        <div class="meta-row">
-                                            <span class="field-label">Date:</span>
-                                            <?php if (isset($r['pubdate_display'])) : ?>
-                                                <?php if (is_array($r['pubdate_display'])) : ?>
-                                                    <?php foreach ($r['pubdate_display'] as $date) : ?>
-                                                        <span class="date"><?= $date ?></span>
+                                <div class="content-meta">
+                                    <dl class="described-links">
+                                        <?php if (isset($r['source'])) : ?>
+                                            <dt>Collection</dt>
+                                            <dd class="taxonomy-list">
+                                                <?php if (is_array($r['source'])) : ?>
+                                                    <?php foreach ($r['source'] as $source) : ?>
+                                                        <a href="<?= $this->path('/?f%5Bsource_s%5D%5B%5D=' . urlencode($source)) ?>"><?= $source ?></a>
                                                     <?php endforeach; ?>
                                                 <?php else : ?>
-                                                    <span class="date"><?= $r['pubdate_display'] ?></span>
+                                                    <a href="<?= $this->path('/?f%5Bsource_s%5D%5B%5D=' . urlencode($r['source'])) ?>"><?= $r['source'] ?></a>
                                                 <?php endif; ?>
-                                            <?php else : ?>
-                                                <span class="date">date unknown</span>
-                                            <?php endif; ?>
-                                        </div>
-                                        <?php if (isset($r['format'])) : ?>
-                                            <div class="meta-row">
-                                                <span class="field-label">Format:</span>
+                                            </dd>
+                                        <?php endif; ?>
+                                            <dt>Date</dt>
+                                                <?php if (isset($r['pubdate_display'])) : ?>
+                                                    <?php if (is_array($r['pubdate_display'])) : ?>
+                                                        <?php foreach ($r['pubdate_display'] as $date) : ?>
+                                                            <dd><?= $date ?></dd>
+                                                        <?php endforeach; ?>
+                                                    <?php else : ?>
+                                                        <dd><?= $r['pubdate_display'] ?></dd>
+                                                    <?php endif; ?>
+                                                <?php else : ?>
+                                                    <dd>Date unknown</dd>
+                                                <?php endif; ?>
+                                            <?php if (isset($r['format'])) : ?>
+                                                <dt>Format</dt>
                                                 <?php if (is_array($r['format'])) : ?>
                                                     <?php foreach ($r['format'] as $format) : ?>
-                                                        <span class="byline"><?= $format ?></span>
+                                                        <dd><?= $format ?></dd>
                                                     <?php endforeach; ?>
                                                 <?php else : ?>
-                                                    <span class="byline"><?= $r['format'] ?></span>
+                                                    <dd><?= $r['format'] ?></dd>
                                                 <?php endif; ?>
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                </div>
+                                            <?php endif; ?>
+                                        </dl>
+                                </div>    
+                            </div>
                         </div>
                         <!-- END TWIG INCLUDE : @limestone/teaser.twig" -->
                         <!-- END TWIG INCLUDE : components-teaser" --> <!-- TWIG INCLUDE : components-teaser" -->
