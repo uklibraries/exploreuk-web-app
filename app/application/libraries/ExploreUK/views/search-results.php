@@ -45,7 +45,7 @@ $m['current_page_title'] = !empty($m['q'])
                         <div class="teaser teaser--news teaser--blue-gray">
                             <?php if (isset($r['thumb'])) : ?>
                                 <div class="teaser__media">
-                                    <a href="<?= $r['link'] ?>" aria-hidden=“true” tabindex=“-1”>
+                                    <a href="<?= $r['link'] ?>" aria-hidden='true' tabindex='-1'>
                                         <img src="<?= $r['thumb'] ?>" alt="<?= $this->brevity($r['title']) ?>" class="" />
                                     </a>
                                 </div>
