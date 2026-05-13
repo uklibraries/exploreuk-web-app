@@ -3,6 +3,7 @@
 /* colors */
     --wildcat-blue: #0033a0;
     --wildcat-white: #fff;
+    --wildcat-black: #000;
     --midnight: #041e42;
     --dark-blue: #1f2c5e;
 }
@@ -430,4 +431,17 @@ a.button.button--wildcat-blue:focus .icon-label--stacked .label {
 
 .download-options .option a {
     width: 100%;
+}
+
+/*Archive content banner*/
+@scope (.slab--micro) {
+    :scope{
+        padding-top: .2rem;
+        padding-bottom: .2rem;
+    }
+    .icon-label--micro {
+        font-size: .81rem;
+        margin-top: .2rem;
+        margin-bottom: .2rem; 
+    }    
 }
