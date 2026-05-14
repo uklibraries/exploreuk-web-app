@@ -2,18 +2,20 @@
 
 namespace ExploreUK;
 
-class Config
+readonly class Config
 {
-    private array $config;
-
-    public function __construct()
+    public function __construct(private array $config)
     {
-        $this->config = [
-            'app_env' => $this->ensureEnv('APP_ENV'),
-            'solr_url' => $this->ensureEnv('SOLR_URL'),
-            'fa_base_url' => $this->ensureEnv('FA_BASE_URL'),
-            'dip_store_base_url' => $this->ensureEnv('DIP_STORE_BASE_URL')
-        ];
+    }
+
+    public static function fromEnv(): self
+    {
+        return new self([
+            'app_env' => self::ensureEnv('APP_ENV'),
+            'solr_url' => self::ensureEnv('SOLR_URL'),
+            'fa_base_url' => self::ensureEnv('FA_BASE_URL'),
+            'dip_store_base_url' => self::ensureEnv('DIP_STORE_BASE_URL'),
+        ]);
     }
 
     public function get(string $key): string
@@ -24,7 +26,7 @@ class Config
         return $this->config[$key];
     }
 
-    private function ensureEnv(string $key): string
+    private static function ensureEnv(string $key): string
     {
         $value = getenv($key);
 

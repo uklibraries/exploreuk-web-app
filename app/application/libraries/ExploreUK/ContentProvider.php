@@ -4,11 +4,8 @@ namespace ExploreUK;
 
 class ContentProvider
 {
-    private string $assetsDir;
-
-    public function __construct($assetsDir = EUK_BASE_DIR . '/themes/assets/')
+    public function __construct(private string $assetsDir)
     {
-        $this->assetsDir = $assetsDir;
     }
 
     public function popularResources(): array
@@ -50,7 +47,7 @@ class ContentProvider
     // helpers
     private function load(string $name): array
     {
-        $path = $this->assetsDir . '/' . $name;
+        $path = $this->assetsDir . '/data/' . $name;
         if (!file_exists($path)) {
             error_log("Missing site asset: $path");
             return [];
