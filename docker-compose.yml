@@ -7,7 +7,7 @@ services:
       target: development
     volumes:
       - ./app/application:/app/application
-      - ./app/themes:/app/themes
+      - ./app/assets:/app/assets
       - ./app/catalog.php:/app/catalog.php
       - ./assets/frontpage-assets/files:/app/files
       # Bind mount for dev, baked in image for production
@@ -33,7 +33,7 @@ services:
       - ./assets/frontpage-assets/files:/app/files
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./app/application:/app/application
-      - ./app/themes:/app/themes
+      - ./app/assets:/app/assets
       - ./app/catalog.php:/app/catalog.php
       - findingaid:/opt/findingaid
     depends_on:
