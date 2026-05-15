@@ -152,4 +152,4 @@ $(function () {
 <script src="<?= $this->assetPath('js/main.js') ?>"></script>
 <script src="<?= $this->assetPath('js/lazyload.js') ?>"></script>
     </body>
-</html>s
+</html>
