@@ -38,6 +38,7 @@
 </head>
 
 <body>
+    <?php require('archive-notice.html'); ?>
     <?php require('universal-header.html'); ?>
     <div id="main">
         <?php if ($m['front_page']) : ?>
