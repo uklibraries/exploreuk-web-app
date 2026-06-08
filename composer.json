@@ -3,5 +3,14 @@
         "rector/rector": "^2.1",
         "phpunit/phpunit": "^12.3",
         "squizlabs/php_codesniffer": "^4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ExploreUK\\": "app/application/libraries/ExploreUK"
+        },
+        "files": [
+            "app/application/libraries/ExploreUK/definitions.php",
+            "app/application/libraries/ExploreUK/render.php"
+        ]
     }
 }
