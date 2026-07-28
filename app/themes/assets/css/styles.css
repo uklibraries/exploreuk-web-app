@@ -6,6 +6,7 @@
     --wildcat-black: #000;
     --midnight: #041e42;
     --dark-blue: #1f2c5e;
+    --color-sky: #b1c9e8;
 }
 
 /* Limestone universal breadcrumb overrides */
@@ -64,6 +65,17 @@
     width: 144px;
     height: auto;
     margin: 0 auto;
+}
+
+/* Fix Limestone bug - `.social-media-links` assume a light background, so override with appropriate color for footer. */
+.global-footer .social-media-links a:hover,
+.global-footer .social-media-links a:focus,
+.global-footer .social-media-links a:active {
+    color: var(--color-sky);
+}
+
+.global-footer .social-media-links__linkset a {
+    text-decoration: none;
 }
 
 #top > div {
@@ -361,17 +373,6 @@ a.button.button--wildcat-blue:focus .icon-label--stacked .label {
 .grid__column--minor .result-amount,
 .grid__column--minor .result-amount form {
     margin-bottom: 0;
-}
-
-.search-form .control-group button.icon-only:focus,
-.search-form .control-group button.icon-only:focus-visible {
-    background-color: var(--wildcat-blue);
-    color: var(--wildcat-white);
-}
-
-.search-form .control-group button.icon-only:focus .ic,
-.search-form .control-group button.icon-only:focus-visible .ic {
-    color: var(--wildcat-white);
 }
 
 /*.item-list .teaser {
