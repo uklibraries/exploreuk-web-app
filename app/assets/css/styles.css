@@ -444,5 +444,17 @@ a.button.button--wildcat-blue:focus .icon-label--stacked .label {
         font-size: .81rem;
         margin-top: .2rem;
         margin-bottom: .2rem; 
-    }    
+    }
+}
+
+/* Table on item pages */
+@scope (.metadata-table) {
+    :scope a:link,
+    :scope a:visited {
+        color: var(--wildcat-black);
+    }
+    :scope a:hover,
+    :scope a:active {
+        color: var(--wildcat-blue);
+    }
 }

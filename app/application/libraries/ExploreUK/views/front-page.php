@@ -22,7 +22,7 @@
                     >
                         <img
                             class="lazy"
-                            src="<?= $this->themePath('images/middlegray.png') ?>"
+                            src="<?= $this->assetPath('images/middlegray.png') ?>"
                             data-src="<?= $resource['image'] ?>"
                             title="<?= $resource['label'] ?>"
                             alt="<?= htmlspecialchars((string)$resource['label']) ?>"

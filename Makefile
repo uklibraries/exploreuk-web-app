@@ -1,4 +1,4 @@
-.PHONY: help dev dev-fa build down test lint lint-fix logs test-watch omeka-sh web-sh db-sh sample
+.PHONY: help dev dev-fa build down test lint lint-fix logs test-watch exploreuk-sh web-sh db-sh sample
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
@@ -16,13 +16,13 @@ down: ## Stop all containers
 	docker compose down
 
 test: ## Run PHPUnit tests
-	docker compose exec omeka /vendor/bin/phpunit -c /phpunit.xml /tests
+	docker compose exec exploreuk /vendor/bin/phpunit -c /phpunit.xml /tests
 
 lint: ## Run PHP_CodeSniffer (PSR-12)
-	docker compose exec omeka /vendor/bin/phpcs -w --exclude=Generic.Files.LineLength --standard=PSR12 /tests /app/catalog.php /app/application/libraries/ExploreUK
+	docker compose exec exploreuk /vendor/bin/phpcs -w --exclude=Generic.Files.LineLength --standard=PSR12 /tests /app/catalog.php /app/application/libraries/ExploreUK
 
 lint-fix: ## Auto-fix PHP_CodeSniffer violations (PSR-12)
-	docker compose exec omeka /vendor/bin/phpcbf --exclude=Generic.Files.LineLength --standard=PSR12 /tests /app/catalog.php /app/application/libraries/ExploreUK
+	docker compose exec exploreuk /vendor/bin/phpcbf --exclude=Generic.Files.LineLength --standard=PSR12 /tests /app/catalog.php /app/application/libraries/ExploreUK
 
 check: ## Run linter and tests reports
 	make lint
@@ -34,8 +34,8 @@ logs: ## Tail container logs
 test-watch: ## Run tests on each file change (requires: watchexec)
 	watchexec -w app -w tests --no-process-group 'make test'
 
-omeka-sh: ## Shell into the omeka container
-	docker compose exec omeka sh
+exploreuk-sh: ## Shell into the exploreuk container
+	docker compose exec exploreuk sh
 
 web-sh: ## Shell into the web container
 	docker compose exec web sh

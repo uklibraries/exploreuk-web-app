@@ -1,4 +1,5 @@
-<?php require('header.php'); ?>
+<?php
+require('header.php'); ?>
 <?php $m['current_page_title'] = $m['page_title']; ?>
 <main id="main-content">
 <div class="slab slab--thin">

@@ -229,8 +229,7 @@ class View
 
     public function path($path)
     {
-        $base = $this->metadata['base'];
-        $url = str_replace('//', '/', "$base$path");
+        $url = str_replace('//', '/', "$path");
         $url = preg_replace('/\?$/', '', $url);
         if (!str_starts_with((string) $url, '/')) {
             $url = "/$url";
@@ -238,15 +237,14 @@ class View
         return $url;
     }
 
-    public function themePath($path)
+    public function assetPath($path)
     {
-        return $this->path('/themes/' . $this->metadata['theme'] . "/$path");
+        return $this->path('/assets/' . $path);
     }
 
     public function subresourceIntegrity($path)
     {
-        $base = $this->metadata['base'];
-        $file_path = realpath(EUK_BASE_DIR) . $this->themePath($path);
+        $file_path = realpath(EUK_BASE_DIR) . $this->assetPath($path);
         $algo = 'sha384';
         $version = $algo . '-' . base64_encode(hash($algo, file_get_contents($file_path), true));
         return $version;

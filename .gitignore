@@ -4,11 +4,10 @@ backup/*
 !backup/README.md
 /app/dist/*
 dist/*
-/app/themes/omeukaprologue/assets/css/main.min.css
+/app/assets/css/main.min.css
 node_modules/
 .env*
 !.env.ci
-!.env.dev
 nginx/default.conf
 nginx/default.prod.conf
 docker-entrypoint-initdb.d/

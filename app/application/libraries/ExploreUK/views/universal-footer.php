@@ -65,7 +65,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.1/lity.min.js" integrity="sha256-3VzI8FuSG20IfvIDKRptBR+1d4T6G57eDIf6ZEO13iY=" crossorigin="anonymous"></script>
-<script src="<?= $this->themePath('assets/js/resize.js') ?>"></script>
+<script src="<?= $this->assetPath('js/resize.js') ?>"></script>
 <script>
   $(document).ready(function() {
       togglebutton();
@@ -82,7 +82,7 @@
             $ui = "1";
         }
         if ($ui === "1") : ?>
-<script type="text/javascript" src="<?= $this->themePath('openseadragon/openseadragon.min.js') ?>"></script>
+<script type="text/javascript" src="<?= $this->assetPath('openseadragon/openseadragon.min.js') ?>"></script>
 <script type="text/javascript">
 $(function () {
     function resize_window() {
@@ -148,8 +148,8 @@ $(function () {
 </script>
         <?php endif; ?>
 <?php endif; ?>
-<script src="<?= $this->themePath('javascripts/back_to_top.js') ?>"></script>
-<script src="<?= $this->themePath('javascripts/main.js') ?>"></script>
-<script src="<?= $this->themePath('assets/js/lazyload.js') ?>"></script>
+<script src="<?= $this->assetPath('js/back_to_top.js') ?>"></script>
+<script src="<?= $this->assetPath('js/main.js') ?>"></script>
+<script src="<?= $this->assetPath('js/lazyload.js') ?>"></script>
     </body>
 </html>
