@@ -6,9 +6,13 @@ APP_ROOT="/app"
 umask 002
 
 chmod 755 "$APP_ROOT"
-chown -R root:www-data "$APP_ROOT/files"
-find "$APP_ROOT/files" -type d -exec chmod 0775 "{}" \;
-find "$APP_ROOT/files" -type f -exec chmod 0664 "{}" \;
+
+# files/ is bind mounted at runtime, so it is absent wherever no mount is supplied (e.g. CI)
+if [ -d "$APP_ROOT/files" ]; then
+    chown -R root:www-data "$APP_ROOT/files"
+    find "$APP_ROOT/files" -type d -exec chmod 0775 "{}" \;
+    find "$APP_ROOT/files" -type f -exec chmod 0664 "{}" \;
+fi
 
 if [ "$APP_ENV" == "development" ]; then
     # overwrites the bind mounted install to make sure dev is always up-to-date
