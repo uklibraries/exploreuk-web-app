@@ -14,8 +14,9 @@
     <link rel="shortcut icon" href="/favicon.ico?v=m2LeKYRNPO">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <!-- <link rel="stylesheet" href="<?= $this->assetPath('css/main.min.css') ?>?<?= $this->subresourceIntegrity('css/main.min.css') ?>" /> -->
-    <link rel="stylesheet" href="<?= $this->assetPath('css/styles.css') ?>" />
     <link rel="stylesheet" href="https://webcdn.uky.edu/limestone/1.0.0/css/style.css">
+    <!-- temp to restore load order -->
+    <link rel="stylesheet" href="<?= $this->assetPath('css/styles.css') ?>" />
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.2.0/jquery.magnific-popup.min.js"></script>
     <script defer src="https://webcdn.uky.edu/limestone/1.0.0/js/lib/jquery-accessible-tabs-aria.js"></script>
     <script defer src="https://webcdn.uky.edu/limestone/1.0.0/js/toggle-button.js"></script>
