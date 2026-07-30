@@ -3,25 +3,26 @@
 namespace ExploreUK;
 
 use DOMDocument;
-use ExploreUK;
+use DOMElement;
 
 class Oai
 {
-    public function __construct(private $config)
-    {
+    public function __construct(
+        private Config $config,
+        private string $host,
+    ) {
     }
 
     public function run()
     {
         global $euk_oai_options;
-        #require_once('application/libraries/ExploreUK/Oai.php');
         $response = euk_oai_response([
-            'base' => $this->config['base'],
-            'solr' => $this->config['solr'],
-            'host' => $this->config['host'],
+            'solr' => $this->config->get('solr_url'),
+            'host' => $this->host,
         ]);
         $doc = new DOMDocument('1.0', 'utf-8');
         $root = $doc->createElementNS('http://www.openarchives.org/OAI/2.0/', 'OAI-PMH');
+        /** @var DOMElement $root */
         $root = $doc->appendChild($root);
         $root->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
         $root->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'schemaLocation', 'http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd');
@@ -59,6 +60,7 @@ class Oai
                         $child = $doc->createElement($field, '');
                         $child = $node->appendChild($child);
                         $oai_id = $doc->createElementNS('http://www.openarchives.org/OAI/2.0/oai-identifier', 'oai-identifier');
+                        /** @var DOMElement $oai_id */
                         $oai_id = $child->appendChild($oai_id);
                         $oai_id->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
                         $oai_id->setAttributeNS('http://www.w3.org/2001/XMLSchema-instance', 'schemaLocation', 'http://www.openarchives.org/OAI/2.0/oai-identifier http://www.openarchives.org/OAI/2.0/oai-identifier.xsd');
@@ -112,6 +114,7 @@ class Oai
                     $metadata = $result_node->appendChild($metadata);
 
                     $oai_dc = $doc->createElementNS('http://www.openarchives.org/OAI/2.0/oai_dc/', 'oai_dc:dc');
+                    /** @var DOMElement $oai_dc */
                     $oai_dc = $metadata->appendChild($oai_dc);
                     $oai_dc->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:dc', 'http://purl.org/dc/elements/1.1/');
                     $oai_dc->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
@@ -154,6 +157,7 @@ class Oai
                     $metadata = $result_node->appendChild($metadata);
 
                     $oai_dc = $doc->createElementNS('http://www.openarchives.org/OAI/2.0/oai_dc/', 'oai_dc:dc');
+                    /** @var DOMElement $oai_dc */
                     $oai_dc = $metadata->appendChild($oai_dc);
                     $oai_dc->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:dc', 'http://purl.org/dc/elements/1.1/');
                     $oai_dc->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance');
@@ -240,7 +244,6 @@ function euk_oai_response($host_options)
         'responseDate' => gmdate('Y-m-d\TH:i:s\Z'),
         'request' => oai_base(),
     ];
-    $error = null;
     $options = [];
     foreach ($params as $key => $value) {
         if ($key === 'verb') {
@@ -343,7 +346,7 @@ function euk_oai_list_metadata_formats($options)
     if (count($options) > 1) {
         return euk_oai_error('badArgument');
     }
-    foreach ($options as $option => $value) {
+    foreach (array_keys($options) as $option) {
         if (!in_array($option, $permitted_options)) {
             return euk_oai_error('badArgument');
         }
@@ -375,7 +378,7 @@ function euk_oai_list_sets($options)
     $permitted_options = [
         'resumptionToken',
     ];
-    foreach ($options as $option => $value) {
+    foreach (array_keys($options) as $option) {
         if (!in_array($option, $permitted_options)) {
             return euk_oai_error('badArgument');
         }
@@ -444,7 +447,7 @@ function euk_oai_get_record($options)
             ['datestamp', $doc['timestamp']],
         ],
     ];
-    foreach (euk_oai_set_memberships($doc, $options) as $set) {
+    foreach (euk_oai_set_memberships($doc) as $set) {
         $record['header'][] = ['setSpec', $set];
     }
     $record['metadata'] = [];
@@ -528,7 +531,7 @@ function euk_oai_list_identifiers($options)
                 ['datestamp', $doc['timestamp']],
             ],
         ];
-        foreach (euk_oai_set_memberships($doc, $options) as $set) {
+        foreach (euk_oai_set_memberships($doc) as $set) {
             $record['header'][] = ['setSpec', $set];
         }
         $metadata['results'][] = $record;
@@ -613,7 +616,7 @@ function euk_oai_list_records($options)
                 ['datestamp', $doc['timestamp']],
             ],
         ];
-        foreach (euk_oai_set_memberships($doc, $options) as $set) {
+        foreach (euk_oai_set_memberships($doc) as $set) {
             $record['header'][] = ['setSpec', $set];
         }
 
@@ -650,8 +653,7 @@ function oai_base()
 {
     global $oai_host_options;
     $host = $oai_host_options['host'];
-    $base = $oai_host_options['base'];
-    $oai_base = "https://$host/$base/catalog/oai";
+    $oai_base = "https://$host/catalog/oai";
     $oai_base = preg_replace('#/+#', '/', $oai_base);
     $oai_base = preg_replace('#https:/#', 'https://', (string) $oai_base);
     return $oai_base;
@@ -749,7 +751,7 @@ function euk_oai_error_message($code)
 
 /* set handling */
 
-function euk_oai_set_memberships($doc, $options)
+function euk_oai_set_memberships($doc)
 {
     $sets = [];
     if (($doc['sequence_number_display'][0] === '1') || ($doc['format'] === 'collections')) {

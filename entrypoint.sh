@@ -1,46 +1,19 @@
 #!/bin/sh
-set -e # Exit immediately if a command exits with a non-zero status or if there are env variables unset
-if [ "$APP_ENV" == "production" ]; then
-	MYSQL_USER=$(cat /run/secrets/mysql_user)
-	MYSQL_PASSWORD=$(cat /run/secrets/mysql_password)
-	MYSQL_DATABASE=$(cat /run/secrets/mysql_database)
-fi
+set -eu # Exit immediately if a command exits with a non-zero status or if there are env variables unset
 
-OMEKA_ROOT="/app"
-
-umask 077
-
-# Create db.ini programmatically
-# Using a compound command to group echos and redirect output
-mkdir -p "/tmp/omeka"
-
-{
-	echo "[database]"
-	echo "host = '${DB_HOST}'"
-	echo "username = '${MYSQL_USER}'"
-	echo "password = '${MYSQL_PASSWORD}'"
-	echo "dbname = '${MYSQL_DATABASE}'"
-	echo "prefix = '${DB_PREFIX}'"
-	echo "port = '${DB_PORT}'"
-	echo "charset = '${DB_CHARSET}'"
-} > "/tmp/omeka/db.ini"
-
-# Set appropriate permissions
-rsync -a "/tmp/omeka/db.ini" "$OMEKA_ROOT/"
-chown root:www-data "$OMEKA_ROOT/db.ini"
-chmod 640 "$OMEKA_ROOT/db.ini"
+APP_ROOT="/app"
 
 umask 002
 
-chmod 755 "$OMEKA_ROOT"
-chown -R root:www-data "$OMEKA_ROOT/files"
-find "$OMEKA_ROOT/files" -type d -exec chmod 0775 "{}" \;
-find "$OMEKA_ROOT/files" -type f -exec chmod 0664 "{}" \;
+chmod 755 "$APP_ROOT"
+chown -R root:www-data "$APP_ROOT/files"
+find "$APP_ROOT/files" -type d -exec chmod 0775 "{}" \;
+find "$APP_ROOT/files" -type f -exec chmod 0664 "{}" \;
 
 if [ "$APP_ENV" == "development" ]; then
     # overwrites the bind mounted install to make sure dev is always up-to-date
-	npm install --prefix "$OMEKA_ROOT"
-	npm run --prefix "$OMEKA_ROOT" minify-css
+	npm install --prefix "$APP_ROOT"
+	npm run --prefix "$APP_ROOT" minify-css
 fi
 
 # If a command was provided, run that instead of php-fpm in the foreground

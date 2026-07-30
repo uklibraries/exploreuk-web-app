@@ -14,7 +14,7 @@ foreach (EUK_DETAIL_FIELD_ORDER as $field) {
         $content = $m['details'][$field];
         if ($field === 'usage_display') {
             if ($rows) {
-                echo '<dl>' . $rows . '</dl>';
+                echo '<dl class="metadata-table">' . $rows . '</dl>';
                 $rows = '';
             }
             print $this->renderField($content);
@@ -30,7 +30,7 @@ foreach (EUK_DETAIL_FIELD_ORDER as $field) {
     }
 }
 if ($rows) {
-    echo '<dl>' . $rows . '</dl>';
+    echo '<dl class="metadata-table">' . $rows . '</dl>';
 }
 ?>
 </div>

@@ -1,9 +1,8 @@
 # ExploreUK
 
 This is the main portion of the ExploreUK web application. Document data is
-pulled from [Solr](https://solr.apache.org/), and other settings are managed in
-the [Omeka Classic](https://omeka.org/classic/) admin panel. Deploying to
-production is managed in the
+pulled from [Solr](https://solr.apache.org/). Deploying to production is managed
+in the
 [ukl-ansible-playbooks](https://github.com/uklibraries/ukl-ansible-playbooks)
 repository.
 
@@ -23,10 +22,10 @@ make dev
 
 The application should then be available at http://localhost:8080. Developers
 should run `make help` to see helper commands through
-[make](https://www.gnu.org/software/make/). There are
-[git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) and a
-mysql database that is loaded on initialization in the `assets` directory, so
-new developers do not need to source assets for installation.
+[make](https://www.gnu.org/software/make/). There is a
+[git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) that is
+loaded on initialization in the `assets` directory, so new developers do not
+need to source assets for installation.
 
 ### Dependencies
 
