@@ -196,10 +196,11 @@
     padding: 0.5rem 1rem;
 }
 
+.mfp-close:hover,
 .mfp-close:focus,
 .mfp-close:focus-visible {
-    outline: 2px solid var(--wildcat-blue);
-    outline-offset: 2px;
+    color: var(--wildcat-white);
+    background-color: var(--dark-blue);
 }
 
 .item-details-tabs dd a {
@@ -284,7 +285,6 @@
 
 a.button.button--wildcat-blue:hover .icon-label--stacked .label,
 a.button.button--wildcat-blue:focus .icon-label--stacked .label {
-  color: #0033a0;
 }
 
 .search-nav {
