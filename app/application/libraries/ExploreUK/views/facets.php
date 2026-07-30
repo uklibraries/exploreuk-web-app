@@ -28,7 +28,7 @@ $fc++;
                     <li><a href="<?= $value['add_link'] ?>"><?= $this->brevity($value['value_label'], 40) ?> <span class="facet-count">(<?= $value['count'] ?>)</span></a></li>
                 <?php endforeach; ?>
                 </ul>
-                <button class="button--small modal-control mfp-inline" data-mfp-src="#inlinefacets-<?= $facet['field_raw'] ?>">More <i class="fas fa-plus-circle"></i></button>
+                <button class="button--small modal-control mfp-inline" data-mfp-src="#inlinefacets-<?= $facet['field_raw'] ?>"><i class="fas fa-plus-circle"></i> Filter more <?= $facet['field_label'] ?>s</button>
             </details>
         </article>
     <?php endforeach; ?>
