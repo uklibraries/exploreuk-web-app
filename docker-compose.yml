@@ -1,5 +1,5 @@
 services:
-  omeka:
+  exploreuk:
     command: /usr/local/bin/entrypoint.sh
     build:
       context: .
@@ -18,9 +18,6 @@ services:
       - .env.dev
     networks:
       - app_network
-    depends_on:
-      db:
-        condition: service_healthy
 
   web:
     image: nginx:1.29.0
@@ -37,25 +34,9 @@ services:
       - ./app/catalog.php:/app/catalog.php
       - findingaid:/opt/findingaid
     depends_on:
-      - omeka
+      - exploreuk
     networks:
       - app_network
-
-  db:
-    image: mysql:9.4.0
-    restart: always
-    env_file:
-      - .env.dev
-    volumes:
-      - db_data:/var/lib/mysql
-      - ./assets/dev/mysql-init-files:/docker-entrypoint-initdb.d
-    networks:
-      - app_network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
 
   findingaid:
     profiles:
@@ -73,7 +54,6 @@ services:
 
 
 volumes:
-  db_data:
   findingaid:
 
 networks:
