@@ -87,6 +87,12 @@
     text-decoration: none;
 }
 
+.global-footer .icon-label .ic--svg {
+    width: 1em;
+    height: 1em;
+    fill: currentColor;
+}
+
 #top > div {
     /*background-image:url(<?= $m['featured_image']['image'] ?>);*/
     height: 100%;
