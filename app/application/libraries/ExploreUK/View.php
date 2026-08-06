@@ -118,8 +118,6 @@ class View
                     $this->renderLink([
                         "href" => $this->path("/catalog/{$content['base_id']}"),
                         "content" => $collection_label,
-                        "external" => true,
-                        "open_new_tab" => true,
                     ]),
                     ' | ',
                     $this->renderLink([
@@ -211,20 +209,40 @@ class View
 
     public function renderLink($options)
     {
-        $content = $options["content"];
+        $external = !empty($options["external"]);
+        $open_new_tab = !empty($options["open_new_tab"]);
+        $content = htmlspecialchars((string) $options["content"], ENT_QUOTES);
         $attributes = [];
-        $attributes[] = "href=\"" . $options["href"] . "\"";
-        if (!empty($options["external"])) {
-            $content .= " <i class=\"fas fa-external-link-alt\"></i>";
+        $attributes[] = "href=\"" . htmlspecialchars((string) $options["href"], ENT_QUOTES) . "\"";
+        if ($external) {
+            $content .= " <span class=\"ic ic--popup\" aria-hidden=\"true\"></span>";
         }
-        if (!empty($options["open_new_tab"])) {
+        if ($open_new_tab) {
             # rel="noreferrer" implies target="_blank" and rel="noopener",
             # but I deliberately choose to include them explicitly.
             $attributes[] = "target=\"_blank\"";
             $attributes[] = "rel=\"noopener noreferrer\"";
         }
+        $note = $this->linkDestinationNote($external, $open_new_tab);
+        if ($note !== '') {
+            $content .= " <span class=\"show-for-sr\">($note)</span>";
+        }
         $attribute_string = implode(" ", $attributes);
-        return "<a class='underline-link' $attribute_string>$content</a>";
+        return "<a class=\"underline-link\" $attribute_string>$content</a>";
+    }
+
+    private function linkDestinationNote($external, $open_new_tab)
+    {
+        if ($external && $open_new_tab) {
+            return 'external link, opens in a new tab';
+        }
+        if ($external) {
+            return 'external link';
+        }
+        if ($open_new_tab) {
+            return 'opens in a new tab';
+        }
+        return '';
     }
 
     public function path($path)

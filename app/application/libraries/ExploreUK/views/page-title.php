@@ -30,9 +30,9 @@
                         $dd = implode('', [
                             $content['value']['source_s'],
                             ' | ',
-                            $this->renderLink(['href' => $this->path("/catalog/{$content['value']['base_id']}"), 'content' => $collection_label, 'open_new_tab' => true]),
+                            $this->renderLink(['href' => $this->path("/catalog/{$content['value']['base_id']}"), 'content' => $collection_label]),
                             ' | ',
-                            $this->renderLink(['href' => $this->path($link . urlencode((string) $content['value']['source_s'])), 'content' => $link_label, 'open_new_tab' => true]),
+                            $this->renderLink(['href' => $this->path($link . urlencode((string) $content['value']['source_s'])), 'content' => $link_label]),
                         ]);
                         $rows .= '<dt>' . EUK_LOCALE['en']['source_s'] . '</dt><dd>' . $dd . "</dd>\n";
                     }
