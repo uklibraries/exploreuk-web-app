@@ -14,9 +14,9 @@
             <h1>About</h1>
             <p>
                 ExploreUK is the gateway to many of
-                <a href="https://libraries.uky.edu/" target="_blank" rel="noopener">University of Kentucky Libraries</a>
+                <?= $this->renderLink(['href' => 'https://libraries.uky.edu/', 'content' => 'University of Kentucky Libraries', 'external' => true]) ?>
                 rare and unique resources, particularly those housed in the
-                <a href="https://libraries.uky.edu/locations/special-collections-research-center" target="_blank" rel="noopener">Special Collections Research Center</a>.
+                <?= $this->renderLink(['href' => 'https://libraries.uky.edu/locations/special-collections-research-center', 'content' => 'Special Collections Research Center', 'external' => true]) ?>.
                 ExploreUK provides free and public access to digital materials for research, teaching, and curious exploration.
             </p>
             <p>
@@ -44,27 +44,27 @@
                     Apache Solr
                 </li>
                 <li>
-                    <a href="https://www.uky.edu/its/" target="_blank" rel="noopener">University of Kentucky Information Technology Services</a>
+                    <?= $this->renderLink(['href' => 'https://www.uky.edu/its/', 'content' => 'University of Kentucky Information Technology Services', 'external' => true]) ?>
                     infrastructure for AIPs and DIPs storage
                 </li>
                 <li>
                     Collection guides and related information are managed by the
-                    <a href="http://archivesspace.org/" target="_blank" rel="noopener">ArchivesSpace</a>
+                    <?= $this->renderLink(['href' => 'http://archivesspace.org/', 'content' => 'ArchivesSpace', 'external' => true]) ?>
                     information management application.
                 </li>
             </ul>
             <p>Visit the
-                <a href="https://github.com/uklibraries" target="_blank" rel="noopener">UK Libraries GitHub page</a>
+                <?= $this->renderLink(['href' => 'https://github.com/uklibraries', 'content' => 'UK Libraries GitHub page', 'external' => true]) ?>
                 for more information.
             </p>
             <h2>Acknowledgements</h2>
             <p>
                 A portion of the collection guides and digitized content on ExploreUK was made possible by support from the
-                <a href="https://www.clir.org/" target="_blank" rel="noopener">Council on Library and Information Resources</a>,
-                <a href="https://www.imls.gov/" target="_blank" rel="noopener">Institute of Museum and Library Services</a>,
-                <a href="https://www.heyburninitiative.org/" target="_blank" rel="noopener">The John G. Heyburn II Initiative for Excellence in the Federal Judiciary</a>, the
-                <a href="https://www.neh.gov/" target="_blank" rel="noopener">National Endowment for the Humanities</a>, and the
-                <a href="https://www.archives.gov/nhprc" target="_blank" rel="noopener">National Historical Publications &amp; Records Commission</a>.
+                <?= $this->renderLink(['href' => 'https://www.clir.org/', 'content' => 'Council on Library and Information Resources', 'external' => true]) ?>,
+                <?= $this->renderLink(['href' => 'https://www.imls.gov/', 'content' => 'Institute of Museum and Library Services', 'external' => true]) ?>,
+                <?= $this->renderLink(['href' => 'https://www.heyburninitiative.org/', 'content' => 'The John G. Heyburn II Initiative for Excellence in the Federal Judiciary', 'external' => true]) ?>, the
+                <?= $this->renderLink(['href' => 'https://www.neh.gov/', 'content' => 'National Endowment for the Humanities', 'external' => true]) ?>, and the
+                <?= $this->renderLink(['href' => 'https://www.archives.gov/nhprc', 'content' => 'National Historical Publications & Records Commission', 'external' => true]) ?>.
             </p>
         </div>
     </div>
