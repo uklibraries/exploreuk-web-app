@@ -51,25 +51,17 @@ function fa_render_title($node)
 
 function fa_render_extref($node)
 {
-    $render = '';
-    if ($node->hasAttribute('href')) {
-        $href = $node->getAttribute('href');
+    $href = $node->getAttribute('href');
+    $show = $node->getAttribute('show');
+    $text = (string) $node->textContent;
 
-        $show_new = true;
-        if ($node->hasAttribute('show')) {
-            $show_desire = $node->getAttribute('show');
-            if ($show_desire === 'replace') {
-                $show_new = false;
-            }
-        }
-        $link = '<a href="' . $href . '"';
-        if ($show_new) {
-            $link .= ' target="_blank" rel="nooopener noreferrer"';
-        }
-        $link .= '>' . $node->textContent . '</a>';
-        $render = $link;
-    } else {
-        $render = $node->textContent;
+    if (strlen($href) === 0 || strlen(trim($text)) === 0) {
+        return $text;
     }
-    return $render;
+    return \ExploreUK\View::renderLink([
+        'href' => $href,
+        'content' => $text,
+        'external' => true,
+        'open_new_tab' => $show === 'new',
+    ]);
 }
