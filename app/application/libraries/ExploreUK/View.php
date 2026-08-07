@@ -95,7 +95,6 @@ class View
                             "href" => $relation->identifier,
                             "content" => $relation->content,
                             "external" => true,
-                            "open_new_tab" => true,
                         ]);
                         $lines[] = "</li>\n";
                     }
@@ -145,7 +144,16 @@ class View
             if (is_array($content)) {
                 $content = $content[0];
             }
-            $content = preg_replace('/Please go to http:\/\/kdl.kyvl.org for more information\./', 'For information about permissions to reproduce or publish, <a href="https://libraries.uky.edu/ContactSCRC" target="_blank" rel="noopener">contact the Special Collections Research Center</a>.', (string) $content);
+            $scrc_link = self::renderLink([
+                'href' => 'https://libraries.uky.edu/ContactSCRC',
+                'content' => 'contact the Special Collections Research Center',
+                'external' => true,
+            ]);
+            $content = preg_replace(
+                '/Please go to http:\/\/kdl.kyvl.org for more information\./',
+                'For information about permissions to reproduce or publish, ' . $scrc_link . '.',
+                (string) $content
+            );
         }
         if (isset($euk_locale['en'][$field])) {
             $label = $euk_locale['en'][$field];
@@ -188,7 +196,6 @@ class View
                 "href" => $item,
                 "content" => $item,
                 "external" => true,
-                "open_new_tab" => true,
             ]);
         } elseif (in_array($field, $euk_facetable)) {
             $link = "/?f%5B$field%5D%5B%5D=";
@@ -200,14 +207,14 @@ class View
             if ($field === 'description_display') {
                 return strip_tags((string) $item, '<b>');
             } elseif ($field === 'usage_display') {
-                return strip_tags((string) $item, '<a>');
+                return strip_tags((string) $item, '<a><span>');
             } else {
                 return htmlspecialchars((string) $item);
             }
         }
     }
 
-    public function renderLink($options)
+    public static function renderLink($options)
     {
         $external = !empty($options["external"]);
         $open_new_tab = !empty($options["open_new_tab"]);
@@ -223,7 +230,7 @@ class View
             $attributes[] = "target=\"_blank\"";
             $attributes[] = "rel=\"noopener noreferrer\"";
         }
-        $note = $this->linkDestinationNote($external, $open_new_tab);
+        $note = self::linkDestinationNote($external, $open_new_tab);
         if ($note !== '') {
             $content .= " <span class=\"show-for-sr\">($note)</span>";
         }
@@ -231,7 +238,7 @@ class View
         return "<a class=\"underline-link\" $attribute_string>$content</a>";
     }
 
-    private function linkDestinationNote($external, $open_new_tab)
+    private static function linkDestinationNote($external, $open_new_tab)
     {
         if ($external && $open_new_tab) {
             return 'external link, opens in a new tab';
