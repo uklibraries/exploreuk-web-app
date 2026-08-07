@@ -17,7 +17,7 @@
                         ExploreUK
                     </span>
                 </h1>
-                <p>Search archived collections, prints, photographs, maps, manuscripts, streaming video, and more from <a href="https://libraries.uky.edu/locations/special-collections-research-center">UK Special Collections Research Center</a> and <a href="https://libraries.uky.edu/">UK Libraries</a></p>
+                <p>Search archived collections, prints, photographs, maps, manuscripts, streaming video, and more from <?= $this->renderLink(['href' => 'https://libraries.uky.edu/locations/special-collections-research-center', 'content' => 'UK Special Collections Research Center', 'external' => true]) ?> and <?= $this->renderLink(['href' => 'https://libraries.uky.edu/', 'content' => 'UK Libraries', 'external' => true]) ?></p>
                 <!-- END TWIG INCLUDE : @limestone/headline-group.twig" -->
                 <?php require('search-form.php'); ?>
             </div>
