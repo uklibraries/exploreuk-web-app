@@ -27,7 +27,7 @@
             <p>All correspondence will be answered within a reasonable time by SCRC.</p>
         </div>
     </div>
-    <?php require('sponsors.php'); ?>
+    <?php require('sponsors.html'); ?>
 </main>
 <?php
     require('global-footer.html');

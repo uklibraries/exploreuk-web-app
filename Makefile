@@ -1,12 +1,20 @@
-.PHONY: help dev dev-fa build down test lint lint-fix logs test-watch exploreuk-sh web-sh db-sh sample
+.PHONY: help env require-env dev dev-fa build down test lint lint-fix logs test-watch exploreuk-sh web-sh db-sh sample
+
+export COMPOSE_FILE ?= docker-compose.yml:docker-compose.dev.override.yml
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
 
-dev: ## Start development environment
+env: ## Generate an .env file from .env.example (interactive)
+	app/exe/make-env.sh
+
+require-env:
+	@test -f .env.dev || { echo ".env.dev not found - run 'make env' to create one"; exit 1; }
+
+dev: require-env ## Start development environment
 	docker compose up -d
 
-dev-fa: ## Start development environment with findingaid application (requires FA_IMAGE=IMAGE_LOCATION environment variable)
+dev-fa: require-env ## Start development environment with findingaid application (requires FA_IMAGE=IMAGE_LOCATION environment variable)
 	docker compose --profile with_fa up -d
 
 build: ## Build containers

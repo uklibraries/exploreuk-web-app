@@ -17,6 +17,7 @@ Developer installations have been tested on Linux (through Windows with
 git clone git@github.com:uklibraries/exploreuk-web-app.git
 cd exploreuk-web-app
 git submodule init; git submodule update
+make env
 make dev
 ```
 
@@ -52,17 +53,35 @@ brew install make watchexec
 
 ### Configuration
 
-`.env.example` and `nginx/default.conf` are provided as configurations for
-development. Developers are expected to create their own .env files for new
-environments, but a .env.example is provided as a template, and the repo
-includes .env.dev and .env.ci for those environments.
+`nginx/default.conf` is provided as an example configuration for development.
+Developers are expected to create their own .env files for new environments,
+including a `.env.dev` for development purposes. An `.env.example` file is
+provided as a template for environment files, and the repo includes `.env.ci`
+for continuous integration. Developers can choose to copy and edit
+`.env.example` or run `make env` to generate a `.env.dev` file from the
+template.
 
-The docker-compose.yml file is specifically for development. Other compose files
-are designed to be
+`docker-compose.yml` is the shared base and deliberately declares no `env_file`,
+so it does not depend on any untracked file. Each environment supplies its own
+through a compose file that is
 [merged](https://docs.docker.com/compose/how-tos/multiple-compose-files/merge/)
-with the dev compose file. A production file can be found in the
+onto the base: `docker-compose.dev.override.yml` points at `.env.dev` and
+`docker-compose.ci.override.yml` points at `.env.ci`. Note that Compose appends
+rather than replaces list fields such as `env_file` when merging, which is why
+the base leaves it empty. A production file can be found in the
 [ukl-ansible-playbooks](https://github.com/uklibraries/ukl-ansible-playbooks)
 repository.
+
+The `make` targets export `COMPOSE_FILE` so the base and dev override are always
+loaded together. Developers invoking Compose directly need to do the same:
+
+```
+docker compose -f docker-compose.yml -f docker-compose.dev.override.yml up -d
+
+# or
+export COMPOSE_FILE=docker-compose.yml:docker-compose.dev.override.yml
+docker compose up -d
+```
 
 ### Optional: Findingaid
 
