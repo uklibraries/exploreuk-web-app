@@ -6,12 +6,12 @@
     <meta charset="utf-8" />
     <meta name="description" content="<?= $m['page_description'] ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon.png?v=m2LeKYRNPO">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=m2LeKYRNPO">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=m2LeKYRNPO">
-    <link rel="manifest" href="/site.webmanifest?v=m2LeKYRNPO">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg?v=m2LeKYRNPO" color="#005dab">
-    <link rel="shortcut icon" href="/favicon.ico?v=m2LeKYRNPO">
+    <link rel="apple-touch-icon" sizes="152x152" href="<?= $this->assetPath('icons/apple-touch-icon.png') ?>?v=m2LeKYRNPO">
+    <link rel="icon" type="image/png" sizes="32x32" href="<?= $this->assetPath('icons/favicon-32x32.png') ?>?v=m2LeKYRNPO">
+    <link rel="icon" type="image/png" sizes="16x16" href="<?= $this->assetPath('icons/favicon-16x16.png') ?>?v=m2LeKYRNPO">
+    <link rel="manifest" href="<?= $this->assetPath('icons/site.webmanifest') ?>?v=m2LeKYRNPO">
+    <link rel="mask-icon" href="<?= $this->assetPath('icons/safari-pinned-tab.svg') ?>?v=m2LeKYRNPO" color="#005dab">
+    <link rel="shortcut icon" href="<?= $this->assetPath('icons/favicon.ico') ?>?v=m2LeKYRNPO">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <!-- <link rel="stylesheet" href="<?= $this->assetPath('css/main.min.css') ?>?<?= $this->subresourceIntegrity('css/main.min.css') ?>" /> -->
     <!-- Limestone is imported by styles.css into a cascade layer; preloaded here because that @import blocks render -->
