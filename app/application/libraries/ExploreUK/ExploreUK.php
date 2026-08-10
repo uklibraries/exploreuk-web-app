@@ -4,6 +4,11 @@ namespace ExploreUK;
 
 class ExploreUK
 {
+    private const STATIC_PAGES = [
+        'about' => 'About ExploreUK',
+        'takedown-policy' => 'Copyright, Use, and Take-Down Policies',
+    ];
+
     private Config $config;
     private ContentProvider $content;
     private Query $query;
@@ -53,6 +58,11 @@ class ExploreUK
             $this->index();
         } elseif (preg_match("#^/text/(?<id>[^/]+)/?#", $request_uri, $matches)) {
             $this->text($matches['id']);
+        } elseif (
+            preg_match("#^/(?<slug>[^/]+)/?$#", $request_uri, $matches)
+            && isset(self::STATIC_PAGES[$matches['slug']])
+        ) {
+            $this->staticPage($matches['slug']);
         } else {
             $this->index();
         }
@@ -310,6 +320,21 @@ class ExploreUK
         if (array_key_exists($text_field, $doc)) {
             print '<pre style="white-space: pre-wrap">' . implode("\n", $doc[$text_field]) . "</pre>\n";
         }
+    }
+
+    public function staticPage($slug)
+    {
+        $title = self::STATIC_PAGES[$slug];
+        $metadata = [
+            'front_page' => false,
+            'page_title' => $title,
+            'current_page_title' => $title,
+            'query' => $this->query,
+        ];
+        $metadata['page_description'] = $title;
+
+        $view = new View($metadata, $slug);
+        $view->render();
     }
 
     public function statsViewer()

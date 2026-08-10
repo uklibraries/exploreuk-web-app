@@ -68,7 +68,7 @@
             </p>
         </div>
     </div>
-    <?php require('sponsors.php'); ?>
+    <?php require('sponsors.html'); ?>
 </main>
 <?php
     require('global-footer.html');
