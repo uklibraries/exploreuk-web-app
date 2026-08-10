@@ -1,7 +1,10 @@
-.PHONY: help dev dev-fa build down test lint lint-fix logs test-watch exploreuk-sh web-sh db-sh sample
+.PHONY: help env dev dev-fa build down test lint lint-fix logs test-watch exploreuk-sh web-sh db-sh sample
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
+
+env: ## Generate an .env file from .env.example (interactive)
+	app/exe/make-env.sh
 
 dev: ## Start development environment
 	docker compose up -d

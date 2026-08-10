@@ -17,6 +17,7 @@ Developer installations have been tested on Linux (through Windows with
 git clone git@github.com:uklibraries/exploreuk-web-app.git
 cd exploreuk-web-app
 git submodule init; git submodule update
+make env
 make dev
 ```
 
@@ -52,10 +53,13 @@ brew install make watchexec
 
 ### Configuration
 
-`.env.example` and `nginx/default.conf` are provided as configurations for
-development. Developers are expected to create their own .env files for new
-environments, but a .env.example is provided as a template, and the repo
-includes .env.dev and .env.ci for those environments.
+`nginx/default.conf` is provided as an example configuration for development.
+Developers are expected to create their own .env files for new environments,
+including a `.env.dev` for development purposes. An `.env.example` file is
+provided as a template for environment files, and the repo includes `.env.ci`
+for continuous integration. Developers can choose to copy and edit
+`.env.example` or run `make env` to generate a `.env.dev` file from the
+template.
 
 The docker-compose.yml file is specifically for development. Other compose files
 are designed to be
