@@ -1,6 +1,5 @@
  <form action="<?= $this->path('/catalog/') ?>" method="get" id="search" class="search-form">
     <div class="control-group">
-        <!--<span><?= $m['search_items_count_text'] ?></span>-->
         <input aria-label="Search" class="q form-control" type="text" name="q" value="<?= htmlspecialchars((string) $this->q('q')) ?>" placeholder="Search ExploreUK">
         <button type="submit" class="icon-only" value="search">
             <!-- TWIG INCLUDE : @atoms/icon-label.html.twig" -->
