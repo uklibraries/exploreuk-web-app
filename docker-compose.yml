@@ -14,16 +14,12 @@ services:
       - ./php-fpm/php.ini-development:/usr/local/etc/php/conf.d/php.ini
       - ./phpunit.xml:/phpunit.xml
       - ./tests:/tests
-    env_file:
-      - .env.dev
     networks:
       - app_network
 
   web:
     image: nginx:1.29.0
     restart: always
-    env_file:
-      - .env.dev
     ports:
       - "8080:80"
     volumes:
@@ -41,8 +37,6 @@ services:
   findingaid:
     profiles:
       - with_fa
-    env_file:
-      - .env.dev
     # Pass in which findinagid image as an environment variable
     image: ${FA_IMAGE}
     volumes:

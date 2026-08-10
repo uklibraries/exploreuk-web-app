@@ -1,0 +1,12 @@
+services:
+  exploreuk:
+    env_file:
+      - .env.dev
+
+  web:
+    env_file:
+      - .env.dev
+
+  findingaid:
+    env_file:
+      - .env.dev
