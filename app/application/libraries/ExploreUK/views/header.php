@@ -13,12 +13,11 @@
     <link rel="mask-icon" href="<?= $this->assetPath('icons/safari-pinned-tab.svg') ?>?v=m2LeKYRNPO" color="#005dab">
     <link rel="shortcut icon" href="<?= $this->assetPath('icons/favicon.ico') ?>?v=m2LeKYRNPO">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <!-- <link rel="stylesheet" href="<?= $this->assetPath('css/main.min.css') ?>?<?= $this->subresourceIntegrity('css/main.min.css') ?>" /> -->
     <!-- Limestone is imported by styles.css into a cascade layer; preloaded here because that @import blocks render -->
     <link rel="preload" href="https://webcdn.uky.edu/limestone/1.0.0/css/style.css" as="style">
     <link rel="stylesheet" href="<?= $this->assetPath('css/styles.css') ?>" />
+    <script defer src="<?= $this->assetPath('js/vendor/jquery-accessible-tabs-aria.js') ?>"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.2.0/jquery.magnific-popup.min.js"></script>
-    <script defer src="https://webcdn.uky.edu/limestone/1.0.0/js/lib/jquery-accessible-tabs-aria.js"></script>
     <script defer src="https://webcdn.uky.edu/limestone/1.0.0/js/toggle-button.js"></script>
     <script defer src="https://webcdn.uky.edu/limestone/1.0.0/js/modals.js"></script>
     <meta name="msapplication-TileColor" content="#2d89ef">
