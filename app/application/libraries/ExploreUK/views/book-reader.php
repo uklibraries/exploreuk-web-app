@@ -6,8 +6,6 @@
                 document.getElementById('books_frame').src += window.location.hash;
             }
 
-            var initialSync = true;
-
             window.addEventListener('message', function (e) {
                 var origin = window.location.protocol + '//' + window.location.host;
                 if (e.origin !== origin) {
@@ -52,13 +50,8 @@
                 }
 
                 if (url !== window.location.href) {
-                    if (initialSync) {
-                        history.replaceState({href: url}, '', url);
-                    } else {
-                        history.pushState({href: url}, '', url);
-                    }
+                    history.replaceState({href: url}, '', url);
                 }
-                initialSync = false;
             }, false);
 
             window.addEventListener('popstate', function () {
