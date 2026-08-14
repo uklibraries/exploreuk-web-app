@@ -242,7 +242,7 @@ class View
         return $this->path('/assets/' . $path);
     }
 
-    public function subresourceIntegrity($path)
+    public function assetVersion($path)
     {
         $file_path = realpath(EUK_BASE_DIR) . $this->assetPath($path);
         $algo = 'sha384';
