@@ -175,7 +175,7 @@ class View
         $euk_requires_capitalization = EUK_REQUIRES_CAPITALIZATION;
 
         if ($field === 'id') {
-            $item = 'https://' . $_SERVER['HTTP_HOST'] . $this->path("/catalog/$item");
+            $item = euk_request_scheme() . '://' . $_SERVER['HTTP_HOST'] . $this->path("/catalog/$item");
             return $this->renderLink([
                 "href" => $item,
                 "content" => $item,

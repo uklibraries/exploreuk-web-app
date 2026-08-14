@@ -1,4 +1,4 @@
-<div class="tab-wrap js-tabs js-tabs--white item-details-tabs">
+<div class="tab-wrap js-tabs js-tabs--white item-details-tabs" data-tabs-disable-fragment="1">
     <ul id="item-view-tabs" class="tabs js-tablist">
         <li id="item-view-details" class="js-tablist__item"><a href="#item-details" id="label_item-details" class="js-tablist__link">Item Details</a></li>
         <?php if (isset($m['item_book'])) : ?>
@@ -24,7 +24,8 @@ foreach (EUK_DETAIL_FIELD_ORDER as $field) {
                 $dds = array_map(fn($item) => '<dd>' . $this->renderHelper($field, $item) . '</dd>', $content['value']);
                 $rows .= '<dt>' . $label . '</dt>' . implode('', $dds) . "\n";
             } else {
-                $rows .= '<dt>' . $label . '</dt><dd>' . $this->renderHelper($field, $content['value']) . "</dd>\n";
+                $dd = $field === 'id' ? '<dd id="permalink">' : '<dd>';
+                $rows .= '<dt>' . $label . '</dt>' . $dd . $this->renderHelper($field, $content['value']) . "</dd>\n";
             }
         }
     }

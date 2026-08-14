@@ -9,6 +9,11 @@ jQuery(document).ready(function($) {
     // Store current URL hash.
     var hash = window.location.hash.replace("#", "");
 
+    /* Guard for valid element id's */
+    if (!/^[A-Za-z][\w-]*$/.test(hash)) {
+        hash = "";
+    }
+
     /* Tabs ------------------------------------------------------------------------------------------------------------ */
     var $tabs = $(".js-tabs"),
         $body = $("body");
