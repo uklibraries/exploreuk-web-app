@@ -39,8 +39,6 @@ $m['current_page_title'] = !empty($m['q'])
             </div>
             <div class="grid__column grid__column--major">
                 <div class="item-list">
-                    <!-- TWIG INCLUDE : components-teaser" -->
-                    <!-- TWIG INCLUDE : @limestone/teaser.twig" -->
                     <?php foreach ($m['results'] as $r) : ?>
                         <div class="teaser teaser--news teaser--blue-gray">
                             <?php if (isset($r['thumb'])) : ?>
@@ -100,8 +98,6 @@ $m['current_page_title'] = !empty($m['q'])
                                 </div>    
                             </div>
                         </div>
-                        <!-- END TWIG INCLUDE : @limestone/teaser.twig" -->
-                        <!-- END TWIG INCLUDE : components-teaser" --> <!-- TWIG INCLUDE : components-teaser" -->
                     <?php endforeach; ?>
                 </div>
             </div>

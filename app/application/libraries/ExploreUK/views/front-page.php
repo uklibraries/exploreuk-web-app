@@ -2,7 +2,6 @@
 <main id="main-content">
 <!--<div class="resources-section bg-uklblack">-->
 
-<!-- TWIG INCLUDE : @limestone/grid.twig" -->
 <div class="slab">
     <div class="slab__wrapper">
         <div class="editorial">
