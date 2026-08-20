@@ -1,4 +1,4 @@
-.PHONY: help env require-env dev dev-fa build down test lint lint-fix logs test-watch exploreuk-sh web-sh db-sh sample
+.PHONY: help env require-env dev dev-fa build down test lint lint-fix phpstan logs test-watch exploreuk-sh web-sh db-sh sample
 
 export COMPOSE_FILE ?= docker-compose.yml:docker-compose.dev.override.yml
 
@@ -31,6 +31,9 @@ lint: ## Run PHP_CodeSniffer (PSR-12)
 
 lint-fix: ## Auto-fix PHP_CodeSniffer violations (PSR-12)
 	docker compose exec exploreuk /vendor/bin/phpcbf --exclude=Generic.Files.LineLength --standard=PSR12 /tests /app/catalog.php /app/application/libraries/ExploreUK
+
+phpstan: ## Run PHPStan static analysis
+	docker compose exec exploreuk /vendor/bin/phpstan analyse --level=0 --memory-limit=1G /tests /app/catalog.php /app/application/libraries/ExploreUK
 
 check: ## Run linter and tests reports
 	make lint
