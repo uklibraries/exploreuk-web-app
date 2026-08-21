@@ -1,7 +1,6 @@
     </section>
 </div>
 
-<!-- TWIG INCLUDE : @limestone/universal-footer.twig" -->
 <div class="slab slab--wildcat-blue universal-footer">
     <div class="slab__wrapper">
         <a href="https://www.uky.edu" aria-label="University of Kentucky Homepage">
@@ -42,20 +41,15 @@
             <div>© University of Kentucky</div>
             <div>
                 <a href="https://www.uky.edu/directions">
-                    <!-- TWIG INCLUDE : @limestone/icon-label.twig" -->
                     <span class="icon-label ">
                         <span class="ic ic--pin" aria-hidden="true"></span>
                         <span class="label ">Lexington, Kentucky 40506</span>
                     </span>
-                    <!-- END TWIG INCLUDE : @limestone/icon-label.twig" -->
                 </a>
             </div>
         </div>
     </div>
 </div>
-<!-- END TWIG INCLUDE : @limestone/universal-footer.twig" -->
-
-
 
 <!-- CSS -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.1/lity.min.css" integrity="sha256-0SZxASYAglrmIuTx+ZYHE3hzTnCZWB7XLu+iA8AG0Z0=" crossorigin="anonymous" />
