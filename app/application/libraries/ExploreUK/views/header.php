@@ -12,7 +12,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="<?= $this->assetPath('icons/apple-touch-icon.png') ?>?v=2">
     <link rel="manifest" href="<?= $this->assetPath('icons/site.webmanifest') ?>?v=2">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <!-- <link rel="stylesheet" href="<?= $this->assetPath('css/main.min.css') ?>?<?= $this->subresourceIntegrity('css/main.min.css') ?>" /> -->
     <!-- Limestone is imported by styles.css into a cascade layer; preloaded here because that @import blocks render -->
     <link rel="preload" href="https://webcdn.uky.edu/limestone/1.0.0/css/style.css" as="style">
     <link rel="stylesheet" href="<?= $this->assetPath('css/styles.css') ?>" />
