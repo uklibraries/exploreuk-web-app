@@ -1,6 +1,7 @@
-.PHONY: help env require-env dev dev-fa build down test lint lint-fix phpstan logs test-watch exploreuk-sh web-sh db-sh sample
+.PHONY: help env require-env dev dev-fa build down test lint lint-fix phpstan check logs test-watch exploreuk-sh web-sh db-sh sample
 
 export COMPOSE_FILE ?= docker-compose.yml:docker-compose.dev.override.yml
+export FA_IMAGE ?=
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
@@ -38,6 +39,7 @@ phpstan: ## Run PHPStan static analysis
 check: ## Run linter and tests reports
 	make lint
 	make test
+	make phpstan
 
 logs: ## Tail container logs
 	docker compose logs -f
