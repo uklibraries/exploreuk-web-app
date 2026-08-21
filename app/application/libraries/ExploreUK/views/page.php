@@ -58,7 +58,7 @@ if (isset($m['flat']['title_display'])) {
 
             <?php require('page-title.php'); ?>
 
-            <?php require('page-harmful-language-statement.php'); ?>
+            <?php require('page-harmful-language-statement.html'); ?>
 
             <?php require('page-details.php'); ?>
         </div>
