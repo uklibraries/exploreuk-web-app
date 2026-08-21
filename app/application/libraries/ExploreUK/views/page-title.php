@@ -1,3 +1,4 @@
+<?php /** @var \ExploreUK\View $this */ ?>
 <div class="item-details">
     <div class="grid--major-left">
         <?php if (isset($m['downloadable'])) : ?>

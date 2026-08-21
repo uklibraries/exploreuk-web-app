@@ -1,3 +1,4 @@
+<?php /** @var \ExploreUK\View $this */ ?>
 <div class="tab-wrap js-tabs js-tabs--white item-details-tabs">
     <ul id="item-view-tabs" class="tabs js-tablist">
         <li id="item-view-details" class="js-tablist__item"><a href="#item-details" id="label_item-details" class="js-tablist__link">Item Details</a></li>
