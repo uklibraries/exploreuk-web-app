@@ -289,9 +289,9 @@
   font-size: 1rem;
 }
 
-a.button.button--wildcat-blue:hover .icon-label--stacked .label,
+/* a.button.button--wildcat-blue:hover .icon-label--stacked .label,
 a.button.button--wildcat-blue:focus .icon-label--stacked .label {
-}
+} */
 
 .search-nav {
     padding-top: 1rem;
@@ -471,5 +471,11 @@ a.button.button--wildcat-blue:focus .icon-label--stacked .label {
     :scope a:hover,
     :scope a:active {
         color: var(--wildcat-blue);
+    }
+}
+
+@scope (.harmful-lang) {
+    :scope {
+        margin: 0 2rem;
     }
 }
