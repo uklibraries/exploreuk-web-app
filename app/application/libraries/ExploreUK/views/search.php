@@ -15,9 +15,9 @@
                 </h1>
                 <p>
                   Search archived collections, prints, photographs, maps, manuscripts, streaming video, and more from
-                  <?= $this->renderLink(['href' => 'https://libraries.uky.edu/locations/special-collections-research-center', 'content' => 'UK Special Collections Research Center']) ?>
+                  <?= $this->renderLink(['href' => 'https://libraries.uky.edu/locations/special-collections-research-center', 'content' => 'UK Special Collections Research Center', 'external' => true]) ?>
                   and
-                  <?= $this->renderLink(['href' => 'https://libraries.uky.edu/', 'content' => 'UK Libraries']) ?>
+                  <?= $this->renderLink(['href' => 'https://libraries.uky.edu/', 'content' => 'UK Libraries', 'external' => true]) ?>
                 </p>
                 <?php require('search-form.php'); ?>
             </div>

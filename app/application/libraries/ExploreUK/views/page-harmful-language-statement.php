@@ -7,7 +7,7 @@
                 </p>
 
                 <p>
-                If you find description with problematic language that you think SCRC should review, please contact us at <a href="mailto:SCRC@uky.edu">SCRC@uky.edu</a>.
+                If you find description with problematic language that you think SCRC should review, please contact us at <?= $this->renderLink(['href' => 'mailto:SCRC@uky.edu', 'content' => 'SCRC@uky.edu']) ?>.
                 </p>
             </div>
         </div>

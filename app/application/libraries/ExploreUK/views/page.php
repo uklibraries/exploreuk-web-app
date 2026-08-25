@@ -34,9 +34,19 @@ if (isset($m['flat']['title_display'])) {
         }
         if (($ui === "2") && $m['item_image']) : ?>
             <div class="editorial">
-                <?php $r = $m['item_image']; ?>
-                <a href="<?= $r['reference_image_url_s'] ?>" target="_blank" rel="noopener">Open fullsize image</a> |
-                <a href="<?= $this->path('/catalog/' . $r['id'] . '/zoom' . $m['query']->link()) ?>" target="_blank" rel="noopener">Zooom!</a>
+                <?php
+                  $r = $m['item_image'];
+                  print $this->renderLink([
+                      'href' => $r['reference_image_url_s'],
+                      'content' => 'Open fullsize image',
+                  ]);
+                  print " | ";
+                  print $this->renderLink([
+                      'href' => $this->path('/catalog/' . $r['id'] . '/zoom' . $m['query']->link()),
+                      'content' => 'Zooom!',
+                      'open_new_tab' => true,
+                  ]);
+                ?>
             </div>
         <?php endif; ?>
 
