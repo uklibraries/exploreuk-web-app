@@ -41,7 +41,7 @@
     <?php require('sponsors.html'); ?>
 </main>
 
-<?php 
-    require('global-footer.php'); 
-    require('universal-footer.php'); 
+<?php
+    require('global-footer.php');
+    require('universal-footer.php');
 ?>
