@@ -147,7 +147,6 @@ class View
             $scrc_link = self::renderLink([
                 'href' => 'https://libraries.uky.edu/ContactSCRC',
                 'content' => 'contact the Special Collections Research Center',
-                'external' => true,
             ]);
             $content = preg_replace(
                 '/Please go to http:\/\/kdl.kyvl.org for more information\./',

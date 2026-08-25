@@ -24,7 +24,7 @@
                 <p>Disclaimer: The University of Kentucky Libraries Special Collections Research Center (SCRC) provides broad public access to collections as a contribution to education and scholarship. Most content in the digital libraries is protected by the U.S. Copyright Law (Title 17, U.S.C.). Use of the materials may also be subject to other legal rights, for example, rights of publicity, privacy rights, or other legal interests. Transmission or reproduction of materials protected by copyright beyond that allowed by fair use requires the written permission of the copyright owners. As noted, additional permissions may also be required. SCRC does not authorize any use or reproduction whatsoever for commercial purposes.</p>
                 <p>SCRC makes digital versions of collections accessible in the following situations: they are in the public domain; SCRC has permission to make them accessible online; materials are made accessible for education and research purposes as a legal fair use, or; there are no known restrictions on use.</p>
                 <p>Researchers should
-                  <?= $this->renderLink(['href' => 'https://libraries.uky.edu/ContactSCRC', 'content' => 'contact SCRC', 'external' => true]) ?>
+                  <?= $this->renderLink(['href' => 'https://libraries.uky.edu/ContactSCRC', 'content' => 'contact SCRC']) ?>
                   for additional information about rights, contacts, and permissions. Responsibility for making an independent legal assessment of an item and securing any necessary permissions ultimately rests with those persons wishing to use the item(s).
                 </p>
                 <h2>Take-Down Policies</h2>
