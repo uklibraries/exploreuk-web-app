@@ -85,6 +85,6 @@
     <?php require('sponsors.html'); ?>
 </main>
 <?php
-    require('global-footer.html');
+    require('global-footer.php');
     require('universal-footer.php');
 ?>
