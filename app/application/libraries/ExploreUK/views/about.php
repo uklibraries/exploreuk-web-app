@@ -59,13 +59,13 @@
                       infrastructure for AIPs and DIPs storage</li>
                     <li>
                       Collection guides and related information are managed by the
-                      <?= $this->renderLink(['href' => 'https://archivesspace.org/', 'content' => 'ArchivesSpace']) ?>
+                      <?= $this->renderLink(['href' => 'https://archivesspace.org/', 'content' => 'ArchivesSpace', 'external' => true]) ?>
                       information management application.
                     </li>
                 </ul>
                 <p>
                   Visit the
-                  <?= $this->renderLink(['href' => 'https://github.com/uklibraries', 'content' => 'UK Libraries GitHub page']) ?>
+                  <?= $this->renderLink(['href' => 'https://github.com/uklibraries', 'content' => 'UK Libraries GitHub page', 'external' => true]) ?>
                   for more information.
                 </p>
                 <h2>Acknowledgements</h2>
