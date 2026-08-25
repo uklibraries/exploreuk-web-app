@@ -74,6 +74,105 @@ final class ViewTest extends TestCase
         $this->assertStringContainsString('rel="noopener noreferrer"', $link);
     }
 
+    public function testClassesReplaceTheDefaultStyling(): void
+    {
+        $link = View::renderLink([
+            'href' => 'https://example.org',
+            'content' => 'Example',
+            'classes' => 'link--fancy',
+        ]);
+
+        $this->assertSame(
+            '<a class="link--fancy" href="https://example.org">Example</a>',
+            $link
+        );
+    }
+
+    public function testClassesCanStackWhenPassedExplicitly(): void
+    {
+        $link = View::renderLink([
+            'href' => '/about',
+            'content' => 'About',
+            'classes' => 'underline-link link--fancy',
+        ]);
+
+        $this->assertStringContainsString('class="underline-link link--fancy"', $link);
+    }
+
+    public function testEmptyClassesOmitTheAttributeEntirely(): void
+    {
+        $link = View::renderLink([
+            'href' => '/about',
+            'content' => 'About',
+            'classes' => '',
+        ]);
+
+        $this->assertSame('<a href="/about">About</a>', $link);
+    }
+
+    public function testClassesCannotBreakOutOfTheirAttribute(): void
+    {
+        $link = View::renderLink([
+            'href' => '/about',
+            'content' => 'About',
+            'classes' => 'x" onmouseover="alert(1)',
+        ]);
+
+        $this->assertStringNotContainsString('onmouseover="alert(1)"', $link);
+    }
+
+    public function testIdAndTitleAreRenderedAndEscaped(): void
+    {
+        $link = View::renderLink([
+            'href' => '/catalog/xt123/download?type=pdf',
+            'content' => 'Download PDF',
+            'classes' => 'button button--wildcat-blue',
+            'id' => 'pdf_href',
+            'title' => 'A "quoted" title',
+        ]);
+
+        $this->assertStringContainsString('id="pdf_href"', $link);
+        $this->assertStringContainsString('title="A &quot;quoted&quot; title"', $link);
+        $this->assertStringNotContainsString('onmouseover', $link);
+    }
+
+    public function testAriaLabelIsRendered(): void
+    {
+        $link = View::renderLink([
+            'href' => '/catalog/?offset=20',
+            'content' => 'Next',
+            'aria_label' => 'Next page of results',
+        ]);
+
+        $this->assertStringContainsString('aria-label="Next page of results"', $link);
+    }
+
+    public function testAriaLabelAbsorbsTheDestinationNote(): void
+    {
+        $link = View::renderLink([
+            'href' => 'https://ukyarchives.blogspot.com/',
+            'content' => 'blogspot',
+            'aria_label' => 'Curiosities and Wonders',
+            'external' => true,
+        ]);
+
+        # The label carries the note, because it overrides the inner text entirely.
+        $this->assertStringContainsString('aria-label="Curiosities and Wonders (external link)"', $link);
+        $this->assertStringNotContainsString('<span class="show-for-sr">', $link);
+        $this->assertStringContainsString(self::ICON, $link);
+    }
+
+    public function testAriaLabelCannotBreakOutOfItsAttribute(): void
+    {
+        $link = View::renderLink([
+            'href' => '/about',
+            'content' => 'About',
+            'aria_label' => 'x" onmouseover="alert(1)',
+        ]);
+
+        $this->assertStringNotContainsString('onmouseover="alert(1)"', $link);
+    }
+
     public function testHrefCannotBreakOutOfItsAttribute(): void
     {
         $link = View::renderLink([

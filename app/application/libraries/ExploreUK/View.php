@@ -218,9 +218,27 @@ class View
     {
         $external = !empty($options["external"]);
         $open_new_tab = !empty($options["open_new_tab"]);
+        // default underline-link, provide 'classes' => '' to remove all classes
+        $classes = $options["classes"] ?? 'underline-link';
         $content = htmlspecialchars((string) $options["content"], ENT_QUOTES);
         $attributes = [];
+        if ($classes !== '') {
+            $attributes[] = "class=\"" . htmlspecialchars((string) $classes, ENT_QUOTES) . "\"";
+        }
         $attributes[] = "href=\"" . htmlspecialchars((string) $options["href"], ENT_QUOTES) . "\"";
+        $note = self::linkDestinationNote($external, $open_new_tab);
+        foreach (["id" => "id", "title" => "title"] as $key => $name) {
+            if (isset($options[$key])) {
+                $attributes[] = "$name=\"" . htmlspecialchars((string) $options[$key], ENT_QUOTES) . "\"";
+            }
+        }
+        if (isset($options["aria_label"])) {
+            $label = (string) $options["aria_label"];
+            if ($note !== '') {
+                $label .= " ($note)";
+            }
+            $attributes[] = "aria-label=\"" . htmlspecialchars($label, ENT_QUOTES) . "\"";
+        }
         if ($external) {
             $content .= " <span class=\"ic ic--popup\" aria-hidden=\"true\"></span>";
         }
@@ -230,12 +248,11 @@ class View
             $attributes[] = "target=\"_blank\"";
             $attributes[] = "rel=\"noopener noreferrer\"";
         }
-        $note = self::linkDestinationNote($external, $open_new_tab);
-        if ($note !== '') {
+        if ($note !== '' && !isset($options["aria_label"])) {
             $content .= " <span class=\"show-for-sr\">($note)</span>";
         }
         $attribute_string = implode(" ", $attributes);
-        return "<a class=\"underline-link\" $attribute_string>$content</a>";
+        return "<a $attribute_string>$content</a>";
     }
 
     private static function linkDestinationNote($external, $open_new_tab)
