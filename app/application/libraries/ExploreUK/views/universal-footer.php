@@ -3,7 +3,7 @@
 
 <div class="slab slab--wildcat-blue universal-footer">
     <div class="slab__wrapper">
-        <a href="https://www.uky.edu" aria-label="University of Kentucky Homepage">
+        <a href="https://www.uky.edu" aria-label="University of Kentucky Homepage (external link)">
             <svg class="uk-wordmark" preserveAspectRatio="xMinYMid" viewBox="0 0 196 20" xmlns="http://www.w3.org/2000/svg" aria-labelledby="svgTitleID_-699c93cb7ec5b svgDescID_-699c93cb7ec5e">
             <title id="svgTitleID_-699c93cb7ec5b">University of Kentucky Homepage</title>
             <desc id="svgDescID_-699c93cb7ec5e">A link to return to the University of Kentucky Homepage</desc>
@@ -44,6 +44,7 @@
                     <span class="icon-label ">
                         <span class="ic ic--pin" aria-hidden="true"></span>
                         <span class="label ">Lexington, Kentucky 40506</span>
+                        <span class="show-for-sr">(external link)</span>
                     </span>
                 </a>
             </div>

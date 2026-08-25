@@ -18,7 +18,7 @@
 </div>
     <?php elseif ($ui === "2") : ?>
 <div id="image_viewer">
-    <a href="<?= $r['reference_image_url_s'] ?>" target="_blank" rel="noopener"><img class="reference_image static-thumb" id="reference_image" src="<?= $r['front_thumbnail_url_s'] ?>" srcset="<?= $r['front_thumbnail_url_s'] ?> 400w, <?= $r['reference_image_url_s'] ?> <?= $r['reference_image_width_s'] ?>w" sizes="(max-width: 800px) 400px, <?= $r['reference_image_width_s'] ?>px" alt="<?= $r['title_display'] ?>" title="<?= $r['title_display'] ?>"></a>
+    <a href="<?= $r['reference_image_url_s'] ?>" target="_blank" rel="noopener noreferrer"><img class="reference_image static-thumb" id="reference_image" src="<?= $r['front_thumbnail_url_s'] ?>" srcset="<?= $r['front_thumbnail_url_s'] ?> 400w, <?= $r['reference_image_url_s'] ?> <?= $r['reference_image_width_s'] ?>w" sizes="(max-width: 800px) 400px, <?= $r['reference_image_width_s'] ?>px" alt="<?= $r['title_display'] ?>" title="<?= $r['title_display'] ?>"><span class="show-for-sr">(opens in a new tab)</span></a>
 </div>
     <?php endif; ?>
 <?php endif; ?>
