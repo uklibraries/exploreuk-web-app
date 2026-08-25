@@ -23,7 +23,11 @@
                     $suggestions = $m['suggestions'];
                     foreach ($suggestions as $index => $suggestion) {
                         $link = $this->suggestedLink($suggestion);
-                        echo '<a class="suggested-search" href="' . $link . '">' . $suggestion . '</a>';
+                        echo $this->renderLink([
+                            'href' => $link,
+                            'content' => $suggestion,
+                            'classes' => 'suggested-search',
+                        ]);
                         if ($index + 1 < count($suggestions)) {
                             echo ' or ';
                         }

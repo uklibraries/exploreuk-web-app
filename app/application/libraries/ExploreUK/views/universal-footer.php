@@ -16,25 +16,25 @@
         </a>
         <div class="universal-footer__ribbon">
             <div>
-                <a class="underline-link" href="https://www.uky.edu/equal-opportunity-university/">An Equal Opportunity University</a>
+                <?= $this->renderLink(['href' => 'https://www.uky.edu/equal-opportunity-university/', 'content' => 'An Equal Opportunity University', 'external' => true]) ?>
             </div>
             <div>
-                <a class="underline-link" href="https://www.uky.edu/accreditation/">Accreditation</a>
+                <?= $this->renderLink(['href' => 'https://www.uky.edu/accreditation/', 'content' => 'Accreditation', 'external' => true]) ?>
             </div>
             <div>
-                <a class="underline-link" href="https://directory.uky.edu/">Directory</a>
+                <?= $this->renderLink(['href' => 'https://directory.uky.edu/', 'content' => 'Directory', 'external' => true]) ?>
             </div>
             <div>
-                <a class="underline-link" href="mailto:refdesk@uky.edu">Email</a>
+                <?= $this->renderLink(['href' => 'mailto:refdesk@uky.edu', 'content' => 'Email']) ?>
             </div>
             <div>
-                <a class="underline-link" href="https://www.uky.edu/privacy">Privacy Policy</a>
+                <?= $this->renderLink(['href' => 'https://www.uky.edu/privacy', 'content' => 'Privacy Policy', 'external' => true]) ?>
             </div>
             <div>
-                <a class="underline-link" href="https://www.uky.edu/web-accessibility">Accessibility</a>
+                <?= $this->renderLink(['href' => 'https://www.uky.edu/web-accessibility', 'content' => 'Accessibility', 'external' => true]) ?>
             </div>
             <div>
-                <a class="underline-link" href="https://www.uky.edu/disclosures">Disclosures</a>
+                <?= $this->renderLink(['href' => 'https://www.uky.edu/disclosures', 'content' => 'Disclosures', 'external' => true]) ?>
             </div>
         </div>
         <div class="universal-footer__ribbon">

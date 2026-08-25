@@ -7,8 +7,8 @@
           <b>Special Collections Research Center</b><br />
           Margaret I. King Library<br />
           Lexington, KY 40506-0039<br />
-          <a href=mailto:scrc@uky.edu>scrc@uky.edu</a><br />
-          Phone: <a href="tel:859-257-8611">859-257-8611</a><br />
+          <?= $this->renderLink(['href' => 'mailto:scrc@uky.edu', 'content' => 'scrc@uky.edu']) ?><br />
+          Phone: <?= $this->renderLink(['href' => 'tel:859-257-8611', 'content' => '859-257-8611']) ?><br />
         </p>
         <p>
           <b>Breckinridge Research Room</b><br />
@@ -16,7 +16,12 @@
           Appointments required.<br />
         </p>
         <p>
-          <a class="link--fancy" href="https://form.jotform.com/251873807588170">Contact form</a>
+          <?= $this->renderLink([
+              'href' => 'https://form.jotform.com/251873807588170',
+              'content' => 'Contact form',
+              'classes' => 'link--fancy',
+              'external' => true,
+          ]) ?>
         </p>
       </div>
     </div>
@@ -25,10 +30,10 @@
       <div class="link-group">
         <h2 class="link-group__heading"><span class="heading__text">Researcher Resources</span></h2>
         <ul class="no-decoration">
-          <li><a href="https://requests-libraries.uky.edu/">Request materials</a></li>
-          <li><a href="https://libguides.uky.edu/SCRCaccount/appointment">Schedule SCRC appointment</a></li>
-          <li><a href="https://libguides.uky.edu/SCRCaccount">Researcher account help</a></li>
-          <li><a href="https://libraries.uky.edu/ContactSCRC">Ask an archivist</a></li>
+          <li><?= $this->renderLink(['href' => 'https://requests-libraries.uky.edu/', 'content' => 'Request materials', 'external' => true]) ?></li>
+          <li><?= $this->renderLink(['href' => 'https://libguides.uky.edu/SCRCaccount/appointment', 'content' => 'Schedule SCRC appointment', 'external' => true]) ?></li>
+          <li><?= $this->renderLink(['href' => 'https://libguides.uky.edu/SCRCaccount', 'content' => 'Researcher account help', 'external' => true]) ?></li>
+          <li><?= $this->renderLink(['href' => 'https://libraries.uky.edu/ContactSCRC', 'content' => 'Ask an archivist', 'external' => true]) ?></li>
         </ul>
       </div>
     </div>

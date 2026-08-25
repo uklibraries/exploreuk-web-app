@@ -24,8 +24,8 @@
                 </a>
                 <nav id="UtilityNav660c465a9ed01" class="utility-nav" aria-labelledby="UtilityNavLabel660c465a9ed00">
                     <div class="show-for-sr" id="UtilityNavLabel660c465a9ed00">Utility Navigation</div>
-                    <a href="https://libraries.uky.edu/ContactSCRC">Contact <span class="ic ic--popup" aria-hidden="true"></span></a>
-                    <a href="https://libraries.uky.edu/locations/special-collections-research-center">Visit <span class="ic ic--popup" aria-hidden="true"></span></a>
+                    <?= $this->renderLink(['href' => 'https://libraries.uky.edu/ContactSCRC', 'content' => 'Contact', 'external' => true]) ?>
+                    <?= $this->renderLink(['href' => 'https://libraries.uky.edu/locations/special-collections-research-center', 'content' => 'Visit', 'external' => true]) ?>
                 </nav>
                 
                 <button
@@ -51,12 +51,12 @@
         <nav id="MainNav" class="global-nav" aria-labelledby="MainNavLabel660c465a9ec23">
             <div class="show-for-sr" id="MainNavLabel660c465a9ec23">Main Navigation</div>
             <a href="/" class="ic ic--home"><span class="show-for-sr">Return to Home Page</span></a>
-                <a href="/about">About</a>
-                <a href="/takedown-policy">Copyright and Use</a>
-                <a href="https://libguides.uky.edu/SCRCaccount">Researcher Account Guide <span class="ic ic--popup" aria-hidden="true"></span></a>
-                <a href="https://libguides.uky.edu/SCRCaccount/archivesrequests">Request Materials Guide <span class="ic ic--popup" aria-hidden="true"></span></a>
-                <a href="https://requests-libraries.uky.edu/logon">Researcher Account Login <span class="ic ic--popup" aria-hidden="true"></span></a> 
-        </nav> 
+                <?= $this->renderLink(['href' => '/about', 'classes' => '', 'content' => 'About']) ?>
+                <?= $this->renderLink(['href' => '/takedown-policy', 'classes' => '', 'content' => 'Copyright and Use']) ?>
+                <?= $this->renderLink(['href' => 'https://libguides.uky.edu/SCRCaccount', 'classes' => '', 'content' => 'Researcher Account Guide', 'external' => true]) ?>
+                <?= $this->renderLink(['href' => 'https://libguides.uky.edu/SCRCaccount/archivesrequests', 'classes' => '', 'content' => 'Request Materials Guide', 'external' => true]) ?>
+                <?= $this->renderLink(['href' => 'https://requests-libraries.uky.edu/logon', 'classes' => '', 'content' => 'Researcher Account Login', 'external' => true]) ?>
+        </nav>
     </div>
 </div>
 
@@ -71,17 +71,17 @@
                         <a href="/" class="ic ic--home">
                             <span class="show-for-sr">Return to Home Page</span>
                         </a>
-                        <a href="/about">About</a>
-                        <a href="/takedown-policy">Copyright and Use</a>
-                        <a href="https://libguides.uky.edu/SCRCaccount">Researcher Account Guide <span class="ic ic--popup" aria-hidden="true"></span></a>
-                        <a href="https://libguides.uky.edu/SCRCaccount/archivesrequests">Request Materials Guide <span class="ic ic--popup" aria-hidden="true"></span></a>
-                        <a href="https://requests-libraries.uky.edu/logon">Researcher Account Login <span class="ic ic--popup" aria-hidden="true"></span></a>  
+                        <?= $this->renderLink(['href' => '/about', 'classes' => '', 'content' => 'About']) ?>
+                        <?= $this->renderLink(['href' => '/takedown-policy', 'classes' => '', 'content' => 'Copyright and Use']) ?>
+                        <?= $this->renderLink(['href' => 'https://libguides.uky.edu/SCRCaccount', 'classes' => '', 'content' => 'Researcher Account Guide', 'external' => true]) ?>
+                        <?= $this->renderLink(['href' => 'https://libguides.uky.edu/SCRCaccount/archivesrequests', 'classes' => '', 'content' => 'Request Materials Guide', 'external' => true]) ?>
+                        <?= $this->renderLink(['href' => 'https://requests-libraries.uky.edu/logon', 'classes' => '', 'content' => 'Researcher Account Login', 'external' => true]) ?>
                     </nav>
                     <hr>
                         <nav id="UtilityNav660c465a9ed01" class="global-nav" aria-labelledby="UtilityNavLabel660c465a9ed00">
                             <div class="show-for-sr" id="UtilityNavLabel660c465a9ed00">Utility Navigation</div>
-                                <a href="https://libraries.uky.edu/ContactSCRC">Contact <span class="ic ic--popup" aria-hidden="true"></span></a>
-                                <a href="https://libraries.uky.edu/locations/special-collections-research-center">Visit <span class="ic ic--popup" aria-hidden="true"></span></a>
+                                <?= $this->renderLink(['href' => 'https://libraries.uky.edu/ContactSCRC', 'classes' => '', 'content' => 'Contact', 'external' => true]) ?>
+                                <?= $this->renderLink(['href' => 'https://libraries.uky.edu/locations/special-collections-research-center', 'classes' => '', 'content' => 'Visit', 'external' => true]) ?>
                         </nav>
                 </div>
                 <div class="mobile-tab-nav__universal">

@@ -4,10 +4,16 @@
             <div class="universal-breadcrumb">
                 <ul>
                     <li>
-                        <a class="link--fancy-reverse" href="https://www.uky.edu" title="Back to University of Kentucky home page">University of Kentucky</a>
+                        <?= $this->renderLink([
+                            'href' => 'https://www.uky.edu',
+                            'content' => 'University of Kentucky',
+                            'classes' => 'link--fancy-reverse',
+                            'title' => 'Back to University of Kentucky home page',
+                            'external' => true,
+                        ]) ?>
                     </li>
                     <li>
-                        <a href="https://libraries.uky.edu/">UK Libraries</a>
+                        <?= $this->renderLink(['href' => 'https://libraries.uky.edu/', 'content' => 'UK Libraries', 'external' => true]) ?>
                     </li>
                 </ul>
             </div>

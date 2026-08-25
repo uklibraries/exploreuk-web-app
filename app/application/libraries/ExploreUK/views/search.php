@@ -3,7 +3,11 @@
             <figure class="slab">
                 <img class="featured-image" src="<?= $m['featured_image']['image'] ?>" alt="<?= htmlspecialchars((string)$m['featured_image']['label']) ?>" />
                 <figcaption class="featured-text slab--dark-blue">
-                    <a href="<?= $m['featured_image']['url'] ?>" class="link--fancy"><?= $m['featured_image']['label'] ?></a>
+                    <?= $this->renderLink([
+                        'href' => $m['featured_image']['url'],
+                        'content' => $m['featured_image']['label'],
+                        'classes' => 'link--fancy',
+                    ]) ?>
                 </figcaption>
             </figure>
         <div class="slab__wrapper">
