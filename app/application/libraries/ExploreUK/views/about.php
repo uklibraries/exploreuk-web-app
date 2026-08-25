@@ -50,10 +50,8 @@
                     <p>ExploreUK uses a combination of the following:</p>
                 <ul>
                     <li>
-                      <?= $this->renderLink(['href' => 'https://omeka.org/', 'content' => 'Omeka Classic']) ?>
-                      with a highly customized theme
+                      <?= $this->renderLink(['href' => 'https://solr.apache.org/', 'content' => 'Apache Solr', 'external' => true]) ?>
                     </li>
-                    <li>Apache Solr</li>
                     <li>
                       <?= $this->renderLink(['href' => 'https://www.uky.edu/its/', 'content' => 'University of Kentucky Information Technology Services']) ?>
                       infrastructure for AIPs and DIPs storage</li>
