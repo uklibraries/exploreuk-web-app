@@ -14,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <!-- Limestone is imported by styles.css into a cascade layer; preloaded here because that @import blocks render -->
     <link rel="preload" href="https://webcdn.uky.edu/limestone/1.0.0/css/style.css" as="style">
-    <link rel="stylesheet" href="<?= $this->assetPath('css/styles.css') ?>" />
+    <link rel="stylesheet" href="<?= $this->assetPath('css/styles.min.css') ?>?<?= $this->subresourceIntegrity('css/styles.min.css') ?>" />
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.2.0/jquery.magnific-popup.min.js"></script>
     <script defer src="https://webcdn.uky.edu/limestone/1.0.0/js/lib/jquery-accessible-tabs-aria.js"></script>
     <script defer src="https://webcdn.uky.edu/limestone/1.0.0/js/toggle-button.js"></script>
