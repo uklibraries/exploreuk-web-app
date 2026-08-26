@@ -70,12 +70,6 @@
 <?php if (isset($m['script_image'])) : ?>
         <?php $s = $m['script_image']; ?>
         <?php $r = $m['item_image']; ?>
-        <?php
-        $ui = $this->q('ui');
-        if (!isset($ui) || !$ui) {
-            $ui = "1";
-        }
-        if ($ui === "1") : ?>
 <script type="text/javascript" src="<?= $this->assetPath('openseadragon/openseadragon.min.js') ?>"></script>
 <script type="text/javascript">
 $(function () {
@@ -140,7 +134,6 @@ $(function () {
     initialize_osd();
 });
 </script>
-        <?php endif; ?>
 <?php endif; ?>
 <script src="<?= $this->assetPath('js/back_to_top.js') ?>"></script>
 <script src="<?= $this->assetPath('js/main.js') ?>"></script>

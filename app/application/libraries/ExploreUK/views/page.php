@@ -27,19 +27,6 @@ if (isset($m['flat']['title_display'])) {
     <div class="slab">
         <div class="slab__wrapper">
 
-        <?php
-        $ui = $this->q('ui');
-        if (!isset($ui) || !$ui) {
-            $ui = "1";
-        }
-        if (($ui === "2") && $m['item_image']) : ?>
-            <div class="editorial">
-                <?php $r = $m['item_image']; ?>
-                <a href="<?= $r['reference_image_url_s'] ?>" target="_blank" rel="noopener">Open fullsize image</a> |
-                <a href="<?= $this->path('/catalog/' . $r['id'] . '/zoom' . $m['query']->link()) ?>" target="_blank" rel="noopener">Zooom!</a>
-            </div>
-        <?php endif; ?>
-
             <div class="item-presentation">
                 <?php
                 if (isset($m['item_image'])) {
