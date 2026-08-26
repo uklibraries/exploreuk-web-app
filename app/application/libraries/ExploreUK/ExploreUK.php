@@ -50,8 +50,6 @@ class ExploreUK
             $this->embedPagedViewer($matches['id']);
         } elseif (preg_match("#^/catalog/(?<id>[^/]+)/text/?#", $request_uri, $matches)) {
             $this->text($matches['id']);
-        } elseif (preg_match("#^/catalog/(?<id>[^/]+)/zoom/?#", $request_uri, $matches)) {
-            $this->pageViewer($matches['id'], 'zoom');
         } elseif (preg_match("#^/catalog/(?<id>[^/]+)/?#", $request_uri, $matches)) {
             $this->pageViewer($matches['id']);
         } elseif (preg_match("#^/catalog/?#", $request_uri, $matches)) {
@@ -436,7 +434,6 @@ class ExploreUK
 
         $metadata = [
             'id' => $id,
-            'action' => 'page',
             'front_page' => false,
             'query' => $this->query,
         ];
