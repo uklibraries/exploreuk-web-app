@@ -26,30 +26,6 @@ if (isset($m['flat']['title_display'])) {
 <main id="main-content" class="item-container">
     <div class="slab">
         <div class="slab__wrapper">
-
-        <?php
-        $ui = $this->q('ui');
-        if (!isset($ui) || !$ui) {
-            $ui = "1";
-        }
-        if (($ui === "2") && $m['item_image']) : ?>
-            <div class="editorial">
-                <?php
-                  $r = $m['item_image'];
-                  print $this->renderLink([
-                      'href' => $r['reference_image_url_s'],
-                      'content' => 'Open fullsize image',
-                  ]);
-                  print " | ";
-                  print $this->renderLink([
-                      'href' => $this->path('/catalog/' . $r['id'] . '/zoom' . $m['query']->link()),
-                      'content' => 'Zooom!',
-                      'open_new_tab' => true,
-                  ]);
-                ?>
-            </div>
-        <?php endif; ?>
-
             <div class="item-presentation">
                 <?php
                 if (isset($m['item_image'])) {
