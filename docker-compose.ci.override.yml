@@ -1,5 +1,5 @@
 services:
-  omeka:
+  exploreuk:
     build:
       context: .
       target: ci
@@ -12,7 +12,3 @@ services:
     env_file:
       - .env.ci
     ports: !reset [] # disable publish ports for jobs
-
-  db:
-    env_file:
-      - .env.ci

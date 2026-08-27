@@ -1,72 +1,111 @@
-<?php require('header.php'); ?>
+<?php require 'header.php'; ?>
 <?php
-$p = $m['pagination'];
+$m['current_page_title'] = !empty($m['q'])
+    ? 'Search results for &ldquo;' . htmlspecialchars((string) $m['q']) . '&rdquo;'
+    : 'All Items';
 ?>
-<div id="facet_group_mobile">
-    <div id="facet_group_mobile_top">
-        <details id="facet_group_mobile_container" class="facet-menu-mobile bg-uklwhite row">
-            <summary id="facet_group_mobile_head"><?= $m['facet_menu_title'] ?></summary>
-            <?php require('facets.php'); ?>
-        </details>
+
+    <div class="slab slab--wildcat-white page-header page-header--text">
+        <div class="slab__wrapper">
+            <h1 class="headline-group">
+                <span class="headline-group__head">
+                   <?= $m['current_page_title'] ?>
+                </span>
+            </h1>
+        </div>
     </div>
-</div>
-<div class="results">
-    <div id="resultsfacets" class="resultsfacets has-results">
-        <div id="facet_group">
-            <div id="facet_group_left">
-                <div class="bg-uklblue" id="facet_group_left_container">
-                    <span id="facet_group_left_head"><?= $m['facet_menu_title'] ?></span>
+
+    <?php require 'breadcrumbs.php'; ?>
+
+<main id="main-content">
+    <div class="slab slab--thin">
+        <div class="slab__wrapper">
+            <?php require 'pagination.php'; ?>
+        </div>
+    </div>
+    <div class="slab">
+        <div class="slab__wrapper">
+            <div class="grid grid--major-right">
+                <div id="facet_group_mobile" class="section-nav grid__column grid__column--minor">
+                    <div id="facet_group_mobile_top">
+                        <h2><?= $m['facet_menu_title'] ?></h2>
+                        <?php require 'facets.php'; ?>
+                    </div>
                 </div>
-    <?php require('facets.php'); ?>
+                <div class="grid__column grid__column--major">
+                    <div class="item-list">
+                        <?php foreach ($m['results'] as $r) : ?>
+                            <div class="teaser teaser--news teaser--blue-gray">
+                                <?php if (isset($r['thumb'])) : ?>
+                                    <div class="teaser__media">
+                                        <a href="<?= $r['link'] ?>" aria-hidden='true' tabindex='-1'>
+                                            <img src="<?= $r['thumb'] ?>" alt="<?= $this->brevity($r['title']) ?>" class="" />
+                                        </a>
+                                    </div>
+                                <?php else : ?>
+                                    <span class="teaser__media">No image available</span>
+                                <?php endif; ?>
+                                <div class="teaser-content">
+                                    <h3 class="headline-group">
+                                        <span class="headline-group__head">
+                                            <a href="<?= $r['link'] ?>" class="underline-link">
+                                                <?= $this->brevity($r['title']) ?>
+                                            </a>
+                                        </span>
+                                    </h3>
+                                    <div class="content-meta">
+                                        <dl class="described-links">
+                                            <?php if (isset($r['source'])) : ?>
+                                                <dt>Collection</dt>
+                                                <dd class="taxonomy-list">
+                                                    <?php if (is_array($r['source'])) : ?>
+                                                        <?php foreach ($r['source'] as $source) : ?>
+                                                            <a href="<?= $this->path('/?f%5Bsource_s%5D%5B%5D=' . urlencode($source)) ?>"><?= $source ?></a>
+                                                        <?php endforeach; ?>
+                                                    <?php else : ?>
+                                                        <a href="<?= $this->path('/?f%5Bsource_s%5D%5B%5D=' . urlencode($r['source'])) ?>"><?= $r['source'] ?></a>
+                                                    <?php endif; ?>
+                                                </dd>
+                                            <?php endif; ?>
+                                                <dt>Date</dt>
+                                                    <?php if (isset($r['pubdate_display'])) : ?>
+                                                        <?php if (is_array($r['pubdate_display'])) : ?>
+                                                            <?php foreach ($r['pubdate_display'] as $date) : ?>
+                                                                <dd><?= $date ?></dd>
+                                                            <?php endforeach; ?>
+                                                        <?php else : ?>
+                                                            <dd><?= $r['pubdate_display'] ?></dd>
+                                                        <?php endif; ?>
+                                                    <?php else : ?>
+                                                        <dd>Date unknown</dd>
+                                                    <?php endif; ?>
+                                                <?php if (isset($r['format'])) : ?>
+                                                    <dt>Format</dt>
+                                                    <?php if (is_array($r['format'])) : ?>
+                                                        <?php foreach ($r['format'] as $format) : ?>
+                                                            <dd><?= $format ?></dd>
+                                                        <?php endforeach; ?>
+                                                    <?php else : ?>
+                                                        <dd><?= $r['format'] ?></dd>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            </dl>
+                                    </div>    
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    <div id="resultsmain">
-<?php require('pagination.php'); ?>
-        <div class="row">
-            <ul class="result-list">
-<?php foreach ($m['results'] as $r) : ?>
-                <li class="result-item">
-                    <p class="result-number"><?= $r['number'] ?>.</p>
-                    <div class="result-summary">
-        <?php if (isset($r['thumb'])) : ?>
-                        <a class="image-placeholder" href="<?= $r['link'] ?>"<?= $r['target'] ?> aria-label="<?= $r['title'] ?>">
-                            <img class="lazy" src="<?= $this->themePath('images/middlegray.png') ?>" data-src="<?= $r['thumb'] ?>" alt="<?= $r['title'] ?>" title="<?= $r['title'] ?>">
-        </a>
-        <?php elseif (isset($r['format']) && isset(EUK_FORMAT_ICONS[$r['format']])) : ?>
-                        <a class="image-placeholder" href="<?= $r['link'] ?>"<?= $r['target'] ?> aria-label="<?= $r['title'] ?>"><i class="fas fa-<?= EUK_FORMAT_ICONS[$r['format']] ?> fa-7x"></i></a>
-        <?php else : ?>
-                        <div class="image-placeholder"></div>
-        <?php endif; ?>
-                        <h3><a href="<?= $r['link'] ?>"<?= $r['target'] ?>><?= $this->brevity($r['title']) ?></a></h3>
-                        <ul class="result-metadata">
-            <?php foreach (EUK_RESULT_FACET_ORDER as $field) : ?>
-                <?php if (isset($r[$field])) : ?>
-                    <?php $label = EUK_LOCALE['en'][EUK_HIT_FIELDS[$field]]; ?>
-                    <?php if (in_array($field, EUK_RESULT_DROP_FIELDS)) : ?>
-                        <?php $lclass = ' class="result-metadata-drop"'; ?>
-                    <?php else : ?>
-                        <?php $lclass = ''; ?>
-                    <?php endif; ?>
-                        <?php if (is_array($r[$field])) : ?>
-                            <?php foreach ($r[$field] as $entry) : ?>
-                            <li<?= $lclass ?>><span class="result-metadata-label"><?= $label ?>:</span>
-                                <?= $entry ?></li>
-                            <?php endforeach; ?>
-                        <?php else : ?>
-                            <li<?= $lclass ?>><span class="result-metadata-label"><?= $label ?>:</span>
-                            <?= $r[$field] ?></li>
-                        <?php endif; ?>
-                <?php endif; ?>
-            <?php endforeach; ?>
-                        </ul>
-                    </div>
-                </li>
-<?php endforeach; ?>
-            </ul>
+    <div class="slab slab--thin">
+        <div class="slab__wrapper">
+            <?php require 'pagination.php'; ?>
         </div>
-<?php require('pagination.php'); ?>
     </div>
-</div>
-<?php require('more-facets.php'); ?>
-<?php require('footer.php'); ?>
+    <?php require 'more-facets.php'; ?>
+    <?php require('sponsors.html'); ?>
+</main>
+<?php require 'global-footer.html'; ?>
+<?php require 'universal-footer.php'; ?>

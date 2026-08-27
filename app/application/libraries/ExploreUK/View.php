@@ -147,22 +147,22 @@ class View
             if (is_array($content)) {
                 $content = $content[0];
             }
-            $content = preg_replace('/Please go to http:\/\/kdl.kyvl.org for more information\./', 'For information about permissions to reproduce or publish, <a href="https://libraries.uky.edu/ContactSCRC" target="_blank" rel="noopener">contact the Special Collections Research Center</a>.', (string) $content);
+            $content = preg_replace('/Please go to http:\/\/kdl.kyvl.org for more information\./', 'For information about permissions to reproduce or publish, <a class="underline-link" href="https://libraries.uky.edu/ContactSCRC">contact the Special Collections Research Center</a>.', (string) $content);
         }
         if (isset($euk_locale['en'][$field])) {
             $label = $euk_locale['en'][$field];
         } else {
             $label = 'Unknown';
         }
-        $lines = ["<h3 id=\"page-details-$field\">$label</h3>"];
+        $lines = ["<h2 id=\"page-details-$field\">$label</h2>"];
         if (is_array($content)) {
-            $lines[] = "<ul>";
+            $lines[] = "<ul class=\"no-decoration\">";
             foreach ($content as $item) {
                 $lines[] = "<li>" . $this->renderHelper($field, $item) . "</li>";
             }
             $lines[] = "</ul>";
         } else {
-            $lines[] = "<ul>";
+            $lines[] = "<ul class=\"no-decoration\">";
             $lines[] = "<li>" . $this->renderHelper($field, $content) . "</li>";
             $lines[] = "</ul>";
         }
@@ -176,6 +176,10 @@ class View
 
         if ($field === 'id') {
             $item = 'https://' . $_SERVER['HTTP_HOST'] . $this->path("/catalog/$item");
+            return $this->renderLink([
+                "href" => $item,
+                "content" => $item,
+            ]);
         }
         if (in_array($field, $euk_requires_capitalization)) {
             $item = ucfirst((string) $item);
@@ -220,13 +224,12 @@ class View
             $attributes[] = "rel=\"noopener noreferrer\"";
         }
         $attribute_string = implode(" ", $attributes);
-        return "<a $attribute_string>$content</a>";
+        return "<a class='underline-link' $attribute_string>$content</a>";
     }
 
     public function path($path)
     {
-        $base = $this->metadata['base'];
-        $url = str_replace('//', '/', "$base$path");
+        $url = str_replace('//', '/', "$path");
         $url = preg_replace('/\?$/', '', $url);
         if (!str_starts_with((string) $url, '/')) {
             $url = "/$url";
@@ -234,15 +237,14 @@ class View
         return $url;
     }
 
-    public function themePath($path)
+    public function assetPath($path)
     {
-        return $this->path('/themes/' . $this->metadata['theme'] . "/$path");
+        return $this->path('/assets/' . $path);
     }
 
     public function subresourceIntegrity($path)
     {
-        $base = $this->metadata['base'];
-        $file_path = realpath(EUK_BASE_DIR) . $this->themePath($path);
+        $file_path = realpath(EUK_BASE_DIR) . $this->assetPath($path);
         $algo = 'sha384';
         $version = $algo . '-' . base64_encode(hash($algo, file_get_contents($file_path), true));
         return $version;

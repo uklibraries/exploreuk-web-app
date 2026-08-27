@@ -1,11 +1,20 @@
-<form action="<?= $this->path('/catalog/') ?>" method="get" id="search">
-    <div class="form-group">
-        <span><?= $m['search_items_count_text'] ?></span>
-        <span><input aria-label="Search" class="q form-control" type="text" name="q" value="<?= htmlspecialchars((string) $this->q('q')) ?>">
-        <span class="input-group-btn"><button type="submit" class="btn btn-default bg-uklblue" value="search">Search</button></span></span>
-    </div>
-
-    <div id="featured_image_box"><p id="featured_image_text"><a href="<?= $m['featured_image']['url'] ?>"><?= $m['featured_image']['label'] ?></a></p>
-
-    </div>
-</form>
+<div class="slab-series hero">
+    <div class="slab slab--light-gray page-header page-header--split"  >
+            <figure class="slab">
+                <img class="featured-image" src="<?= $m['featured_image']['image'] ?>" alt="<?= htmlspecialchars((string)$m['featured_image']['label']) ?>" />
+                <figcaption class="featured-text slab--dark-blue">
+                    <a href="<?= $m['featured_image']['url'] ?>" class="link--fancy"><?= $m['featured_image']['label'] ?></a>
+                </figcaption>
+            </figure>
+        <div class="slab__wrapper">
+            <div class="page-header__content">
+                <h1 id="headline-group660c465ae69fa" class="headline-group ">
+                    <span class="headline-group__head ">
+                        ExploreUK
+                    </span>
+                </h1>
+                <p>Search archived collections, prints, photographs, maps, manuscripts, streaming video, and more from <a href="https://libraries.uky.edu/locations/special-collections-research-center">UK Special Collections Research Center</a> and <a href="https://libraries.uky.edu/">UK Libraries</a></p>
+                <?php require('search-form.php'); ?>
+            </div>
+        </div>
+</div>

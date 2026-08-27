@@ -1,8 +1,13 @@
 # What is this directory for?
-This directory serves as a location to load from a backup. Files loaded into this directory **will overwrite** the database and files directories. It is recommended to move or delete the files in this directory once loading from backup is complete.
+
+This directory serves as a location to load from a backup. Files loaded into
+this directory **will overwrite** the files directory. It is recommended to move
+or delete the files in this directory once loading from backup is complete.
 
 # How this directory should be organized
-This directory should contain an "omeuka.sql" file at the top level, as well as a `files` directory sourced from a working Omeka installation or backup.
+
+A `files` directory sourced from a working backup.
+
 ```
 project-root
 ├── LICENSE.txt
@@ -10,8 +15,7 @@ project-root
 ├── app
 ├── backup
 │   ├── README.md
-│   ├── files/
-│   └── omeuka.sql
+│   └── files/
 ├── docker-compose.yml
 ├── dockerfile
 ├── entrypoint.sh
@@ -21,4 +25,7 @@ project-root
 ```
 
 # How the backup works
-`docker-compose.yml` is configured to mount the `files` directory here within the nginx container. `entrypoint.sh` will check for existence of these files and then overwrite the `var/www/html/files` directory in the container. The SQL container will mount the `omeuka.sql` file and has built-in utilities for loading the file as an SQL dump.
+
+`docker-compose.yml` is configured to mount the `files` directory within the
+nginx container. A user can then run `utils/restore-files.sh` to put those files
+in the right place.

@@ -4,79 +4,63 @@ namespace ExploreUK;
 
 class ExploreUK
 {
-    private $config;
-    private $omeka;
+    private const STATIC_PAGES = [
+        'about' => 'About ExploreUK',
+        'takedown-policy' => 'Copyright, Use, and Take-Down Policies',
+    ];
 
-    public function __construct()
-    {
-        $this->omeka = new OmekaShim();
-        $this->config = [
-            'base' => '',
-            'theme' => $this->omeka->getOption('public_theme'),
-        ];
-        if (realpath(EUK_BASE_DIR) !== realpath($_SERVER['DOCUMENT_ROOT'])) {
-            $this->config['base'] = basename(EUK_BASE_DIR) . '/';
-        }
-        $dipsUrl = $this->omeka->getThemeOption('euk_dip_store_base_url');
-        $this->config['prod'] = !str_contains($dipsUrl, 'test');
-    }
+    private Config $config;
+    private ContentProvider $content;
+    private Query $query;
+    private string $solr;
+    private string $host;
 
-    private function configure()
+    public function __construct(Config $config, string $assetsDir)
     {
-        $this->config['solr'] = $this->omeka->getThemeOption('euk_solr');
-        $this->config['query'] = new Query([], $this->config['solr']);
-        $this->config['fa_base'] = $this->omeka->getThemeOption('euk_findingaid_base_url');
-        $this->config['logo'] = $this->omeka->getThemeOption('logo');
-        $this->config['simple_pages'] = $this->omeka->getSimplePages();
+        $this->config = $config;
+        $this->content = new ContentProvider($assetsDir);
+        $this->query = new Query([], $this->config->get('solr_url'));
+        $this->solr = $this->config->get('solr_url');
     }
 
     public function run()
     {
-        $this->configure();
         if (isset($_SERVER['HTTP_HOST'])) {
-            $this->config['host'] = $_SERVER['HTTP_HOST'];
+            $this->host = $_SERVER['HTTP_HOST'];
         } else {
-            $this->config['host'] = $_SERVER['SERVER_NAME'];
+            $this->host = $_SERVER['SERVER_NAME'];
         }
 
         $request_uri = strtok($_SERVER['REQUEST_URI'], '?');
-        $query_string = $_SERVER['QUERY_STRING'];
 
-        $base = $this->config['base'];
-        if (preg_match("#^/{$base}(catalog/)?(?<slug>[^/]+)/?#", $request_uri, $matches)) {
-            $slug = $matches['slug'];
-            foreach ($this->config['simple_pages'] as $page) {
-                if ($page->slug === $slug) {
-                    return $this->simplePage($page);
-                }
-            }
-        }
-
-        if (preg_match("#^/{$base}catalog/oai?#", $request_uri, $matches)) {
-            $oai = new Oai($this->config);
+        if (preg_match("#^/catalog/oai?#", $request_uri, $matches)) {
+            $oai = new Oai($this->config, $this->host);
             $oai->run();
-        } elseif (preg_match("#^/{$base}popular_resources.json$#", $request_uri, $matches)) {
+        } elseif (preg_match("#^/popular_resources.json$#", $request_uri, $matches)) {
             $this->showPopularResources();
-        } elseif (preg_match("#^/{$base}additional_resources.json$#", $request_uri, $matches)) {
-            $this->showAdditionalResources();
-        } elseif (preg_match("#^/{$base}catalog/stats#", $request_uri, $matches)) {
+        //} elseif (preg_match("#^/{$base}additional_resources.json$#", $request_uri, $matches)) {
+            //$this->showadditionalResources();
+        } elseif (preg_match("#^/catalog/stats#", $request_uri, $matches)) {
             $this->statsViewer();
-        } elseif (preg_match("#^/{$base}catalog/(?<id>[^/]+)/find/?#", $request_uri, $matches)) {
+        } elseif (preg_match("#^/catalog/(?<id>[^/]+)/find/?#", $request_uri, $matches)) {
             $this->find($matches['id']);
-        } elseif (preg_match("#^/{$base}catalog/(?<id>[^/]+)/download/?#", $request_uri, $matches)) {
+        } elseif (preg_match("#^/catalog/(?<id>[^/]+)/download/?#", $request_uri, $matches)) {
             $this->download($matches['id']);
-        } elseif (preg_match("#^/{$base}catalog/(?<id>[^/]+)/paged/?#", $request_uri, $matches)) {
+        } elseif (preg_match("#^/catalog/(?<id>[^/]+)/paged/?#", $request_uri, $matches)) {
             $this->embedPagedViewer($matches['id']);
-        } elseif (preg_match("#^/{$base}catalog/(?<id>[^/]+)/text/?#", $request_uri, $matches)) {
+        } elseif (preg_match("#^/catalog/(?<id>[^/]+)/text/?#", $request_uri, $matches)) {
             $this->text($matches['id']);
-        } elseif (preg_match("#^/{$base}catalog/(?<id>[^/]+)/zoom/?#", $request_uri, $matches)) {
-            $this->pageViewer($matches['id'], 'zoom');
-        } elseif (preg_match("#^/{$base}catalog/(?<id>[^/]+)/?#", $request_uri, $matches)) {
+        } elseif (preg_match("#^/catalog/(?<id>[^/]+)/?#", $request_uri, $matches)) {
             $this->pageViewer($matches['id']);
-        } elseif (preg_match("#^/{$base}catalog/?#", $request_uri, $matches)) {
+        } elseif (preg_match("#^/catalog/?#", $request_uri, $matches)) {
             $this->index();
-        } elseif (preg_match("#^/{$base}text/(?<id>[^/]+)/?#", $request_uri, $matches)) {
+        } elseif (preg_match("#^/text/(?<id>[^/]+)/?#", $request_uri, $matches)) {
             $this->text($matches['id']);
+        } elseif (
+            preg_match("#^/(?<slug>[^/]+)/?$#", $request_uri, $matches)
+            && isset(self::STATIC_PAGES[$matches['slug']])
+        ) {
+            $this->staticPage($matches['slug']);
         } else {
             $this->index();
         }
@@ -88,7 +72,7 @@ class ExploreUK
             $value = $value[0];
         }
 
-        if (!$this->config['prod']) {
+        if ($this->config->get('app_env') !== 'production') {
             if (str_contains((string) $value, '/dips/')) {
                 $value = preg_replace('/\/dips\//', '/dipstest/', (string) $value);
             }
@@ -99,7 +83,7 @@ class ExploreUK
 
     public function cleanupDoc($doc)
     {
-        if ($this->config['prod']) {
+        if ($this->config->get('app_env') === 'production') {
             $result = [];
             foreach ($doc as $key => $value) {
                 if (is_string($value)) {
@@ -143,7 +127,7 @@ class ExploreUK
 
     public function cleanupDocs($docs)
     {
-        #if ($this->config['prod']) {
+        #if ($this->config->get('app_env') === 'production') {
         #    return $docs;
         #}
         $result = [];
@@ -160,7 +144,7 @@ class ExploreUK
         $pieces[] = 'fl=' . urlencode("*");
         $pieces[] = 'wt=json';
         $query = implode('&', $pieces);
-        $url = $this->config['solr'] . '?' . $query;
+        $url = $this->solr . '?' . $query;
         $result = json_decode(file_get_contents($url), true);
         if (isset($result['response']) and count($result['response']['docs']) > 0) {
             return $this->cleanupDoc($result['response']['docs'][0]);
@@ -190,7 +174,7 @@ class ExploreUK
         $pieces[] = 'rows=10000';
         $pieces[] = 'sort=browse_key_sort+asc';
         $query = implode('&', $pieces);
-        $url = $this->config['solr'] . '?' . $query;
+        $url = $this->solr . '?' . $query;
         $result = json_decode(file_get_contents($url), true);
         if (isset($result['response']) and count($result['response']['docs']) > 0) {
             return $this->cleanupDocs($result['response']['docs']);
@@ -215,7 +199,7 @@ class ExploreUK
         $pieces[] = 'rows=10000';
         $pieces[] = 'sort=browse_key_sort+asc';
         $query = implode('&', $pieces);
-        $url = $this->config['solr'] . '?' . $query;
+        $url = $this->solr . '?' . $query;
         $result = json_decode(file_get_contents($url), true);
         if (isset($result['response']) and count($result['response']['docs']) > 0) {
             return $this->cleanupDocs($result['response']['docs']);
@@ -226,7 +210,7 @@ class ExploreUK
 
     public function find($id)
     {
-        $euk_solr = $this->config['solr'];
+        $euk_solr = $this->solr;
 
         parse_str((string) $_SERVER['QUERY_STRING'], $params);
         $q = null;
@@ -336,40 +320,27 @@ class ExploreUK
         }
     }
 
-    public function getVisiblePages($pages)
+    public function staticPage($slug)
     {
-        $visiblePages = [];
-        foreach ($pages as $page) {
-            if ($page['visible']) {
-                $newPage = [];
-                $newPage['label'] = $page['label'];
-                $newPage['uri'] = $page['uri'];
-                if ($page['uri'] === '/') {
-                    $newPage['suppress'] = true;
-                } elseif (!str_starts_with((string) $page['uri'], '/')) {
-                    $newPage['external'] = true;
-                }
-                $subPages = $this->getVisiblePages($page['pages']);
-                if (count($subPages) > 0) {
-                    $newPage['pages'] = $subPages;
-                    $newPage['active'] = true;
-                }
-                $visiblePages[] = $newPage;
-                $subPages = [];
-            }
-        }
-        return $visiblePages;
+        $title = self::STATIC_PAGES[$slug];
+        $metadata = [
+            'front_page' => false,
+            'page_title' => $title,
+            'current_page_title' => $title,
+            'query' => $this->query,
+        ];
+        $metadata['page_description'] = $title;
+
+        $view = new View($metadata, $slug);
+        $view->render();
     }
 
     public function statsViewer()
     {
         $metadata = [
-            'base' => $this->config['base'],
-            'logo' => $this->config['logo'],
             'front_page' => false,
-            'page_title' => 'ExploreUK - rare and unique research materials from UK Libraries.',
-            'theme' => $this->config['theme'],
-            'query' => $this->config['query'],
+            'page_title' => 'ExploreUK | Rare & unique research materials from UK Libraries',
+            'query' => $this->query,
         ];
         $metadata['page_description'] = $metadata['page_title'];
 
@@ -408,20 +379,17 @@ class ExploreUK
     public function embedPagedViewer($id)
     {
         $metadata = [
-            'base' => $this->config['base'],
-            'logo' => $this->config['logo'],
             'front_page' => false,
-            'page_title' => 'ExploreUK - rare and unique research materials from UK Libraries.',
-            'theme' => $this->config['theme'],
-            'query' => $this->config['query'],
+            'page_title' => 'ExploreUK | Rare & unique research materials from UK Libraries',
+            'query' => $this->query,
         ];
         $metadata['page_description'] = $metadata['page_title'];
 
         $pages = $this->pages($id);
         if ($pages) {
-            $sequence = intval(preg_replace('/.*[^_]+_/', '', (string) $id)) - 1;
-            $search_host = 'https://' . $_SERVER['HTTP_HOST'] . '/catalog/' . $id . '/find';
-            $images_base_url = 'https://' . $_SERVER['HTTP_HOST'] . '/themes/' . $metadata['theme'] . '/BookReader/images/';
+            $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+            $search_host = $scheme . '://' . $_SERVER['HTTP_HOST'] . '/catalog/' . $id . '/find';
+            $images_base_url = $scheme . '://' . $_SERVER['HTTP_HOST'] . $this->assetPath('BookReader/images/');
 
             $metadata['script'] = [
                 'json' => json_encode($pages),
@@ -460,23 +428,21 @@ class ExploreUK
 
         $format = $doc['format'];
         if ($format === 'collections' && $object_type === 'collection') {
-            header('Location: ' . $this->config['fa_base'] . $id);
+            header('Location: ' . $this->config->get('fa_base_url') . $id);
             return;
         }
 
         $metadata = [
             'id' => $id,
-            'logo' => $this->config['logo'],
-            'action' => 'page',
-            'base' => $this->config['base'],
             'front_page' => false,
-            'theme' => $this->config['theme'],
-            'query' => $this->config['query'],
+            'query' => $this->query,
         ];
 
-        $metadata['search_link'] = $this->config['solr'] . '?' . $metadata['query']->searchParams();
-        $metadata['back_to_search'] = $this->path('/catalog/' . $metadata['query']->link());
-        $metadata['back_to_search_text'] = EUK_BACK_TO_SEARCH_TEXT;
+        $metadata['search_link'] = $this->solr . '?' . $metadata['query']->searchParams();
+        if ($metadata['query']->nontrivial()) {
+            $metadata['back_to_search'] = $this->path('/catalog/' . $metadata['query']->link());
+            $metadata['back_to_search_text'] = EUK_BACK_TO_SEARCH_TEXT;
+        }
 
         $flat = [];
         foreach ($doc as $key => $value) {
@@ -500,7 +466,6 @@ class ExploreUK
             }
         }
         $details = [];
-        $pageMetadata = [];
         $desired = [
             ['Title', 'title_display'],
             ['', 'scopecontent_s'],
@@ -669,7 +634,7 @@ class ExploreUK
                     $metadata['item_image'] = $flat;
                     $metadata['script_image'] = [
                         'osd_id' => 'viewer',
-                        'prefix_url' => $this->themePath('openseadragon/images/'),
+                        'prefix_url' => $this->assetPath('openseadragon/images/'),
                         'ref_id' => 'reference_image',
                     ];
                     $metadata['downloadable'] = true;
@@ -736,29 +701,20 @@ class ExploreUK
         $metadata['flat'] = $flat;
         $metadata['details'] = $details;
 
-        $raw_pages = json_decode((string) $this->omeka->getOption('public_navigation_main'), true);
-        $metadata['nav'] = $this->getVisiblePages($raw_pages);
-        $metadata['z_simple_pages'] = $this->config['simple_pages'];
         $view = new View($metadata, $template);
         $view->render();
     }
 
     public function index()
     {
-        $raw_pages = json_decode((string) $this->omeka->getOption('public_navigation_main'), true);
         $metadata = [
-            'base' => $this->config['base'],
-            'logo' => $this->config['logo'],
-            'theme' => $this->config['theme'],
-            'query' => $this->config['query'],
-            'nav' => $this->getVisiblePages($raw_pages),
+            'query' => $this->query,
         ];
 
         $metadata['q'] = $metadata['query']->q('q');
-        $metadata['search_link'] = $this->config['solr'] . '?' . $metadata['query']->searchParams();
-        $metadata['back_to_search'] = $this->path('/catalog/' . $metadata['query']->link());
-        if ($this->config['query']->nontrivial()) {
-            $result = $this->config['query']->search();
+        $metadata['search_link'] = $this->solr . '?' . $metadata['query']->searchParams();
+        if ($this->query->nontrivial()) {
+            $result = $this->query->search();
             $metadata['page_title'] = htmlspecialchars((string) $metadata['q'], ENT_QUOTES, 'UTF-8') . ' - ExploreUK';
 
             $euk_requires_capitalization = EUK_REQUIRES_CAPITALIZATION;
@@ -766,7 +722,7 @@ class ExploreUK
             # Facets
             $metadata['active_facets'] = [];
             foreach ($metadata['query']->q('f') as $f_term => $ary) {
-                foreach ($ary as $value => $truth) {
+                foreach (array_keys($ary) as $value) {
                     $remove_link = $metadata['query']->removeFilterLink($f_term, $value);
                     $field_label = facet_displayname($f_term);
                     if (isset($result['facet_counts']['facet_fields'][$f_term])) {
@@ -880,40 +836,17 @@ class ExploreUK
                 }
             }
         } else {
-            $metadata['page_title'] = 'ExploreUK - rare and unique research materials from UK Libraries.';
+            $metadata['page_title'] = 'ExploreUK | Rare & unique research materials from UK Libraries';
         }
         $metadata['page_description'] = $metadata['page_title'];
 
-        if (!$this->config['query']->nontrivial()) {
+        if (!$this->query->nontrivial()) {
             $metadata['front_page'] = true;
-            $metadata['search_items_count_text'] = $this->omeka->getThemeOption('search_items_count_text');
 
-            $colln = $this->omeka->getCollectionByTitle('Background image rotation');
-            $metadata['colln'] = $colln;
-            $items = $this->omeka->getItems($colln->id, ['featured' => true]);
-            if (count($items) > 0) {
-                $index = array_rand($items);
-                $item = $items[$index];
-                $metadata['featured_image'] = $this->omeka->getItemMetadata($item->id);
-            } else {
-                $metadata['featured_image'] = [
-                    'image' => '',
-                    'label' => '',
-                    'url' => '',
-                ];
-            }
+            $metadata['featured_image'] = $this->content->getRandomBackgroundImage();
 
-            $metadata['popular_resources'] = [];
-            $popular_resources = $this->popularResources();
-            if (!isset($popular_resources['errors'])) {
-                $metadata['popular_resources'] = $popular_resources['data'];
-            }
-
-            $metadata['additional_resources'] = [];
-            $additional_resources = $this->additionalResources();
-            if (!isset($additional_resources['errors'])) {
-                $metadata['additional_resources'] = $additional_resources['data'];
-            }
+            $metadata['popular_resources'] = $this->content->popularResources();
+            $metadata['additional_resources'] = $this->content->additionalResources();
 
             $view = new View($metadata, 'front-page');
         } else {
@@ -937,6 +870,27 @@ class ExploreUK
                 } else {
                     $pagination_data['last'] = $pagination_data['count'];
                 }
+                # Page numbers
+                $rows = $metadata['query']->q('rows');
+                $current_page = intval($metadata['query']->q('offset') / $rows) + 1;
+                $total_pages = intval(ceil($pagination_data['count'] / $rows));
+                $pagination_data['current_page'] = $current_page;
+                $pagination_data['total_pages'] = $total_pages;
+                $pagination_data['first_page'] = $this->path('/catalog/' . $metadata['query']->offsetLink(0));
+                $pagination_data['last_page'] = $this->path('/catalog/' . $metadata['query']->offsetLink(($total_pages - 1) * $rows));
+
+                $pages = [];
+                $window_start = max(1, $current_page - 2);
+                $window_end = min($total_pages, $current_page + 2);
+                for ($pg = $window_start; $pg <= $window_end; $pg++) {
+                    $pages[] = [
+                        'number' => $pg,
+                        'link' => $this->path('/catalog/' . $metadata['query']->offsetLink(($pg - 1) * $rows)),
+                        'current' => ($pg === $current_page),
+                    ];
+                }
+                $pagination_data['pages'] = $pages;
+
                 $metadata['pagination'] = $pagination_data;
 
                 # results
@@ -1001,8 +955,7 @@ class ExploreUK
 
     public function path($path)
     {
-        $base = $this->config['base'];
-        $url = str_replace('//', '/', "$base$path");
+        $url = str_replace('//', '/', "$path");
         $url = preg_replace('/\?$/', '', $url);
         if (!str_starts_with((string) $url, '/')) {
             $url = "/$url";
@@ -1010,82 +963,13 @@ class ExploreUK
         return $url;
     }
 
-    public function themePath($path)
+    public function assetPath($path)
     {
-        return $this->path('/themes/' . $this->config['theme'] . "/$path");
-    }
-
-    public function simplePage($page)
-    {
-        $raw_pages = json_decode((string) $this->omeka->getOption('public_navigation_main'), true);
-        $metadata = [
-            'action' => 'simple-page',
-            'logo' => $this->config['logo'],
-            'front_page' => false,
-            'base' => $this->config['base'],
-            'theme' => $this->config['theme'],
-            'query' => $this->config['query'],
-            'nav' => $this->getVisiblePages($raw_pages),
-        ];
-        $metadata['page'] = $this->omeka->getSimplePage($page->id);
-        $metadata['page_title'] = $metadata['page']->title;
-        $metadata['page_description'] = $metadata['page']->title;
-
-        $view = new View($metadata, 'simple-page');
-        $view->render();
+        return $this->path('/assets/' . $path);
     }
 
     public function showPopularResources()
     {
-        $popular_resources = $this->popularResources();
-        if (isset($popular_resources['errors']) && count($popular_resources['errors']) > 0) {
-            $this->index();
-        } else {
-            print json_encode($popular_resources);
-        }
-    }
-
-    public function popularResources()
-    {
-        $metadata = ['data' => []];
-        $popular_resources = [];
-        $colln = $this->omeka->getCollectionByTitle('Popular Resources');
-        $items = $this->omeka->getItems($colln->id);
-        foreach ($items as $item) {
-            $im = $this->omeka->getItemMetadata($item->id);
-            $popular_resources[$im['position']] = $im;
-        }
-        ksort($popular_resources);
-        foreach ($popular_resources as $im) {
-            $metadata['data'][] = $im;
-        }
-        return $metadata;
-    }
-
-    public function showAdditionalResources()
-    {
-        $additional_resources = $this->additionalResources();
-        if (isset($additional_resources['errors']) && count($additional_resources['errors']) > 0) {
-            $this->index();
-        } else {
-            print json_encode($additional_resources);
-        }
-    }
-
-    public function additionalResources()
-    {
-        $metadata = ['data' => []];
-        $additional_resources = [];
-        $colln = $this->omeka->getCollectionByTitle('Additional Resources');
-        $items = $this->omeka->getItems($colln->id);
-        foreach ($items as $item) {
-            $im = $this->omeka->getItemMetadata($item->id);
-            $additional_resources[$im['position']] = $im;
-        }
-        ksort($additional_resources);
-        foreach ($additional_resources as $im) {
-            $metadata['data'][] = $im;
-        }
-        return $metadata;
+        print(json_encode($this->content->popularResources()));
     }
 }

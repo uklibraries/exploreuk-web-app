@@ -1,0 +1,64 @@
+{
+  "data": [
+    {
+      "image": "/files/fullsize/b06e483e0a8af6bb6abbdddf299699e8.jpg",
+      "label": "Collection Guides",
+      "url": "/?f%5Bformat%5D%5B%5D=collections"
+    },
+    {
+      "image": "/files/fullsize/e5cf2c3c784ae1f1b45bc5c1f064db48.jpg",
+      "label": "Photos",
+      "url": "/?f%5Bformat%5D%5B%5D=images"
+    },
+    {
+      "image": "/files/fullsize/6abde349cd4aa9d03dcfc25af170ed69.jpg",
+      "label": "UK Yearbooks",
+      "url": "/?f%5Bformat%5D%5B%5D=yearbooks"
+    },
+    {
+      "image": "/files/fullsize/95de02760d5f4f4c8853ccbb3a97dca6.jpg",
+      "label": "Maps",
+      "url": "/?f%5Bformat%5D%5B%5D=maps"
+    },
+    {
+      "image": "/files/fullsize/47bd63bc718f3ae83f361ebdbebe3cdc.jpg",
+      "label": "Books",
+      "url": "/?f%5Bformat%5D%5B%5D=books"
+    },
+    {
+      "image": "/files/fullsize/c1c5b558c344e5cb78b2ca784f7ca554.jpg",
+      "label": "UK Athletic Publications",
+      "url": "/?f%5Bformat%5D%5B%5D=athletic+publications"
+    },
+    {
+      "image": "/files/fullsize/31eb65724f8277ad73f1997a5dedc610.jpg",
+      "label": "UK Board of Trustees Minutes",
+      "url": "/catalog?f[source_s][]=Minutes%20of%20the%20University%20of%20Kentucky%20Board%20of%20Trustees"
+    },
+    {
+      "image": "/files/fullsize/98fe0c3f17d4573081e8b7000e9bb080.jpg",
+      "label": "WPA Publications",
+      "url": "/catalog/?q=%22Works+Progress+Administration+Publications%22"
+    },
+    {
+      "image": "/files/fullsize/be9253ba7389ac67fd2b414a702d5c79.jpg",
+      "label": "UK Course Catalogs",
+      "url": "/?f%5Bformat%5D%5B%5D=course+catalogs"
+    },
+    {
+      "image": "/files/fullsize/88dc79428b9f620d223254867406b509.jpg",
+      "label": "Kentucky Kernel",
+      "url": "/catalog?f[source_s][]=The%20Kentucky%20Kernel"
+    },
+    {
+      "image": "/files/fullsize/0be916700a133c7e98e831e0080184b1.jpg",
+      "label": "Kentucky Alumnus",
+      "url": "/?f%5Bsource_s%5D%5B%5D=Kentucky+alumnus"
+    },
+    {
+      "image": "/files/fullsize/a43135565c462b6a7415cb72c772e0ce.jpg",
+      "label": "Lexington City Directory",
+      "url": "/?f%5Bsource_s%5D%5B%5D=Lexington+City+Directories"
+    }
+  ]
+}

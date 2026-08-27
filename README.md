@@ -1,9 +1,8 @@
 # ExploreUK
 
 This is the main portion of the ExploreUK web application. Document data is
-pulled from [Solr](https://solr.apache.org/), and other settings are managed in
-the [Omeka Classic](https://omeka.org/classic/) admin panel. Deploying to
-production is managed in the
+pulled from [Solr](https://solr.apache.org/). Deploying to production is managed
+in the
 [ukl-ansible-playbooks](https://github.com/uklibraries/ukl-ansible-playbooks)
 repository.
 
@@ -18,15 +17,16 @@ Developer installations have been tested on Linux (through Windows with
 git clone git@github.com:uklibraries/exploreuk-web-app.git
 cd exploreuk-web-app
 git submodule init; git submodule update
+make env
 make dev
 ```
 
 The application should then be available at http://localhost:8080. Developers
 should run `make help` to see helper commands through
-[make](https://www.gnu.org/software/make/). There are
-[git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules) and a
-mysql database that is loaded on initialization in the `assets` directory, so
-new developers do not need to source assets for installation.
+[make](https://www.gnu.org/software/make/). There is a
+[git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) that is
+loaded on initialization in the `assets` directory, so new developers do not
+need to source assets for installation.
 
 ### Dependencies
 
@@ -53,17 +53,35 @@ brew install make watchexec
 
 ### Configuration
 
-`.env.example` and `nginx/default.conf` are provided as configurations for
-development. Developers are expected to create their own .env files for new
-environments, but a .env.example is provided as a template, and the repo
-includes .env.dev and .env.ci for those environments.
+`nginx/default.conf` is provided as an example configuration for development.
+Developers are expected to create their own .env files for new environments,
+including a `.env.dev` for development purposes. An `.env.example` file is
+provided as a template for environment files, and the repo includes `.env.ci`
+for continuous integration. Developers can choose to copy and edit
+`.env.example` or run `make env` to generate a `.env.dev` file from the
+template.
 
-The docker-compose.yml file is specifically for development. Other compose files
-are designed to be
+`docker-compose.yml` is the shared base and deliberately declares no `env_file`,
+so it does not depend on any untracked file. Each environment supplies its own
+through a compose file that is
 [merged](https://docs.docker.com/compose/how-tos/multiple-compose-files/merge/)
-with the dev compose file. A production file can be found in the
+onto the base: `docker-compose.dev.override.yml` points at `.env.dev` and
+`docker-compose.ci.override.yml` points at `.env.ci`. Note that Compose appends
+rather than replaces list fields such as `env_file` when merging, which is why
+the base leaves it empty. A production file can be found in the
 [ukl-ansible-playbooks](https://github.com/uklibraries/ukl-ansible-playbooks)
 repository.
+
+The `make` targets export `COMPOSE_FILE` so the base and dev override are always
+loaded together. Developers invoking Compose directly need to do the same:
+
+```
+docker compose -f docker-compose.yml -f docker-compose.dev.override.yml up -d
+
+# or
+export COMPOSE_FILE=docker-compose.yml:docker-compose.dev.override.yml
+docker compose up -d
+```
 
 ### Optional: Findingaid
 
@@ -95,21 +113,10 @@ length as a fix.
 
 This is based in part on euk: https://github.com/uklibraries/euk/
 
-The following directories are derived in part from the
-[HTML5 Up Prologue](https://html5up.net/prologue) theme:
-
-- theme/assets/css
-- theme/assets/js/ie
-
-Additionally, the HTML in the following directory is derived in part from the
-HTML5 Up Prologue theme:
-
-- theme/templates
-
 The following file is derived from
 [Google's documentation of lazy loading images](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/):
 
-- theme/assets/js/lazy-loading.js
+- app/assets/js/lazyload.js
 
 ## Licenses
 
@@ -129,24 +136,16 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 
 We make use of code which has their own licensing:
 
-- [HTML5 Up Prologue](https://html5up.net/prologue) -
-  [Creative Commons Attribution 3.0 License](https://creativecommons.org/licenses/by/3.0/)
 - [Google's documentation of lazy loading images](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/) -
   [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 - [Internet Archive BookReader](https://github.com/internetarchive/bookreader) -
-  [GNU Affero GPL](https://www.gnu.org/licenses/agpl-3.0.en.html)
-- [jQuery](http://jquery.com/) - dual-licensed under the
-  [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) and
-  [MIT](https://opensource.org/license/mit) licenses
-- [jQuery UI](https://jqueryui.com/) - dual-licensed under the
-  [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) and
-  [MIT](https://opensource.org/license/mit) licenses
+  [GNU Affero GPL v3](https://www.gnu.org/licenses/agpl-3.0.en.html)
+- [jQuery](http://jquery.com/) - [MIT License](https://opensource.org/license/mit) (Dual-licensed GPLv2/MIT; MIT selected)
+- [jQuery UI](https://jqueryui.com/) - [MIT License](https://opensource.org/license/mit) (Dual-licensed GPLv2/MIT; MIT selected)
 - [MediaElement.js](https://www.mediaelementjs.com/) -
-  [MIT](https://opensource.org/license/mit)
+  [MIT License](https://opensource.org/license/mit)
 - [OpenSeadragon](https://openseadragon.github.io/) -
-  [new BSD license](https://opensource.org/license/bsd-3-clause)
-- [A Simple CSS Tooltip](https://chrisbracco.com/a-simple-css-tooltip/) -
-  [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/)
+  [BSD 3-Clause License](https://opensource.org/license/bsd-3-clause)
 
 An important note for users,
 [Docker Desktop](https://www.docker.com/products/docker-desktop/) is

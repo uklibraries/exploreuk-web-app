@@ -1,9 +1,21 @@
-<form action="<?= $this->path('/catalog/') ?>" method="get" id="search-brief">
-    <div class="bg-uklblack form-group-brief">
-        <input aria-label="Search" class="q form-control" type="text" name="q" value="<?= htmlspecialchars((string) $this->q('q')) ?>">
-        <span class="input-group-btn"></span><button type="submit" class="btn btn-default" value="search">Search</button>
+<div class="slab slab--thin slab--dark-blue search-brief">
+    <div class="slab__wrapper">
+        <form method="get" action="<?= $this->path('/catalog/') ?>" id="search" class="search-form section-nav">
+            <label for="search-keywords660c465ba79a9" class="heading__text">Search ExploreUK</label>
+            <div class="control-group">
+                <input type="text"
+                    id="search-keywords660c465ba79a9"
+                    name="q"
+                    class="input-text"
+                    value="<?= htmlspecialchars((string) $this->q('q')) ?>"
+                />
+                <button class="icon-only">
+                    <span class="icon-label">
+                        <span class="ic ic--magnify" aria-hidden="true"></span>
+                        <span class="label">search</span>
+                    </span> 
+                </button>
+            </div>
+        </form>
     </div>
-<?php foreach ($this->hiddenSearchFields() as $field) : ?>
-    <input type="hidden" name="<?= $field['name'] ?>" value="<?= htmlspecialchars((string) $field['value']) ?>"/>
-<?php endforeach; ?>
-</form>
+</div>
