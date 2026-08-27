@@ -1,7 +1,6 @@
     </section>
 </div>
 
-<!-- TWIG INCLUDE : @limestone/universal-footer.twig" -->
 <div class="slab slab--wildcat-blue universal-footer">
     <div class="slab__wrapper">
         <a href="https://www.uky.edu" aria-label="University of Kentucky Homepage">
@@ -42,20 +41,15 @@
             <div>© University of Kentucky</div>
             <div>
                 <a href="https://www.uky.edu/directions">
-                    <!-- TWIG INCLUDE : @limestone/icon-label.twig" -->
                     <span class="icon-label ">
                         <span class="ic ic--pin" aria-hidden="true"></span>
                         <span class="label ">Lexington, Kentucky 40506</span>
                     </span>
-                    <!-- END TWIG INCLUDE : @limestone/icon-label.twig" -->
                 </a>
             </div>
         </div>
     </div>
 </div>
-<!-- END TWIG INCLUDE : @limestone/universal-footer.twig" -->
-
-
 
 <!-- CSS -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.0/css/all.css" integrity="sha384-X5iGjkVST5r3jLDsMntiITKVTkgf0v7xH26P7RqdeTvlbV9P11Azs27mXs7Kht/E" crossorigin="anonymous">
@@ -76,12 +70,6 @@
 <?php if (isset($m['script_image'])) : ?>
         <?php $s = $m['script_image']; ?>
         <?php $r = $m['item_image']; ?>
-        <?php
-        $ui = $this->q('ui');
-        if (!isset($ui) || !$ui) {
-            $ui = "1";
-        }
-        if ($ui === "1") : ?>
 <script type="text/javascript" src="<?= $this->assetPath('openseadragon/openseadragon.min.js') ?>"></script>
 <script type="text/javascript">
 $(function () {
@@ -146,7 +134,6 @@ $(function () {
     initialize_osd();
 });
 </script>
-        <?php endif; ?>
 <?php endif; ?>
 <script src="<?= $this->assetPath('js/vendor/back_to_top.js') ?>?<?= $this->assetVersion('js/vendor/back_to_top.js') ?>"></script>
 <script src="<?= $this->assetPath('js/main.js') ?>?<?= $this->assetVersion('js/main.js') ?>"></script>

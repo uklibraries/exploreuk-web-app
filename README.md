@@ -113,21 +113,10 @@ length as a fix.
 
 This is based in part on euk: https://github.com/uklibraries/euk/
 
-The following directories are derived in part from the
-[HTML5 Up Prologue](https://html5up.net/prologue) theme:
-
-- theme/assets/css
-- theme/assets/js/ie
-
-Additionally, the HTML in the following directory is derived in part from the
-HTML5 Up Prologue theme:
-
-- theme/templates
-
 The following file is derived from
 [Google's documentation of lazy loading images](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/):
 
-- theme/assets/js/lazy-loading.js
+- app/assets/js/lazyload.js
 
 ## Licenses
 
@@ -147,24 +136,16 @@ this program. If not, see <https://www.gnu.org/licenses/>.
 
 We make use of code which has their own licensing:
 
-- [HTML5 Up Prologue](https://html5up.net/prologue) -
-  [Creative Commons Attribution 3.0 License](https://creativecommons.org/licenses/by/3.0/)
 - [Google's documentation of lazy loading images](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/) -
   [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 - [Internet Archive BookReader](https://github.com/internetarchive/bookreader) -
-  [GNU Affero GPL](https://www.gnu.org/licenses/agpl-3.0.en.html)
-- [jQuery](http://jquery.com/) - dual-licensed under the
-  [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) and
-  [MIT](https://opensource.org/license/mit) licenses
-- [jQuery UI](https://jqueryui.com/) - dual-licensed under the
-  [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) and
-  [MIT](https://opensource.org/license/mit) licenses
+  [GNU Affero GPL v3](https://www.gnu.org/licenses/agpl-3.0.en.html)
+- [jQuery](http://jquery.com/) - [MIT License](https://opensource.org/license/mit) (Dual-licensed GPLv2/MIT; MIT selected)
+- [jQuery UI](https://jqueryui.com/) - [MIT License](https://opensource.org/license/mit) (Dual-licensed GPLv2/MIT; MIT selected)
 - [MediaElement.js](https://www.mediaelementjs.com/) -
-  [MIT](https://opensource.org/license/mit)
+  [MIT License](https://opensource.org/license/mit)
 - [OpenSeadragon](https://openseadragon.github.io/) -
-  [new BSD license](https://opensource.org/license/bsd-3-clause)
-- [A Simple CSS Tooltip](https://chrisbracco.com/a-simple-css-tooltip/) -
-  [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/)
+  [BSD 3-Clause License](https://opensource.org/license/bsd-3-clause)
 
 An important note for users,
 [Docker Desktop](https://www.docker.com/products/docker-desktop/) is

@@ -147,7 +147,7 @@ class View
             if (is_array($content)) {
                 $content = $content[0];
             }
-            $content = preg_replace('/Please go to http:\/\/kdl.kyvl.org for more information\./', 'For information about permissions to reproduce or publish, <a href="https://libraries.uky.edu/ContactSCRC" target="_blank" rel="noopener">contact the Special Collections Research Center</a>.', (string) $content);
+            $content = preg_replace('/Please go to http:\/\/kdl.kyvl.org for more information\./', 'For information about permissions to reproduce or publish, <a class="underline-link" href="https://libraries.uky.edu/ContactSCRC">contact the Special Collections Research Center</a>.', (string) $content);
         }
         if (isset($euk_locale['en'][$field])) {
             $label = $euk_locale['en'][$field];
