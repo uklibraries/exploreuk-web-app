@@ -1,6 +1,7 @@
-.PHONY: help env require-env dev dev-fa build down test lint lint-fix logs test-watch exploreuk-sh web-sh db-sh sample
+.PHONY: help env require-env dev dev-fa build down test lint lint-fix phpstan check logs test-watch exploreuk-sh web-sh db-sh sample
 
 export COMPOSE_FILE ?= docker-compose.yml:docker-compose.dev.override.yml
+export FA_IMAGE ?=
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
@@ -32,9 +33,13 @@ lint: ## Run PHP_CodeSniffer (PSR-12)
 lint-fix: ## Auto-fix PHP_CodeSniffer violations (PSR-12)
 	docker compose exec exploreuk /vendor/bin/phpcbf --exclude=Generic.Files.LineLength --standard=PSR12 /tests /app/catalog.php /app/application/libraries/ExploreUK
 
+phpstan: ## Run PHPStan static analysis
+	docker compose exec exploreuk /vendor/bin/phpstan analyse --level=0 --memory-limit=1G /tests /app/catalog.php /app/application/libraries/ExploreUK
+
 check: ## Run linter and tests reports
 	make lint
 	make test
+	make phpstan
 
 logs: ## Tail container logs
 	docker compose logs -f
