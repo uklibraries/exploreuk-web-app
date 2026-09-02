@@ -20,9 +20,12 @@
     <div class="slab">
         <div class="slab__wrapper">
             <div class="editorial">
-                <p>ExploreUK is the gateway to many of <a href="http://libraries.uky.edu/">University of Kentucky Libraries’</a> rare and unique resources, particularly those housed in the <a href="https://libraries.uky.edu/locations/special-collections-research-center">Special Collections Research Center</a>. ExploreUK provides free and public access to digital materials for research, teaching, and curious exploration.</p>
+                <p>ExploreUK is the gateway to many of
+                  <?= $this->renderLink(['href' => 'https://libraries.uky.edu/', 'content' => "University of Kentucky Libraries'", 'external' => true]) ?>
+                  rare and unique resources, particularly those housed in the
+                  <?= $this->renderLink(['href' => 'https://libraries.uky.edu/locations/special-collections-research-center', 'content' => 'Special Collections Research Center', 'external' => true]) ?>.
+                  ExploreUK provides free and public access to digital materials for research, teaching, and curious exploration.</p>
                 <p>Materials include manuscript collections, University of Kentucky archives, rare books, photographs, organizational records, newspapers, maps, architectural drawings, government publications, and more. The collections document the social, cultural, economic, and political history of the Commonwealth of Kentucky, but also include materials of national and international significance.</p>
-                
                 <h2>Content Types</h2>
                 <p>When searching ExploreUK, you will discover the following content types:</p>
                 <dl>
@@ -38,26 +41,50 @@
                     <dd>In some cases, materials are created as digital formats, like .pdf, .jpeg, and .wav files. These are also available through ExploreUK. Like digitized items, they may be described within a collection guide or by basic descriptive metadata.</dd>
                 </dl>
                 <h2>Our Organization</h2>
-                    <p>ExploreUK is a project of the <a href="http://libraries.uky.edu/">University of Kentucky Libraries</a> and is developed and maintained by the <a href="https://libraries.uky.edu/locations/special-collections-research-center">UK Libraries Special Collections Research Center.</a></p>
-                
+                    <p>ExploreUK is a project of
+                      <?= $this->renderLink(['href' => 'https://libraries.uky.edu/', 'content' => 'University of Kentucky Libraries', 'external' => true]) ?>
+                      and is developed and maintained by the
+                      <?= $this->renderLink(['href' => 'https://libraries.uky.edu/locations/special-collections-research-center', 'content' => 'UK Libraries Special Collections Research Center', 'external' => true]) ?>.
+                    </p>
                     <h2>Platform and Tools</h2>
                     <p>ExploreUK uses a combination of the following:</p>
                 <ul>
-                    <li><a href="https://omeka.org/">Omeka Classic</a> with a highly customized theme</li>
-                    <li>Apache Solr</li>
-                    <li><a href="https://www.uky.edu/its/">University of Kentucky Information Technology Services</a> infrastructure for AIPs and DIPs storage</li>
-                    <li>Collection guides and related information are managed by the <a href="http://archivesspace.org/">ArchivesSpace</a> information management application.</li>
+                    <li>
+                      <?= $this->renderLink(['href' => 'https://solr.apache.org/', 'content' => 'Apache Solr', 'external' => true]) ?>
+                    </li>
+                    <li>
+                      <?= $this->renderLink(['href' => 'https://www.uky.edu/its/', 'content' => 'University of Kentucky Information Technology Services', 'external' => true]) ?>
+                      infrastructure for AIPs and DIPs storage</li>
+                    <li>
+                      Collection guides and related information are managed by the
+                      <?= $this->renderLink(['href' => 'https://archivesspace.org/', 'content' => 'ArchivesSpace', 'external' => true]) ?>
+                      information management application.
+                    </li>
                 </ul>
-                <p>Visit the <a href="https://github.com/uklibraries">UK Libraries GitHub page</a> for more information.</p>
-                
+                <p>
+                  Visit the
+                  <?= $this->renderLink(['href' => 'https://github.com/uklibraries', 'content' => 'UK Libraries GitHub page', 'external' => true]) ?>
+                  for more information.
+                </p>
                 <h2>Acknowledgements</h2>
-                <p>A portion of the collection guides and digitized content on ExploreUK was made possible by support from the <a href="https://www.clir.org/">Council on Library and Information Resources</a>, <a href="https://www.imls.gov/">Institute of Museum and Library Services</a>, <a href="https://heyburncollections.org/">The John G. Heyburn II Initiative for Excellence in the Federal Judiciary</a>, the <a href="https://www.neh.gov/">National Endowment for the Humanities</a>, and the <a href="https://www.archives.gov/nhprc">National Historical Publications &amp; Records Commission</a>. Visit the <a href="https://libraries.uky.edu/people-0/about-us/grants-partnerships">SCRC Projects and Grants page</a> for more information on these grant-funded projects.</p>
+                <p>
+                  A portion of the collection guides and digitized content on ExploreUK was made possible by support from the
+                  <?= $this->renderLink(['href' => 'https://www.clir.org/', 'content' => 'Council on Library and Information Resources', 'external' => true]) ?>,
+                  <?= $this->renderLink(['href' => 'https://www.imls.gov/', 'content' => 'Institute of Museum and Library Services', 'external' => true]) ?>,
+                  <?= $this->renderLink(['href' => 'https://heyburncollections.org/', 'content' => 'The John G. Heyburn II Initiative for Excellence in the Federal Judiciary', 'external' => true]) ?>,
+                  <?= $this->renderLink(['href' => 'https://www.neh.gov/', 'content' => 'National Endowment for the Humanities', 'external' => true]) ?>,
+                  and the
+                  <?= $this->renderLink(['href' => 'https://www.archives.gov/nhprc', 'content' => 'National Historical Publications & Records Commission', 'external' => true]) ?>.
+                  Visit the
+                  <?= $this->renderLink(['href' => 'https://libraries.uky.edu/people-0/about-us/grants-partnerships', 'content' => 'SCRC Projects and Grants page', 'external' => true]) ?>
+                  for more information on these grant-funded projects.
+                </p>
             </div>
         </div>
     </div>
     <?php require('sponsors.html'); ?>
 </main>
 <?php
-    require('global-footer.html');
+    require('global-footer.php');
     require('universal-footer.php');
 ?>

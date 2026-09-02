@@ -26,7 +26,6 @@ if (isset($m['flat']['title_display'])) {
 <main id="main-content" class="item-container">
     <div class="slab">
         <div class="slab__wrapper">
-
             <div class="item-presentation">
                 <?php
                 if (isset($m['item_image'])) {
@@ -53,5 +52,5 @@ if (isset($m['flat']['title_display'])) {
     <?php require('sponsors.html'); ?>
 </main>
 
-<?php require('global-footer.html'); ?>
+<?php require('global-footer.php'); ?>
 <?php require('universal-footer.php'); ?>

@@ -10,7 +10,7 @@ $fc++;
         <?php foreach ($m['active_facets'] as $active) : ?>
             <li>
                 <a aria-label="Remove <?= $active['value_label'] ?> filter" href="<?= $active['remove_link'] ?>">
-                    <i class="fas fa-times"></i>
+                    <span class="ic ic--close" aria-hidden="true"></span>
                     <?= $active['field_label'] ?>: <?= $active['value_label'] ?> <span class="facet-count">(<?= $active['count'] ?>)</span>
                 </a>
             </li>
@@ -28,7 +28,7 @@ $fc++;
                     <li><a href="<?= $value['add_link'] ?>"><?= $this->brevity($value['value_label'], 40) ?> <span class="facet-count">(<?= $value['count'] ?>)</span></a></li>
                 <?php endforeach; ?>
                 </ul>
-                <button class="button--small modal-control mfp-inline" data-mfp-src="#inlinefacets-<?= $facet['field_raw'] ?>"><i class="fas fa-plus-circle"></i> Filter more <?= $facet['field_label'] ?>s</button>
+                <button class="button--small modal-control mfp-inline" data-mfp-src="#inlinefacets-<?= $facet['field_raw'] ?>">Filter more <?= $facet['field_label'] ?>s</button>
             </details>
         </article>
     <?php endforeach; ?>

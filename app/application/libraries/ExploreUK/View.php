@@ -95,7 +95,6 @@ class View
                             "href" => $relation->identifier,
                             "content" => $relation->content,
                             "external" => true,
-                            "open_new_tab" => true,
                         ]);
                         $lines[] = "</li>\n";
                     }
@@ -118,8 +117,6 @@ class View
                     $this->renderLink([
                         "href" => $this->path("/catalog/{$content['base_id']}"),
                         "content" => $collection_label,
-                        "external" => true,
-                        "open_new_tab" => true,
                     ]),
                     ' | ',
                     $this->renderLink([
@@ -147,7 +144,16 @@ class View
             if (is_array($content)) {
                 $content = $content[0];
             }
-            $content = preg_replace('/Please go to http:\/\/kdl.kyvl.org for more information\./', 'For information about permissions to reproduce or publish, <a class="underline-link" href="https://libraries.uky.edu/ContactSCRC">contact the Special Collections Research Center</a>.', (string) $content);
+            $scrc_link = self::renderLink([
+                'href' => 'https://libraries.uky.edu/ContactSCRC',
+                'content' => 'contact the Special Collections Research Center',
+                'external' => true,
+            ]);
+            $content = preg_replace(
+                '/Please go to http:\/\/kdl.kyvl.org for more information\./',
+                'For information about permissions to reproduce or publish, ' . $scrc_link . '.',
+                (string) $content
+            );
         }
         if (isset($euk_locale['en'][$field])) {
             $label = $euk_locale['en'][$field];
@@ -190,7 +196,6 @@ class View
                 "href" => $item,
                 "content" => $item,
                 "external" => true,
-                "open_new_tab" => true,
             ]);
         } elseif (in_array($field, $euk_facetable)) {
             $link = "/?f%5B$field%5D%5B%5D=";
@@ -202,29 +207,66 @@ class View
             if ($field === 'description_display') {
                 return strip_tags((string) $item, '<b>');
             } elseif ($field === 'usage_display') {
-                return strip_tags((string) $item, '<a>');
+                return strip_tags((string) $item, '<a><span>');
             } else {
                 return htmlspecialchars((string) $item);
             }
         }
     }
 
-    public function renderLink($options)
+    public static function renderLink($options)
     {
-        $content = $options["content"];
+        $external = !empty($options["external"]);
+        $open_new_tab = !empty($options["open_new_tab"]);
+        // default underline-link, provide 'classes' => '' to remove all classes
+        $classes = $options["classes"] ?? 'underline-link';
+        $content = htmlspecialchars((string) $options["content"], ENT_QUOTES);
         $attributes = [];
-        $attributes[] = "href=\"" . $options["href"] . "\"";
-        if (!empty($options["external"])) {
-            $content .= " <i class=\"fas fa-external-link-alt\"></i>";
+        if ($classes !== '') {
+            $attributes[] = "class=\"" . htmlspecialchars((string) $classes, ENT_QUOTES) . "\"";
         }
-        if (!empty($options["open_new_tab"])) {
+        $attributes[] = "href=\"" . htmlspecialchars((string) $options["href"], ENT_QUOTES) . "\"";
+        $note = self::linkDestinationNote($external, $open_new_tab);
+        foreach (["id" => "id", "title" => "title"] as $key => $name) {
+            if (isset($options[$key])) {
+                $attributes[] = "$name=\"" . htmlspecialchars((string) $options[$key], ENT_QUOTES) . "\"";
+            }
+        }
+        if (isset($options["aria_label"])) {
+            $label = (string) $options["aria_label"];
+            if ($note !== '') {
+                $label .= " ($note)";
+            }
+            $attributes[] = "aria-label=\"" . htmlspecialchars($label, ENT_QUOTES) . "\"";
+        }
+        if ($external) {
+            $content .= " <span class=\"ic ic--popup\" aria-hidden=\"true\"></span>";
+        }
+        if ($open_new_tab) {
             # rel="noreferrer" implies target="_blank" and rel="noopener",
             # but I deliberately choose to include them explicitly.
             $attributes[] = "target=\"_blank\"";
             $attributes[] = "rel=\"noopener noreferrer\"";
         }
+        if ($note !== '' && !isset($options["aria_label"])) {
+            $content .= " <span class=\"show-for-sr\">($note)</span>";
+        }
         $attribute_string = implode(" ", $attributes);
-        return "<a class='underline-link' $attribute_string>$content</a>";
+        return "<a $attribute_string>$content</a>";
+    }
+
+    private static function linkDestinationNote($external, $open_new_tab)
+    {
+        if ($external && $open_new_tab) {
+            return 'external link, opens in a new tab';
+        }
+        if ($external) {
+            return 'external link';
+        }
+        if ($open_new_tab) {
+            return 'opens in a new tab';
+        }
+        return '';
     }
 
     public function path($path)

@@ -107,5 +107,5 @@ $m['current_page_title'] = !empty($m['q'])
     <?php require 'more-facets.php'; ?>
     <?php require('sponsors.html'); ?>
 </main>
-<?php require 'global-footer.html'; ?>
+<?php require 'global-footer.php'; ?>
 <?php require 'universal-footer.php'; ?>

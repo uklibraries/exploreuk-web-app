@@ -3,7 +3,7 @@
         <nav class="breadcrumbs">
             <ul class="no-decoration">
                 <li>
-                    <a href="<?= $this->path('') ?>" class="">Home</a>
+                    <?= $this->renderLink(['href' => $this->path(''), 'content' => 'Home']) ?>
                 </li>
                 <?php if (isset($m['back_to_search']) && isset($m['back_to_search_text'])) : ?>
                     <li>

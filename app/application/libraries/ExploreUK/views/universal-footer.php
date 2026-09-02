@@ -3,7 +3,7 @@
 
 <div class="slab slab--wildcat-blue universal-footer">
     <div class="slab__wrapper">
-        <a href="https://www.uky.edu" aria-label="University of Kentucky Homepage">
+        <a href="https://www.uky.edu" aria-label="University of Kentucky Homepage (external link)">
             <svg class="uk-wordmark" preserveAspectRatio="xMinYMid" viewBox="0 0 196 20" xmlns="http://www.w3.org/2000/svg" aria-labelledby="svgTitleID_-699c93cb7ec5b svgDescID_-699c93cb7ec5e">
             <title id="svgTitleID_-699c93cb7ec5b">University of Kentucky Homepage</title>
             <desc id="svgDescID_-699c93cb7ec5e">A link to return to the University of Kentucky Homepage</desc>
@@ -16,25 +16,25 @@
         </a>
         <div class="universal-footer__ribbon">
             <div>
-                <a class="underline-link" href="https://www.uky.edu/equal-opportunity-university/">An Equal Opportunity University</a>
+                <?= $this->renderLink(['href' => 'https://www.uky.edu/equal-opportunity-university/', 'content' => 'An Equal Opportunity University', 'external' => true]) ?>
             </div>
             <div>
-                <a class="underline-link" href="https://www.uky.edu/accreditation/">Accreditation</a>
+                <?= $this->renderLink(['href' => 'https://www.uky.edu/accreditation/', 'content' => 'Accreditation', 'external' => true]) ?>
             </div>
             <div>
-                <a class="underline-link" href="https://directory.uky.edu/">Directory</a>
+                <?= $this->renderLink(['href' => 'https://directory.uky.edu/', 'content' => 'Directory', 'external' => true]) ?>
             </div>
             <div>
-                <a class="underline-link" href="mailto:refdesk@uky.edu">Email</a>
+                <?= $this->renderLink(['href' => 'mailto:refdesk@uky.edu', 'content' => 'Email']) ?>
             </div>
             <div>
-                <a class="underline-link" href="https://www.uky.edu/privacy">Privacy Policy</a>
+                <?= $this->renderLink(['href' => 'https://www.uky.edu/privacy', 'content' => 'Privacy Policy', 'external' => true]) ?>
             </div>
             <div>
-                <a class="underline-link" href="https://www.uky.edu/web-accessibility">Accessibility</a>
+                <?= $this->renderLink(['href' => 'https://www.uky.edu/web-accessibility', 'content' => 'Accessibility', 'external' => true]) ?>
             </div>
             <div>
-                <a class="underline-link" href="https://www.uky.edu/disclosures">Disclosures</a>
+                <?= $this->renderLink(['href' => 'https://www.uky.edu/disclosures', 'content' => 'Disclosures', 'external' => true]) ?>
             </div>
         </div>
         <div class="universal-footer__ribbon">
@@ -44,6 +44,7 @@
                     <span class="icon-label ">
                         <span class="ic ic--pin" aria-hidden="true"></span>
                         <span class="label ">Lexington, Kentucky 40506</span>
+                        <span class="show-for-sr">(external link)</span>
                     </span>
                 </a>
             </div>
@@ -52,7 +53,6 @@
 </div>
 
 <!-- CSS -->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.0/css/all.css" integrity="sha384-X5iGjkVST5r3jLDsMntiITKVTkgf0v7xH26P7RqdeTvlbV9P11Azs27mXs7Kht/E" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lity/2.3.1/lity.min.css" integrity="sha256-0SZxASYAglrmIuTx+ZYHE3hzTnCZWB7XLu+iA8AG0Z0=" crossorigin="anonymous" />
 
 <!-- Scripts -->

@@ -13,11 +13,11 @@
             <?php foreach ($m['popular_resources'] as $index => $resource) : ?>
                 <li class="grid__column">
                     <a
-                        aria-label="<?= $resource['label'] ?>"
+                        aria-label="<?= htmlspecialchars((string)$resource['label']) ?> (external link, opens in a new tab)"
                         id="popular-resource-<?= $index ?>"
                         href="<?= $resource['url'] ?>"
                         target="_blank"
-                        rel="noopener"
+                        rel="noopener noreferrer"
                     >
                         <img
                             class="lazy"
@@ -50,7 +50,7 @@
                                 <img src="<?= $resource['image'] ?>" alt="" role="presentation"/>
                             </div>
                             <h3 class="headline-group">
-                                <span class="headline-group__head" id="additional-resource-<?= $index ?>"><?= $resource['label'] ?> <span class="ic ic--popup" aria-hidden="true"></span></span>
+                                <span class="headline-group__head" id="additional-resource-<?= $index ?>"><?= $resource['label'] ?> <span class="ic ic--popup" aria-hidden="true"></span> <span class="show-for-sr">(external link)</span></span>
                             </h3>
                         </a>
                         <div class="editorial">
@@ -66,6 +66,6 @@
 <?php //require('additional-resources.php'); ?>
 <?php require('sponsors.html'); ?>
 </main>
-<?php require('global-footer.html'); ?>
+<?php require('global-footer.php'); ?>
 <?php require('universal-footer.php'); ?>
 
