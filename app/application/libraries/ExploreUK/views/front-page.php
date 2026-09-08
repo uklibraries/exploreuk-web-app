@@ -16,8 +16,6 @@
                         aria-label="<?= $resource['label'] ?>"
                         id="popular-resource-<?= $index ?>"
                         href="<?= $resource['url'] ?>"
-                        target="_blank"
-                        rel="noopener"
                     >
                         <img
                             class="lazy"
