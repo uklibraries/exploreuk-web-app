@@ -45,11 +45,10 @@ if (isset($m['flat']['title_display'])) {
 
             <?php require('page-title.php'); ?>
 
-            <?php require('page-harmful-language-statement.html'); ?>
-
             <?php require('page-details.php'); ?>
         </div>
     </div>
+    <?php require('page-harmful-language-statement.html'); ?>
     <?php require('sponsors.html'); ?>
 </main>
 
