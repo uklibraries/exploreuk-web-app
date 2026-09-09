@@ -13,20 +13,17 @@
             <?php foreach ($m['popular_resources'] as $index => $resource) : ?>
                 <li class="grid__column">
                     <a
-                        aria-label="<?= $resource['label'] ?>"
-                        id="popular-resource-<?= $index ?>"
-                        href="<?= $resource['url'] ?>"
-                        target="_blank"
-                        rel="noopener"
+                        href="<?= htmlspecialchars((string)$resource['url']) ?>"
+                        aria-labelledby="popular-resource-<?= $index ?>"
                     >
                         <img
                             class="lazy"
                             src="<?= $this->assetPath('images/middlegray.png') ?>"
-                            data-src="<?= $resource['image'] ?>"
-                            title="<?= $resource['label'] ?>"
-                            alt="<?= htmlspecialchars((string)$resource['label']) ?>"
+                            data-src="<?= htmlspecialchars((string)$resource['image']) ?>"
+                            alt=""
+                            role="presentation"
                         >
-                            <span class="popular-card__label"><?= htmlspecialchars((string)$resource['label']) ?></span>
+                            <span class="popular-card__label" id="popular-resource-<?= $index ?>"><?= htmlspecialchars((string)$resource['label']) ?></span>
                     </a>
                 </li>
             <?php endforeach; ?>
