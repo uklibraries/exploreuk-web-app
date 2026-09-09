@@ -65,4 +65,3 @@
 </main>
 <?php require('global-footer.html'); ?>
 <?php require('universal-footer.php'); ?>
-
