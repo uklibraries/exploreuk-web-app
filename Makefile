@@ -1,4 +1,4 @@
-.PHONY: help env require-env dev dev-fa build down test lint lint-fix logs test-watch exploreuk-sh web-sh db-sh sample
+.PHONY: help env require-env dev dev-fa build down test lint lint-fix rector rector-fix check logs test-watch exploreuk-sh web-sh db-sh sample
 
 export COMPOSE_FILE ?= docker-compose.yml:docker-compose.dev.override.yml
 
@@ -31,6 +31,12 @@ lint: ## Run PHP_CodeSniffer (PSR-12)
 
 lint-fix: ## Auto-fix PHP_CodeSniffer violations (PSR-12)
 	docker compose exec exploreuk /vendor/bin/phpcbf --exclude=Generic.Files.LineLength --standard=PSR12 /tests /app/catalog.php /app/application/libraries/ExploreUK
+
+rector: ## Preview Rector changes (dry run; runs on host; requires composer installed)
+	vendor/bin/rector process --dry-run
+
+rector-fix: ## Auto-fix Rector Violations (runs on host; requires composer installed)
+	vendor/bin/rector process
 
 check: ## Run linter and tests reports
 	make lint
