@@ -13,6 +13,7 @@ return RectorConfig::configure()
 ->withSets([
 	LevelSetList::UP_TO_PHP_84,
 ])
+->withComposerBased(phpunit: true)
 ->withTypeCoverageLevel(0)
 ->withDeadCodeLevel(0)
 ->withCodeQualityLevel(0);
