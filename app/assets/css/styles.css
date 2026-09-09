@@ -155,7 +155,7 @@
 /* styling to match central webcom's in-page alert*/
 @scope(.harmful-language-statement) {
     :scope{
-      padding-bottom: 0;
+      padding-top: 0;
     }
 
     .in-page-alert {
