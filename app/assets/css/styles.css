@@ -30,6 +30,7 @@
     --midnight: #041e42;
     --dark-blue: #1f2c5e;
     --color-sky: #b1c9e8;
+    --color-blue-gray: #eff4fd;
 }
 
 /* Limestone v3 mobile tab nav additions */
@@ -148,6 +149,41 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
+}
+
+
+/* styling to match central webcom's in-page alert*/
+@scope(.in-page-alert) {
+    :scope{
+      background-color: var(--color-blue-gray);
+      border-left: 7px solid #1E8AFF;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+    }
+
+    h2 {
+        text-transform: uppercase;
+        font-size: 1.75rem;
+        font-weight: 900;
+        margin: 0;
+        color: var(--wildcat-blue);
+        line-height: 1.2;
+    }
+
+    h3 {
+        text-transform: uppercase;
+        font-size: 1.5rem;
+        font-weight: 500;
+        margin-bottom: 5px;
+        margin-top: 10px;
+        color: var(--wildcat-blue);
+        line-height: 1.2;
+    }
+
+    .icon-wrapper{
+      margin-right: 2rem;
+    }
 }
 
 @media all and (min-width: 440px) {
