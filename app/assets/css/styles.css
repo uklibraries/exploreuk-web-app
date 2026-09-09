@@ -153,8 +153,12 @@
 
 
 /* styling to match central webcom's in-page alert*/
-@scope(.in-page-alert) {
+@scope(.harmful-language-statement) {
     :scope{
+      padding-bottom: 0;
+    }
+
+    .in-page-alert {
       background-color: var(--color-blue-gray);
       border-left: 7px solid #1E8AFF;
       padding: 1rem;
