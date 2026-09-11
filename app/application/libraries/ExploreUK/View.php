@@ -175,7 +175,7 @@ class View
         $euk_requires_capitalization = EUK_REQUIRES_CAPITALIZATION;
 
         if ($field === 'id') {
-            $item = 'https://' . $_SERVER['HTTP_HOST'] . $this->path("/catalog/$item");
+            $item = euk_request_scheme() . '://' . $_SERVER['HTTP_HOST'] . $this->path("/catalog/$item");
             return $this->renderLink([
                 "href" => $item,
                 "content" => $item,
@@ -242,7 +242,7 @@ class View
         return $this->path('/assets/' . $path);
     }
 
-    public function subresourceIntegrity($path)
+    public function assetVersion($path)
     {
         $file_path = realpath(EUK_BASE_DIR) . $this->assetPath($path);
         $algo = 'sha384';
