@@ -715,7 +715,10 @@ class ExploreUK
         $metadata['search_link'] = $this->solr . '?' . $metadata['query']->searchParams();
         if ($this->query->nontrivial()) {
             $result = $this->query->search();
-            $metadata['page_title'] = htmlspecialchars((string) $metadata['q'], ENT_QUOTES, 'UTF-8') . ' - ExploreUK';
+            $page_title_prefix = (strlen((string) $metadata['q']) > 0)
+              ? htmlspecialchars((string) $metadata['q'], ENT_QUOTES, 'UTF-8')
+              : 'All Items';
+            $metadata['page_title'] = $page_title_prefix . ' - ExploreUK';
 
             $euk_requires_capitalization = EUK_REQUIRES_CAPITALIZATION;
 

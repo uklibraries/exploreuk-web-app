@@ -37,7 +37,7 @@
 
 <body>
     <?php require('archive-notice.html'); ?>
-    <?php require('universal-header.html'); ?>
+    <?php require('universal-header.php'); ?>
     <div id="main">
         <?php if ($m['front_page']) : ?>
             <section id="top">

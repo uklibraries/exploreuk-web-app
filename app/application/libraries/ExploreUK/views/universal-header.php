@@ -26,11 +26,15 @@
                     <span class="show-for-sr">My UK</span>
                 </a>
                 <div class="modal-display mfp-hide" id="modal_popup_660c465a9ee53">
-                    <form class="search" method="post">
+                    <form class="search" method="get" action="<?= $this->path('/catalog/') ?>">
                         <label for="search-keywords660c465a9ee64">Search our Site</label>
                         <div class="control-group">
-                            <input type="text" id="search-keywords660c465a9ee64" />
-                            <button class="icon-only">
+                            <input type="text"
+                                id="search-keywords660c465a9ee64"
+                                name="q"
+                                value="<?= htmlspecialchars((string) $this->q('q')) ?>"
+                            />
+                            <button type="submit" class="icon-only">
                                 <span class="icon-label ">
                                     <span class="ic ic--magnify" aria-hidden="true"></span>
                                     <span class="label ">search</span>
