@@ -28,6 +28,10 @@ should run `make help` to see helper commands through
 loaded on initialization in the `assets` directory, so new developers do not
 need to source assets for installation.
 
+The development environment includes a detached `css-watch` service. Editing
+`app/assets/css/styles.css` automatically regenerates the minified stylesheet,
+so CSS changes are visible after a browser refresh without an image rebuild.
+
 ### Dependencies
 
 We use [Docker](https://www.docker.com/) for reproducible environments.
