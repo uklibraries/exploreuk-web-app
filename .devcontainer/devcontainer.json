@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
+  "name": "ExploreUK",
+  "image": "mcr.microsoft.com/devcontainers/base:noble",
+  "features": {
+    "ghcr.io/devcontainers/features/docker-in-docker:4": {
+      "version": "29",
+      "moby": true,
+      "dockerDashComposeVersion": "v2",
+      "azureDnsAutoDetection": true,
+      "iptablesSwitchAtRuntime": true
+    }
+  },
+  "forwardPorts": [8080],
+  "portsAttributes": {
+    "8080": {
+      "label": "ExploreUK",
+      "onAutoForward": "notify"
+    }
+  },
+  "remoteUser": "vscode"
+}
