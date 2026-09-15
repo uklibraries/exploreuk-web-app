@@ -16,14 +16,14 @@ Developer installations have been tested on Linux (through Windows with
 ```
 git clone git@github.com:uklibraries/exploreuk-web-app.git
 cd exploreuk-web-app
-git submodule update --init
-make env
+make init
 make dev
 ```
 
 The application should then be available at http://localhost:8080. Developers
-should run `make help` to see helper commands through
-[make](https://www.gnu.org/software/make/). There is a
+can rerun `make init` safely; it preserves an existing `.env.dev` file and does
+not start the development services. They should run `make help` to see helper
+commands through [make](https://www.gnu.org/software/make/). There is a
 [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) that is
 loaded on initialization in the `assets` directory, so new developers do not
 need to source assets for installation. Its `shared/` directory holds images
