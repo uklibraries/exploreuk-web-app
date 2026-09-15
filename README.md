@@ -30,6 +30,10 @@ need to source assets for installation. Its `shared/` directory holds images
 also used by [findingaid](https://github.com/uklibraries/findingaid); it is
 copied into the Docker image at build time and served from `/assets/shared/`.
 
+The development environment includes a detached `css-watch` service. Editing
+`app/assets/css/styles.css` automatically regenerates the minified stylesheet,
+so CSS changes are visible after a browser refresh without an image rebuild.
+
 ### Dependencies
 
 We use [Docker](https://www.docker.com/) for reproducible environments.
