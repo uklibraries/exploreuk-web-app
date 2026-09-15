@@ -2,3 +2,5 @@
 .git
 .gitignore
 app/node_modules
+assets/frontpage-assets/.git
+assets/frontpage-assets/files

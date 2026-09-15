@@ -16,7 +16,7 @@ Developer installations have been tested on Linux (through Windows with
 ```
 git clone git@github.com:uklibraries/exploreuk-web-app.git
 cd exploreuk-web-app
-git submodule init; git submodule update
+git submodule update --init
 make env
 make dev
 ```
@@ -26,7 +26,9 @@ should run `make help` to see helper commands through
 [make](https://www.gnu.org/software/make/). There is a
 [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) that is
 loaded on initialization in the `assets` directory, so new developers do not
-need to source assets for installation.
+need to source assets for installation. Its `shared/` directory holds images
+also used by [findingaid](https://github.com/uklibraries/findingaid); it is
+copied into the Docker image at build time and served from `/assets/shared/`.
 
 ### Dependencies
 

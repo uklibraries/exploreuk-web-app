@@ -15,6 +15,7 @@ COPY ./app/package-lock.json .
 RUN npm install
 
 COPY ./app .
+COPY ./assets/frontpage-assets/shared ./assets/shared
 
 RUN npm run minify-css
 

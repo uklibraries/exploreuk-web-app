@@ -18,7 +18,7 @@
                     >
                         <img
                             class="lazy"
-                            src="<?= $this->assetPath('images/middlegray.png') ?>"
+                            src="<?= $this->assetPath('shared/images/middlegray.png') ?>"
                             data-src="<?= htmlspecialchars((string)$resource['image']) ?>"
                             alt=""
                             role="presentation"
