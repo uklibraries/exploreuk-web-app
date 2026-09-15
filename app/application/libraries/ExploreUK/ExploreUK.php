@@ -388,7 +388,7 @@ class ExploreUK
         $pages = $this->pages($id);
         if ($pages) {
             $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-            $search_host = $scheme . '://' . $_SERVER['HTTP_HOST'] . '/catalog/' . $id . '/find';
+            $search_host = $this->path("/catalog/$id/find");
             $images_base_url = $scheme . '://' . $_SERVER['HTTP_HOST'] . $this->assetPath('BookReader/images/');
 
             $metadata['script'] = [
