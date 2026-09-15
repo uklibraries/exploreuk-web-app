@@ -16,7 +16,7 @@ Developer installations have been tested on Linux (through Windows with
 ```
 git clone git@github.com:uklibraries/exploreuk-web-app.git
 cd exploreuk-web-app
-git submodule init; git submodule update
+git submodule update --init
 make env
 make dev
 ```
