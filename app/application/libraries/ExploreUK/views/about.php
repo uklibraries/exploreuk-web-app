@@ -43,7 +43,6 @@
                     <h2>Platform and Tools</h2>
                     <p>ExploreUK uses a combination of the following:</p>
                 <ul>
-                    <li><a href="https://omeka.org/">Omeka Classic</a> with a highly customized theme</li>
                     <li>Apache Solr</li>
                     <li><a href="https://www.uky.edu/its/">University of Kentucky Information Technology Services</a> infrastructure for AIPs and DIPs storage</li>
                     <li>Collection guides and related information are managed by the <a href="http://archivesspace.org/">ArchivesSpace</a> information management application.</li>
