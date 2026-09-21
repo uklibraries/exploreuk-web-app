@@ -115,11 +115,6 @@ length as a fix.
 
 This is based in part on euk: https://github.com/uklibraries/euk/
 
-The following file is derived from
-[Google's documentation of lazy loading images](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/):
-
-- app/assets/js/lazyload.js
-
 ## Contributors
 
 Neal Powers, Nicole Sand, MLE Slone, and Eric Weig. For details, consult [CONTRIBUTORS](CONTRIBUTORS.md).
@@ -130,8 +125,6 @@ Copyright (C) 2018-2026 University of Kentucky.  For details, consult [LICENSE](
 
 We make use of code which has their own licensing:
 
-- [Google's documentation of lazy loading images](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/) -
-  [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 - [Internet Archive BookReader](https://github.com/internetarchive/bookreader) -
   [GNU Affero GPL v3](https://www.gnu.org/licenses/agpl-3.0.en.html)
 - [jQuery](http://jquery.com/) - [MIT License](https://opensource.org/license/mit) (Dual-licensed GPLv2/MIT; MIT selected)
