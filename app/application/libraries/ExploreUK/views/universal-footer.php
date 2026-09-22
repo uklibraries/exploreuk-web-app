@@ -137,6 +137,5 @@ $(function () {
 <?php endif; ?>
 <script src="<?= $this->assetPath('js/vendor/back_to_top.js') ?>?<?= $this->assetVersion('js/vendor/back_to_top.js') ?>"></script>
 <script src="<?= $this->assetPath('js/main.js') ?>?<?= $this->assetVersion('js/main.js') ?>"></script>
-<script src="<?= $this->assetPath('js/vendor/lazyload.js') ?>?<?= $this->assetVersion('js/vendor/lazyload.js') ?>"></script>
     </body>
 </html>
