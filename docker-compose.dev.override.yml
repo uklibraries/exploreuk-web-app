@@ -3,9 +3,31 @@ services:
     env_file:
       - .env.dev
 
+  css-watch:
+    build:
+      context: .
+      target: css-watcher
+    entrypoint: /app/exe/watch-css.sh
+    healthcheck:
+      test:
+        - CMD
+        - test
+        - -f
+        - /tmp/css-watch-ready
+      interval: 1s
+      timeout: 1s
+      retries: 10
+    network_mode: none
+    volumes:
+      - ./app/assets:/app/assets
+    restart: unless-stopped
+
   web:
     env_file:
       - .env.dev
+    depends_on:
+      css-watch:
+        condition: service_healthy
 
   findingaid:
     env_file:
