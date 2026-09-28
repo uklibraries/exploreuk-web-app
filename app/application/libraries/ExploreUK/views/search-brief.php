@@ -16,6 +16,9 @@
                     </span> 
                 </button>
             </div>
+            <?php foreach ($this->hiddenSearchFields() as $field) : ?>
+                <input type="hidden" name="<?= $field['name'] ?>" value="<?= htmlspecialchars((string) $field['value']) ?>"/>
+            <?php endforeach; ?>
         </form>
     </div>
 </div>
