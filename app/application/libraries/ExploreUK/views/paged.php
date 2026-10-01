@@ -12,7 +12,7 @@
 <div id="BookReader">
 </div>
 </main>
-<script type="text/javascript" src="<?= $this->assetPath('js/jquery.min.js') ?>"></script>
+<script type="text/javascript" src="<?= $this->assetPath('js/vendor/jquery.min.js') ?>"></script>
 <script type="text/javascript" src="<?= $this->assetPath('BookReader/jquery-ui-1.8.5.custom.min.js') ?>"></script>
 <script type="text/javascript" src="<?= $this->assetPath('BookReader/dragscrollable.js') ?>"></script>
 <script type="text/javascript" src="<?= $this->assetPath('BookReader/jquery.colorbox-min.js') ?>"></script>
@@ -25,6 +25,6 @@ var search_host = <?= $m['script']['search_host'] ?>;
 var imagesBaseURL = <?= $m['script']['imagesBaseURL'] ?>;
 var query = <?= $m['script']['query'] ?>;
 </script>
-<script type="text/javascript" src="<?= $this->assetPath('BookReaderDemo/BookReaderJSmod.js') ?>?<?= $this->subresourceIntegrity('BookReaderDemo/BookReaderJSmod.js') ?>"></script>
+<script type="text/javascript" src="<?= $this->assetPath('BookReaderDemo/BookReaderJSmod.js') ?>?<?= $this->assetVersion('BookReaderDemo/BookReaderJSmod.js') ?>"></script>
 </body>
 </html>

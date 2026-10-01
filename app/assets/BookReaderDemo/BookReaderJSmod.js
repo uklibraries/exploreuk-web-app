@@ -180,7 +180,7 @@ $('#BRreturn').hide();
 
 function updateOuter()
 {
-    var origin = window.location.protocol + '//' + window.location.hostname;
+    var origin = window.location.protocol + '//' + window.location.host;
     var page = parseInt(br.paramsFromFragment(window.location.hash).page, 10) - 1;
     if (json[page]) {
         parent.postMessage({page: json[page], hash: window.location.hash}, origin);
@@ -194,6 +194,17 @@ if (br.searchTerm) {
     $('#textSrch').val(query);
     br.search(query);
 }
+
+/* outer frame sends when user moves through browser history. */
+window.addEventListener('message', function (e) {
+    if (e.origin !== window.location.protocol + '//' + window.location.host) {
+        return;
+    }
+    if (!e.data || e.data.command !== 'navigate') {
+        return;
+    }
+    br.updateFromParams(br.paramsFromFragment(e.data.hash));
+});
 
 if ('onhashchange' in window) {
     window.addEventListener('hashchange', updateOuter);
