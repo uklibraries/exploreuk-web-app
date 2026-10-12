@@ -1,9 +1,17 @@
-.PHONY: help env require-env dev dev-fa build down test lint lint-fix rector rector-fix check logs test-watch exploreuk-sh web-sh db-sh sample
+.PHONY: help init env require-env dev dev-fa build down test lint lint-fix rector rector-fix check logs test-watch exploreuk-sh web-sh db-sh sample
 
 export COMPOSE_FILE ?= docker-compose.yml:docker-compose.dev.override.yml
 
 help: ## Show this help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
+
+init: ## Initialize the repository for development
+	git submodule update --init --recursive
+	@if [ -f .env.dev ]; then \
+		echo ".env.dev already exists; skipping environment generation."; \
+	else \
+		$(MAKE) env; \
+	fi
 
 env: ## Generate an .env file from .env.example (interactive)
 	app/exe/make-env.sh

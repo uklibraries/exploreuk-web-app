@@ -17,9 +17,8 @@
                         aria-labelledby="popular-resource-<?= $index ?>"
                     >
                         <img
-                            class="lazy"
-                            src="<?= $this->assetPath('shared/images/middlegray.png') ?>"
-                            data-src="<?= htmlspecialchars((string)$resource['image']) ?>"
+                            loading="lazy"
+                            src="<?= htmlspecialchars((string)$resource['image']) ?>"
                             alt=""
                             role="presentation"
                         >
@@ -65,4 +64,3 @@
 </main>
 <?php require('global-footer.html'); ?>
 <?php require('universal-footer.php'); ?>
-

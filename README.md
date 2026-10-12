@@ -16,14 +16,14 @@ Developer installations have been tested on Linux (through Windows with
 ```
 git clone git@github.com:uklibraries/exploreuk-web-app.git
 cd exploreuk-web-app
-git submodule update --init
-make env
+make init
 make dev
 ```
 
 The application should then be available at http://localhost:8080. Developers
-should run `make help` to see helper commands through
-[make](https://www.gnu.org/software/make/). There is a
+can rerun `make init` safely; it preserves an existing `.env.dev` file and does
+not start the development services. They should run `make help` to see helper
+commands through [make](https://www.gnu.org/software/make/). There is a
 [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) that is
 loaded on initialization in the `assets` directory, so new developers do not
 need to source assets for installation. Its `shared/` directory holds images
@@ -115,11 +115,6 @@ length as a fix.
 
 This is based in part on euk: https://github.com/uklibraries/euk/
 
-The following file is derived from
-[Google's documentation of lazy loading images](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/):
-
-- app/assets/js/lazyload.js
-
 ## Contributors
 
 Neal Powers, Nicole Sand, MLE Slone, and Eric Weig. For details, consult [CONTRIBUTORS](CONTRIBUTORS.md).
@@ -130,8 +125,6 @@ Copyright (C) 2018-2026 University of Kentucky.  For details, consult [LICENSE](
 
 We make use of code which has their own licensing:
 
-- [Google's documentation of lazy loading images](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/) -
-  [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 - [Internet Archive BookReader](https://github.com/internetarchive/bookreader) -
   [GNU Affero GPL v3](https://www.gnu.org/licenses/agpl-3.0.en.html)
 - [jQuery](http://jquery.com/) - [MIT License](https://opensource.org/license/mit) (Dual-licensed GPLv2/MIT; MIT selected)
