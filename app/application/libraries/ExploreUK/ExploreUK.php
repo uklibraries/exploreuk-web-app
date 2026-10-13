@@ -50,8 +50,6 @@ class ExploreUK
             $this->embedPagedViewer($matches['id']);
         } elseif (preg_match("#^/catalog/(?<id>[^/]+)/text/?#", $request_uri, $matches)) {
             $this->text($matches['id']);
-        } elseif (preg_match("#^/catalog/(?<id>[^/]+)/zoom/?#", $request_uri, $matches)) {
-            $this->pageViewer($matches['id'], 'zoom');
         } elseif (preg_match("#^/catalog/(?<id>[^/]+)/?#", $request_uri, $matches)) {
             $this->pageViewer($matches['id']);
         } elseif (preg_match("#^/catalog/?#", $request_uri, $matches)) {
@@ -74,51 +72,31 @@ class ExploreUK
             $value = $value[0];
         }
 
-        if ($this->config->get('app_env') !== 'production') {
-            if (str_contains((string) $value, '/dips/')) {
-                $value = preg_replace('/\/dips\//', '/dipstest/', (string) $value);
-            }
-        }
+        $dipStoreBaseUrl = rtrim(
+            $this->config->get('dip_store_base_url'),
+            '/'
+        ) . '/';
+
+        $value = str_replace(
+            ['/dips/', '/dipstest/'],
+            $dipStoreBaseUrl,
+            (string) $value,
+        );
+
         $value = preg_replace('#https://nyx#', 'https://exploreuk', (string) $value);
         return $value;
     }
 
     public function cleanupDoc($doc)
     {
-        if ($this->config->get('app_env') === 'production') {
-            $result = [];
-            foreach ($doc as $key => $value) {
-                if (is_string($value)) {
-                    $value = $this->cleanupHost($value);
-                    $result[$key] = $value;
-                } elseif (is_array($value)) {
-                    $result[$key] = [];
-                    foreach ($value as $item) {
-                        $item = $this->cleanupHost($item);
-                        $result[$key][] = $item;
-                    }
-                } else {
-                    $result[$key] = $value;
-                }
-            }
-            return $result;
-        }
         $result = [];
         foreach ($doc as $key => $value) {
             if (is_string($value)) {
-                if (str_contains($value, '/dips/')) {
-                    $value = preg_replace('/\/dips\//', '/dipstest/', $value);
-                }
-                $value = preg_replace('#https://nyx#', 'https://exploreuk', (string) $value);
-                $result[$key] = $value;
+                $result[$key] = $this->cleanupHost($value);
             } elseif (is_array($value)) {
                 $result[$key] = [];
                 foreach ($value as $item) {
-                    if (str_contains((string) $item, '/dips/')) {
-                        $item = preg_replace('/\/dips\//', '/dipstest/', (string) $item);
-                    }
-                    $item = preg_replace('#https://nyx#', 'https://exploreuk', (string) $item);
-                    $result[$key][] = $item;
+                    $result[$key][] = $this->cleanupHost($item);
                 }
             } else {
                 $result[$key] = $value;
@@ -129,9 +107,6 @@ class ExploreUK
 
     public function cleanupDocs($docs)
     {
-        #if ($this->config->get('app_env') === 'production') {
-        #    return $docs;
-        #}
         $result = [];
         foreach ($docs as $doc) {
             $result[] = $this->cleanupDoc($doc);
@@ -390,7 +365,7 @@ class ExploreUK
         $pages = $this->pages($id);
         if ($pages) {
             $scheme = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
-            $search_host = $scheme . '://' . $_SERVER['HTTP_HOST'] . '/catalog/' . $id . '/find';
+            $search_host = $this->path("/catalog/$id/find");
             $images_base_url = $scheme . '://' . $_SERVER['HTTP_HOST'] . $this->assetPath('BookReader/images/');
 
             $metadata['script'] = [
@@ -436,7 +411,6 @@ class ExploreUK
 
         $metadata = [
             'id' => $id,
-            'action' => 'page',
             'front_page' => false,
             'query' => $this->query,
         ];
@@ -718,7 +692,10 @@ class ExploreUK
         $metadata['search_link'] = $this->solr . '?' . $metadata['query']->searchParams();
         if ($this->query->nontrivial()) {
             $result = $this->query->search();
-            $metadata['page_title'] = htmlspecialchars((string) $metadata['q'], ENT_QUOTES, 'UTF-8') . ' - ExploreUK';
+            $page_title_prefix = (strlen((string) $metadata['q']) > 0)
+              ? htmlspecialchars((string) $metadata['q'], ENT_QUOTES, 'UTF-8')
+              : 'All Items';
+            $metadata['page_title'] = $page_title_prefix . ' - ExploreUK';
 
             $euk_requires_capitalization = EUK_REQUIRES_CAPITALIZATION;
 

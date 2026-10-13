@@ -16,17 +16,23 @@ Developer installations have been tested on Linux (through Windows with
 ```
 git clone git@github.com:uklibraries/exploreuk-web-app.git
 cd exploreuk-web-app
-git submodule init; git submodule update
-make env
+make init
 make dev
 ```
 
 The application should then be available at http://localhost:8080. Developers
-should run `make help` to see helper commands through
-[make](https://www.gnu.org/software/make/). There is a
+can rerun `make init` safely; it preserves an existing `.env.dev` file and does
+not start the development services. They should run `make help` to see helper
+commands through [make](https://www.gnu.org/software/make/). There is a
 [git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) that is
 loaded on initialization in the `assets` directory, so new developers do not
-need to source assets for installation.
+need to source assets for installation. Its `shared/` directory holds images
+also used by [findingaid](https://github.com/uklibraries/findingaid); it is
+copied into the Docker image at build time and served from `/assets/shared/`.
+
+The development environment includes a detached `css-watch` service. Editing
+`app/assets/css/styles.css` automatically regenerates the minified stylesheet,
+so CSS changes are visible after a browser refresh without an image rebuild.
 
 ### Dependencies
 
@@ -113,58 +119,24 @@ length as a fix.
 
 This is based in part on euk: https://github.com/uklibraries/euk/
 
-The following directories are derived in part from the
-[HTML5 Up Prologue](https://html5up.net/prologue) theme:
+## Contributors
 
-- theme/assets/css
-- theme/assets/js/ie
-
-Additionally, the HTML in the following directory is derived in part from the
-HTML5 Up Prologue theme:
-
-- theme/templates
-
-The following file is derived from
-[Google's documentation of lazy loading images](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/):
-
-- theme/assets/js/lazy-loading.js
+Neal Powers, Nicole Sand, MLE Slone, and Eric Weig. For details, consult [CONTRIBUTORS](CONTRIBUTORS.md).
 
 ## Licenses
 
-Copyright (C) 2018-2026 Neal Powers, Nicole Sand, MLE Slone, and Eric Weig.
-
-This program is free software: you can redistribute it and/or modify it under
-the terms of the GNU General Public License as published by the Free Software
-Foundation, either [version 3](https://www.gnu.org/licenses/gpl-3.0.en.html) of
-the License, or (at your option) any later version.
-
-This program is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE. See the GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along with
-this program. If not, see <https://www.gnu.org/licenses/>.
+Copyright (C) 2018-2026 University of Kentucky.  For details, consult [LICENSE](LICENSE.txt).
 
 We make use of code which has their own licensing:
 
-- [HTML5 Up Prologue](https://html5up.net/prologue) -
-  [Creative Commons Attribution 3.0 License](https://creativecommons.org/licenses/by/3.0/)
-- [Google's documentation of lazy loading images](https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video/) -
-  [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
 - [Internet Archive BookReader](https://github.com/internetarchive/bookreader) -
-  [GNU Affero GPL](https://www.gnu.org/licenses/agpl-3.0.en.html)
-- [jQuery](http://jquery.com/) - dual-licensed under the
-  [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) and
-  [MIT](https://opensource.org/license/mit) licenses
-- [jQuery UI](https://jqueryui.com/) - dual-licensed under the
-  [GPLv2](https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html) and
-  [MIT](https://opensource.org/license/mit) licenses
+  [GNU Affero GPL v3](https://www.gnu.org/licenses/agpl-3.0.en.html)
+- [jQuery](http://jquery.com/) - [MIT License](https://opensource.org/license/mit) (Dual-licensed GPLv2/MIT; MIT selected)
+- [jQuery UI](https://jqueryui.com/) - [MIT License](https://opensource.org/license/mit) (Dual-licensed GPLv2/MIT; MIT selected)
 - [MediaElement.js](https://www.mediaelementjs.com/) -
-  [MIT](https://opensource.org/license/mit)
+  [MIT License](https://opensource.org/license/mit)
 - [OpenSeadragon](https://openseadragon.github.io/) -
-  [new BSD license](https://opensource.org/license/bsd-3-clause)
-- [A Simple CSS Tooltip](https://chrisbracco.com/a-simple-css-tooltip/) -
-  [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/)
+  [BSD 3-Clause License](https://opensource.org/license/bsd-3-clause)
 
 An important note for users,
 [Docker Desktop](https://www.docker.com/products/docker-desktop/) is

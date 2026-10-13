@@ -8,6 +8,7 @@ services:
     volumes:
       - ./app/application:/app/application
       - ./app/assets:/app/assets
+      - ./assets/frontpage-assets/shared:/app/assets/shared
       - ./app/catalog.php:/app/catalog.php
       - ./assets/frontpage-assets/files:/app/files
       # Bind mount for dev, baked in image for production
@@ -27,6 +28,7 @@ services:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./app/application:/app/application
       - ./app/assets:/app/assets
+      - ./assets/frontpage-assets/shared:/app/assets/shared
       - ./app/catalog.php:/app/catalog.php
       - findingaid:/opt/findingaid
     depends_on:

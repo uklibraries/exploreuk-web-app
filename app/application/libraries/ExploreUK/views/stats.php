@@ -1,44 +1,49 @@
 <?php require('header.php'); ?>
 
-<div class="search-and-item-control-row bg-uklgray">
-<div class="search-and-item-control-container">
+    <div class="slab slab--wildcat-white page-header page-header--text">
+        <div class="slab__wrapper">
+            <h1 class="headline-group">
+                <span class="headline-group__head">
+                    ExploreUK statistics
+                </span>
+            </h1>
+        </div>
+    </div>
 
-</div>
-</div>
+    <?php require('breadcrumbs.php'); ?>
 
-<div class="item-container">
-<main id="main-content" class="item-presentation">
+<main id="main-content">
+    <div class="slab">
+        <div class="slab__wrapper">
+            <div class="editorial">
+                <h2>Leaves</h2>
+                <ul>
+                    <li><b>Total:</b> <?= $m['stats']['leaf']['count'] ?></li>
+                    <?php
+                    foreach ($m['stats']['leaf']['count_by_type'] as $type => $count) :
+                        ?>
+                    <li><?= $type ?>: <?= $count ?></li>
+                        <?php
+                    endforeach;
+                    ?>
+                </ul>
 
-<div class="page-title bg-uklgray">
-<h2>ExploreUK statistics</h2>
-
-<h3>Leaves</h3>
-<ul>
-<li><b>Total:</b> <?= $m['stats']['leaf']['count'] ?></li>
-<?php
-foreach ($m['stats']['leaf']['count_by_type'] as $type => $count) :
-    ?>
-<li><?= $type ?>: <?= $count ?></li>
-    <?php
-endforeach;
-?>
-</ul>
-
-<h3>Sections</h3>
-<ul>
-<li><b>Total:</b> <?= $m['stats']['section']['count'] ?></li>
-<?php
-foreach ($m['stats']['section']['count_by_type'] as $type => $count) :
-    ?>
-<li><?= $type ?>: <?= $count ?></li>
-    <?php
-endforeach;
-?>
-</ul>
-
+                <h2>Sections</h2>
+                <ul>
+                    <li><b>Total:</b> <?= $m['stats']['section']['count'] ?></li>
+                    <?php
+                    foreach ($m['stats']['section']['count_by_type'] as $type => $count) :
+                        ?>
+                    <li><?= $type ?>: <?= $count ?></li>
+                        <?php
+                    endforeach;
+                    ?>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <?php require('sponsors.html'); ?>
 </main>
-
-</div>
 
 <?php require('global-footer.html'); ?>
 <?php require('universal-footer.php'); ?>

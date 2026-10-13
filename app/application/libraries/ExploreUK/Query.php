@@ -14,7 +14,6 @@ class Query
             'f' => [],
             'offset' => 0,
             'rows' => 20,
-            'ui' => null,
         ];
         $raw_params = [];
         if (isset($_SERVER['QUERY_STRING'])) {
@@ -39,18 +38,6 @@ class Query
                     $this->query['offset'] = intval($value);
                 } elseif ($key == 'per_page') {
                     $this->query['rows'] = intval($value);
-                } elseif ($key == 'ui') {
-                    switch ($value) {
-                        case '1':
-                            /* fall through */
-                        case '2':
-                            $this->query['ui'] = $value;
-                            break;
-
-                        default:
-                            /* do nothing */
-                            break;
-                    }
                 }
             }
         }
@@ -99,9 +86,6 @@ class Query
         }
         if ($query['rows'] > 0) {
             $pieces[] = 'per_page=' . urlencode((string) $query['rows']);
-        }
-        if (isset($query['ui'])) {
-            $pieces[] = 'ui=' . urlencode($query['ui']);
         }
         return '?' . implode('&', $pieces);
     }
