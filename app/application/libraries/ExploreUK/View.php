@@ -45,34 +45,7 @@ class View
 
     public function brevity($message, $length = 0)
     {
-        if ($length == 0) {
-            $length = EUK_MAX_LABEL;
-        }
-        if (strlen((string) $message) <= $length) {
-            return $message;
-        }
-        $source_words = preg_split('/\b/', (string) $message);
-        $target_words = [];
-        $current_length = 0;
-        foreach ($source_words as $word) {
-            if (($current_length == 0) || $current_length + strlen($word) <= $length) {
-                $target_words[] = $word;
-                $current_length += strlen($word);
-            } else {
-                break;
-            }
-        }
-        $count = count($target_words);
-        if ($count == 0) {
-            $message = '…';
-        } else {
-            $terminal = $target_words[$count - 1];
-            if (preg_match('/^\W+$/', $terminal)) {
-                array_pop($target_words);
-            }
-            $message = implode('', $target_words) . '…';
-        }
-        return $message;
+        return brevity($message, $length);
     }
 
     public function renderField($hash)
