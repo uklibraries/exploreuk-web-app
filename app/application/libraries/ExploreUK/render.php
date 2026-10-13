@@ -1,5 +1,13 @@
 <?php
 
+function euk_request_scheme()
+{
+    if (!empty($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+        return $_SERVER['HTTP_X_FORWARDED_PROTO'];
+    }
+    return (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+}
+
 function fa_render_string($s)
 {
     $fragment = simplexml_load_string((string) $s);
