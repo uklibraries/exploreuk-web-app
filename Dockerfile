@@ -19,12 +19,13 @@ COPY ./assets/frontpage-assets/shared ./assets/shared
 
 RUN npm run minify-css
 
+FROM builder AS css-watcher
+
+RUN apk add --no-cache watchexec
+
 FROM php:8.3-fpm-alpine AS development
 
-RUN apk add --no-cache \
-    bash \
-    nodejs \
-    npm
+RUN apk add --no-cache bash
 
 COPY --from=builder /app /app
 

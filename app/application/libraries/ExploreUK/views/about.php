@@ -43,7 +43,6 @@
                     <h2>Platform and Tools</h2>
                     <p>ExploreUK uses a combination of the following:</p>
                 <ul>
-                    <li><a href="https://omeka.org/">Omeka Classic</a> with a highly customized theme</li>
                     <li>Apache Solr</li>
                     <li><a href="https://www.uky.edu/its/">University of Kentucky Information Technology Services</a> infrastructure for AIPs and DIPs storage</li>
                     <li>Collection guides and related information are managed by the <a href="http://archivesspace.org/">ArchivesSpace</a> information management application.</li>
@@ -51,7 +50,8 @@
                 <p>Visit the <a href="https://github.com/uklibraries">UK Libraries GitHub page</a> for more information.</p>
                 
                 <h2>Acknowledgements</h2>
-                <p>A portion of the collection guides and digitized content on ExploreUK was made possible by support from the <a href="https://www.clir.org/">Council on Library and Information Resources</a>, <a href="https://www.imls.gov/">Institute of Museum and Library Services</a>, <a href="https://heyburncollections.org/">The John G. Heyburn II Initiative for Excellence in the Federal Judiciary</a>, the <a href="https://www.neh.gov/">National Endowment for the Humanities</a>, and the <a href="https://www.archives.gov/nhprc">National Historical Publications &amp; Records Commission</a>. Visit the <a href="https://libraries.uky.edu/people-0/about-us/grants-partnerships">SCRC Projects and Grants page</a> for more information on these grant-funded projects.</p>
+                <p>A portion of the collection guides and digitized content on ExploreUK was made possible by support from the <a href="https://www.clir.org/">Council on Library and Information Resources</a>, <a href="https://www.imls.gov/">Institute of Museum and Library Services</a>, <a href="https://heyburncollections.org/">The John G. Heyburn II Initiative for Excellence in the Federal Judiciary</a>, the <a href="https://www.neh.gov/">National Endowment for the Humanities</a>, and the <a href="https://www.archives.gov/nhprc">National Historical Publications &amp; Records Commission</a>. </p>
+                <p>Visit the <a href="https://libraries.uky.edu/people-0/about-us/grants-partnerships">SCRC Projects and Grants page</a> for more information on these grant-funded projects.</p>
             </div>
         </div>
     </div>

@@ -14,10 +14,6 @@ if [ -d "$APP_ROOT/files" ]; then
     find "$APP_ROOT/files" -type f -exec chmod 0664 "{}" \;
 fi
 
-if [ "$APP_ENV" == "development" ]; then
-	npm run --prefix "$APP_ROOT" minify-css
-fi
-
 # If a command was provided, run that instead of php-fpm in the foreground
 if [ "$#" -gt 0 ]; then
     exec "$@"
