@@ -89,6 +89,23 @@ export COMPOSE_FILE=docker-compose.yml:docker-compose.dev.override.yml
 docker compose up -d
 ```
 
+### Acceptance base paths
+
+`APP_BASE_PATH` is the URL prefix a review site is served under, such as
+`/review/euk-118`. Leave it empty for root deployments.
+
+Application links, forms, assets, viewer requests and redirects use the prefix;
+content URLs from `DIP_STORE_BASE_URL` do not. `FA_BASE_URL` is used exactly as
+written, so a review's value includes the prefix:
+`/review/euk-118/fa/findingaid/?id=`.
+
+The proxy in front of the application must strip the prefix: ExploreUK expects
+root-relative requests and only adds the prefix to URLs it emits. Review
+deployments set this up through ukl-ansible-playbooks (see
+[deploying ExploreUK](https://github.com/uklibraries/ukl-ansible-playbooks/blob/main/docs/deploying-euk.md)).
+The development nginx configuration serves at the root, so setting
+`APP_BASE_PATH` locally will not work on its own.
+
 ### Optional: Findingaid
 
 There is a service, findingaid, which is an integration with ExploreUK's
