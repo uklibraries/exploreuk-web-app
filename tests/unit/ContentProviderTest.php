@@ -36,7 +36,7 @@ final class ContentProviderTest extends TestCase
 
     public function testDefaultConstructorReadsAssetFiles(): void
     {
-        $provider = new ContentProvider(realpath(__DIR__ . '/../../app/assets'));
+        $provider = new ContentProvider(realpath(__DIR__ . '/../../app/assets'), new Config([]));
 
         $this->assertNotEmpty($provider->popularResources());
         $this->assertNotEmpty($provider->additionalResources());
@@ -74,6 +74,27 @@ final class ContentProviderTest extends TestCase
         $this->assertSame('#', $result[0]['url']);
     }
 
+    public function testResourceUrlsUseConfiguredBasePath(): void
+    {
+        $config = new Config(['app_base_path' => '/review/euk-118']);
+        $provider = $this->makeProviderWithData('popular_resources.json', [
+            'data' => [
+                ['image' => '/img/a.jpg', 'label' => 'Alpha', 'url' => '/?f%5Bformat%5D%5B%5D=images'],
+                ['image' => 'https://outside.test/b.jpg', 'label' => 'Beta', 'url' => 'https://outside.test/'],
+                ['label' => 'No URL or Image'],
+            ],
+        ], $config);
+
+        $result = $provider->popularResources();
+
+        $this->assertSame('/review/euk-118/img/a.jpg', $result[0]['image']);
+        $this->assertSame('/review/euk-118/?f%5Bformat%5D%5B%5D=images', $result[0]['url']);
+        $this->assertSame('https://outside.test/b.jpg', $result[1]['image']);
+        $this->assertSame('https://outside.test/', $result[1]['url']);
+        $this->assertSame('', $result[2]['image']);
+        $this->assertSame('#', $result[2]['url']);
+    }
+
     public function testAdditionalResourcesIncludesDescription(): void
     {
         $provider = $this->makeProviderWithData('additional_resources.json', [
@@ -109,7 +130,7 @@ final class ContentProviderTest extends TestCase
 
     public function testPopularResourcesReturnsEmptyArrayWhenFileMissing(): void
     {
-        $provider = new ContentProvider($this->fixtureDir);
+        $provider = new ContentProvider($this->fixtureDir, new Config([]));
 
         $this->assertSame([], $provider->popularResources());
     }
@@ -120,14 +141,14 @@ final class ContentProviderTest extends TestCase
             $this->fixtureDir . '/data/popular_resources.json',
             '{"not_valid',
         );
-        $provider = new ContentProvider($this->fixtureDir);
+        $provider = new ContentProvider($this->fixtureDir, new Config([]));
 
         $this->assertSame([], $provider->popularResources());
     }
 
     public function testGetRandomBackgroundImageReturnsEmptyShapeWhenFileMissing(): void
     {
-        $provider = new ContentProvider($this->fixtureDir);
+        $provider = new ContentProvider($this->fixtureDir, new Config([]));
 
         $this->assertSame(
             ['image' => '', 'label' => '', 'url' => '#'],
@@ -151,13 +172,16 @@ final class ContentProviderTest extends TestCase
         $this->assertIsArray($data['data'] ?? null, "$filename must have a \"data\" array");
     }
 
-    private function makeProviderWithData(string $filename, array $data): ContentProvider
-    {
+    private function makeProviderWithData(
+        string $filename,
+        array $data,
+        ?Config $config = null,
+    ): ContentProvider {
         file_put_contents(
             $this->fixtureDir . '/data/' . $filename,
             json_encode($data),
         );
-        return new ContentProvider($this->fixtureDir);
+        return new ContentProvider($this->fixtureDir, $config ?? new Config([]));
     }
 
     private function rmdirRecursive(string $dir): void

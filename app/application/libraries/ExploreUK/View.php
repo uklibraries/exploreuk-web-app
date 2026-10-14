@@ -7,7 +7,7 @@ class View
     private $query;
     private $templateFile;
 
-    public function __construct(private $metadata, $template)
+    public function __construct(private $metadata, $template, private Config $config)
     {
         $this->query = $this->metadata['query'];
         $this->templateFile = __DIR__ . "/views/{$template}.php";
@@ -158,7 +158,7 @@ class View
             $item = ucfirst((string) $item);
         }
 
-        if (str_starts_with((string) $item, 'http')) {
+        if ($field === 'finding_aid_url_s' || str_starts_with((string) $item, 'http')) {
             return $this->renderLink([
                 "href" => $item,
                 "content" => $item,
@@ -202,12 +202,7 @@ class View
 
     public function path($path)
     {
-        $url = str_replace('//', '/', "$path");
-        $url = preg_replace('/\?$/', '', $url);
-        if (!str_starts_with((string) $url, '/')) {
-            $url = "/$url";
-        }
-        return $url;
+        return $this->config->path((string) $path);
     }
 
     public function assetPath($path)
@@ -217,7 +212,7 @@ class View
 
     public function assetVersion($path)
     {
-        $file_path = realpath(EUK_BASE_DIR) . $this->assetPath($path);
+        $file_path = realpath(EUK_BASE_DIR) . '/assets/' . $path;
         $algo = 'sha384';
         $version = $algo . '-' . base64_encode(hash($algo, file_get_contents($file_path), true));
         return $version;

@@ -6,7 +6,7 @@ $pc++;
 ?>
 <div class="result-amount">
     <div class="rows-select">
-        <form action="/catalog" class="per_page" method="get">
+        <form action="<?= $this->path('/catalog') ?>" class="per_page" method="get">
             <label for="per_page_<?= $pc ?>">Show
                 <select class="pagination-rows" id="per_page_<?= $pc ?>" name="per_page" onchange="this.form.submit()" title="Number of results to display per page">
                 <?php foreach (EUK_PER_PAGE_OPTS as $opt) : ?>

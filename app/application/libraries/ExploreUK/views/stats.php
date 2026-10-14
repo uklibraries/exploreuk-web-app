@@ -42,8 +42,8 @@
             </div>
         </div>
     </div>
-    <?php require('sponsors.html'); ?>
+    <?php require('sponsors.php'); ?>
 </main>
 
-<?php require('global-footer.html'); ?>
+<?php require('global-footer.php'); ?>
 <?php require('universal-footer.php'); ?>

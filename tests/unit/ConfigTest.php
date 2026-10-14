@@ -8,6 +8,7 @@ final class ConfigTest extends TestCase
 {
     protected function setUp(): void
     {
+        putenv('APP_BASE_PATH');
         putenv('APP_ENV=development');
         putenv('SOLR_URL=https://example.com/solr/select');
         putenv('FA_BASE_URL=/fa/findingaid/?id=');
@@ -16,6 +17,7 @@ final class ConfigTest extends TestCase
 
     protected function tearDown(): void
     {
+        putenv('APP_BASE_PATH');
         putenv('APP_ENV');
         putenv('SOLR_URL');
         putenv('FA_BASE_URL');
@@ -30,6 +32,46 @@ final class ConfigTest extends TestCase
         $this->assertSame('https://example.com/solr/select', $config->get('solr_url'));
         $this->assertSame('/fa/findingaid/?id=', $config->get('fa_base_url'));
         $this->assertSame('/dips', $config->get('dip_store_base_url'));
+    }
+
+    public function testOptionalBasePathIsNormalized(): void
+    {
+        $this->assertSame('', Config::fromEnv()->get('app_base_path'));
+        putenv('APP_BASE_PATH=/');
+        $this->assertSame('', Config::fromEnv()->get('app_base_path'));
+        putenv('APP_BASE_PATH=/review/euk-118/');
+        $this->assertSame('/review/euk-118', Config::fromEnv()->get('app_base_path'));
+    }
+
+    public function testBasePathRejectsInvalidValues(): void
+    {
+        $bases = ['relative', '//outside.test', '/a/../b', '/a?q=1', '/a#fragment', "/a\r\nLocation: bad"];
+        foreach ($bases as $base) {
+            try {
+                new Config(['app_base_path' => $base]);
+                $this->fail('Accepted invalid base path: ' . $base);
+            } catch (\RuntimeException $error) {
+                $this->assertStringContainsString('APP_BASE_PATH', $error->getMessage());
+            }
+        }
+    }
+
+    public function testPathAddsBasePathToApplicationUrlsOnly(): void
+    {
+        $bases = ['', '/review/euk-118'];
+        foreach ($bases as $base) {
+            $config = new Config(['app_base_path' => $base]);
+
+            $paths = ['/', '/catalog/?q=https://example.test/a//b#page/1', '/assets/js/main.js'];
+            foreach ($paths as $path) {
+                $this->assertSame($base . $path, $config->path($path));
+            }
+
+            $urls = ['https://outside.test/a//b', '//cdn.example.test/a', '#item'];
+            foreach ($urls as $url) {
+                $this->assertSame($url, $config->path($url));
+            }
+        }
     }
 
     public function testGetThrowsOnUnknownKey(): void

@@ -60,7 +60,7 @@
 </div>
 
 <?php //require('additional-resources.php'); ?>
-<?php require('sponsors.html'); ?>
+<?php require('sponsors.php'); ?>
 </main>
-<?php require('global-footer.html'); ?>
+<?php require('global-footer.php'); ?>
 <?php require('universal-footer.php'); ?>

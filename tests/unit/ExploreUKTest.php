@@ -36,12 +36,30 @@ final class ExploreUKTest extends TestCase
                 'https://nyx.uky.edu/dips/abc/data/image.jpg',
                 'https://exploreuk.uky.edu/dipstest/abc/data/image.jpg',
             ],
-            'unrelated path is preserved' => [
+            'finding aid uses configured application' => [
                 '/dipstest/',
                 'https://nyx.uky.edu/fa/findingaid/?id=abc',
-                'https://exploreuk.uky.edu/fa/findingaid/?id=abc',
+                '/fa/findingaid/?id=abc',
             ],
         ];
+    }
+
+    public function testCleanupHostRebuildsFindingAidUrlsFromConfig(): void
+    {
+        $exploreUk = $this->makeExploreUk('/dips/', faBaseUrl: '/review/euk-118/fa/findingaid/?id=');
+
+        $this->assertSame(
+            '/review/euk-118/fa/findingaid/?id=abc&extra=param#folder',
+            $exploreUk->cleanupHost('https://nyx.uky.edu/fa/findingaid/?id=abc&extra=param#folder'),
+        );
+        $this->assertSame(
+            '/review/euk-118/fa/findingaid/?id=abc',
+            $exploreUk->cleanupHost('https://exploreuk.uky.edu/fa/findingaid/?id=abc'),
+        );
+        $this->assertSame(
+            'https://exploreuk.uky.edu/dips/abc/image.jpg',
+            $exploreUk->cleanupHost('https://nyx.uky.edu/dips/abc/image.jpg'),
+        );
     }
 
     public function testCleanupDocUsesConfiguredDipStoreForEveryEnvironment(): void
@@ -72,11 +90,12 @@ final class ExploreUKTest extends TestCase
     private function makeExploreUk(
         string $dipStoreBaseUrl,
         string $appEnv = 'development',
+        string $faBaseUrl = '/fa/findingaid/?id=',
     ): ExploreUK {
         $config = new Config([
             'app_env' => $appEnv,
             'solr_url' => 'https://example.com/solr/select',
-            'fa_base_url' => '/fa/findingaid/?id=',
+            'fa_base_url' => $faBaseUrl,
             'dip_store_base_url' => $dipStoreBaseUrl,
         ]);
 

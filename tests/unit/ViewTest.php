@@ -19,6 +19,7 @@ final class ViewTest extends TestCase
                 ],
             ],
             'search-brief',
+            new Config(['app_base_path' => '']),
         );
 
         ob_start();
