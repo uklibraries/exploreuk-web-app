@@ -7,7 +7,7 @@
             }
 
             window.addEventListener('message', function (e) {
-                var origin = window.location.protocol + '//' + window.location.host;
+                var origin = window.location.origin;
                 if (e.origin !== origin) {
                     return;
                 }

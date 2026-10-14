@@ -23,6 +23,7 @@
 var json = <?= $m['script']['json'] ?>;
 var search_host = <?= $m['script']['search_host'] ?>;
 var imagesBaseURL = <?= $m['script']['imagesBaseURL'] ?>;
+var appHome = <?= json_encode($this->path('/')) ?>;
 var query = <?= $m['script']['query'] ?>;
 </script>
 <script type="text/javascript" src="<?= $this->assetPath('BookReaderDemo/BookReaderJSmod.js') ?>?<?= $this->assetVersion('BookReaderDemo/BookReaderJSmod.js') ?>"></script>
