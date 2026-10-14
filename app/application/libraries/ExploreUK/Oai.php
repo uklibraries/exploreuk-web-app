@@ -19,6 +19,7 @@ class Oai
         $response = euk_oai_response([
             'solr' => $this->config->get('solr_url'),
             'host' => $this->host,
+            'base_path' => $this->config->get('app_base_path'),
         ]);
         $doc = new DOMDocument('1.0', 'utf-8');
         $root = $doc->createElementNS('http://www.openarchives.org/OAI/2.0/', 'OAI-PMH');
@@ -653,7 +654,8 @@ function oai_base()
 {
     global $oai_host_options;
     $host = $oai_host_options['host'];
-    $oai_base = "https://$host/catalog/oai";
+    $base_path = $oai_host_options['base_path'] ?? '';
+    $oai_base = "https://$host$base_path/catalog/oai";
     $oai_base = preg_replace('#/+#', '/', $oai_base);
     $oai_base = preg_replace('#https:/#', 'https://', (string) $oai_base);
     return $oai_base;

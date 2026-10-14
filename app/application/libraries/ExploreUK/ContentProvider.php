@@ -4,7 +4,7 @@ namespace ExploreUK;
 
 class ContentProvider
 {
-    public function __construct(private string $assetsDir)
+    public function __construct(private string $assetsDir, private Config $config)
     {
     }
 
@@ -59,7 +59,14 @@ class ContentProvider
                 512,
                 JSON_THROW_ON_ERROR,
             );
-            return $data['data'] ?? [];
+            return array_map(function (array $item): array {
+                foreach (['image', 'url'] as $key) {
+                    if (isset($item[$key])) {
+                        $item[$key] = $this->config->path($item[$key]);
+                    }
+                }
+                return $item;
+            }, $data['data'] ?? []);
         } catch (\JsonException $e) {
             error_log("Invalid JSON in $path: " . $e->getMessage());
             return [];
