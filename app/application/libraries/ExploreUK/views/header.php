@@ -42,13 +42,13 @@
         <?php if ($m['front_page']) : ?>
             <section id="top">
                 <div>
-                    <?php require('global-header.html'); ?>
+                    <?php require('global-header.php'); ?>
                     <?php require('search.php'); ?>
                     <div class="row"></div>
         <?php else : ?>
                     <section class="bg-uklblack" id="top2">
                         <div>
-                            <?php require('global-header.html'); ?>
+                            <?php require('global-header.php'); ?>
                             <div id="top2_bottom">
                                 <?php require('search-brief.php'); ?>
                             </div>
