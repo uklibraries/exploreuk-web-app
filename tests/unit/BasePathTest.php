@@ -126,7 +126,7 @@ final class BasePathTest extends TestCase
     #     url the viewer must render for that format
     #   ]
     # ]
-    public static function itemViewers(): array
+    public static function itemViewerProvider(): array
     {
         $cases = [];
         foreach (self::bases() as $baseName => [$base]) {
@@ -143,7 +143,7 @@ final class BasePathTest extends TestCase
         return $cases;
     }
 
-    #[DataProvider('itemViewers')]
+    #[DataProvider('itemViewerProvider')]
     public function testItemViewers(string $base, string $format, string $expectedUrl): void
     {
         $_SERVER['QUERY_STRING'] = '';
