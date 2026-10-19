@@ -18,7 +18,7 @@ class ExploreUK
     public function __construct(Config $config, string $assetsDir)
     {
         $this->config = $config;
-        $this->content = new ContentProvider($assetsDir);
+        $this->content = new ContentProvider($assetsDir, $config);
         $this->query = new Query([], $this->config->get('solr_url'));
         $this->solr = $this->config->get('solr_url');
     }
@@ -77,13 +77,14 @@ class ExploreUK
             '/'
         ) . '/';
 
-        $value = str_replace(
-            ['/dips/', '/dipstest/'],
-            $dipStoreBaseUrl,
-            (string) $value,
-        );
+        $value = (string) $value;
 
-        $value = preg_replace('#https://nyx#', 'https://exploreuk', (string) $value);
+        # rebuild findingaid urls to point to findingaid location from FA_BASE_URL
+        if (preg_match('#^(?:https?://(?:nyx|exploreuk)\.uky\.edu)?/fa/findingaid/\?id=(.*)$#', $value, $matches)) {
+            return $this->config->get('fa_base_url') . $matches[1];
+        }
+        $value = str_replace(['/dips/', '/dipstest/'], $dipStoreBaseUrl, $value);
+        $value = preg_replace('#https://nyx#', 'https://exploreuk', $value);
         return $value;
     }
 
@@ -308,7 +309,7 @@ class ExploreUK
         ];
         $metadata['page_description'] = $title;
 
-        $view = new View($metadata, $slug);
+        $view = new View($metadata, $slug, $this->config);
         $view->render();
     }
 
@@ -349,7 +350,7 @@ class ExploreUK
 
         $metadata['stats'] = $stats;
 
-        $view = new View($metadata, 'stats');
+        $view = new View($metadata, 'stats', $this->config);
         $view->render();
     }
 
@@ -364,9 +365,8 @@ class ExploreUK
 
         $pages = $this->pages($id);
         if ($pages) {
-            $scheme = euk_request_scheme();
             $search_host = $this->path("/catalog/$id/find");
-            $images_base_url = $scheme . '://' . $_SERVER['HTTP_HOST'] . $this->assetPath('BookReader/images/');
+            $images_base_url = $this->assetPath('BookReader/images/');
 
             $metadata['script'] = [
                 'json' => json_encode($pages),
@@ -376,7 +376,7 @@ class ExploreUK
             ];
         }
 
-        $view = new View($metadata, 'paged');
+        $view = new View($metadata, 'paged', $this->config);
         $view->render();
     }
 
@@ -384,7 +384,7 @@ class ExploreUK
     {
         $doc = $this->document($id);
         if (is_null($doc)) {
-            header('Location: /');
+            header('Location: ' . $this->path('/'));
             return;
         }
 
@@ -678,7 +678,7 @@ class ExploreUK
         $metadata['flat'] = $flat;
         $metadata['details'] = $details;
 
-        $view = new View($metadata, $template);
+        $view = new View($metadata, $template, $this->config);
         $view->render();
     }
 
@@ -828,7 +828,7 @@ class ExploreUK
             $metadata['popular_resources'] = $this->content->popularResources();
             $metadata['additional_resources'] = $this->content->additionalResources();
 
-            $view = new View($metadata, 'front-page');
+            $view = new View($metadata, 'front-page', $this->config);
         } else {
             # Pagination and results
             $metadata['facet_menu_title'] = EUK_LOCALE['en']['facet_menu_title'];
@@ -914,7 +914,7 @@ class ExploreUK
                     $results[] = $results_data;
                 }
                 $metadata['results'] = $results;
-                $view = new View($metadata, 'search-results');
+                $view = new View($metadata, 'search-results', $this->config);
             } else {
                 $metadata['suggestions'] = [];
                 if (isset($result['spellcheck'])) {
@@ -926,7 +926,7 @@ class ExploreUK
                         }
                     }
                 }
-                $view = new View($metadata, 'no-results');
+                $view = new View($metadata, 'no-results', $this->config);
             }
         }
 
@@ -935,12 +935,7 @@ class ExploreUK
 
     public function path($path)
     {
-        $url = str_replace('//', '/', "$path");
-        $url = preg_replace('/\?$/', '', $url);
-        if (!str_starts_with((string) $url, '/')) {
-            $url = "/$url";
-        }
-        return $url;
+        return $this->config->path((string) $path);
     }
 
     public function assetPath($path)

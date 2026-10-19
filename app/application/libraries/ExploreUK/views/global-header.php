@@ -2,7 +2,7 @@
     <div class="slab global-header__masthead"  >
         <div class="slab__wrapper">
             <div class="global-header__banner">
-                <a href="/" class="site-identity">
+                <a href="<?= $this->path('/') ?>" class="site-identity">
                     <div class="site-identity__main">
                         <div class="site-identity__logo">
                             <span class="uk-logo-svg">
@@ -50,9 +50,9 @@
     <div class="slab__wrapper">
         <nav id="MainNav" class="global-nav" aria-labelledby="MainNavLabel660c465a9ec23">
             <div class="show-for-sr" id="MainNavLabel660c465a9ec23">Main Navigation</div>
-            <a href="/" class="ic ic--home"><span class="show-for-sr">Return to Home Page</span></a>
-                <a href="/about">About</a>
-                <a href="/takedown-policy">Copyright and Use</a>
+            <a href="<?= $this->path('/') ?>" class="ic ic--home"><span class="show-for-sr">Return to Home Page</span></a>
+                <a href="<?= $this->path('/about') ?>">About</a>
+                <a href="<?= $this->path('/takedown-policy') ?>">Copyright and Use</a>
                 <a href="https://libguides.uky.edu/SCRCaccount">Researcher Account Guide <span class="ic ic--popup" aria-hidden="true"></span></a>
                 <a href="https://libguides.uky.edu/SCRCaccount/archivesrequests">Request Materials Guide <span class="ic ic--popup" aria-hidden="true"></span></a>
                 <a href="https://requests-libraries.uky.edu/logon">Researcher Account Login <span class="ic ic--popup" aria-hidden="true"></span></a> 
@@ -68,11 +68,11 @@
                 <div class="mobile-tab-nav__menus">
                     <nav id="MainMobileNav" class="global-nav" aria-labelledby="MainNavLabel660c465a9ec23">
                         <div class="show-for-sr" id="MainNavLabel660c465a9ec23">Main Navigation</div>
-                        <a href="/" class="ic ic--home">
+                        <a href="<?= $this->path('/') ?>" class="ic ic--home">
                             <span class="show-for-sr">Return to Home Page</span>
                         </a>
-                        <a href="/about">About</a>
-                        <a href="/takedown-policy">Copyright and Use</a>
+                        <a href="<?= $this->path('/about') ?>">About</a>
+                        <a href="<?= $this->path('/takedown-policy') ?>">Copyright and Use</a>
                         <a href="https://libguides.uky.edu/SCRCaccount">Researcher Account Guide <span class="ic ic--popup" aria-hidden="true"></span></a>
                         <a href="https://libguides.uky.edu/SCRCaccount/archivesrequests">Request Materials Guide <span class="ic ic--popup" aria-hidden="true"></span></a>
                         <a href="https://requests-libraries.uky.edu/logon">Researcher Account Login <span class="ic ic--popup" aria-hidden="true"></span></a>  

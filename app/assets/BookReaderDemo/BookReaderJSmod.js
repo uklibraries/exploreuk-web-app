@@ -96,7 +96,7 @@ br.getPageURI = function (index, reduce, rotate) {
     if (index >= 0 && index < pages.length) {
         url = pages[index].reference_image_url_s;
     } else {
-        url = '/images/logo.png';
+        url = imagesBaseURL + 'transparent.png';
     }
 
     return url;
@@ -159,7 +159,7 @@ br.numLeafs = pages.length; //15;
 // Book title and the URL used for the book title link
 //br.bookTitle = item_title;
 br.bookTitle = 'ExploreUK';
-br.bookUrl  = '/';
+br.bookUrl  = appHome;
 
 br.getEmbedCode = function (frameWidth, frameHeight, viewParams) {
     return "Embed code not supported in bookreader demo.";
@@ -180,7 +180,7 @@ $('#BRreturn').hide();
 
 function updateOuter()
 {
-    var origin = window.location.protocol + '//' + window.location.host;
+    var origin = window.location.origin;
     var page = parseInt(br.paramsFromFragment(window.location.hash).page, 10) - 1;
     if (json[page]) {
         parent.postMessage({page: json[page], hash: window.location.hash}, origin);

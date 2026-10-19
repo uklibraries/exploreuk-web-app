@@ -39,9 +39,9 @@
             </div>
         </div>
     </div>
-    <?php require('sponsors.html'); ?>
+    <?php require('sponsors.php'); ?>
 </main>
 <?php
-    require('global-footer.html');
+    require('global-footer.php');
     require('universal-footer.php');
 ?>

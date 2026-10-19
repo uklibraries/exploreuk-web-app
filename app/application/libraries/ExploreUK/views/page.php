@@ -49,8 +49,8 @@ if (isset($m['flat']['title_display'])) {
         </div>
     </div>
     <?php require('page-harmful-language-statement.html'); ?>
-    <?php require('sponsors.html'); ?>
+    <?php require('sponsors.php'); ?>
 </main>
 
-<?php require('global-footer.html'); ?>
+<?php require('global-footer.php'); ?>
 <?php require('universal-footer.php'); ?>
