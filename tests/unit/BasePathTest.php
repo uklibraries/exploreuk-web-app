@@ -119,14 +119,41 @@ final class BasePathTest extends TestCase
         );
     }
 
-    #[DataProvider('bases')]
-    public function testItemViewers(string $base): void
+    # [
+    #   "base, format" => [
+    #     base,
+    #     format,
+    #     url the viewer must render for that format
+    #   ]
+    # ]
+    public static function itemViewers(): array
+    {
+        $cases = [];
+        foreach (self::bases() as $baseName => [$base]) {
+            $expectedUrls = [
+                'images' => 'https://exploreuk.uky.edu/dips/abc/image.jpg',
+                'books' => $base . '/catalog/abc/paged',
+                'audio' => 'https://exploreuk.uky.edu/dips/abc/audio.mp3',
+                'audiovisual' => 'https://exploreuk.uky.edu/dips/abc/video.mp4',
+            ];
+            foreach ($expectedUrls as $format => $expectedUrl) {
+                $cases["$baseName, $format"] = [$base, $format, $expectedUrl];
+            }
+        }
+        return $cases;
+    }
+
+    #[DataProvider('itemViewers')]
+    public function testItemViewers(string $base, string $format, string $expectedUrl): void
     {
         $_SERVER['QUERY_STRING'] = '';
+        // The permalink in the item details is built from the request host.
         $_SERVER['HTTP_HOST'] = 'acceptance.example.test';
         $app = new class ($this->config($base), EUK_BASE_DIR . '/assets') extends ExploreUK {
-            public string $format = 'images';
+            public string $format;
 
+            // Fields are shaped like a real Solr document, including the nyx host, and go
+            // through cleanupDoc() so the test covers the same rewriting as production.
             public function document($id)
             {
                 return $this->cleanupDoc([
@@ -150,16 +177,15 @@ final class BasePathTest extends TestCase
             }
         };
 
-        $formats = ['images', 'books', 'audio', 'audiovisual'];
-        foreach ($formats as $format) {
-            $app->format = $format;
-            $html = $this->capture(fn () => $app->pageViewer('abc'));
+        $app->format = $format;
+        $html = $this->capture(fn () => $app->pageViewer('abc'));
 
-            $this->assertNoUnprefixedUrls($base, $html);
-            $this->assertStringContainsString('href="' . $base . '/fa/findingaid/?id=abc"', $html);
-            // Content comes from the DIP store, never from beneath the prefix.
-            $this->assertDoesNotMatchRegularExpression('#["\']' . preg_quote($base, '#') . '/dips/#', $html);
-        }
+        $this->assertNoUnprefixedUrls($base, $html);
+        $this->assertStringContainsString('href="' . $base . '/fa/findingaid/?id=abc"', $html);
+        $this->assertStringContainsString($expectedUrl, $html);
+        // Content comes from the DIP store, never from beneath the prefix.
+        $this->assertStringNotContainsString('"' . $base . '/dips/', $html);
+        $this->assertStringNotContainsString("'" . $base . '/dips/', $html);
     }
 
     #[DataProvider('bases')]
