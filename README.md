@@ -155,7 +155,7 @@ We make use of code which has their own licensing:
 - [OpenSeadragon](https://openseadragon.github.io/) -
   [BSD 3-Clause License](https://opensource.org/license/bsd-3-clause)
 
-An important note for users,
+An important note for users:
 [Docker Desktop](https://www.docker.com/products/docker-desktop/) is
 [not always](https://www.docker.com/legal/docker-subscription-service-agreement/)
 free software. The recommended installation instructions mention ways of
