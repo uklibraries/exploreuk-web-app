@@ -19,7 +19,7 @@ services:
       - app_network
 
   web:
-    image: nginx:1.29.0
+    image: nginx:1.30-alpine-slim
     restart: always
     ports:
       - "8080:80"
